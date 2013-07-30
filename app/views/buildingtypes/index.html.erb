@@ -1,0 +1,33 @@
+<h1>Listing buildingtypes</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Stufe</th>
+      <th>Produktion</th>
+      <th>Energieverbrauch</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @buildingtypes.each do |buildingtype| %>
+      <tr>
+        <td><%= buildingtype.name %></td>
+        <td><%= buildingtype.stufe %></td>
+        <td><%= buildingtype.produktion %></td>
+        <td><%= buildingtype.energieverbrauch %></td>
+        <td><%= link_to 'Show', buildingtype %></td>
+        <td><%= link_to 'Edit', edit_buildingtype_path(buildingtype) %></td>
+        <td><%= link_to 'Destroy', buildingtype, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Buildingtype', new_buildingtype_path %>

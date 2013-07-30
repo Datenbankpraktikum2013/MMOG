@@ -4,6 +4,12 @@ Mmog::Application.routes.draw do
 
   resources :missions
 
+  resources :ships
+
+  resources :buildingtypes
+
+  resources :technologies
+
   devise_for :users
 
   root 'welcome#index'

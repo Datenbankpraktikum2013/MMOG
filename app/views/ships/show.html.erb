@@ -1,0 +1,64 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Construction time:</strong>
+  <%= @ship.construction_time %>
+</p>
+
+<p>
+  <strong>Offense:</strong>
+  <%= @ship.offense %>
+</p>
+
+<p>
+  <strong>Defense:</strong>
+  <%= @ship.defense %>
+</p>
+
+<p>
+  <strong>Crystal cost:</strong>
+  <%= @ship.crystal_cost %>
+</p>
+
+<p>
+  <strong>Credit cost:</strong>
+  <%= @ship.credit_cost %>
+</p>
+
+<p>
+  <strong>Ore cost:</strong>
+  <%= @ship.ore_cost %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @ship.name %>
+</p>
+
+<p>
+  <strong>Velocity:</strong>
+  <%= @ship.velocity %>
+</p>
+
+<p>
+  <strong>Crew capacity:</strong>
+  <%= @ship.crew_capacity %>
+</p>
+
+<p>
+  <strong>Ressource capasity:</strong>
+  <%= @ship.ressource_capasity %>
+</p>
+
+<p>
+  <strong>Fuel capacity:</strong>
+  <%= @ship.fuel_capacity %>
+</p>
+
+<p>
+  <strong>Consumption:</strong>
+  <%= @ship.consumption %>
+</p>
+
+<%= link_to 'Edit', edit_ship_path(@ship) %> |
+<%= link_to 'Back', ships_path %>

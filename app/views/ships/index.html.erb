@@ -1,0 +1,49 @@
+<h1>Listing ships</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Construction time</th>
+      <th>Offense</th>
+      <th>Defense</th>
+      <th>Crystal cost</th>
+      <th>Credit cost</th>
+      <th>Ore cost</th>
+      <th>Name</th>
+      <th>Velocity</th>
+      <th>Crew capacity</th>
+      <th>Ressource capasity</th>
+      <th>Fuel capacity</th>
+      <th>Consumption</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @ships.each do |ship| %>
+      <tr>
+        <td><%= ship.construction_time %></td>
+        <td><%= ship.offense %></td>
+        <td><%= ship.defense %></td>
+        <td><%= ship.crystal_cost %></td>
+        <td><%= ship.credit_cost %></td>
+        <td><%= ship.ore_cost %></td>
+        <td><%= ship.name %></td>
+        <td><%= ship.velocity %></td>
+        <td><%= ship.crew_capacity %></td>
+        <td><%= ship.ressource_capasity %></td>
+        <td><%= ship.fuel_capacity %></td>
+        <td><%= ship.consumption %></td>
+        <td><%= link_to 'Show', ship %></td>
+        <td><%= link_to 'Edit', edit_ship_path(ship) %></td>
+        <td><%= link_to 'Destroy', ship, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Ship', new_ship_path %>
