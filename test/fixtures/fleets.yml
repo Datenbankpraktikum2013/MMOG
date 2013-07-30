@@ -1,0 +1,33 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  credit: 1
+  ressource_capacity: 1
+  ore: 1
+  crystal: 1
+  storage_factor: 1.5
+  velocity_factor: 1.5
+  offense: 1
+  defense: 1
+  user_id: 
+  mission_id: 
+  departure_time: 1
+  arrival_time: 1
+  start_planet: 1
+  target_planet: 1
+
+two:
+  credit: 1
+  ressource_capacity: 1
+  ore: 1
+  crystal: 1
+  storage_factor: 1.5
+  velocity_factor: 1.5
+  offense: 1
+  defense: 1
+  user_id: 
+  mission_id: 
+  departure_time: 1
+  arrival_time: 1
+  start_planet: 1
+  target_planet: 1

@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 20130730140811) do
 
   create_table "alliances", force: true do |t|
     t.string   "name"
+    t.integer  "default_rank"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -35,9 +36,37 @@ ActiveRecord::Schema.define(version: 20130730140811) do
     t.datetime "updated_at"
   end
 
+  create_table "fleets", force: true do |t|
+    t.integer  "credit"
+    t.integer  "ressource_capacity"
+    t.integer  "ore"
+    t.integer  "crystal"
+    t.float    "storage_factor"
+    t.float    "velocity_factor"
+    t.integer  "offense"
+    t.integer  "defense"
+    t.integer  "user_id"
+    t.integer  "mission_id"
+    t.integer  "departure_time"
+    t.integer  "arrival_time"
+    t.integer  "start_planet"
+    t.integer  "target_planet"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "fleets", ["mission_id"], name: "index_fleets_on_mission_id"
+  add_index "fleets", ["user_id"], name: "index_fleets_on_user_id"
+
   create_table "galaxies", force: true do |t|
     t.integer  "x"
     t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "missions", force: true do |t|
+    t.string   "info_text"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -55,6 +84,26 @@ ActiveRecord::Schema.define(version: 20130730140811) do
     t.integer  "maxenergie"
     t.integer  "einwohner"
     t.integer  "maxeinwohner"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "player_settings", force: true do |t|
+    t.float    "increased_income",            default: 1.0
+    t.float    "increased_ironproduction",    default: 1.0
+    t.float    "increased_energy_efficiency", default: 1.0
+    t.float    "increased_movement",          default: 1.0
+    t.float    "big_house",                   default: 1.0
+    t.float    "increased_research",          default: 1.0
+    t.float    "increased_power",             default: 1.0
+    t.float    "increased_defense",           default: 1.0
+    t.float    "increased_capacity",          default: 1.0
+    t.boolean  "hyperspace_technology",       default: false
+    t.boolean  "large_cargo_ship",            default: false
+    t.boolean  "large_defenseplattform",      default: false
+    t.boolean  "destroyer",                   default: false
+    t.boolean  "cruiser",                     default: false
+    t.boolean  "deathstar",                   default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
