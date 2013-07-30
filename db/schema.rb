@@ -11,7 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130730102936) do
+ActiveRecord::Schema.define(version: 20130730104445) do
+
+  create_table "buildings", force: true do |t|
+    t.integer  "typeid"
+    t.datetime "letzteaktion"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "galaxies", force: true do |t|
     t.integer  "x"
