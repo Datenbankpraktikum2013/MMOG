@@ -7,7 +7,14 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
+	<div id="usr_nav">
+		<% if user_signed_in? %>
+			Willkommen zurück, <%= current_user.email %>!
+			<%= link_to "Ausloggen", destroy_user_session_path, method: :delete %>
+		<% else %>
+			Du bist nicht eingeloggt. <%= link_to "Logge dich ein ", new_user_session_path %> oder <%= link_to "registriere dich jetzt kostenlos!", new_user_registration_path %>
+		<% end %>
+	</div>
 <%= yield %>
 
 </body>
