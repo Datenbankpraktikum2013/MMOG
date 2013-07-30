@@ -1,0 +1,29 @@
+<h1>Listing sunsystems</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Y</th>
+      <th>Name</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @sunsystems.each do |sunsystem| %>
+      <tr>
+        <td><%= sunsystem.y %></td>
+        <td><%= sunsystem.name %></td>
+        <td><%= link_to 'Show', sunsystem %></td>
+        <td><%= link_to 'Edit', edit_sunsystem_path(sunsystem) %></td>
+        <td><%= link_to 'Destroy', sunsystem, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Sunsystem', new_sunsystem_path %>
