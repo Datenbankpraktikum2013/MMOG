@@ -14,7 +14,6 @@ class Sunsystem < ActiveRecord::Base
 
       else
 
-
         if(dist1 == 0) then
 
           if self.id < other.id then
@@ -31,13 +30,10 @@ class Sunsystem < ActiveRecord::Base
 
         return dist1 + 10 * dist2
 
-        else
-        -1
+
       end
     end
 
-
-
   end
 
-
+end
