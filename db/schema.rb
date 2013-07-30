@@ -11,11 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 20130730124519) do
-=======
 ActiveRecord::Schema.define(version: 20130730140811) do
->>>>>>> 0029bd8b4225b5ef94debba89a65b392871b3833
 
   create_table "alliances", force: true do |t|
     t.string   "name"
@@ -127,8 +123,6 @@ ActiveRecord::Schema.define(version: 20130730140811) do
     t.datetime "updated_at"
   end
 
-<<<<<<< HEAD
-=======
   create_table "user_settings", force: true do |t|
     t.float    "increased_income",            default: 1.0
     t.float    "increased_ironproduction",    default: 1.0
@@ -149,7 +143,6 @@ ActiveRecord::Schema.define(version: 20130730140811) do
     t.datetime "updated_at"
   end
 
->>>>>>> 0029bd8b4225b5ef94debba89a65b392871b3833
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
