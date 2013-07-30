@@ -6,9 +6,9 @@
 class Planet < ActiveRecord::Base
 
 	def update_ore
-		if (ore + 20) < max_ore
-			ore += 20
-		else ore = max_ore	
+		if ((self.eisenerz + 20) < self.maxeisenerz)
+			self.eisenerz = self.eisenerz + 20
+		else self.eisenerz = self.maxeisenerz	
 		end
 	end
 
@@ -18,8 +18,10 @@ class Planet < ActiveRecord::Base
 
 	end
 
-	def createRohstoffJob(buildingtyp_id)
-		Resque.enqueue(RohstoffProduktionsjob, planet_id)
+	def createRohstoffJob
+		puts "Planeten ID #{self.id}"
+		Resque.enqueue(ProduceResources, self.id)
+
 
 	end
 end

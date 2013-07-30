@@ -3,4 +3,5 @@
 
 require File.expand_path('../config/application', __FILE__)
 
+
 Mmog::Application.load_tasks
