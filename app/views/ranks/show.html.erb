@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @rank.name %>
+</p>
+
+<p>
+  <strong>Kick:</strong>
+  <%= @rank.can_kick %>
+</p>
+
+<p>
+  <strong>Massmail:</strong>
+  <%= @rank.can_massmail %>
+</p>
+
+<p>
+  <strong>Edit:</strong>
+  <%= @rank.can_edit %>
+</p>
+
+<p>
+  <strong>Invite:</strong>
+  <%= @rank.can_invite %>
+</p>
+
+<p>
+  <strong>Delete:</strong>
+  <%= @rank.can_disband %>
+</p>
+
+<%= link_to 'Edit', edit_rank_path(@rank) %> |
+<%= link_to 'Back', ranks_path %>

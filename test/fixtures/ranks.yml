@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: 
+  kick: false
+  massmail: false
+  edit: false
+  invite: false
+  delete: false
+
+two:
+  name: 
+  kick: false
+  massmail: false
+  edit: false
+  invite: false
+  delete: false

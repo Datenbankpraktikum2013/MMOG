@@ -1,4 +1,8 @@
 Mmog::Application.routes.draw do
+  resources :alliances
+
+  resources :ranks
+
   resources :galaxies
 
   resources :sunsystems
