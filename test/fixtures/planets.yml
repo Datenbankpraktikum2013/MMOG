@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  z: 1
+  name: MyString
+  spezialisierung: 1
+  groesse: 
+  eisenerz: 1
+  maxeisenerz: 1
+  kristalle: 1
+  maxkristalle: 1
+  energie: 1
+  maxenergie: 1
+  einwohner: 1
+  maxeinwohner: 1
+
+two:
+  z: 1
+  name: MyString
+  spezialisierung: 1
+  groesse: 
+  eisenerz: 1
+  maxeisenerz: 1
+  kristalle: 1
+  maxkristalle: 1
+  energie: 1
+  maxenergie: 1
+  einwohner: 1
+  maxeinwohner: 1

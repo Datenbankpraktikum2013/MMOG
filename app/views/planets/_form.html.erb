@@ -1,0 +1,65 @@
+<%= form_for(@planet) do |f| %>
+  <% if @planet.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@planet.errors.count, "error") %> prohibited this planet from being saved:</h2>
+
+      <ul>
+      <% @planet.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :z %><br>
+    <%= f.number_field :z %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :spezialisierung %><br>
+    <%= f.number_field :spezialisierung %>
+  </div>
+  <div class="field">
+    <%= f.label :groesse %><br>
+    <%= f.text_field :groesse %>
+  </div>
+  <div class="field">
+    <%= f.label :eisenerz %><br>
+    <%= f.number_field :eisenerz %>
+  </div>
+  <div class="field">
+    <%= f.label :maxeisenerz %><br>
+    <%= f.number_field :maxeisenerz %>
+  </div>
+  <div class="field">
+    <%= f.label :kristalle %><br>
+    <%= f.number_field :kristalle %>
+  </div>
+  <div class="field">
+    <%= f.label :maxkristalle %><br>
+    <%= f.number_field :maxkristalle %>
+  </div>
+  <div class="field">
+    <%= f.label :energie %><br>
+    <%= f.number_field :energie %>
+  </div>
+  <div class="field">
+    <%= f.label :maxenergie %><br>
+    <%= f.number_field :maxenergie %>
+  </div>
+  <div class="field">
+    <%= f.label :einwohner %><br>
+    <%= f.number_field :einwohner %>
+  </div>
+  <div class="field">
+    <%= f.label :maxeinwohner %><br>
+    <%= f.number_field :maxeinwohner %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

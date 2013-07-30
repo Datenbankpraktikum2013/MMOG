@@ -1,0 +1,49 @@
+<h1>Listing planets</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Z</th>
+      <th>Name</th>
+      <th>Spezialisierung</th>
+      <th>Groesse</th>
+      <th>Eisenerz</th>
+      <th>Maxeisenerz</th>
+      <th>Kristalle</th>
+      <th>Maxkristalle</th>
+      <th>Energie</th>
+      <th>Maxenergie</th>
+      <th>Einwohner</th>
+      <th>Maxeinwohner</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @planets.each do |planet| %>
+      <tr>
+        <td><%= planet.z %></td>
+        <td><%= planet.name %></td>
+        <td><%= planet.spezialisierung %></td>
+        <td><%= planet.groesse %></td>
+        <td><%= planet.eisenerz %></td>
+        <td><%= planet.maxeisenerz %></td>
+        <td><%= planet.kristalle %></td>
+        <td><%= planet.maxkristalle %></td>
+        <td><%= planet.energie %></td>
+        <td><%= planet.maxenergie %></td>
+        <td><%= planet.einwohner %></td>
+        <td><%= planet.maxeinwohner %></td>
+        <td><%= link_to 'Show', planet %></td>
+        <td><%= link_to 'Edit', edit_planet_path(planet) %></td>
+        <td><%= link_to 'Destroy', planet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Planet', new_planet_path %>
