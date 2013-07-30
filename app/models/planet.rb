@@ -1,16 +1,24 @@
-require "resque"
-require "models/workingqueues/buildBuildingqueue"
-require "models/workingqueues/rostoffqueue"
+#require "resque"
+#require "app/controllers/workingqueues/buildBuildingqueue"
+#require "app/controllers/workingqueues/rohstoffqueue"
+
 
 class Planet < ActiveRecord::Base
-	
+
+	def update_ore
+		if (ore + 20) < max_ore
+			ore += 20
+		else ore = max_ore	
+		end
+	end
+
 	#grober entwurf
-	define createBuildingjob(buildingtyp_id)
+	def createBuildingjob(buildingtyp_id)
 		Resque.enqueue(BuildBuildingjob, id_array(planet_id,buildingtyp_id))
 
 	end
 
-	define createRohstoffJob(buildingtyp_id)
+	def createRohstoffJob(buildingtyp_id)
 		Resque.enqueue(RohstoffProduktionsjob, planet_id)
 
 	end
