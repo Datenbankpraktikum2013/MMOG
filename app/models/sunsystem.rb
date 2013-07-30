@@ -20,7 +20,8 @@ class Sunsystem < ActiveRecord::Base
         end
       else
         dist2 = ((self.id + other.id)^3)/((self.id - other.id)^2 + 1)
-      end  dist1 + 10 * dist2
+      end
+      dist1 + 10 * dist2
 
     else
       -1
