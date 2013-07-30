@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130730115031) do
+ActiveRecord::Schema.define(version: 20130730135529) do
 
   create_table "alliances", force: true do |t|
     t.string   "name"
@@ -27,9 +27,37 @@ ActiveRecord::Schema.define(version: 20130730115031) do
     t.datetime "updated_at"
   end
 
+  create_table "fleets", force: true do |t|
+    t.integer  "credit"
+    t.integer  "ressource_capacity"
+    t.integer  "ore"
+    t.integer  "crystal"
+    t.float    "storage_factor"
+    t.float    "velocity_factor"
+    t.integer  "offense"
+    t.integer  "defense"
+    t.integer  "user_id"
+    t.integer  "mission_id"
+    t.integer  "departure_time"
+    t.integer  "arrival_time"
+    t.integer  "start_planet"
+    t.integer  "target_planet"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "fleets", ["mission_id"], name: "index_fleets_on_mission_id"
+  add_index "fleets", ["user_id"], name: "index_fleets_on_user_id"
+
   create_table "galaxies", force: true do |t|
     t.integer  "x"
     t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "missions", force: true do |t|
+    t.string   "info_text"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

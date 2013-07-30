@@ -1,5 +1,9 @@
 Mmog::Application.routes.draw do
 
+  resources :fleets
+
+  resources :missions
+
   devise_for :users
 
   root 'welcome#index'

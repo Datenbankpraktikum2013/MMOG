@@ -1,0 +1,1 @@
+json.extract! @fleet, :credit, :ressource_capacity, :ore, :crystal, :storage_factor, :velocity_factor, :offense, :defense, :user_id, :mission_id, :departure_time, :arrival_time, :start_planet, :target_planet, :created_at, :updated_at
