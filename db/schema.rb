@@ -11,11 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20130730124519) do
+=======
+ActiveRecord::Schema.define(version: 20130730140811) do
+>>>>>>> 0029bd8b4225b5ef94debba89a65b392871b3833
 
   create_table "alliances", force: true do |t|
     t.string   "name"
-    t.integer  "default_rank"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -23,6 +26,15 @@ ActiveRecord::Schema.define(version: 20130730124519) do
   create_table "buildings", force: true do |t|
     t.integer  "typeid"
     t.datetime "letzteaktion"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "buildingtypes", force: true do |t|
+    t.string   "name"
+    t.integer  "stufe"
+    t.integer  "produktion"
+    t.integer  "energieverbrauch"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -83,6 +95,23 @@ ActiveRecord::Schema.define(version: 20130730124519) do
     t.integer  "alliance_id"
   end
 
+  create_table "ships", force: true do |t|
+    t.integer  "construction_time"
+    t.integer  "offense"
+    t.integer  "defense"
+    t.integer  "crystal_cost"
+    t.integer  "credit_cost"
+    t.integer  "ore_cost"
+    t.string   "name"
+    t.integer  "velocity"
+    t.integer  "crew_capacity"
+    t.integer  "ressource_capasity"
+    t.integer  "fuel_capacity"
+    t.integer  "consumption"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "sunsystems", force: true do |t|
     t.integer  "y"
     t.string   "name"
@@ -98,6 +127,29 @@ ActiveRecord::Schema.define(version: 20130730124519) do
     t.datetime "updated_at"
   end
 
+<<<<<<< HEAD
+=======
+  create_table "user_settings", force: true do |t|
+    t.float    "increased_income",            default: 1.0
+    t.float    "increased_ironproduction",    default: 1.0
+    t.float    "increased_energy_efficiency", default: 1.0
+    t.float    "increased_movement",          default: 1.0
+    t.float    "big_house",                   default: 1.0
+    t.float    "increased_research",          default: 1.0
+    t.float    "increased_power",             default: 1.0
+    t.float    "increased_defense",           default: 1.0
+    t.float    "increased_capacity",          default: 1.0
+    t.boolean  "hyperspace_technology",       default: false
+    t.boolean  "large_cargo_ship",            default: false
+    t.boolean  "large_defenseplattform",      default: false
+    t.boolean  "destroyer",                   default: false
+    t.boolean  "cruiser",                     default: false
+    t.boolean  "deathstar",                   default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+>>>>>>> 0029bd8b4225b5ef94debba89a65b392871b3833
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false

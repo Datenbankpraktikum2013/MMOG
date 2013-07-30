@@ -3,6 +3,8 @@
 <table>
   <thead>
     <tr>
+      <th>ID</th>
+      <th>Alliance</th>
       <th>Name</th>
       <th>Can Kick</th>
       <th>Can Massmail</th>
@@ -18,6 +20,8 @@
   <tbody>
     <% @ranks.each do |rank| %>
       <tr>
+        <td><%= rank.id %></td>
+        <td><%= rank.alliance_id%></td>
         <td><%= rank.name %></td>
         <td><%= rank.can_kick %></td>
         <td><%= rank.can_massmail %></td>

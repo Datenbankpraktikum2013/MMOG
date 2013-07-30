@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  construction_time: 1
+  offense: 1
+  defense: 1
+  crystal_cost: 1
+  credit_cost: 1
+  ore_cost: 1
+  name: MyString
+  velocity: 1
+  crew_capacity: 1
+  ressource_capasity: 1
+  fuel_capacity: 1
+  consumption: 1
+
+two:
+  construction_time: 1
+  offense: 1
+  defense: 1
+  crystal_cost: 1
+  credit_cost: 1
+  ore_cost: 1
+  name: MyString
+  velocity: 1
+  crew_capacity: 1
+  ressource_capasity: 1
+  fuel_capacity: 1
+  consumption: 1
