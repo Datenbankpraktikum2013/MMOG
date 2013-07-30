@@ -1,4 +1,6 @@
 Mmog::Application.routes.draw do
+  resources :galaxies
+
   resources :sunsystems
 
   resources :planets
