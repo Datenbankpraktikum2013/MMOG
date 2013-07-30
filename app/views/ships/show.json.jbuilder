@@ -1,0 +1,1 @@
+json.extract! @ship, :construction_time, :offense, :defense, :crystal_cost, :credit_cost, :ore_cost, :name, :velocity, :crew_capacity, :ressource_capasity, :fuel_capacity, :consumption, :created_at, :updated_at

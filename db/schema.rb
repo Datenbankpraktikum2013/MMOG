@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130730133530) do
+ActiveRecord::Schema.define(version: 20130730140811) do
 
   create_table "alliances", force: true do |t|
     t.string   "name"
@@ -69,6 +69,23 @@ ActiveRecord::Schema.define(version: 20130730133530) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "alliance_id"
+  end
+
+  create_table "ships", force: true do |t|
+    t.integer  "construction_time"
+    t.integer  "offense"
+    t.integer  "defense"
+    t.integer  "crystal_cost"
+    t.integer  "credit_cost"
+    t.integer  "ore_cost"
+    t.string   "name"
+    t.integer  "velocity"
+    t.integer  "crew_capacity"
+    t.integer  "ressource_capasity"
+    t.integer  "fuel_capacity"
+    t.integer  "consumption"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "sunsystems", force: true do |t|
