@@ -1,0 +1,48 @@
+/* TODO wo gehoert das hier hin??
+*/
+
+body{
+    background-color: #FFF;
+    width: 100%;
+}
+
+.wrapper{
+    max-width: 995px;
+    padding: 4px;
+    margin: auto 8px;
+    background-color: #CCC;
+}
+
+.header{
+    background-color: #666;
+    height: 40px;
+}
+
+.footer{
+    background-color: #666;
+    height: 20px;
+    overflow: hidden;
+}
+.linksitemap{
+    background-color: #C7C4A5;
+    min-width: 120px;
+    min-height: 200px;
+}
+
+.rightsitemap{
+    background-color: #A5C4C7;
+    float: right;
+    min-width: 120px;
+    min-height: 200px;
+}
+
+.content{
+    background-color: #000;
+    min-width: 50%;
+    min-height: 400px;
+}
+
+.login{
+    background-color: #CC0;
+    height: 20px;
+}
