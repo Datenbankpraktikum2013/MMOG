@@ -1,0 +1,73 @@
+<%= form_for(@fleet) do |f| %>
+  <% if @fleet.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@fleet.errors.count, "error") %> prohibited this fleet from being saved:</h2>
+
+      <ul>
+      <% @fleet.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :credit %><br>
+    <%= f.number_field :credit %>
+  </div>
+  <div class="field">
+    <%= f.label :ressource_capacity %><br>
+    <%= f.number_field :ressource_capacity %>
+  </div>
+  <div class="field">
+    <%= f.label :ore %><br>
+    <%= f.number_field :ore %>
+  </div>
+  <div class="field">
+    <%= f.label :crystal %><br>
+    <%= f.number_field :crystal %>
+  </div>
+  <div class="field">
+    <%= f.label :storage_factor %><br>
+    <%= f.text_field :storage_factor %>
+  </div>
+  <div class="field">
+    <%= f.label :velocity_factor %><br>
+    <%= f.text_field :velocity_factor %>
+  </div>
+  <div class="field">
+    <%= f.label :offense %><br>
+    <%= f.number_field :offense %>
+  </div>
+  <div class="field">
+    <%= f.label :defense %><br>
+    <%= f.number_field :defense %>
+  </div>
+  <div class="field">
+    <%= f.label :user %><br>
+    <%= f.text_field :user %>
+  </div>
+  <div class="field">
+    <%= f.label :mission %><br>
+    <%= f.text_field :mission %>
+  </div>
+  <div class="field">
+    <%= f.label :departure_time %><br>
+    <%= f.number_field :departure_time %>
+  </div>
+  <div class="field">
+    <%= f.label :arrival_time %><br>
+    <%= f.number_field :arrival_time %>
+  </div>
+  <div class="field">
+    <%= f.label :start_planet %><br>
+    <%= f.number_field :start_planet %>
+  </div>
+  <div class="field">
+    <%= f.label :target_planet %><br>
+    <%= f.number_field :target_planet %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

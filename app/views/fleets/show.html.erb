@@ -1,0 +1,74 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Credit:</strong>
+  <%= @fleet.credit %>
+</p>
+
+<p>
+  <strong>Ressource capacity:</strong>
+  <%= @fleet.ressource_capacity %>
+</p>
+
+<p>
+  <strong>Ore:</strong>
+  <%= @fleet.ore %>
+</p>
+
+<p>
+  <strong>Crystal:</strong>
+  <%= @fleet.crystal %>
+</p>
+
+<p>
+  <strong>Storage factor:</strong>
+  <%= @fleet.storage_factor %>
+</p>
+
+<p>
+  <strong>Velocity factor:</strong>
+  <%= @fleet.velocity_factor %>
+</p>
+
+<p>
+  <strong>Offense:</strong>
+  <%= @fleet.offense %>
+</p>
+
+<p>
+  <strong>Defense:</strong>
+  <%= @fleet.defense %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @fleet.user %>
+</p>
+
+<p>
+  <strong>Mission:</strong>
+  <%= @fleet.mission %>
+</p>
+
+<p>
+  <strong>Departure time:</strong>
+  <%= @fleet.departure_time %>
+</p>
+
+<p>
+  <strong>Arrival time:</strong>
+  <%= @fleet.arrival_time %>
+</p>
+
+<p>
+  <strong>Start planet:</strong>
+  <%= @fleet.start_planet %>
+</p>
+
+<p>
+  <strong>Target planet:</strong>
+  <%= @fleet.target_planet %>
+</p>
+
+<%= link_to 'Edit', edit_fleet_path(@fleet) %> |
+<%= link_to 'Back', fleets_path %>
