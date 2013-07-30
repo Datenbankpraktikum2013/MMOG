@@ -1,6 +1,6 @@
-class CreatePlayerSettings < ActiveRecord::Migration
+class CreateUserSettings < ActiveRecord::Migration
   def change
-    create_table :player_settings do |t|
+    create_table :user_settings do |t|
       t.float :increased_income, :default => 1.0
       t.float :increased_ironproduction, :default => 1.0
       t.float :increased_energy_efficiency, :default => 1.0
