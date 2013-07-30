@@ -2,27 +2,22 @@ require "resque"
 require "models/workingqueues/buildBuildingqueue"
 require "models/workingqueues/rostoffqueue"
 
-
 class Planet < ActiveRecord::Base
-
-	def update_ore
-		if (ore + 20) < max_ore
-			ore += 20
-		else ore = max_ore	
-		end
-	end
-
-	#grober entwurf
-	def createBuildingjob(buildingtyp_id)
-		Resque.enqueue(BuildBuildingjob, id_array(planet_id,buildingtyp_id))
 
   belongs_to :sunsystem
   has_many :buildings
 
+  def update_ore()
+    if (self.eisenerz + 20) < self.maxeisenerz then
+      self.eisenerz += 20
+    else
+      self.eisenerz = self.maxeisenerz
+    end
+  end
+
   #grober entwurf
   def createBuildingjob(buildingtyp_id)
     Resque.enqueue(BuildBuildingjob, id_array(planet_id,buildingtyp_id))
-
   end
 
   def createRohstoffJob(buildingtyp_id)
