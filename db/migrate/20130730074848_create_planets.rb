@@ -4,7 +4,7 @@ class CreatePlanets < ActiveRecord::Migration
       t.integer :z
       t.string :name
       t.integer :spezialisierung
-      t.double :groesse
+      t.float :groesse
       t.integer :eisenerz
       t.integer :maxeisenerz
       t.integer :kristalle
