@@ -1,7 +1,12 @@
 Mmog::Application.routes.draw do
+
+  devise_for :users
+
   resources :alliances
 
-  resources :ranks
+  resources :ranks  
+  
+  resources :buildings
 
   resources :galaxies
 
