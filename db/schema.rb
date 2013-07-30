@@ -59,26 +59,6 @@ ActiveRecord::Schema.define(version: 20130730140811) do
     t.datetime "updated_at"
   end
 
-  create_table "player_settings", force: true do |t|
-    t.float    "increased_income",            default: 1.0
-    t.float    "increased_ironproduction",    default: 1.0
-    t.float    "increased_energy_efficiency", default: 1.0
-    t.float    "increased_movement",          default: 1.0
-    t.float    "big_house",                   default: 1.0
-    t.float    "increased_research",          default: 1.0
-    t.float    "increased_power",             default: 1.0
-    t.float    "increased_defense",           default: 1.0
-    t.float    "increased_capacity",          default: 1.0
-    t.boolean  "hyperspace_technology",       default: false
-    t.boolean  "large_cargo_ship",            default: false
-    t.boolean  "large_defenseplattform",      default: false
-    t.boolean  "destroyer",                   default: false
-    t.boolean  "cruiser",                     default: false
-    t.boolean  "deathstar",                   default: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "ranks", force: true do |t|
     t.string   "name"
     t.boolean  "can_kick"
@@ -144,8 +124,8 @@ ActiveRecord::Schema.define(version: 20130730140811) do
   end
 
   create_table "users", force: true do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.string   "email",                  default: "",  null: false
+    t.string   "encrypted_password",     default: "",  null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -154,9 +134,9 @@ ActiveRecord::Schema.define(version: 20130730140811) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.string   "nickname"
-    t.integer  "money"
-    t.integer  "score"
+    t.string   "nickname",                             null: false
+    t.integer  "money",                  default: 100
+    t.integer  "score",                  default: 0
     t.integer  "alliance_id"
     t.integer  "alliance_rank"
     t.datetime "created_at"
