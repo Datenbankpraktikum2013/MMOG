@@ -4,7 +4,6 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>Default rank</th>
       <th></th>
       <th></th>
       <th></th>
@@ -15,7 +14,6 @@
     <% @alliances.each do |alliance| %>
       <tr>
         <td><%= alliance.name %></td>
-        <td><%= alliance.default_rank %></td>
         <td><%= link_to 'Show', alliance %></td>
         <td><%= link_to 'Edit', edit_alliance_path(alliance) %></td>
         <td><%= link_to 'Destroy', alliance, method: :delete, data: { confirm: 'Are you sure?' } %></td>
