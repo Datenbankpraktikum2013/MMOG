@@ -1,5 +1,7 @@
 Mmog::Application.routes.draw do
 
+  resources :technologies
+
   devise_for :users
 
   root 'welcome#index'
