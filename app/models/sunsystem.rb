@@ -1,9 +1,12 @@
 class Sunsystem < ActiveRecord::Base
 
+  has_many :planets
+  belongs_to :galaxy
+
   def getDistance(other)
     if(other is_a? Sunsystem)
 
-      dist1 = self.galaxy.getDistance(other.galaxy)
+      dist1 = self.Galaxy.getDistance(other.Galaxy)
 
       if( dist1 < 0 )
 
@@ -34,4 +37,7 @@ class Sunsystem < ActiveRecord::Base
     end
 
 
-end
+
+  end
+
+
