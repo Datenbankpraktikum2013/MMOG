@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @buildingtype.name %>
+</p>
+
+<p>
+  <strong>Stufe:</strong>
+  <%= @buildingtype.stufe %>
+</p>
+
+<p>
+  <strong>Produktion:</strong>
+  <%= @buildingtype.produktion %>
+</p>
+
+<p>
+  <strong>Energieverbrauch:</strong>
+  <%= @buildingtype.energieverbrauch %>
+</p>
+
+<%= link_to 'Edit', edit_buildingtype_path(@buildingtype) %> |
+<%= link_to 'Back', buildingtypes_path %>
