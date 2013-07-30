@@ -1,0 +1,4 @@
+development: localhost:6379
+test: localhost:6379
+production: 127.0.0.1:6379
+remote_production: localhost:6379
