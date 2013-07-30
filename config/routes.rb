@@ -1,5 +1,7 @@
 Mmog::Application.routes.draw do
 
+  resources :buildingtypes
+
   resources :technologies
 
   devise_for :users
