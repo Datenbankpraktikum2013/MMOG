@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  id: 1
+  typeid: 1
+  letzteaktion: 2013-07-30 12:44:46
+
+two:
+  id: 1
+  typeid: 1
+  letzteaktion: 2013-07-30 12:44:46

@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Id:</strong>
+  <%= @building.id %>
+</p>
+
+<p>
+  <strong>Typeid:</strong>
+  <%= @building.typeid %>
+</p>
+
+<p>
+  <strong>Letzteaktion:</strong>
+  <%= @building.letzteaktion %>
+</p>
+
+<%= link_to 'Edit', edit_building_path(@building) %> |
+<%= link_to 'Back', buildings_path %>

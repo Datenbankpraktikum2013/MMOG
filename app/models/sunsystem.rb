@@ -1,9 +1,16 @@
 class Sunsystem < ActiveRecord::Base
 
-      def getDistance(other)
-      if(other is_a? Sunsystem)
+  def getDistance(other)
+    if(other is_a? Sunsystem)
 
-        dist1 = self.galaxy.getDistance(other.galaxy)
+      dist1 = self.galaxy.getDistance(other.galaxy)
+
+      if( dist1 < 0 )
+
+        return -1
+
+      else
+
 
         if(dist1 == 0) then
 
@@ -21,10 +28,10 @@ class Sunsystem < ActiveRecord::Base
 
         return dist1 + 10 * dist2
 
-      else
+        else
         -1
       end
-
+    end
 
 
 end

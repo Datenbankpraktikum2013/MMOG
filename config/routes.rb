@@ -1,6 +1,11 @@
 Mmog::Application.routes.draw do
+<<<<<<< HEAD
   devise_for :users
   
+=======
+  resources :buildings
+
+>>>>>>> 50df6c8696ac36abfa7e756804f447b54a1b21d8
   resources :galaxies
 
   resources :sunsystems
