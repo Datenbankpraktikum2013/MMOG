@@ -15,7 +15,6 @@ ActiveRecord::Schema.define(version: 20130730124519) do
 
   create_table "alliances", force: true do |t|
     t.string   "name"
-    t.integer  "default_rank"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
