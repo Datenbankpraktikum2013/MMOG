@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130730124519) do
+ActiveRecord::Schema.define(version: 20130730133530) do
 
   create_table "alliances", force: true do |t|
     t.string   "name"
@@ -22,6 +22,15 @@ ActiveRecord::Schema.define(version: 20130730124519) do
   create_table "buildings", force: true do |t|
     t.integer  "typeid"
     t.datetime "letzteaktion"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "buildingtypes", force: true do |t|
+    t.string   "name"
+    t.integer  "stufe"
+    t.integer  "produktion"
+    t.integer  "energieverbrauch"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
