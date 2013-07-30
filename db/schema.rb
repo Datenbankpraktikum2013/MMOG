@@ -11,7 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130730104445) do
+ActiveRecord::Schema.define(version: 20130730115031) do
+
+  create_table "alliances", force: true do |t|
+    t.string   "name"
+    t.integer  "default_rank"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "buildings", force: true do |t|
     t.integer  "typeid"
@@ -42,6 +49,18 @@ ActiveRecord::Schema.define(version: 20130730104445) do
     t.integer  "maxeinwohner"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "ranks", force: true do |t|
+    t.string   "name"
+    t.boolean  "can_kick"
+    t.boolean  "can_massmail"
+    t.boolean  "can_edit"
+    t.boolean  "can_invite"
+    t.boolean  "can_disband"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "alliance_id"
   end
 
   create_table "sunsystems", force: true do |t|

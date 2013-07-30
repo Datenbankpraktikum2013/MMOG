@@ -4,6 +4,10 @@ Mmog::Application.routes.draw do
 
   root 'welcome#index'
 
+  resources :alliances
+
+  resources :ranks  
+  
   resources :buildings
 
   resources :galaxies
