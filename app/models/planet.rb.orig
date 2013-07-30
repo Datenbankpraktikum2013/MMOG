@@ -1,3 +1,7 @@
+require "resque"
+require "models/workingqueues/buildBuildingqueue"
+require "models/workingqueues/rostoffqueue"
+
 class Planet < ActiveRecord::Base
 
 
