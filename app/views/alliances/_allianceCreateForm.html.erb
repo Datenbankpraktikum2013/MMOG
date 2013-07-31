@@ -1,0 +1,20 @@
+<% if current_user.alliance_id!=nil %>
+  <div>
+    Du hast gehörst bereits zu der Allianz <b>current_user.alliance_id.name</b>
+  </div>
+<% else %>
+  <h1>Eine neue Allianz erstellen</h1>
+  <%= form_for(@alliance) do |f| %>
+    <div class="field">
+      <%= f.label :name %><br>
+      <%= f.text_field :name %>
+    </div>
+    <div class="field">
+      <%= f.label "Beschreibung" %><br>
+      <%= f.text_area :description %>
+    </div>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+  <% end %>
+<% end %>
