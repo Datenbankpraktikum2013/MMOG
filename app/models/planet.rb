@@ -4,24 +4,37 @@ class Planet < ActiveRecord::Base
   belongs_to :sunsystem
   has_many :buildings
 
-  def update_ore()
-    if (self.eisenerz + 20) < self.maxeisenerz then
-      self.eisenerz += 20
-    else
-      self.eisenerz = self.maxeisenerz
+  def getProductionFactorOf(type)
+    # TODO Calculate the factor of productionspeed
+    return 1
+  end
+
+  def getBuildingFactorOf(type)
+    # TODO Calculate the factor of buildingspeed
+    return 1
+  end
+
+  def update_ore(ammount)
+    f = getProductionFactorOf(:ore)
+    if ammount.integer? then
+      ammount = f * ammount
+      if (self.ore + ammount) < self.maxore then
+        self.ore += ammount
+      else
+        self.ore = self.maxore
+      end
     end
   end
 
   #grober entwurf
-  def createBuildingjob(buildingtyp_id)
+  def createBuildingJob(buildingtyp_id)
     Resque.enqueue(BuildBuildingjob, id_array(planet_id,buildingtyp_id))
   end
 
-  def createRohstoffJob
-  	puts "Planeten ID #{self.id}"
-	Resque.enqueue(ProduceResources, self.id)
-
- 	end
+  def createProductionJob()
+    puts "Planeten ID #{self.id}"
+    Resque.enqueue(ProduceResources, self.id)
+  end
 
   def getDistance(other)
     if other.is_a?Planet then
@@ -41,12 +54,9 @@ class Planet < ActiveRecord::Base
         dist2 = ((self.z + other.z)^3)/((self.z - other.z)^2 + 1)
       end
       dist1 + dist2
-  
-    #von usn geändert wenn quatswch richtig machen
-    else  
-      return -1
-    # hier auchs 
-    end  
+    else
+      -1
+    end
   end
 
 end

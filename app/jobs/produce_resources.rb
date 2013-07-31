@@ -6,11 +6,11 @@ class ProduceResources
 		puts "Rohstoff produktion auf #{id}"
 		sleep 1
 		@planet = Planet.find_by_id(id)
-		puts "der Planet hat vor erhöhren #{@planet.eisenerz}"
+		puts "der Planet hat vor erhöhen #{@planet.eisenerz}"
 
 		#noch nicht implementiert stand 11:07
 		@planet.update_ore
-		puts "der Planet hat nach erhöhren #{@planet.eisenerz}"
-		@planet.save!
+		puts "der Planet hat nach erhöhen #{@planet.eisenerz}"
+		@planet.save
 	end
 end
