@@ -4,8 +4,8 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th></th>
-      <th></th>
+      <th>ID</th>
+      <th>Founder</th>
       <th></th>
     </tr>
   </thead>
@@ -14,6 +14,8 @@
     <% @alliances.each do |alliance| %>
       <tr>
         <td><%= alliance.name %></td>
+        <td><%= alliance.id %></td>
+        <td><%= alliance.alliance_founder_id %></td>
         <td><%= link_to 'Show', alliance %></td>
         <td><%= link_to 'Edit', edit_alliance_path(alliance) %></td>
         <td><%= link_to 'Destroy', alliance, method: :delete, data: { confirm: 'Are you sure?' } %></td>

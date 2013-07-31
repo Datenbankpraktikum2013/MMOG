@@ -7,7 +7,7 @@ class TechnologyRequire < ActiveRecord::Base
   def self.technology_require? (user, tech)
     #TODO   chech the requirements for a specific technology -- return true if fulfilled
 
-    #
+    result = technology_requires.where(:technology_id => tech)
       
 
   end
