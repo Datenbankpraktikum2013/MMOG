@@ -3,11 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="a80e5915-ae26-49fb-9eeb-ed1a773c9151" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/planet.rb" afterPath="$PROJECT_DIR$/app/models/planet.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="MMOG.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375252965004" ignored="false" />
+    <file path="/Dummy.txt" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375258423597" ignored="false" />
     <file path="/worldgenerator.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375169276272" ignored="false" />
     <file path="/20130730074848_create_planets.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375174839857" ignored="false" />
     <file path="/20130730085926_change_planet_groesse_type_to_float.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375174789295" ignored="false" />
@@ -19,11 +18,13 @@
     <file path="$PROJECT_DIR$/db/migrate/20130730101940_create_alliances.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375192496861" ignored="false" />
     <file path="/seitenaufteilung.erb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375194691486" ignored="false" />
     <file path="/style.css" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375195948472" ignored="false" />
-    <file path="$PROJECT_DIR$/db/schema.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375196126131" ignored="false" />
     <file path="$PROJECT_DIR$/config/routes.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375196126131" ignored="false" />
-    <file path="/planet.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375251588348" ignored="false" />
+    <file path="/planet.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375258750059" ignored="false" />
     <file path="/galaxy.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375251721743" ignored="false" />
     <file path="/technology.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375252604978" ignored="false" />
+    <file path="/20130731080225_planets_fix_column_name.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375258311885" ignored="false" />
+    <file path="/20130731081253_building_fix_column_name.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375258394821" ignored="false" />
+    <file path="/20130731081346_buildingtype_fix_column_name.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375258496296" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +56,16 @@
       <file leaf-file-name="galaxy.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models/galaxy.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="23" selection-start="253" selection-end="253" vertical-scroll-proportion="0.0">
+            <state line="15" column="28" selection-start="253" selection-end="253" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="building.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/models/building.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="26" column="17" selection-start="481" selection-end="481" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -64,7 +74,34 @@
       <file leaf-file-name="planet.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/models/planet.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="6" selection-start="82" selection-end="82" vertical-scroll-proportion="0.074257426">
+            <state line="16" column="26" selection-start="314" selection-end="314" vertical-scroll-proportion="0.24291497">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="20130731080225_planets_fix_column_name.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/db/migrate/20130731080225_planets_fix_column_name.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="12" column="43" selection-start="571" selection-end="571" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="20130731081253_building_fix_column_name.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/db/migrate/20130731081253_building_fix_column_name.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="2" column="56" selection-start="123" selection-end="123" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="20130731081346_buildingtype_fix_column_name.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/db/migrate/20130731081346_buildingtype_fix_column_name.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="4" column="65" selection-start="244" selection-end="244" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -99,8 +136,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/worldgenerator.rb" />
-        <option value="$PROJECT_DIR$/db/migrate/20130730085926_change_planet_groesse_type_to_float.rb" />
         <option value="$PROJECT_DIR$/db/migrate/20130730074848_create_planets.rb" />
         <option value="$PROJECT_DIR$/app/models/building.rb" />
         <option value="$PROJECT_DIR$/db/migrate/20130730123218_create_technologies.rb" />
@@ -110,10 +145,13 @@
         <option value="$PROJECT_DIR$/db/migrate/20130730124519_create_user_settings.rb" />
         <option value="$PROJECT_DIR$/app/views/_template/seitenaufteilung.erb" />
         <option value="$PROJECT_DIR$/app/views/_template/style.css" />
-        <option value="$PROJECT_DIR$/app/models/planet.rb" />
         <option value="$PROJECT_DIR$/app/models/sunsystem.rb" />
         <option value="$PROJECT_DIR$/app/models/galaxy.rb" />
         <option value="$PROJECT_DIR$/app/models/technology.rb" />
+        <option value="$PROJECT_DIR$/db/migrate/20130731080225_planets_fix_column_name.rb" />
+        <option value="$PROJECT_DIR$/db/migrate/20130731081253_building_fix_column_name.rb" />
+        <option value="$PROJECT_DIR$/db/migrate/20130731081346_buildingtype_fix_column_name.rb" />
+        <option value="$PROJECT_DIR$/app/models/planet.rb" />
       </list>
     </option>
   </component>
@@ -188,6 +226,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="MMOG" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MMOG" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MMOG" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="db" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -588,11 +640,11 @@
       <method />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Rake.db:migrate" />
-      <item index="1" class="java.lang.String" itemvalue="Rails.Production: MMOG" />
-      <item index="2" class="java.lang.String" itemvalue="Rails.Development: MMOG" />
-      <item index="3" class="java.lang.String" itemvalue="Rake.test" />
-      <item index="4" class="java.lang.String" itemvalue="Rake.spec" />
+      <item index="0" class="java.lang.String" itemvalue="Rails.Production: MMOG" />
+      <item index="1" class="java.lang.String" itemvalue="Rails.Development: MMOG" />
+      <item index="2" class="java.lang.String" itemvalue="Rake.test" />
+      <item index="3" class="java.lang.String" itemvalue="Rake.spec" />
+      <item index="4" class="java.lang.String" itemvalue="Rake.db:migrate" />
     </list>
     <recent_temporary>
       <list size="1">
@@ -681,13 +733,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="10" y="40" width="1900" height="1160" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294686" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294686" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30432433" sideWeight="0.80135006" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30432433" sideWeight="0.80135006" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294686" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -769,46 +821,9 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/application.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/alliances.css.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/application.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/_template/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="20" selection-start="328" selection-end="328" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/_template/seitenaufteilung.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="32" selection-start="398" selection-end="398" vertical-scroll-proportion="-16.875" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/planet.rb.orig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="54" selection-start="339" selection-end="339" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/models/sunsystem.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="24" column="27" selection-start="516" selection-end="516" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/galaxy.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="23" selection-start="253" selection-end="253" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -821,13 +836,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/workingqueues/rohstoffqueue.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/building.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
@@ -862,9 +870,65 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/db/seeds.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="57" selection-start="342" selection-end="342" vertical-scroll-proportion="0.089108914">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/galaxy.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="28" selection-start="253" selection-end="253" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/buildings_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/galaxies_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="27" selection-start="198" selection-end="198" vertical-scroll-proportion="0.089108914">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/building.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="17" selection-start="481" selection-end="481" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/migrate/20130731081253_building_fix_column_name.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="56" selection-start="123" selection-end="123" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/migrate/20130731081346_buildingtype_fix_column_name.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="65" selection-start="244" selection-end="244" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/migrate/20130731080225_planets_fix_column_name.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="43" selection-start="571" selection-end="571" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/models/planet.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="6" selection-start="82" selection-end="82" vertical-scroll-proportion="0.074257426">
+        <state line="16" column="26" selection-start="314" selection-end="314" vertical-scroll-proportion="0.24291497">
           <folding />
         </state>
       </provider>
