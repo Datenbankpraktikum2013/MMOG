@@ -14,3 +14,5 @@
 #Default-Werte von Schiffe und Missionen
 
 #Default-Werte von Spieler, Allianzen und Nachrichten
+
+Alliance.create({"name" => "test_alliance3", "description" => "testtesttest"})
