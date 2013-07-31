@@ -29,16 +29,13 @@ class AlliancesController < ApplicationController
   # POST /alliances.json
   def create
     @alliance = Alliance.new(alliance_params)
-<<<<<<< HEAD
-    @founder=current_user
-=======
     
-    @alliance.alliance_founder_id=current_user.id
-    current_user.alliance_id=@alliance.id
     
->>>>>>> 74272d803705c6fecf902e0c01afee963fe21a1c
     respond_to do |format|
-      if @alliance.save
+
+      @alliance.alliance_founder_id=current_user.id
+      current_user.alliance=@alliance
+      if @alliance.save and current_user.save
         format.html { redirect_to @alliance, notice: 'Alliance was successfully created.' }
         format.json { render action: 'show', status: :created, location: @alliance }
       else
@@ -65,6 +62,10 @@ class AlliancesController < ApplicationController
   # DELETE /alliances/1
   # DELETE /alliances/1.json
   def destroy
+    @alliance.users.each do |user|
+      user.alliance=nil
+      user.save
+    end
     @alliance.destroy
     respond_to do |format|
       format.html { redirect_to alliances_url }

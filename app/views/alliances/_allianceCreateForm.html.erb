@@ -1,6 +1,6 @@
 <% if current_user.alliance_id!=nil %>
   <div>
-    Du gehörst bereits zu der Allianz <b>current_user.alliance_id.name</b>
+    Du gehörst bereits zu der Allianz <b><%= current_user.alliance.name %></b>
   </div>
 <% else %>
   <h1>Eine neue Allianz erstellen</h1>
