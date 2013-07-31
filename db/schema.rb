@@ -11,20 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130731085935) do
+ActiveRecord::Schema.define(version: 20130731092527) do
 
   create_table "alliances", force: true do |t|
     t.string   "name"
-    t.integer  "default_rank"
+    t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "buildings", force: true do |t|
-    t.integer  "typeid"
+    t.integer  "buildingtype_id"
     t.datetime "lastAction"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "planet_id"
   end
 
   create_table "buildingtypes", force: true do |t|
@@ -91,6 +92,8 @@ ActiveRecord::Schema.define(version: 20130731085935) do
     t.integer  "maxpopulation"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "sunsystem_id"
+    t.integer  "user_id"
   end
 
   create_table "ranks", force: true do |t|
@@ -140,6 +143,7 @@ ActiveRecord::Schema.define(version: 20130731085935) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "galaxy_id"
   end
 
   create_table "technologies", force: true do |t|
