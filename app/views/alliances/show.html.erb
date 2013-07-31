@@ -1,10 +1,14 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Name:</strong>
+  <strong>Alliance:</strong>
   <%= @alliance.name %>
 </p>
 
+<p>
+	<strong>Description:</strong>
+	<%= @alliance.description %>
+</p>
 
 <%= link_to 'Edit', edit_alliance_path(@alliance) %> |
 <%= link_to 'Back', alliances_path %>
