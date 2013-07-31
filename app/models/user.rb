@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
   has_one :user_setting, :dependent => :destroy
   has_many :user_technologies
   has_many :fleets
+  has_one :alliance
 
   #functions
   def is_username_set

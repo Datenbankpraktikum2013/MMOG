@@ -28,7 +28,7 @@ class AlliancesController < ApplicationController
   # POST /alliances.json
   def create
     @alliance = Alliance.new(alliance_params)
-
+    @founder=current_user
     respond_to do |format|
       if @alliance.save
         format.html { redirect_to @alliance, notice: 'Alliance was successfully created.' }
