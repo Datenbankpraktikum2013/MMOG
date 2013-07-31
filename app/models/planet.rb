@@ -14,8 +14,10 @@ class Planet < ActiveRecord::Base
     return 1
   end
 
-  def update_ore(ammount)
-    f = getProductionFactorOf(:ore)
+  def update_ore
+    ammount = 20
+    #f = getProductionFactorOf(:ore)
+    f = 1
     if ammount.integer? then
       ammount = f * ammount
       if (self.ore + ammount) < self.maxore then
@@ -23,7 +25,9 @@ class Planet < ActiveRecord::Base
       else
         self.ore = self.maxore
       end
+      #Resque.enqueue_in(1.minute, ProduceResources, self.id)
     end
+    self.createProductionJob
   end
 
   #grober entwurf
@@ -33,7 +37,8 @@ class Planet < ActiveRecord::Base
 
   def createProductionJob()
     puts "Planeten ID #{self.id}"
-    Resque.enqueue(ProduceResources, self.id)
+    #Resque.enqueue(ProduceResources, self.id)
+    Resque.enqueue_in(1.minute, ProduceResources, self.id)
   end
 
   def getDistance(other)
