@@ -4,7 +4,7 @@ class Galaxy < ActiveRecord::Base
 
   has_many :sunsystems
 
-  def self.calcID(x, y)
+  def self.calcX(x, y)
     if x.integer? && y.integer? then
       (x + y) * (x + y + 1) / 2 + y + 1
     else

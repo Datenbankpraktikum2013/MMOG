@@ -2,10 +2,33 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a80e5915-ae26-49fb-9eeb-ed1a773c9151" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/building.rb" afterPath="$PROJECT_DIR$/app/models/building.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/buildingtype.rb" afterPath="$PROJECT_DIR$/app/models/buildingtype.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/db/.nfs0000000001a1489b0000009d" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/migrate/20130730101940_create_alliances.rb" afterPath="$PROJECT_DIR$/db/migrate/20130730101940_create_alliances.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/migrate/20130730102936_devise_create_users.rb" afterPath="$PROJECT_DIR$/db/migrate/20130730102936_devise_create_users.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile.lock" afterPath="$PROJECT_DIR$/Gemfile.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile" afterPath="$PROJECT_DIR$/Gemfile" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/MMOG.iml" afterPath="$PROJECT_DIR$/.idea/MMOG.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/alliances/_form.html.erb" afterPath="$PROJECT_DIR$/app/views/alliances/_form.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/ranks/_form.html.erb" afterPath="$PROJECT_DIR$/app/views/ranks/_form.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/devise/shared/_links.erb" afterPath="$PROJECT_DIR$/app/views/devise/shared/_links.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/alliances_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/alliances_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/application_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/application_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/fleet.rb" afterPath="$PROJECT_DIR$/app/models/fleet.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/helpers/galaxies_helper.rb" afterPath="$PROJECT_DIR$/app/helpers/galaxies_helper.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/galaxy.rb" afterPath="$PROJECT_DIR$/app/models/galaxy.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/mission.rb" afterPath="$PROJECT_DIR$/app/models/mission.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/devise/registrations/new.html.erb" afterPath="$PROJECT_DIR$/app/views/devise/registrations/new.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/devise/sessions/new.html.erb" afterPath="$PROJECT_DIR$/app/views/devise/sessions/new.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/planet.rb" afterPath="$PROJECT_DIR$/app/models/planet.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/jobs/produce_resources.rb" afterPath="$PROJECT_DIR$/app/jobs/produce_resources.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/tasks/resque.rake" afterPath="$PROJECT_DIR$/lib/tasks/resque.rake" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/schema.rb" afterPath="$PROJECT_DIR$/db/schema.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/seeds.rb" afterPath="$PROJECT_DIR$/db/seeds.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/ship.rb" afterPath="$PROJECT_DIR$/app/models/ship.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/alliances/show.html.erb" afterPath="$PROJECT_DIR$/app/views/alliances/show.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/technology.rb" afterPath="$PROJECT_DIR$/app/models/technology.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/technology_require.rb" afterPath="$PROJECT_DIR$/app/models/technology_require.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/user.rb" afterPath="$PROJECT_DIR$/app/models/user.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="MMOG.iws" />
@@ -22,12 +45,12 @@
     <file path="/seitenaufteilung.erb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375194691486" ignored="false" />
     <file path="/style.css" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375195948472" ignored="false" />
     <file path="/planet.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375258750059" ignored="false" />
-    <file path="/galaxy.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375271071260" ignored="false" />
+    <file path="/galaxy.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375272818016" ignored="false" />
     <file path="/technology.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375252604978" ignored="false" />
     <file path="/20130731080225_planets_fix_column_name.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375258311885" ignored="false" />
     <file path="/20130731081253_building_fix_column_name.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375258394821" ignored="false" />
     <file path="/20130731081346_buildingtype_fix_column_name.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375258496296" ignored="false" />
-    <file path="/galaxies_helper.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375271635753" ignored="false" />
+    <file path="/galaxies_helper.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375274310743" ignored="false" />
     <file path="/20130731092527_connect_universe_per_relation.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375262984140" ignored="false" />
     <file path="$PROJECT_DIR$/config/routes.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375263565963" ignored="false" />
     <file path="/building.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375272209200" ignored="false" />
@@ -63,7 +86,7 @@
       <file leaf-file-name="galaxy.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models/galaxy.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="14" selection-start="398" selection-end="398" vertical-scroll-proportion="0.0">
+            <state line="6" column="16" selection-start="95" selection-end="95" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -72,16 +95,16 @@
       <file leaf-file-name="galaxies_helper.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/helpers/galaxies_helper.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="11" selection-start="761" selection-end="761" vertical-scroll-proportion="0.0">
+            <state line="35" column="92" selection-start="1019" selection-end="1019" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="building.rb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="building.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models/building.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="4" selection-start="35" selection-end="35" vertical-scroll-proportion="0.02970297">
+            <state line="2" column="4" selection-start="35" selection-end="35" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -96,10 +119,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="planet.rb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="planet.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/models/planet.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="31" column="20" selection-start="688" selection-end="688" vertical-scroll-proportion="0.0">
+            <state line="36" column="20" selection-start="818" selection-end="818" vertical-scroll-proportion="0.53571427">
               <folding />
             </state>
           </provider>
@@ -145,11 +168,11 @@
         <option value="$PROJECT_DIR$/db/migrate/20130731081346_buildingtype_fix_column_name.rb" />
         <option value="$PROJECT_DIR$/app/models/planet.rb" />
         <option value="$PROJECT_DIR$/db/migrate/20130731092527_connect_universe_per_relation.rb" />
-        <option value="$PROJECT_DIR$/app/models/galaxy.rb" />
         <option value="$PROJECT_DIR$/app/models/sunsystem.rb" />
-        <option value="$PROJECT_DIR$/app/helpers/galaxies_helper.rb" />
         <option value="$PROJECT_DIR$/app/models/building.rb" />
         <option value="$PROJECT_DIR$/app/models/buildingtype.rb" />
+        <option value="$PROJECT_DIR$/app/models/galaxy.rb" />
+        <option value="$PROJECT_DIR$/app/helpers/galaxies_helper.rb" />
       </list>
     </option>
   </component>
@@ -224,6 +247,38 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="MMOG" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MMOG" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MMOG" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="db" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MMOG" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MMOG" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="db" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="migrate" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -747,23 +802,9 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/db/migrate/20130731081253_building_fix_column_name.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="56" selection-start="123" selection-end="123" vertical-scroll-proportion="0.030364372">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/db/migrate/20130731081346_buildingtype_fix_column_name.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="4" column="65" selection-start="244" selection-end="244" vertical-scroll-proportion="0.060728744">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/planet.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="20" selection-start="688" selection-end="688" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -810,13 +851,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/db/migrate/20130731092527_connect_universe_per_relation.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="64" selection-start="169" selection-end="169" vertical-scroll-proportion="0.044554457">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/db/migrate/20130731071359_create_technology_requires.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
@@ -824,23 +858,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/galaxy.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="14" selection-start="398" selection-end="398" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/models/sunsystem.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="14" column="0" selection-start="275" selection-end="275" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/helpers/galaxies_helper.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="11" selection-start="761" selection-end="761" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -854,7 +874,42 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/models/building.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="4" selection-start="35" selection-end="35" vertical-scroll-proportion="0.02970297">
+        <state line="2" column="4" selection-start="35" selection-end="35" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/migrate/20130731092527_connect_universe_per_relation.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="49" selection-start="261" selection-end="261" vertical-scroll-proportion="0.07440476">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/migrate/20130731080225_planets_fix_column_name.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/galaxy.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="16" selection-start="95" selection-end="95" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/helpers/galaxies_helper.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="92" selection-start="1019" selection-end="1019" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/planet.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="36" column="20" selection-start="818" selection-end="818" vertical-scroll-proportion="0.53571427">
           <folding />
         </state>
       </provider>
