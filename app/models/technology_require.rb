@@ -4,7 +4,7 @@ class TechnologyRequire < ActiveRecord::Base
   belongs_to :pre_tech, :class_name => "Technology"
 
 
-  def technology_require? (techno, user)
+  def self.technology_require? (user, tech)
     #TODO   chech the requirements for a specific technology -- return true if fulfilled
 
     #

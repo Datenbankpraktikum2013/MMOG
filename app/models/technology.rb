@@ -5,16 +5,17 @@ class Technology < ActiveRecord::Base
 
   def upgrade_technology(user, tech)
 
+    if TechnologyRequire.technology_require?(user, tech)
 
+      result = user_technologies.where(:user_id => user, :technology_id => tech).first
+      if result!=nil then
+        rank = result.rank
+        result.update_attribute(:rank, rank+1)
+      else
+        create()
+        user_technologies.create(:user_id => user, :technology_id => tech, :rank => 1)
+      end
 
-    result = user_technologies.where(:user_id => user, :technology_id => tech).first
-
-    if result!=nil then
-      rank = result.rank
-      result.update_attribute(:rank, rank+1)
-    else
-      create()
-      user_technologies.create(:user_id => user, :technology_id => tech, :rank => 1)
     end
   end
 end
