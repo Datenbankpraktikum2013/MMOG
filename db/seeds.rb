@@ -8,6 +8,8 @@
 
 #Default-Werte von Planeten und Gebäude
 
+GalaxiesHelper.generateNear(1,1)
+
 #Default-Werte von Technologien
 
 #######Default Technologies
