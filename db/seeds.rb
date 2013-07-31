@@ -30,6 +30,18 @@ Technology.create({:name => 'cruiser', :factor => 0, :cost => 250})
 Technology.create({:name => 'hyperspacetechnology', :factor => 0, :cost => 350})
 Technology.create({:name => 'deathstar', :factor => 0, :cost => 400})
 
+#######Default Technologie-requires
+TechnologyRequire.create({:tech_id => Technology.where(:name => 'increased_income').first.id, :building_rank => 1,
+                        :pre_tech_id => 0, :pre_tech_rank => 0})
+TechnologyRequire.create({:tech_id => Technology.where(:name => 'increased_ironproduction').first.id, :building_rank => 1,
+                          :pre_tech_id => 0, :pre_tech_rank => 0})
+TechnologyRequire.create({:tech_id => Technology.where(:name => 'increased_research').first.id, :building_rank => 1,
+                          :pre_tech_id => 0, :pre_tech_rank => 0})
+TechnologyRequire.create({:tech_id => Technology.where(:name => 'increased_energy_efficiency').first.id, :building_rank => 1,
+                          :pre_tech_id => 0, :pre_tech_rank => 0})
+
+
+
 
 
 
