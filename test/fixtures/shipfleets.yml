@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  ship_id: 1
+  fleet_id: 1
+  amount: 1
+
+two:
+  ship_id: 1
+  fleet_id: 1
+  amount: 1
