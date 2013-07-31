@@ -1,8 +1,9 @@
 class CreateAlliances < ActiveRecord::Migration
   def change
     create_table :alliances do |t|
-      t.string  :name
-      t.text 	:description
+      t.integer  :alliance_founder_id
+      t.string   :name
+      t.text 	 :description
       t.timestamps
     end
   end
