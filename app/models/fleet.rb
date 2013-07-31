@@ -20,11 +20,12 @@ class Fleet < ActiveRecord::Base
   # static method that gets one fleet object
   def self.get_fleet(user, planet)
     if planet.is_a?Planet and user.is_a?User then
-      Fleet.where(start_planet: planet, target_planet: planet, user_id: user)
+      # IST DAS FIRST HIER NÖTIG??????????????
+      Fleet.where(start_planet: planet, target_planet: planet, user_id: user).first
     end
   end
 
-  # liefert die Menge eines Schifftyps in einer Flotte
+  # returns the amount of a shiptype in one fleet
   def get_amount_of_ship(ship_id)
     var = self.ships.find(ship_id)
     if var = nil then
@@ -34,13 +35,44 @@ class Fleet < ActiveRecord::Base
     end
   end
 
-  # liefert alle schiffe einer Flotte zurück
+  # Returns a Hash of {Ship => Amount} pairs
   def get_ships()
-    #HASH MIT AMOUNTS!!!!!!!!!!!!
+    #STUFF
     return self.ships
   end
 
 =begin
+  #wie wird destination gepeichert?
+  def move(misson, destination)
+    # calculate needed energy for that flight...cases:
+    # own > foreign ! Angriff
+    # own > foreign ! Spionage
+    # own > foreign ! Angriff
+    # own > foreign ! Angriff
+    #
+    #
+    #
+    #
+    #
+    #
+    # calculate time until arrival at foreign planet
+    # calculate 
+  end
+=end
+
+
+=begin
+  # gets a Hash with ships as keys and amounts as values
+  def split_fleet(ships)
+    # check wether the fleet has enough ships
+    # make new fleet
+    # call add_ships(shiphash) on that new fleet and detroy_ships(shiphash) on the original fleet
+    # returns the fleet
+  end
+=end
+
+=begin
+  #VIELLEICHT NUR ADD_SHIPS???????
   # fuegt einer Flotte ein Schiff hinzu
   def add_ship(ship)
     if ship.is_a?Ship then
@@ -55,5 +87,30 @@ class Fleet < ActiveRecord::Base
   end
 =end
 
+=begin
+  # adds ships dependant on a hash of ship:amount
+  def add_ships(shiphash)
+    # Add them
+  end
+=end
+
+=begin
+  # destroys ships dependant on a hash of ship:amount
+  def destroy_ships(shiphash)
+    # check wether there are enough ships to destroy
+    # destroy them
+  end
+=end
+
+
+=begin
+  #VIELLEICHT NUR DESTROY_SHIPS???????
+  # destroy a ship
+  def destroy_ship(ship)
+    # check wether there is that ship
+    # destroy it
+  end
+=end
+end
 
 end
