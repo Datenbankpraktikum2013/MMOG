@@ -4,6 +4,33 @@ class Planet < ActiveRecord::Base
   belongs_to :sunsystem
   has_many :buildings
   has_many :fleets
+
+  MIN_SIZE = 123456789
+  MAX_SIZE = 987654321
+
+  def initialize(pla_name, pla_z, pla_specialty, pla_sunsystem_id)
+    self.name = pla_name
+    self.z = pla_z
+    if pla_specialty
+      #Random für planetsize
+    else
+      #Startgebaeude muessen noch initialisiert werden 
+      self.size = (MAX_SIZE + MIN_SIZE)/2
+      self.ore = 20
+      self.maxore = 100
+      self.crystal = 0
+      self.maxcrystal = 1
+      self.energy = 50
+      self.maxenergy = 200
+      self.population = 1000
+      self.maxpopulation = 5000
+      self.sunsystem_id = pla_sunsystem_id
+    end
+
+
+
+  end
+
   def get_production_factor_of(type)
     # TODO Calculate the factor of productionspeed
     return 1
