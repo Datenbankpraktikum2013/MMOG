@@ -19,7 +19,7 @@ class Planet < ActiveRecord::Base
     if ammount.integer? then
       ammount = f * ammount
       if (self.ore + ammount) < self.maxore then
-        self.ore += ammount)
+        self.ore += ammount
       else
         self.ore = self.maxore
       end
