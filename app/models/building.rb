@@ -1,7 +1,8 @@
-class Building < ActiveRecord::Base
+class Building < Buildingtype
 
-  belongs_to :buildingtype
+  # belongs_to :buildingtype
 
+=begin
   def getStufe()
     self.Buildingtype.stufe
   end
@@ -18,9 +19,11 @@ class Building < ActiveRecord::Base
     self.Buildingtype.name
   end
 
+=end
+
   def upgrade()
     # TODO Ueberpruefen, ob ein neuer Typ zugewiesen wird
-    self.buildingtype = Buildingtype.where(name: self.getName(), stufe: self.getStufe() + 1)
+    # self.buildingtype = Buildingtype.where(name: self.getName(), stufe: self.getStufe() + 1)
   end
 
 end

@@ -15,7 +15,9 @@ class AlliancesController < ApplicationController
 
   # GET /alliances/new
   def new
-    @alliance = Alliance.new
+    if current_user.alliance_id==nil
+      @alliance = Alliance.new
+    end
   end
 
   # GET /alliances/1/edit
