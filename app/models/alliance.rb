@@ -6,6 +6,8 @@ class Alliance < ActiveRecord::Base
 
 	has_many :users
 
+	has_one  :user
+
 	validate :is_alliance_name_taken
 
 #checks if alliance name is already taken

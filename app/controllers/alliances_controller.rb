@@ -33,7 +33,7 @@ class AlliancesController < ApplicationController
     
     respond_to do |format|
 
-      @alliance.alliance_founder_id=current_user.id
+      @alliance.admin=current_user
       current_user.alliance=@alliance
       if @alliance.save and current_user.save
         format.html { redirect_to @alliance, notice: 'Alliance was successfully created.' }
