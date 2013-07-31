@@ -53,4 +53,23 @@ module GalaxiesHelper
     end
   end
 
+  def self.generateNear(x, y)
+    k = 0
+    3.times do |m|
+      3.times do |n|
+        k += 1
+        generateAt(x - 1 + m, y - 1 + n)
+        puts(k.to_s + " galaxies with " + Planet.all.count.to_s + " planets in " + Sunsystem.all.count.to_s + " sunsystems created (" + (11*k).to_s + "%).")
+      end
+    end
+  end
+
+  def self.generateRegion(from_x, from_y, to_x, to_y)
+     for act_x in from_x..to_x
+       for act_y in from_y..to_y
+         generateAt(act_x, act_y)
+       end
+     end
+  end
+
 end
