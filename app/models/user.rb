@@ -27,10 +27,6 @@ class User < ActiveRecord::Base
   	end
   end
 
-  def assign_alliance(id)
-    self.alliance_id=id
-  end
-
   #get user-settings affected by Research
   def get_movement
     self.user_setting.increased_movement
