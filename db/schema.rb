@@ -177,7 +177,7 @@ ActiveRecord::Schema.define(version: 20130731082435) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.string   "nickname",                             null: false
+    t.string   "username",                             null: false
     t.integer  "money",                  default: 100
     t.integer  "score",                  default: 0
     t.integer  "alliance_id"
@@ -188,5 +188,6 @@ ActiveRecord::Schema.define(version: 20130731082435) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["username"], name: "index_users_on_username", unique: true
 
 end
