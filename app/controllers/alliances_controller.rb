@@ -1,5 +1,6 @@
 class AlliancesController < ApplicationController
   before_action :set_alliance, only: [:show, :edit, :update, :destroy]
+  before_filter :authenticate_user!
 
   # GET /alliances
   # GET /alliances.json
