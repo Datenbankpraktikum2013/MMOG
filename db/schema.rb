@@ -14,6 +14,7 @@
 ActiveRecord::Schema.define(version: 20130731092527) do
 
   create_table "alliances", force: true do |t|
+    t.integer  "alliance_founder_id"
     t.string   "name"
     t.text     "description"
     t.integer  "default_rank"
@@ -98,12 +99,12 @@ ActiveRecord::Schema.define(version: 20130731092527) do
   end
 
   create_table "ranks", force: true do |t|
-    t.string   "name"
-    t.boolean  "can_kick"
-    t.boolean  "can_massmail"
-    t.boolean  "can_edit"
-    t.boolean  "can_invite"
-    t.boolean  "can_disband"
+    t.string   "name",                         null: false
+    t.boolean  "can_kick",     default: false
+    t.boolean  "can_massmail", default: false
+    t.boolean  "can_edit",     default: false
+    t.boolean  "can_invite",   default: false
+    t.boolean  "can_disband",  default: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "alliance_id"
@@ -191,8 +192,8 @@ ActiveRecord::Schema.define(version: 20130731092527) do
   end
 
   create_table "users", force: true do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.string   "email",                  default: "",  null: false
+    t.string   "encrypted_password",     default: "",  null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -201,12 +202,9 @@ ActiveRecord::Schema.define(version: 20130731092527) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.string   "username",               null: false
+    t.string   "username",                             null: false
     t.integer  "money",                  default: 100
     t.integer  "score",                  default: 0
-    t.string   "nickname"
-    t.integer  "money"
-    t.integer  "score"
     t.integer  "alliance_id"
     t.integer  "alliance_rank"
     t.datetime "created_at"
@@ -215,5 +213,6 @@ ActiveRecord::Schema.define(version: 20130731092527) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["username"], name: "index_users_on_username", unique: true
 
 end
