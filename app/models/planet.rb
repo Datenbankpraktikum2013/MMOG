@@ -3,7 +3,7 @@ class Planet < ActiveRecord::Base
 
   belongs_to :sunsystem
   has_many :buildings
-  has_many  :fleets
+  has_many :fleets
   def getProductionFactorOf(type)
     # TODO Calculate the factor of productionspeed
     return 1
@@ -14,20 +14,32 @@ class Planet < ActiveRecord::Base
     return 1
   end
 
-  def update_ore
-    ammount = 20
-    #f = getProductionFactorOf(:ore)
-    f = 1
-    if ammount.integer? then
-      ammount = f * ammount
-      if (self.ore + ammount) < self.maxore then
-        self.ore += ammount
+  #Method which increases and updates all the resources a player has every ...Minute
+  def updateResources
+=begin
+    oremine = self.Buildings.find_by name: 'Oremine'
+    ore_production = oremine.production
+
+    f = getProductionFactorOf(:ore)
+
+    #Ore production
+    if ore_production.integer? then
+      ore_production = f * ore_production
+      if (self.ore + ore_production) < self.maxore then
+        self.ore += ore_production
       else
         self.ore = self.maxore
       end
       #Resque.enqueue_in(1.minute, ProduceResources, self.id)
     end
+
+
+    city = Buildings.find_by name: 'City'
+    taxes = city.production
+
+
     self.createProductionJob
+=end
   end
 
   #grober entwurf
