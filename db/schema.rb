@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 20130731092527) do
     t.integer  "alliance_founder_id"
     t.string   "name"
     t.text     "description"
+    t.integer  "default_rank"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
