@@ -200,6 +200,9 @@ ActiveRecord::Schema.define(version: 20130731092527) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.string   "username",               null: false
+    t.integer  "money",                  default: 100
+    t.integer  "score",                  default: 0
     t.string   "nickname"
     t.integer  "money"
     t.integer  "score"
