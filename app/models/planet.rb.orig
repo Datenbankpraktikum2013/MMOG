@@ -1,3 +1,7 @@
+require "resque"
+require "models/workingqueues/buildBuildingqueue"
+require "models/workingqueues/rostoffqueue"
+
 class Planet < ActiveRecord::Base
 
 
@@ -32,21 +36,16 @@ class Planet < ActiveRecord::Base
       end
 
       if(dist1 == 0) then
-        if self.z < other.z then
-          dist2 = other.z - self.z
+        if self.id < other.id then
+          dist2 = other.id - self.id
         else
-          dist2 = self.z - other.z
+          dist2 = self.id - other.id
         end
       else
-        dist2 = ((self.z + other.z)^3)/((self.z - other.z)^2 + 1)
+        dist2 = ((self.id + other.id)^3)/((self.id - other.id)^2 + 1)
       end
       dist1 + dist2
-  
-    #von usn geändert wenn quatswch richtig machen
-    else  
-      return -1
-    # hier auchs 
-    end  
+    -1
   end
 
 end

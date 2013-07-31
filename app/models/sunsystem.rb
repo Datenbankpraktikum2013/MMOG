@@ -13,13 +13,13 @@ class Sunsystem < ActiveRecord::Base
 
       if(dist1 == 0) then
 
-        if self.id < other.id then
-          dist2 = other.id - self.id
+        if self.y < other.y then
+          dist2 = other.y - self.y
         else
-          dist2 = self.id - other.id
+          dist2 = self.y - other.y
         end
       else
-        dist2 = ((self.id + other.id)^3)/((self.id - other.id)^2 + 1)
+        dist2 = ((self.y + other.y)^3)/((self.y - other.y)^2 + 1)
       end
       dist1 + 10 * dist2
 
