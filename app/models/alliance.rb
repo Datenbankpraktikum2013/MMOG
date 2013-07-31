@@ -9,7 +9,7 @@ class Alliance < ActiveRecord::Base
 #checks if alliance name is already taken
 	def is_alliance_name_taken
 		if Alliance.exists?(:name.downcase => name.downcase)
-		errors.add :name, "is already taken"
+			errors.add :name, "is already taken"
 		end
 	end		
 end
