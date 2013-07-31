@@ -5,4 +5,16 @@ class Fleet < ActiveRecord::Base
 	belongs_to :target_planet, class_name: "Planet", foreign_key: "target_planet"
 	belongs_to :user
 	belongs_to :mission
+
+  def self.getFleet(p)
+    if p.is_a?Planet then
+      Fleet.where(start_planet: p, target_planet: p)
+    end
+  end
+
+  def self.getFleet(u)
+    if u.is_a?User then
+      Fleet.where(user_id: p)
+    end
+  end
 end
