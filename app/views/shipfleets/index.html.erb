@@ -1,0 +1,31 @@
+<h1>Listing shipfleets</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Ship</th>
+      <th>Fleet</th>
+      <th>Amount</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @shipfleets.each do |shipfleet| %>
+      <tr>
+        <td><%= shipfleet.ship_id %></td>
+        <td><%= shipfleet.fleet_id %></td>
+        <td><%= shipfleet.amount %></td>
+        <td><%= link_to 'Show', shipfleet %></td>
+        <td><%= link_to 'Edit', edit_shipfleet_path(shipfleet) %></td>
+        <td><%= link_to 'Destroy', shipfleet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Shipfleet', new_shipfleet_path %>

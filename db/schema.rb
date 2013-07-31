@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 20130731085935) do
 
   create_table "alliances", force: true do |t|
     t.string   "name"
+    t.integer  "default_rank"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -102,6 +103,14 @@ ActiveRecord::Schema.define(version: 20130731085935) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "alliance_id"
+  end
+
+  create_table "shipfleets", force: true do |t|
+    t.integer  "ship_id"
+    t.integer  "fleet_id"
+    t.integer  "amount"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "ships", force: true do |t|

@@ -1,4 +1,6 @@
 class Fleet < ActiveRecord::Base
-  belongs_to :user
-  belongs_to :mission
+	has_many :shipfleets
+	has_many :ships, :through => :shipfleets
+	belongs_to :user
+	belongs_to :mission
 end
