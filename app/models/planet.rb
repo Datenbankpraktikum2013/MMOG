@@ -13,11 +13,11 @@ class Planet < ActiveRecord::Base
   end
 
   #grober entwurf
-  def createBuildingjob(buildingtyp_id)
+  def createBuildingJob(buildingtyp_id)
     Resque.enqueue(BuildBuildingjob, id_array(planet_id,buildingtyp_id))
   end
 
-  def createRohstoffJob
+  def createResourcesJob
   	puts "Planeten ID #{self.id}"
 	Resque.enqueue(ProduceResources, self.id)
 
