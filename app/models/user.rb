@@ -91,4 +91,6 @@ class User < ActiveRecord::Base
     self.user_setting.deathstar
   end
 
+
+
 end
