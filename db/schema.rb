@@ -11,27 +11,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130730140811) do
+ActiveRecord::Schema.define(version: 20130731081346) do
 
   create_table "alliances", force: true do |t|
     t.string   "name"
-    t.integer  "default_rank"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "buildings", force: true do |t|
     t.integer  "typeid"
-    t.datetime "letzteaktion"
+    t.datetime "lastAction"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "buildingtypes", force: true do |t|
     t.string   "name"
-    t.integer  "stufe"
-    t.integer  "produktion"
-    t.integer  "energieverbrauch"
+    t.integer  "level"
+    t.integer  "production"
+    t.integer  "energyusage"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -74,16 +73,16 @@ ActiveRecord::Schema.define(version: 20130730140811) do
   create_table "planets", force: true do |t|
     t.integer  "z"
     t.string   "name"
-    t.integer  "spezialisierung"
-    t.float    "groesse"
-    t.integer  "eisenerz"
-    t.integer  "maxeisenerz"
-    t.integer  "kristalle"
-    t.integer  "maxkristalle"
-    t.integer  "energie"
-    t.integer  "maxenergie"
-    t.integer  "einwohner"
-    t.integer  "maxeinwohner"
+    t.integer  "special"
+    t.float    "size"
+    t.integer  "ore"
+    t.integer  "maxore"
+    t.integer  "crystal"
+    t.integer  "maxcrystal"
+    t.integer  "energy"
+    t.integer  "maxenergy"
+    t.integer  "population"
+    t.integer  "maxpopulation"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -132,6 +131,13 @@ ActiveRecord::Schema.define(version: 20130730140811) do
     t.datetime "updated_at"
   end
 
+  create_table "technology_requires", force: true do |t|
+    t.integer "tech_id"
+    t.integer "building_rank"
+    t.integer "pre_tech_id"
+    t.integer "pre_tech_rank"
+  end
+
   create_table "user_settings", force: true do |t|
     t.float    "increased_income",            default: 1.0
     t.float    "increased_ironproduction",    default: 1.0
@@ -174,5 +180,11 @@ ActiveRecord::Schema.define(version: 20130730140811) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+
+  create_table "users_technologies", id: false, force: true do |t|
+    t.integer "user_id"
+    t.integer "technology_id"
+    t.integer "rank"
+  end
 
 end
