@@ -8,13 +8,27 @@
 
 #Default-Werte von Planeten und Gebäude
 
+GalaxiesHelper.generateNear(1,1)
+
 #Default-Werte von Technologien
+
+#######Default Technologies
+
+
+#######Default Technologie-requires
+
+
+
+
+
+
+
 
 
 #Default-Werte von Schiffe und Missionen
 
 #Default-Werte von Spieler, Allianzen und Nachrichten
-Alliance.create({"name" => "test_alliance3", "description" => "testtesttest"})
+Alliance.create({:name => 'test_alliance3', :description => 'testtesttest'})
 
 ##########DEFAULT USER!! demo:praktikum
-User.create(:email => "demo@demo.com",:password => "praktikum",:username => "demo",:money => 100,:score => 0)
+#User.create(:email => 'demo@demo.com',:password => 'praktikum',:username => 'demo',:money => 100,:score => 0)
