@@ -30,13 +30,13 @@ class Planet < ActiveRecord::Base
       end
 
       if(dist1 == 0) then
-        if self.id < other.id then
-          dist2 = other.id - self.id
+        if self.z < other.z then
+          dist2 = other.z - self.z
         else
-          dist2 = self.id - other.id
+          dist2 = self.z - other.z
         end
       else
-        dist2 = ((self.id + other.id)^3)/((self.id - other.id)^2 + 1)
+        dist2 = ((self.z + other.z)^3)/((self.z - other.z)^2 + 1)
       end
       dist1 + dist2
     
