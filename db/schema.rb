@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130730152338) do
+ActiveRecord::Schema.define(version: 20130731085935) do
 
   create_table "alliances", force: true do |t|
     t.string   "name"
@@ -22,18 +22,23 @@ ActiveRecord::Schema.define(version: 20130730152338) do
 
   create_table "buildings", force: true do |t|
     t.integer  "typeid"
-    t.datetime "letzteaktion"
+    t.datetime "lastAction"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "buildingtypes", force: true do |t|
     t.string   "name"
-    t.integer  "stufe"
-    t.integer  "produktion"
-    t.integer  "energieverbrauch"
+    t.integer  "level"
+    t.integer  "production"
+    t.integer  "energyusage"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "buildingtypes_ships", id: false, force: true do |t|
+    t.integer "buildingtype_id"
+    t.integer "ship_id"
   end
 
   create_table "fleets", force: true do |t|
@@ -74,16 +79,16 @@ ActiveRecord::Schema.define(version: 20130730152338) do
   create_table "planets", force: true do |t|
     t.integer  "z"
     t.string   "name"
-    t.integer  "spezialisierung"
-    t.float    "groesse"
-    t.integer  "eisenerz"
-    t.integer  "maxeisenerz"
-    t.integer  "kristalle"
-    t.integer  "maxkristalle"
-    t.integer  "energie"
-    t.integer  "maxenergie"
-    t.integer  "einwohner"
-    t.integer  "maxeinwohner"
+    t.integer  "special"
+    t.float    "size"
+    t.integer  "ore"
+    t.integer  "maxore"
+    t.integer  "crystal"
+    t.integer  "maxcrystal"
+    t.integer  "energy"
+    t.integer  "maxenergy"
+    t.integer  "population"
+    t.integer  "maxpopulation"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -125,6 +130,11 @@ ActiveRecord::Schema.define(version: 20130730152338) do
     t.datetime "updated_at"
   end
 
+  create_table "ships_technologies", force: true do |t|
+    t.integer "ship_id"
+    t.integer "technology_id"
+  end
+
   create_table "sunsystems", force: true do |t|
     t.integer  "y"
     t.string   "name"
@@ -138,6 +148,13 @@ ActiveRecord::Schema.define(version: 20130730152338) do
     t.float    "cost"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "technology_requires", force: true do |t|
+    t.integer "tech_id"
+    t.integer "building_rank"
+    t.integer "pre_tech_id"
+    t.integer "pre_tech_rank"
   end
 
   create_table "user_settings", force: true do |t|
@@ -156,6 +173,14 @@ ActiveRecord::Schema.define(version: 20130730152338) do
     t.boolean  "destroyer",                   default: false
     t.boolean  "cruiser",                     default: false
     t.boolean  "deathstar",                   default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "user_technologies", force: true do |t|
+    t.integer  "rank"
+    t.integer  "user_id"
+    t.integer  "technology_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

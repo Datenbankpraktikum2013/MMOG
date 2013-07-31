@@ -5,3 +5,12 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+#Default-Werte von Planeten und Gebäude
+
+#Default-Werte von Technologien
+
+
+#Default-Werte von Schiffe und Missionen
+
+#Default-Werte von Spieler, Allianzen und Nachrichten

@@ -13,8 +13,8 @@ class Galaxy < ActiveRecord::Base
   end
 
   def getCoords()
-    if self.id > 0 then
-      i = self.id - 1
+    if self.x > 0 then
+      i = self.x - 1
       j1 = Math.sqrt(0.25 + 2 * i - 0.5).floor
       j2 = j1 * (j1 + 1) / 2
       [j1 - j2, i - j1]

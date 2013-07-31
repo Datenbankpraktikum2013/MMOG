@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  tech_id: 1
+  building_rank: 1
+  pre_tech_id: 1
+  pre_tech_rank: 1
+
+two:
+  tech_id: 1
+  building_rank: 1
+  pre_tech_id: 1
+  pre_tech_rank: 1

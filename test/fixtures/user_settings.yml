@@ -1,0 +1,35 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  increased_income: 1.5
+  increased_ironproduction: 1.5
+  increased_energy_efficiency: 1.5
+  increased_movement: 1.5
+  big_house: 1.5
+  increased_research: 1.5
+  increased_power: 1.5
+  increased_defense: 1.5
+  increased_capacity: 1.5
+  hyperspace_technology: false
+  large_cargo_ship: false
+  large_defenseplattform: false
+  destroyer: false
+  cruiser: false
+  deathstar: false
+
+two:
+  increased_income: 1.5
+  increased_ironproduction: 1.5
+  increased_energy_efficiency: 1.5
+  increased_movement: 1.5
+  big_house: 1.5
+  increased_research: 1.5
+  increased_power: 1.5
+  increased_defense: 1.5
+  increased_capacity: 1.5
+  hyperspace_technology: false
+  large_cargo_ship: false
+  large_defenseplattform: false
+  destroyer: false
+  cruiser: false
+  deathstar: false
