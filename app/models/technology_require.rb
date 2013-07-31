@@ -8,8 +8,7 @@ class TechnologyRequire < ActiveRecord::Base
     #TODO   chech the requirements for a specific technology -- return true if fulfilled
 
     #
-      
-
+    result = TechnologyRequire.where()
   end
 
 
