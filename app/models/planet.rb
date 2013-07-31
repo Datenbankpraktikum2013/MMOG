@@ -3,7 +3,7 @@ class Planet < ActiveRecord::Base
 
   belongs_to :sunsystem
   has_many :buildings
-  has_many  :fleets
+  has_many :fleets
   def getProductionFactorOf(type)
     # TODO Calculate the factor of productionspeed
     return 1
