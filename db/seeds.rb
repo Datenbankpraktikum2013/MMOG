@@ -12,7 +12,7 @@
 
 #######Default Technologies
 Technology.create({:name => 'increased_income', :factor => 1.05, :cost => 100})
-Technology.create({:name => 'increased_ironproduction', :factor => 1.05, :cost => 80)
+Technology.create({:name => 'increased_ironproduction', :factor => 1.05, :cost => 80})
 Technology.create({:name => 'increased_research', :factor => 1.02, :cost => 140})
 Technology.create({:name => 'increased_energie_efficiency', :factor => 1.02, :cost => 90})
 Technology.create({:name => 'increased_power', :factor => 1.04, :cost => 80})
