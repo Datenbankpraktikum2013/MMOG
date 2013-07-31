@@ -9,7 +9,7 @@ class ProduceResources
 		puts "der Planet hat vor erhöhen #{@planet.ore}"
 
 		#noch nicht implementiert stand 11:07
-		@planet.update_ore
+		@planet.updateResources
 		@planet.save
 		puts "der Planet hat nach erhöhen #{@planet.ore}"
 	end
