@@ -1,5 +1,6 @@
 class AlliancesController < ApplicationController
   before_action :set_alliance, only: [:show, :edit, :update, :destroy]
+  before_filter :authenticate_user!
 
   # GET /alliances
   # GET /alliances.json
@@ -69,6 +70,6 @@ class AlliancesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def alliance_params
-      params.require(:alliance).permit(:name, :default_rank)
+      params.require(:alliance).permit(:name, :default_rank, :description)
     end
 end
