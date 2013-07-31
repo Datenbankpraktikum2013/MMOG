@@ -37,6 +37,8 @@ end
 
 # for joblists
 gem 'resque'
+# for job-scheduler
+gem 'resque-scheduler', :require => 'resque_scheduler'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
