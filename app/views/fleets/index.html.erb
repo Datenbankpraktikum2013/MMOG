@@ -1,0 +1,53 @@
+<h1>Listing fleets</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Credit</th>
+      <th>Ressource capacity</th>
+      <th>Ore</th>
+      <th>Crystal</th>
+      <th>Storage factor</th>
+      <th>Velocity factor</th>
+      <th>Offense</th>
+      <th>Defense</th>
+      <th>User</th>
+      <th>Mission</th>
+      <th>Departure time</th>
+      <th>Arrival time</th>
+      <th>Start planet</th>
+      <th>Target planet</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @fleets.each do |fleet| %>
+      <tr>
+        <td><%= fleet.credit %></td>
+        <td><%= fleet.ressource_capacity %></td>
+        <td><%= fleet.ore %></td>
+        <td><%= fleet.crystal %></td>
+        <td><%= fleet.storage_factor %></td>
+        <td><%= fleet.velocity_factor %></td>
+        <td><%= fleet.offense %></td>
+        <td><%= fleet.defense %></td>
+        <td><%= fleet.user %></td>
+        <td><%= fleet.mission %></td>
+        <td><%= fleet.departure_time %></td>
+        <td><%= fleet.arrival_time %></td>
+        <td><%= fleet.start_planet %></td>
+        <td><%= fleet.target_planet %></td>
+        <td><%= link_to 'Show', fleet %></td>
+        <td><%= link_to 'Edit', edit_fleet_path(fleet) %></td>
+        <td><%= link_to 'Destroy', fleet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Fleet', new_fleet_path %>

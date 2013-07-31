@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130730124519) do
+ActiveRecord::Schema.define(version: 20130730140811) do
 
   create_table "alliances", force: true do |t|
     t.string   "name"
@@ -27,9 +27,46 @@ ActiveRecord::Schema.define(version: 20130730124519) do
     t.datetime "updated_at"
   end
 
+  create_table "buildingtypes", force: true do |t|
+    t.string   "name"
+    t.integer  "stufe"
+    t.integer  "produktion"
+    t.integer  "energieverbrauch"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "fleets", force: true do |t|
+    t.integer  "credit"
+    t.integer  "ressource_capacity"
+    t.integer  "ore"
+    t.integer  "crystal"
+    t.float    "storage_factor"
+    t.float    "velocity_factor"
+    t.integer  "offense"
+    t.integer  "defense"
+    t.integer  "user_id"
+    t.integer  "mission_id"
+    t.integer  "departure_time"
+    t.integer  "arrival_time"
+    t.integer  "start_planet"
+    t.integer  "target_planet"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "fleets", ["mission_id"], name: "index_fleets_on_mission_id"
+  add_index "fleets", ["user_id"], name: "index_fleets_on_user_id"
+
   create_table "galaxies", force: true do |t|
     t.integer  "x"
     t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "missions", force: true do |t|
+    t.string   "info_text"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -61,6 +98,23 @@ ActiveRecord::Schema.define(version: 20130730124519) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "alliance_id"
+  end
+
+  create_table "ships", force: true do |t|
+    t.integer  "construction_time"
+    t.integer  "offense"
+    t.integer  "defense"
+    t.integer  "crystal_cost"
+    t.integer  "credit_cost"
+    t.integer  "ore_cost"
+    t.string   "name"
+    t.integer  "velocity"
+    t.integer  "crew_capacity"
+    t.integer  "ressource_capasity"
+    t.integer  "fuel_capacity"
+    t.integer  "consumption"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "sunsystems", force: true do |t|
@@ -99,8 +153,8 @@ ActiveRecord::Schema.define(version: 20130730124519) do
   end
 
   create_table "users", force: true do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.string   "email",                  default: "",  null: false
+    t.string   "encrypted_password",     default: "",  null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -109,9 +163,9 @@ ActiveRecord::Schema.define(version: 20130730124519) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.string   "nickname"
-    t.integer  "money"
-    t.integer  "score"
+    t.string   "nickname",                             null: false
+    t.integer  "money",                  default: 100
+    t.integer  "score",                  default: 0
     t.integer  "alliance_id"
     t.integer  "alliance_rank"
     t.datetime "created_at"

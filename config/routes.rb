@@ -1,5 +1,13 @@
 Mmog::Application.routes.draw do
 
+  resources :fleets
+
+  resources :missions
+
+  resources :ships
+
+  resources :buildingtypes
+
   resources :technologies
 
   devise_for :users

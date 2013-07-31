@@ -1,8 +1,5 @@
-require "resque"
-require "models/workingqueues/buildBuildingqueue"
-require "models/workingqueues/rostoffqueue"
-
 class Planet < ActiveRecord::Base
+
 
   belongs_to :sunsystem
   has_many :buildings
@@ -20,10 +17,11 @@ class Planet < ActiveRecord::Base
     Resque.enqueue(BuildBuildingjob, id_array(planet_id,buildingtyp_id))
   end
 
-  def createRohstoffJob(buildingtyp_id)
-    Resque.enqueue(RohstoffProduktionsjob, planet_id)
+  def createRohstoffJob
+  	puts "Planeten ID #{self.id}"
+	Resque.enqueue(ProduceResources, self.id)
 
-  end
+ 	end
 
   def getDistance(other)
     if other.is_a?Planet then
@@ -34,18 +32,21 @@ class Planet < ActiveRecord::Base
       end
 
       if(dist1 == 0) then
-        if self.id < other.id then
-          dist2 = other.id - self.id
+        if self.z < other.z then
+          dist2 = other.z - self.z
         else
-          dist2 = self.id - other.id
+          dist2 = self.z - other.z
         end
       else
-        dist2 = ((self.id + other.id)^3)/((self.id - other.id)^2 + 1)
+        dist2 = ((self.z + other.z)^3)/((self.z - other.z)^2 + 1)
       end
       dist1 + dist2
-
-    end
-    -1
+  
+    #von usn geändert wenn quatswch richtig machen
+    else  
+      return -1
+    # hier auchs 
+    end  
   end
 
 end
