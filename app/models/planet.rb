@@ -19,11 +19,13 @@ class Planet < ActiveRecord::Base
 
   def createRohstoffJob
   	puts "Planeten ID #{self.id}"
-    Resque.enqueue(ProduceResources, self.id)
-  end
+	Resque.enqueue(ProduceResources, self.id)
+
+ 	end
 
   def getDistance(other)
     if other.is_a?Planet then
+
       dist1 = self.Sunsystem.getDistance(other.Sunsystem)
       if dist1 < 0 then
         return -1
@@ -39,7 +41,7 @@ class Planet < ActiveRecord::Base
         dist2 = ((self.z + other.z)^3)/((self.z - other.z)^2 + 1)
       end
       dist1 + dist2
-    
+  
     #von usn geändert wenn quatswch richtig machen
     else  
       return -1
