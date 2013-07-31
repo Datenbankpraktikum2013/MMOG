@@ -14,5 +14,7 @@
 #Default-Werte von Schiffe und Missionen
 
 #Default-Werte von Spieler, Allianzen und Nachrichten
-
 Alliance.create({"name" => "test_alliance3", "description" => "testtesttest"})
+
+##########DEFAULT USER!! demo:praktikum
+User.create(:email => "demo@demo.com",:password => "praktikum",:username => "demo",:money => 100,:score => 0)
