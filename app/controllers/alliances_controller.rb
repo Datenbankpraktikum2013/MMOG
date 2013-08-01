@@ -11,6 +11,7 @@ class AlliancesController < ApplicationController
   # GET /alliances/1
   # GET /alliances/1.json
   def show
+    @founder=@alliance.ranks.where(:is_founder=>true)[0].users[0]
   end
 
   # GET /alliances/new

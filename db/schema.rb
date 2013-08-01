@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 20130801142000) do
 
   create_table "alliances", force: true do |t|
     t.string   "name"
+    t.integer  "rank_id"
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
