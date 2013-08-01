@@ -1,5 +1,9 @@
 Mmog::Application.routes.draw do
 
+  resources :shipcounts
+
+  resources :battlereports
+
   resources :shipfleets
 
   resources :fleets

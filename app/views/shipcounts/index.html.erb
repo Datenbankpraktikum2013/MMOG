@@ -1,0 +1,33 @@
+<h1>Listing shipcounts</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Battlereport</th>
+      <th>Ship</th>
+      <th>Amount</th>
+      <th>Shipowner time type</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @shipcounts.each do |shipcount| %>
+      <tr>
+        <td><%= shipcount.battlereport_id %></td>
+        <td><%= shipcount.ship_id %></td>
+        <td><%= shipcount.amount %></td>
+        <td><%= shipcount.shipowner_time_type %></td>
+        <td><%= link_to 'Show', shipcount %></td>
+        <td><%= link_to 'Edit', edit_shipcount_path(shipcount) %></td>
+        <td><%= link_to 'Destroy', shipcount, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Shipcount', new_shipcount_path %>
