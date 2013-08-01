@@ -114,9 +114,10 @@ class Fleet < ActiveRecord::Base
 
 #=begin
   # fuegt einer Flotte ein Schiff hinzu
+  # EVTL AUF SHIP_ID ALS INPUT AENDERN???
   def add_ship(s)
     unless s.is_a?Ship
-      return null #Fehlerbehandlung????
+      raise (RuntimeError,"Input is no ship") # Fehlerbehandlung
     end
 
     ship_array = Shipfleet.where(fleet_id: self, ship_id: s)
@@ -134,11 +135,10 @@ class Fleet < ActiveRecord::Base
 
 #=begin
   # adds ships dependant on a hash like {ship_id:amount}
-  # CHECK WETHER THERE ARE NEGATIVE AMOUNTS
+  # CHECK WETHER THERE ARE NEGATIVE AMOUNTS AND FLEETS AND SHIPS EXIST
   def add_ships(sh)
     #temp copy
     ship_hash = sh.clone
-    puts ship_hash
     ship_array = Shipfleet.where(fleet_id: self)
 
     #change amounts of existing ships
@@ -150,12 +150,12 @@ class Fleet < ActiveRecord::Base
       end
     end
 
-    # add schiptypes that yet not exist: check wether there are still nonzero ships left in the hash
+    # add shiptypes that yet not exist: check wether there are still nonzero ships left in the hash
     unless ship_hash.has_value?(0)
       ship_hash.each do |key, value|
         unless value == 0
           self.ships << Ship.find(key)
-          s=Shipfleet.where(fleet_id: self, ship_id: key).first
+          s = Shipfleet.where(fleet_id: self, ship_id: key).first
           s.amount = value
           s.save
         end
@@ -164,21 +164,40 @@ class Fleet < ActiveRecord::Base
   end
 #=end
 
-=begin
-  # destroys ships dependant on a hash of ship:amount
-  def destroy_ships(shiphash)
-    # check wether there are enough ships to destroy
-    # destroy them
+#=begin
+  # destroys ships dependant on a hash of ship_id:amount
+  # FEHLERBEHANDLUNG AN DEN ANFANG SETZEN
+  # CHECK WETHER THERE ARE NEGATIVE AMOUNTS AND FLEETS AND SHIPS EXIST
+  def destroy_ships(sh)
+    #temp copy
+    ship_hash = sh.clone
+    ship_array = Shipfleet.where(fleet_id: self)
+
+    ship_array.each do |s|
+      if ship_hash.has_key?(s.ship_id)
+        if s.amount < ship_hash[s.ship_id]
+          raise (RuntimeError,"Not enough ships to destroy")  #Fehlerbehandlung + ABBRUCH
+        end
+        s.amount -= ship_hash[s.ship_id]
+        s.save
+        ship_hash[s.ship_id] = 0
+      end
+    end
+
+    # throw exception if there are shiptypes to destroy that not exist
+    unless ship_hash.has_value?(0)
+      raise (RuntimeError,"Ships to destry are not in fleet") #Fehlerbehandlung
+    end
   end
-=end
+#=end
 
 
 #=begin
-  #VIELLEICHT NUR DESTROY_SHIPS???????
-  # destroys a ship
+  # destroys a ship dpeendatn on the ship_id
+  # MAYBE ONLY SHIP_IDS
   def destroy_ship(s)
     unless s.is_a?Ship
-      return null #Fehlerbehandlung????
+      raise (RuntimeError,"Input is no ship")
     end
 
     ship_array = Shipfleet.where(fleet_id: self, ship_id: s)
