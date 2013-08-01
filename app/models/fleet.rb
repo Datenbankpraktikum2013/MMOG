@@ -94,6 +94,7 @@ class Fleet < ActiveRecord::Base
     # calculate 
   end
 =end
+  
   def move_to_planet()
     #self.target_planet=planet
     Resque.enqueue(1.minute, MoveFleet, self.id)
@@ -116,25 +117,50 @@ class Fleet < ActiveRecord::Base
       return null #Fehlerbehandlung????
     end
 
-    ship_array = Shipfleet.where(fleet_id: self, ship_id: s).first
+    ship_array = Shipfleet.where(fleet_id: self, ship_id: s)
     # if there is no entry of a shiptype of that fleet
     # else there is an entry, that just has to be incremented
     if ship_array.empty?
       self.ships << s
-      ship_array.amount = 1
+      ship_array.first.amount = 1
     else
-      ship_array.amount += 1
+      ship_array.first.amount += 1
     end
-    ship_array.save
+    ship_array.first.save
   end
 #=end
 
-=begin
-  # adds ships dependant on a hash of ship:amount
-  def add_ships(shiphash)
-    # Add them
+#=begin
+  # adds ships dependant on a hash like {ship_id:amount}
+  # CHECK WETHER THERE ARE NEGATIVE AMOUNTS
+  def add_ships(sh)
+    #temp copy
+    ship_hash = sh.clone
+    puts ship_hash
+    ship_array = Shipfleet.where(fleet_id: self)
+
+    #change amounts of existing ships
+    ship_array.each do |s|
+      if ship_hash.has_key?(s.ship_id)
+        s.amount += ship_hash[s.ship_id]
+        s.save
+        ship_hash[s.ship_id] = 0
+      end
+    end
+
+    # add schiptypes that yet not exist: check wether there are still nonzero ships left in the hash
+    unless ship_hash.has_value?(0)
+      ship_hash.each do |key, value|
+        unless value == 0
+          self.ships << Ship.find(key)
+          s=Shipfleet.where(fleet_id: self, ship_id: key).first
+          s.amount = value
+          s.save
+        end
+      end
+    end
   end
-=end
+#=end
 
 =begin
   # destroys ships dependant on a hash of ship:amount
@@ -145,12 +171,25 @@ class Fleet < ActiveRecord::Base
 =end
 
 
-=begin
+#=begin
   #VIELLEICHT NUR DESTROY_SHIPS???????
-  # destroy a ship
-  def destroy_ship(ship)
-    # check wether there is that ship
-    # destroy it
+  # destroys a ship
+  def destroy_ship(s)
+    unless s.is_a?Ship
+      return null #Fehlerbehandlung????
+    end
+
+    ship_array = Shipfleet.where(fleet_id: self, ship_id: s)
+    # if there is no entry of a shiptype of that fleet
+    # else there is an entry, that just has to be incremented
+    if (ship_array.empty? || ship_array.first.amount == 0)
+      return null #Fehlerbehandlung????
+    else
+      ship_array.first.amount -= 1
+    end
+    ship_array.first.save
   end
-=end
+#=end
+
+
 end
