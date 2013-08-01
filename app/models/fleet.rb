@@ -7,6 +7,7 @@ class Fleet < ActiveRecord::Base
 	belongs_to :user
 	belongs_to :mission
 
+=begin
   # static Method that returns a ?set? of fleets that correspond to either a planet
   # or a user
   def self.get_fleets(p)
@@ -16,7 +17,9 @@ class Fleet < ActiveRecord::Base
       Fleet.where(user_id: p)
     end
   end
+=end
 
+=begin
   # static method that gets one fleet object
   def self.get_fleet(user, planet)
     if planet.is_a?Planet and user.is_a?User then
@@ -24,46 +27,78 @@ class Fleet < ActiveRecord::Base
       Fleet.where(start_planet: planet, target_planet: planet, user_id: user).first
     end
   end
+=end
 
-=begin
+
+#=begin
   # returns the amount of a shiptype in one fleet
-  def get_amount_of_ship(ship_id)
-    var = self.ships.find(ship_id)
-    if var == nil then
-      return null
+  def get_amount_of_ship(s_id)
+    amount = Shipfleet.where(fleet_id: self.id, ship_id: s_id).first.amount
+    if amount == nil then
+      return 0
     else
-      return var.amount
+      return amount
     end
   end
-=end
+#=end
 
-=begin
+#=begin
   # Returns a Hash of {Ship => Amount} pairs
+  #MIT SELF VERSUCHEN
   def get_ships()
-
-    return 
+    if self.ships == nil
+      return null
+    else
+      ship_hash = {}
+      self.ships.each do |s|
+        ship_hash[s.name] = Shipfleet.where(fleet_id: self, ship_id: s).first.amount
+      end
+      return ship_hash
+    end
   end
-=end
+#=end
 
 =begin
   #wie wird destination gepeichert?
   def move(misson, destination)
     # calculate needed energy for that flight...cases:
-    # own > foreign ! Angriff
-    # own > foreign ! Spionage
-    # own > foreign ! Angriff
-    # own > foreign ! Angriff
     #
+    # possible Directions
+    # own > unknown
+    # own > alliance
+    # own > own 
+    # own > enemy
     #
+    # ATTACK
+    # own > enemy
     #
+    # COLONIZATION
+    # own > unknown
     #
+    # TRANSPORT
+    # own > alliance
+    # own > own
+    # own > enemy ??????????
     #
+    # TRAVEL 
+    # own > unknown ????????
+    # own > alliance
+    # own > own
+    #
+    # SPY
+    # own > unknown
+    # own > alliance ??????? you can see it anyway??????
+    # own > enemy
     #
     # calculate time until arrival at foreign planet
     # calculate 
   end
 =end
+  def move_to_planet()
+    #self.target_planet=planet
 
+    Resque.enqueue(1.minute, MoveFleet)
+  end
 
 =begin
   # gets a Hash with ships as keys and amounts as values
@@ -75,21 +110,25 @@ class Fleet < ActiveRecord::Base
   end
 =end
 
-=begin
-  #VIELLEICHT NUR ADD_SHIPS???????
+#=begin
   # fuegt einer Flotte ein Schiff hinzu
-  def add_ship(ship)
-    if ship.is_a?Ship then
-      self.ships << ship
-      #GEHT DIESE AENDERUNG?
-      fid = self.fleet_id 
-      sid = ship.ship_id
-      # first is necessary because the return value is a collection with one object
-      Shipfleet.where(fleet_id: fid, ship_id: sid).first.amount += 1
-      #GEHT DIESE AENDERUNG?
+  def add_ship(s)
+    unless s.is_a?Ship
+      return null #Fehlerbehandlung????
     end
+
+    ship_array = Shipfleet.where(fleet_id: self, ship_id: s).first
+    # if there is no entry of a shiptype of that fleet
+    # else there is an entry, that just has to be incremented
+    if ship_array.empty?
+      self.ships << s
+      ship_array.amount = 1
+    else
+      ship_array.amount += 1
+    end
+    ship_array.save
   end
-=end
+#=end
 
 =begin
   # adds ships dependant on a hash of ship:amount

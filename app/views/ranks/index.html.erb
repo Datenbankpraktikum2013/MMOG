@@ -1,17 +1,14 @@
 <h1>Listing ranks</h1>
 
-<table>
+<table border="1px">
   <thead>
     <tr>
-      <th>ID</th>
-      <th>Alliance</th>
       <th>Name</th>
-      <th>Can Kick</th>
-      <th>Can Massmail</th>
-      <th>Can Edit</th>
-      <th>Can Invite</th>
+      <th>Kicken</th>
+      <th>Massenmail</th>
+      <th>Editieren</th>
+      <th>Einladen</th>
       <th>Can Disband</th>
-      <th></th>
       <th></th>
       <th></th>
     </tr>
@@ -20,17 +17,14 @@
   <tbody>
     <% @ranks.each do |rank| %>
       <tr>
-        <td><%= rank.id %></td>
-        <td><%= rank.alliance_id%></td>
         <td><%= rank.name %></td>
-        <td><%= rank.can_kick %></td>
-        <td><%= rank.can_massmail %></td>
-        <td><%= rank.can_edit %></td>
-        <td><%= rank.can_invite %></td>
-        <td><%= rank.can_disband %></td>
-        <td><%= link_to 'Show', rank %></td>
-        <td><%= link_to 'Edit', edit_rank_path(rank) %></td>
-        <td><%= link_to 'Destroy', rank, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= rank.can_kick ? "Ja" : "Nein" %></td>
+        <td><%= rank.can_massmail ? "Ja" : "Nein"  %></td>
+        <td><%= rank.can_edit ? "Ja" : "Nein"  %></td>
+        <td><%= rank.can_invite ? "Ja" : "Nein"  %></td>
+        <td><%= rank.can_disband ? "Ja" : "Nein"  %></td>
+        <td><%= link_to 'Bearbeiten', edit_rank_path(rank) %></td>
+        <td><%= link_to 'Löschen', rank, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
