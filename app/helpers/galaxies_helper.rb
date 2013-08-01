@@ -33,21 +33,14 @@ module GalaxiesHelper
         k.times do |k2|
           name = "New Startplanet " + k2.to_s
           # TODO Weitere Startattribute festlegen!
-          p = Planet.new(name: name, z: pos2[k2], special: 0, size: (MIN_SIZE + MAX_SIZE)/2)
-          p.sunsystem_id = s.id
-          p.save
+          #p = Planet.new(pla_name: name, pla_z: pos2[k2], pla_specialty: false, pla_sunsystem_id: s.id)
         end
 
         j -= k
         j.times do |z|
           name = "New Planet " + (z + k).to_s
-          spec = Random.rand(SPECIALISATION_COUNT) + 1
-          size = Random.rand(MAX_SIZE - MIN_SIZE) + MIN_SIZE
-
           # TODO Attribute nicht vergessen (Nullwerte vermeiden!)
-          p = Planet.new(name: name, z: pos2[z + k], special: spec, size: size)
-          p.sunsystem_id = s.id
-          p.save
+          #p = Planet.new(pla_name: name, pla_z: pos2[z + k], pla_specialty: true, pla_sunsystem_id: s.id)
         end
       end
     end
@@ -65,11 +58,34 @@ module GalaxiesHelper
   end
 
   def self.generateRegion(from_x, from_y, to_x, to_y)
-     for act_x in from_x..to_x
-       for act_y in from_y..to_y
-         generateAt(act_x, act_y)
-       end
-     end
+    for act_x in from_x..to_x
+      for act_y in from_y..to_y
+        generateAt(act_x, act_y)
+      end
+    end
+  end
+
+  def self.getImageFilename(nr, size)
+    filename = "images/galaxies/"
+    selector = nr % 24
+    if( selector > 17 ) then
+      filename += "l/"
+    elsif (selector > 11) then
+      filename += "d/"
+    elsif( selector > 5) then
+      filename += "r/"
+    else
+      filename += "u/"
+    end
+    filename = filename + size.to_s + "_" + (selector % 6 + 1).to_s + ".png"
+  end
+
+  def self.isVisible(nr)
+    Array.new([4,6,8,9,10,12,13,14,15,18,19,20,25,26,32]).include?(nr)
+  end
+
+  def self.isMeins(nr)
+    Array.new([8,9,13,14,19,20,25,32]).include?(nr)
   end
 
 end

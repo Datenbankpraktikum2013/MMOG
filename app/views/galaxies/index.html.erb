@@ -1,3 +1,5 @@
+<!-- Disabling old version
+
 <h1>Listing galaxies</h1>
 
 <table>
@@ -22,6 +24,32 @@
       </tr>
     <% end %>
   </tbody>
+</table>
+
+-->
+
+<table>
+  <% id = 0
+    5.times do |x| %>
+  <tr>
+    <% 5.times do |y|
+      id=Galaxy.calcX(x, y); %>
+    <td class="galaxy <%= out = ""
+        if(GalaxiesHelper.isMeins(id)) then
+                            out += "mygalaxy "
+                          end
+                          if(GalaxiesHelper.isVisible(id)) then
+                            out += "visiblegalaxy "
+                          end
+    filename = GalaxiesHelper.getImageFilename(id, 80)
+    out += filename[16] + filename[18, 4] %>"
+    title="Galaxie<%= if(GalaxiesHelper.isMeins(id)) then " (gehört mir)" end %>: <%= id; %>, Koordinaten: (<%= y %>,<%= x
+    %>), Sichtbar:<%= if(GalaxiesHelper.isVisible(id)) then "Ja" else "Nein" end %>"></td>
+    <% end %>
+  </tr>
+  <% end %>
+
+
 </table>
 
 <br>

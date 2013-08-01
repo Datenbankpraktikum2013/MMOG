@@ -1,3 +1,84 @@
 // Place all the styles related to the Galaxies controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+*{padding: 0px; margin: 0px;}
+body{padding: 0px;}
+table{border: 0px; background-color: #000; padding: 0px; margin: 0px;}
+tr{padding: 0px; margin: 0px;}
+td{padding: 0px; margin: 0px; width: 80px; height: 80px;}
+a{padding: 0px; margin: 0px;}
+.galaxy{border-radius: 16px; border: 1px dotted #333; opacity: 0.5;}
+.visiblegalaxy{border: 1px dotted #99F; opacity: 1.0;}
+.mygalaxy{border: 1px dotted #9F9; opacity: 1.0;}
+.u80_1{
+  background-image: image-url("galaxies/u/80_1.png");
+}
+.u80_2{
+  background-image: image-url("galaxies/u/80_2.png");
+}
+.u80_3{
+  background-image: image-url("galaxies/u/80_3.png");
+}
+.u80_4{
+  background-image: image-url("galaxies/u/80_4.png");
+}
+.u80_5{
+  background-image: image-url("galaxies/u/80_5.png");
+}
+.u80_6{
+  background-image: image-url("galaxies/u/80_6.png");
+}
+.d80_1{
+  background-image: image-url("galaxies/d/80_1.png");
+}
+.d80_2{
+  background-image: image-url("galaxies/d/80_2.png");
+}
+.d80_3{
+  background-image: image-url("galaxies/d/80_3.png");
+}
+.d80_4{
+  background-image: image-url("galaxies/d/80_4.png");
+}
+.d80_5{
+  background-image: image-url("galaxies/d/80_5.png");
+}
+.d80_6{
+  background-image: image-url("galaxies/d/80_6.png");
+}
+.l80_1{
+  background-image: image-url("galaxies/l/80_1.png");
+}
+.l80_2{
+  background-image: image-url("galaxies/l/80_2.png");
+}
+.l80_3{
+  background-image: image-url("galaxies/l/80_3.png");
+}
+.l80_4{
+  background-image: image-url("galaxies/l/80_4.png");
+}
+.l80_5{
+  background-image: image-url("galaxies/l/80_5.png");
+}
+.l80_6{
+  background-image: image-url("galaxies/l/80_6.png");
+}
+.r80_1{
+  background-image: image-url("galaxies/r/80_1.png");
+}
+.r80_2{
+  background-image: image-url("galaxies/r/80_2.png");
+}
+.r80_3{
+  background-image: image-url("galaxies/r/80_3.png");
+}
+.r80_4{
+  background-image: image-url("galaxies/r/80_4.png");
+}
+.r80_5{
+  background-image: image-url("galaxies/r/80_5.png");
+}
+.r80_6{
+  background-image: image-url("galaxies/r/80_6.png");
+}

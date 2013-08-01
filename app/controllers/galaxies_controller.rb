@@ -4,7 +4,13 @@ class GalaxiesController < ApplicationController
   # GET /galaxies
   # GET /galaxies.json
   def index
-    @galaxies = Galaxy.all
+    pos = Array.new([0,0])
+    unless params[:pox_x].nil? || params[:pox_y].nil?
+      pos[0] = params[:x]
+      pos[1] = params[:y]
+    end
+    near = Array.new(25)
+    @galaxies = Galaxy.where()
   end
 
   # GET /galaxies/1

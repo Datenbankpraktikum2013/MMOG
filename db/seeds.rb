@@ -6,6 +6,13 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+# Game Settings enthaelt Konstanten und einstellbare Werte, die sich im Laufe des Spiels
+# nicht mehr aendern sollten, Beispiel: Spielgeschwindigkeit
+$game_settings = Hash.new()
+$game_settings["game_speed" => 1.0]
+$game_settings["world_length" => 5]
+
+
 #Default-Werte von Planeten und Gebäude
 
 #GalaxiesHelper.generateNear(1,1)
