@@ -15,7 +15,7 @@ $game_settings["world_length" => 5]
 
 #Default-Werte von Planeten und Gebäude
 
-GalaxiesHelper.generateNear(1,1)
+#GalaxiesHelper.generateNear(1,1)
 
 #Default-Werte von Technologien
 

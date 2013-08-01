@@ -2,7 +2,7 @@ module TechnologiesHelper
 
   # TODO ev config
 
-  def init_Technology
+  def self.init_Technology
     Technology.create({:name => 'increased_income', :factor => 1.05, :cost => 100})
     Technology.create({:name => 'increased_ironproduction', :factor => 1.05, :cost => 80})
     Technology.create({:name => 'increased_research', :factor => 1.02, :cost => 140})
@@ -21,7 +21,7 @@ module TechnologiesHelper
     Technology.create({:name => 'deathstar', :factor => 0, :cost => 400})
   end
 
-  def init_Technology_Require
+  def self.init_Technology_Require
     TechnologyRequire.create({:tech_id => Technology.where(:name => 'increased_income').first.id, :building_rank => 0,
                               :pre_tech_id => 0, :pre_tech_rank => 0})
     TechnologyRequire.create({:tech_id => Technology.where(:name => 'increased_ironproduction').first.id, :building_rank => 0,
