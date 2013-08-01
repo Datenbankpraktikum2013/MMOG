@@ -97,20 +97,11 @@ ActiveRecord::Schema.define(version: 20130801062130) do
   end
 
   create_table "ranks", force: true do |t|
-<<<<<<< HEAD
     t.string   "name",                         null: false
     t.boolean  "can_kick",     default: false
     t.boolean  "can_massmail", default: false
     t.boolean  "can_edit",     default: false
     t.boolean  "can_invite",   default: false
-=======
-    t.string   "name"
-    t.boolean  "can_kick"
-    t.boolean  "can_massmail"
-    t.boolean  "can_edit"
-    t.boolean  "can_invite"
-    t.boolean  "can_disband"
->>>>>>> c2582e9c091de7f5e01da3ac488248efb7b89496
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "alliance_id"
