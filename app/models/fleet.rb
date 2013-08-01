@@ -97,7 +97,8 @@ class Fleet < ActiveRecord::Base
   
   def move_to_planet()
     #self.target_planet=planet
-    Resque.enqueue(1.minute, MoveFleet, self.id)
+
+    Resque.enqueue(1.minute, MoveFleet)
   end
 
 =begin

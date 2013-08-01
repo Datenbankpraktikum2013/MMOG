@@ -9,21 +9,34 @@ class TechnologyRequire < ActiveRecord::Base
 
     okay = true
 
-    result= TechnologyRequire.where(:tech_id => tech)
 
-    result.each { |i|
+    TechnologyRequire.where(:tech_id => tech).find_each do |i|
 
-      rank = UserTechnology.where(:user_id =>  user, :technology_id => i.pre_tech_id).first.rank
 
-      if rank < i.pre_tech_rank
-        okay=false
+      if i.pre_tech_id != 0
+
+      rank = UserTechnology.where(:user_id => user, :technology_id => i.pre_tech_id).first
+
+        if rank.blank? then
+          okay=false
+
+        elsif rank.rank < i.pre_tech_rank && i.pre_tech_rank != 0
+
+          puts 'Fehlende Voraussetzung', i.pre_tech_id, i.pre_tech_rank
+          okay=false
+
+        end
+
+               #TODO Abfrage des Technologie-Gebäude Rangs
+
       end
+    end
 
-      #TODO Abfrage des Technologie-Gebäude Rangs
+
+  #  }
 
 
-    }
-
+   puts okay
     okay
 
   end

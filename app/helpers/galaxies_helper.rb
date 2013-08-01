@@ -31,36 +31,32 @@ module GalaxiesHelper
         end
 
         k.times do |k2|
-          name = "New Startplanet " + k2.to_s
-          # TODO Weitere Startattribute festlegen!
-          #p = Planet.new(pla_name: name, pla_z: pos2[k2], pla_specialty: false, pla_sunsystem_id: s.id)
+          p = Planet.create(z: pos2[k2], special: nil, sunsystem_id: s.id)
         end
 
         j -= k
         j.times do |z|
-          name = "New Planet " + (z + k).to_s
-          # TODO Attribute nicht vergessen (Nullwerte vermeiden!)
-          #p = Planet.new(pla_name: name, pla_z: pos2[z + k], pla_specialty: true, pla_sunsystem_id: s.id)
+          p = Planet.new(z: pos2[z + k], special: 1, sunsystem_id: s.id)
         end
       end
     end
   end
 
   def self.generateNear(x, y)
-    k = 0
     3.times do |m|
       3.times do |n|
-        k += 1
         generateAt(x - 1 + m, y - 1 + n)
-        puts(k.to_s + " galaxies with " + Planet.all.count.to_s + " planets in " + Sunsystem.all.count.to_s + " sunsystems created (" + (11*k).to_s + "%).")
       end
     end
   end
 
   def self.generateRegion(from_x, from_y, to_x, to_y)
+    schritt = 100 / ((to_y - from_y + 1) * (to_x - from_x + 1))
+    proz = 0
     for act_x in from_x..to_x
       for act_y in from_y..to_y
         generateAt(act_x, act_y)
+        puts "Generating world region... (" + (proz+=schritt).to_s + "%)"
       end
     end
   end

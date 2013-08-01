@@ -7,25 +7,27 @@ class Planet < ActiveRecord::Base
 
   MIN_SIZE = 10000
   MAX_SIZE = 100000
+
+  after_initialize :init
+
+  #
+  # Method to initialize a new planet
+  #
+  def init
+
 =begin
- 0 orefactor
- 1 energyfactor
- 2 populationfactor
- 3 credtitfactor
- 4 crysstalfactor
- 5 lagerfactor
- 6 buildfactor
- 7 forschungfactor
-  
+    Positions in array @spec for factors:
+    0 orefactor
+    1 energyfactor
+    2 populationfactor
+    3 credtitfactor
+    4 crysstalfactor
+    5 lagerfactor
+    6 buildfactor
+    7 forschungfactor
 =end
-  @spec = [1, 1, 1, 1, 1, 1, 1, 1] 
-
-
-  def initialize(pla_name, pla_z, pla_specialty, pla_sunsystem_id)
-    self.name = pla_name
-    self.z = pla_z
-    self.sunsystem_id = pla_sunsystem_id
-
+    @spec = [1, 1, 1, 1, 1, 1, 1, 1]
+    
     self.size = Random.rand(MAX_SIZE-MIN_SIZE) + MIN_SIZE
     self.ore = 20  
     self.maxore = 100
@@ -36,20 +38,26 @@ class Planet < ActiveRecord::Base
     self.population = self.size/10
     self.maxpopulation = self.size/2
 
-    if pla_specialty
-      self.special = Random.rand(7) +1 
+    #Creates random Planet name
+    if self.name.nil?
+      self.name = (0...8).map{(65 + Random.rand(26)).chr}.join
+    end
+
+    #Creates specialties for Planet
+    unless self.special.nil? 
+      self.special = Random.rand(7) + 1
       #Oreplanet
-      if self.special = 1
+      if self.special == 1
          self.ore = 50
          @spec[0] = 1.3
-      #Populationplanet   
-      elsif self.special = 2
+      #Loveplanet   
+      elsif self.special == 2
          @spec[1] = 1.3
       #Creditplanet   
-      elsif self.special = 3
+      elsif self.special == 3
          @spec[3] = 1.3
       #Crystalplanet   
-      elsif self.special = 4
+      elsif self.special == 4
          self.size = MIN_SIZE + Random.rand(3000)
          self.population = self.size/10
          self.maxpopulation = self.size/2
@@ -58,39 +66,34 @@ class Planet < ActiveRecord::Base
          self.maxcrystal = 5
          @spec = [0.5, 0.5, 0.5, 0.5, 1, 1, 1,1]
       #Buildplanet
-      elsif self.special = 5
+      elsif self.special == 5
          self.ore = 50
          self.energy = 100
          @spec[6] = 0.7
       #Lagerplanet   
-      elsif self.special = 6
+      elsif self.special == 6
          self.maxore = 200
          self.maxenergy = 400
          self.maxcrystal = 5
          @spec[5] = 1.3
       #Scienceplanet
-      elsif self.special = 7
+      elsif self.special == 7
          @spec[7] = 1.3
       #Energieplanet   
-      else self.special = 8
+      else self.special == 8
         self.energy = 100
          @spec[2] = 1.3
       end   
-
-      #Random für planetsize
     else
-      #Startgebaeude muessen noch initialisiert werden 
+       
       self.size = (MAX_SIZE/2)
       self.ore = 20
-      
+      self.special = 0
       self.maxore = 100
       self.maxcrystal = 1
       self.maxenergy = 200
-
       self.crystal = 0
-      
       self.energy = 50
-
       self.population = 1000
       self.maxpopulation = 5000
       
@@ -150,22 +153,18 @@ class Planet < ActiveRecord::Base
       # updates ore production
       #
       ore_production = self.get_production(:ore)
-      #energyneeded = oremine.eneryusage; 
       if ore_production.integer? then
-        #ore_production = f * ore_production
         if (self.ore + ore_production) < self.maxore then
           self.ore += ore_production
         else
           self.ore = self.maxore
         end
-        #Resque.enqueue_in(1.minute, ProduceResources, self.id)
       end
 
       #
       # updates population
       #
       city_population = self.get_production(:population)
-      #energyneeded += city.eneryusage;
       if city_population.integer? then
         if (self.population + city_population) < self.maxpopulation then
           self.population += city_population
@@ -178,7 +177,6 @@ class Planet < ActiveRecord::Base
       # updates crystal
       #
       crystal_production = self.get_production(:crystal)
-      #energyneeded
       if crystal_production.integer? then
         if (self.crystal + crystal_production) < self.maxcrystal then
           self.crystal += crystal_production
@@ -188,12 +186,11 @@ class Planet < ActiveRecord::Base
       end
 
       #
-      #Berechnung der Steuern der Einwohner. Start population sollte > 1000 sein
+      # updates money 
       #
       income = get_production(:money)
       owner = User.find_by id: self.user_id
       owner.money += income
-      #energyneeded += headquarter.eneryusage;
     end
 
     #
@@ -209,14 +206,13 @@ class Planet < ActiveRecord::Base
     @structures = self.buildings
     ener_usage = 0
     @structures.each do |str|
-      ener_usage += str.eneryusage
+      ener_usage += str.energyusage
     end
 
     self.energy -= ener_usage 
  
     # Repeat Job imediately
     self.create_production_job
-
   end
 
   #grober entwurf

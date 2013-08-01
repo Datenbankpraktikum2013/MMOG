@@ -14,42 +14,43 @@
   </thead>
 
   <tbody>
-    <% @galaxies.each do |galaxy| %>
+    <%# @galaxies.each do |galaxy| %>
       <tr>
-        <td><%= galaxy.x %></td>
-        <td><%= galaxy.name %></td>
-        <td><%= link_to 'Show', galaxy %></td>
-        <td><%= link_to 'Edit', edit_galaxy_path(galaxy) %></td>
-        <td><%= link_to 'Destroy', galaxy, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%# galaxy.x %></td>
+        <td><%# galaxy.name %></td>
+        <td><%# link_to 'Show', galaxy %></td>
+        <td><%# link_to 'Edit', edit_galaxy_path(galaxy) %></td>
+        <td><%# link_to 'Destroy', galaxy, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
-    <% end %>
+    <%# end %>
   </tbody>
 </table>
 
 -->
-<div class=".galaxyfield">
-<table>
+<table class="galaxyfield">
   <% id = 0
-    $game_settings[:world_view_length].times do |i| %>
-  <tr class=".galaxyfield_tr">
+     k = 0
+     $game_settings[:world_view_length].times do |i| %>
+  <tr>
     <% $game_settings[:world_view_length].times do |j|
-      x=@galaxies[i*$game_settings[:world_view_length]+j];
-#      unless x.nil? then
-#      pos = x.getCoords()
-#      x = x.x
+      k += 1
+      real_x = Galaxy.calcX(j,i)
+      if !@near.include?real_x then
+        %><td class="galaxy">Unbekannt</td><%
+      else
     %>
     <td class="galaxy <%= out = ""
-        if(GalaxiesHelper.isMeins(x)) then
+        if(GalaxiesHelper.isMeins(real_x)) then
                             out += "mygalaxy "
                           end
-                          if(GalaxiesHelper.isVisible(x)) then
+                          if(GalaxiesHelper.isVisible(real_x)) then
                             out += "visiblegalaxy "
                           end
-    filename = GalaxiesHelper.getImageFilename(x, 80)
+    filename = GalaxiesHelper.getImageFilename(real_x, 80)
     out += filename[16] + filename[18, 4] %>"
-    title="Galaxie<%= if(GalaxiesHelper.isMeins(x)) then " (gehört mir)" end %>: <%= x; %>, Koordinaten: (<%# pos[0] %>,<%# pos[1]
-    %>), Sichtbar:<%= if(GalaxiesHelper.isVisible(x)) then "Ja" else "Nein" end %>"></td>
-    <% end #end %>
+    title="Galaxie<%= if(GalaxiesHelper.isMeins(real_x)) then " (gehört mir)" end %>: <%= real_x; %>, Koordinaten: (<%= j %>,<%= i
+    %>), Sichtbar:<%= if(GalaxiesHelper.isVisible(real_x)) then "Ja" else "Nein" end %>"><%= real_x %></td>
+    <% end end %>
   </tr>
   <% end %>
 
