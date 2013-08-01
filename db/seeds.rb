@@ -7,23 +7,12 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 #Default-Werte von Planeten und Gebäude
-
 GalaxiesHelper.generateNear(1,1)
 
 #Default-Werte von Technologien
-
-#######Default Technologies
-
-
-#######Default Technologie-requires
-
-
-
-
-
-
-
-
+TechnologiesHelper.init_Technology
+TechnologiesHelper.init_Technology_Require
+TechnologiesHelper.test_user_technology
 
 #Default-Werte von Schiffe und Missionen
 

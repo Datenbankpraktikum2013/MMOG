@@ -1,6 +1,6 @@
 module TechnologiesHelper
 
-  def init_Technology
+  def self.init_Technology
     Technology.create({:name => 'increased_income', :factor => 1.05, :cost => 100})
     Technology.create({:name => 'increased_ironproduction', :factor => 1.05, :cost => 80})
     Technology.create({:name => 'increased_research', :factor => 1.02, :cost => 140})
@@ -19,7 +19,7 @@ module TechnologiesHelper
     Technology.create({:name => 'deathstar', :factor => 0, :cost => 400})
   end
 
-  def init_Technology_Require
+  def self.init_Technology_Require
     TechnologyRequire.create({:tech_id => Technology.where(:name => 'increased_income').first.id, :building_rank => 1,
                               :pre_tech_id => 0, :pre_tech_rank => 0})
     TechnologyRequire.create({:tech_id => Technology.where(:name => 'increased_ironproduction').first.id, :building_rank => 1,
@@ -28,5 +28,15 @@ module TechnologiesHelper
                               :pre_tech_id => 0, :pre_tech_rank => 0})
     TechnologyRequire.create({:tech_id => Technology.where(:name => 'increased_energy_efficiency').first.id, :building_rank => 1,
                               :pre_tech_id => 0, :pre_tech_rank => 0})
+  end
+
+  #test einträge für user technology verknüpfung
+  def self.test_user_technology
+    UserTechnology.create({:user_id => 1, :technology_id => 1, :rank => 1})
+    UserTechnology.create({:user_id => 1, :technology_id => 2, :rank => 2})
+    UserTechnology.create({:user_id => 2, :technology_id => 1, :rank => 1})
+    UserTechnology.create({:user_id => 2, :technology_id => 2, :rank => 3})
+    UserTechnology.create({:user_id => 3, :technology_id => 1, :rank => 2})
+    UserTechnology.create({:user_id => 3, :technology_id => 2, :rank => 4})
   end
 end

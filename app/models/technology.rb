@@ -9,16 +9,17 @@ class Technology < ActiveRecord::Base
   #has_many :linked_from, :through => relations_from, :source => :tech
 
 
-  def upgrade_technology(user, tech)
+  #Updated die TechnolgieStufe des Users user
+  def upgrade_technology(user)
 
-    if TechnologyRequire.technology_require?(user, tech)
+    if TechnologyRequire.technology_require?(user, self.id)
 
-      result = user_technologies.where(:user_id => user, :technology_id => tech).first
-      if result!=nil then
-        rank = result.rank
-        result.update_attribute(:rank, rank+1)
+      result = user_technologies.where(:user_id => user).first
+
+      if !result.blank? then
+        result.update_attribute(:rank, result.rank+1)
       else
-        UserTechnology.create(:user_id => user, :technology_id => tech, :rank => 1)
+        user_technologies.create(:rank => 1, :user_id => user)
       end
 
 
