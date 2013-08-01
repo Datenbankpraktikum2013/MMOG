@@ -11,13 +11,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130801131718) do
+ActiveRecord::Schema.define(version: 20130801142000) do
 
   create_table "alliances", force: true do |t|
     t.integer  "alliance_founder_id"
     t.string   "name"
     t.text     "description"
-    t.string   "banner"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "battlereports", force: true do |t|
+    t.integer  "defender_planet_id"
+    t.integer  "attacker_planet_id"
+    t.datetime "fightdate"
+    t.integer  "stolen_ore"
+    t.integer  "stolen_crystal"
+    t.integer  "stolen_space_cash"
+    t.integer  "defender_id"
+    t.integer  "attacker_id"
+    t.integer  "winner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -114,7 +127,16 @@ ActiveRecord::Schema.define(version: 20130801131718) do
     t.boolean  "can_edit",     default: false
     t.boolean  "can_invite",   default: false
     t.boolean  "can_disband",  default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "alliance_id"
+  end
+
+  create_table "shipcounts", force: true do |t|
+    t.integer  "battlereport_id"
+    t.integer  "ship_id"
+    t.integer  "amount"
+    t.integer  "shipowner_time_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -191,6 +213,7 @@ ActiveRecord::Schema.define(version: 20130801131718) do
     t.boolean  "deathstar",                   default: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "increased_spypower",          default: 1
   end
 
   create_table "user_technologies", force: true do |t|

@@ -1,0 +1,53 @@
+<%= form_for(@battlereport) do |f| %>
+  <% if @battlereport.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@battlereport.errors.count, "error") %> prohibited this battlereport from being saved:</h2>
+
+      <ul>
+      <% @battlereport.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :defender_planet_id %><br>
+    <%= f.number_field :defender_planet_id %>
+  </div>
+  <div class="field">
+    <%= f.label :attacker_planet_id %><br>
+    <%= f.number_field :attacker_planet_id %>
+  </div>
+  <div class="field">
+    <%= f.label :fightdate %><br>
+    <%= f.datetime_select :fightdate %>
+  </div>
+  <div class="field">
+    <%= f.label :stolen_ore %><br>
+    <%= f.number_field :stolen_ore %>
+  </div>
+  <div class="field">
+    <%= f.label :stolen_crystal %><br>
+    <%= f.number_field :stolen_crystal %>
+  </div>
+  <div class="field">
+    <%= f.label :stolen_space_cash %><br>
+    <%= f.number_field :stolen_space_cash %>
+  </div>
+  <div class="field">
+    <%= f.label :defender_id %><br>
+    <%= f.number_field :defender_id %>
+  </div>
+  <div class="field">
+    <%= f.label :attacker_id %><br>
+    <%= f.number_field :attacker_id %>
+  </div>
+  <div class="field">
+    <%= f.label :winner_id %><br>
+    <%= f.number_field :winner_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

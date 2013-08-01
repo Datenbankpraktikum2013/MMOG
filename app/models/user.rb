@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
 
   has_many :fleets
   has_many :planets
+  has_many :battlereports
   belongs_to :alliance
 
   #functions

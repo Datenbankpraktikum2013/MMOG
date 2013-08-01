@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  battlereport_id: 1
+  ship_id: 1
+  amount: 1
+  shipowner_time_type: 1
+
+two:
+  battlereport_id: 1
+  ship_id: 1
+  amount: 1
+  shipowner_time_type: 1

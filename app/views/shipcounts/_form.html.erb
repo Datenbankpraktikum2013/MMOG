@@ -1,0 +1,33 @@
+<%= form_for(@shipcount) do |f| %>
+  <% if @shipcount.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@shipcount.errors.count, "error") %> prohibited this shipcount from being saved:</h2>
+
+      <ul>
+      <% @shipcount.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :battlereport_id %><br>
+    <%= f.number_field :battlereport_id %>
+  </div>
+  <div class="field">
+    <%= f.label :ship_id %><br>
+    <%= f.number_field :ship_id %>
+  </div>
+  <div class="field">
+    <%= f.label :amount %><br>
+    <%= f.number_field :amount %>
+  </div>
+  <div class="field">
+    <%= f.label :shipowner_time_type %><br>
+    <%= f.number_field :shipowner_time_type %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

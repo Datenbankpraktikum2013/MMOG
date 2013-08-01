@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  defender_planet_id: 1
+  attacker_planet_id: 1
+  fightdate: 2013-08-01 16:06:21
+  stolen_ore: 1
+  stolen_crystal: 1
+  stolen_space_cash: 1
+  defender_id: 1
+  attacker_id: 1
+  winner_id: 1
+
+two:
+  defender_planet_id: 1
+  attacker_planet_id: 1
+  fightdate: 2013-08-01 16:06:21
+  stolen_ore: 1
+  stolen_crystal: 1
+  stolen_space_cash: 1
+  defender_id: 1
+  attacker_id: 1
+  winner_id: 1
