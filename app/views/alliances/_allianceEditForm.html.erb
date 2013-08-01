@@ -1,4 +1,4 @@
-<% unless current_user.rank_id.can_edit or current_user==@alliance.user_id %>
+<% unless current_user.rank.alliance==@alliance and current_user.rank.can_edit %>
   	<div>
 	  Du besitzt nicht die nötigen Rechte, um <%= current_user.alliance.name %> zu bearbeiten.
   	</div>
@@ -11,7 +11,7 @@
 					<th>Spacecash</th>
 					<th>Userwertung</th>
 					<th>Rank</th>
-					<% if current_user.rank_id.can_kick or current_user==@alliance.user_id %>
+					<% if current_user.rank.alliance==@alliance and current_user.rank.can_edit  %>
 					<th></th>
 					<% end %>
 				</tr>
@@ -21,7 +21,7 @@
 						<td><%=user.money%></td>
 						<td><%=user.score%></td>
 						<td><%=user.rank%></td>
-						<% if current_user.rank.can_kick or current.user==@alliance.user_id %>
+						<% if current_user.rank.alliance==@alliance and current_user.rank.can_edit  %>
 							<td><%= link_to 'Kicken' %>
 						<% end %>
 					</tr>

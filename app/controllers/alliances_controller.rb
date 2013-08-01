@@ -30,15 +30,10 @@ class AlliancesController < ApplicationController
     #only do if user has no alliance.
     if current_user.alliance_id==nil
       @alliance = Alliance.new(alliance_params)
-      
       respond_to do |format|
-        #set adminuser
-        @alliance.user=current_user
-        #set alliance of user to this one
-        current_user.alliance=@alliance
-        if @alliance.save and current_user.save #save both
-          format.html { redirect_to @alliance, notice: 'Alliance was successfully created.' }
-          format.json { render action: 'show', status: :created, location: @alliance }
+        if @alliance.save and @alliance.set_founder(current_user) #save both
+            format.html { redirect_to @alliance, notice: 'Alliance was successfully created.' }
+            format.json { render action: 'show', status: :created, location: @alliance }
         else
           format.html { render action: 'new' }
           format.json { render json: @alliance.errors, status: :unprocessable_entity }
