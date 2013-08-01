@@ -25,21 +25,25 @@ class Fleet < ActiveRecord::Base
     end
   end
 
+=begin
   # returns the amount of a shiptype in one fleet
   def get_amount_of_ship(ship_id)
     var = self.ships.find(ship_id)
-    if var = nil then
+    if var == nil then
       return null
     else
       return var.amount
     end
   end
+=end
 
+=begin
   # Returns a Hash of {Ship => Amount} pairs
   def get_ships()
-    #STUFF
-    return self.ships
+
+    return 
   end
+=end
 
 =begin
   #wie wird destination gepeichert?
@@ -111,6 +115,4 @@ class Fleet < ActiveRecord::Base
     # destroy it
   end
 =end
-end
-
 end

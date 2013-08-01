@@ -45,4 +45,4 @@ Ship.create({:construction_time => 1, :offense => 1, :defense => 10, :crystal_co
 Alliance.create({:name => 'test_alliance3', :description => 'testtesttest'})
 
 ##########DEFAULT USER!! demo:praktikum
-#User.create(:email => 'demo@demo.com',:password => 'praktikum',:username => 'demo',:money => 100,:score => 0)
+User.create(:email => 'demo@demo.com',:password => 'praktikum',:username => 'demo',:money => 100,:score => 0)
