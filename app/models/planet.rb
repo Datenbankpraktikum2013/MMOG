@@ -38,7 +38,11 @@ class Planet < ActiveRecord::Base
     self.population = self.size/10
     self.maxpopulation = self.size/2
 
-    if self.special > 0
+    if self.name.nil?
+      self.name = (0...8).map{(65 + Random.rand(26)).chr}.join
+    end
+
+    unless self.special.nil? 
       self.special = Random.rand(7) + 1
       #Oreplanet
       if self.special == 1

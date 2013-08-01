@@ -85,5 +85,6 @@ module TechnologiesHelper
     UserTechnology.create({:user_id => 2, :technology_id => 2, :rank => 3})
     UserTechnology.create({:user_id => 3, :technology_id => 1, :rank => 2})
     UserTechnology.create({:user_id => 3, :technology_id => 2, :rank => 4})
+    UserTechnology.create({:user_id => 3, :technology_id => 4, :rank => 1})
   end
 end
