@@ -7,6 +7,8 @@ class Planet < ActiveRecord::Base
 
   MIN_SIZE = 10000
   MAX_SIZE = 100000
+
+  after_initialize :init
 =begin
  0 orefactor
  1 energyfactor
@@ -18,13 +20,13 @@ class Planet < ActiveRecord::Base
  7 forschungfactor
   
 =end
-  @spec = [1, 1, 1, 1, 1, 1, 1, 1] 
+  def init
 
-
-  def initialize(pla_name, pla_z, pla_specialty, pla_sunsystem_id)
-    self.name = pla_name
-    self.z = pla_z
-    self.sunsystem_id = pla_sunsystem_id
+    @spec = [1, 1, 1, 1, 1, 1, 1, 1]
+    
+    #self.name = pla_name
+    #self.z = pla_z
+    #self.sunsystem_id = pla_sunsystem_id
 
     self.size = Random.rand(MAX_SIZE-MIN_SIZE) + MIN_SIZE
     self.ore = 20  
@@ -36,20 +38,20 @@ class Planet < ActiveRecord::Base
     self.population = self.size/10
     self.maxpopulation = self.size/2
 
-    if pla_specialty
-      self.special = Random.rand(7) +1 
+    if self.special > 0
+      self.special = Random.rand(7) + 1
       #Oreplanet
-      if self.special = 1
+      if self.special == 1
          self.ore = 50
          @spec[0] = 1.3
       #Populationplanet   
-      elsif self.special = 2
+      elsif self.special == 2
          @spec[1] = 1.3
       #Creditplanet   
-      elsif self.special = 3
+      elsif self.special == 3
          @spec[3] = 1.3
       #Crystalplanet   
-      elsif self.special = 4
+      elsif self.special == 4
          self.size = MIN_SIZE + Random.rand(3000)
          self.population = self.size/10
          self.maxpopulation = self.size/2
@@ -58,21 +60,21 @@ class Planet < ActiveRecord::Base
          self.maxcrystal = 5
          @spec = [0.5, 0.5, 0.5, 0.5, 1, 1, 1,1]
       #Buildplanet
-      elsif self.special = 5
+      elsif self.special == 5
          self.ore = 50
          self.energy = 100
          @spec[6] = 0.7
       #Lagerplanet   
-      elsif self.special = 6
+      elsif self.special == 6
          self.maxore = 200
          self.maxenergy = 400
          self.maxcrystal = 5
          @spec[5] = 1.3
       #Scienceplanet
-      elsif self.special = 7
+      elsif self.special == 7
          @spec[7] = 1.3
       #Energieplanet   
-      else self.special = 8
+      else self.special == 8
         self.energy = 100
          @spec[2] = 1.3
       end   
@@ -82,7 +84,7 @@ class Planet < ActiveRecord::Base
       #Startgebaeude muessen noch initialisiert werden 
       self.size = (MAX_SIZE/2)
       self.ore = 20
-      
+      self.special = 0
       self.maxore = 100
       self.maxcrystal = 1
       self.maxenergy = 200
