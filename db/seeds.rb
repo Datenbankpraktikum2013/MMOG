@@ -14,6 +14,9 @@ GalaxiesHelper.generateNear(1,1)
 
 #######Default Technologies
 
+TechnologiesHelper.init_Technology
+TechnologiesHelper.init_Technology_Require
+
 
 #######Default Technologie-requires
 
