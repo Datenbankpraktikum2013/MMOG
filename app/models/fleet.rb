@@ -25,23 +25,30 @@ class Fleet < ActiveRecord::Base
     end
   end
 
-=begin
+#=begin
   # returns the amount of a shiptype in one fleet
-  def get_amount_of_ship(ship_id)
-    var = self.ships.find(ship_id)
-    if var == nil then
-      return null
+  def get_amount_of_ship(s_id)
+    amount = Shipfleet.where(fleet_id: self.id, ship_id: s_id).first.amount
+    if amount == nil then
+      return 0
     else
-      return var.amount
+      return amount
     end
   end
-=end
+#=end
 
 =begin
   # Returns a Hash of {Ship => Amount} pairs
   def get_ships()
-
-    return 
+    if self.ships = nil
+      return null
+    else
+      ship_hash = {}
+      self.ships.each do |s|
+        ship_hash[s.name] = Shipfleet.where(fleet_id: self.id, )
+      end
+      return shiphash
+    end
   end
 =end
 
@@ -49,15 +56,33 @@ class Fleet < ActiveRecord::Base
   #wie wird destination gepeichert?
   def move(misson, destination)
     # calculate needed energy for that flight...cases:
-    # own > foreign ! Angriff
-    # own > foreign ! Spionage
-    # own > foreign ! Angriff
-    # own > foreign ! Angriff
     #
+    # possible Directions
+    # own > unknown
+    # own > alliance
+    # own > own 
+    # own > enemy
     #
+    # ATTACK
+    # own > enemy
     #
+    # COLONIZATION
+    # own > unknown
     #
+    # TRANSPORT
+    # own > alliance
+    # own > own
+    # own > enemy ??????????
     #
+    # TRAVEL 
+    # own > unknown ????????
+    # own > alliance
+    # own > own
+    #
+    # SPY
+    # own > unknown
+    # own > alliance ??????? you can see it anyway??????
+    # own > enemy
     #
     # calculate time until arrival at foreign planet
     # calculate 
