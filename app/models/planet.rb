@@ -33,7 +33,12 @@ class Planet < ActiveRecord::Base
 
   end
 
-  @param type Name der Produktionsstaette ("Eisenmine", "Haus", ...)
+  def mention()
+      self.sunsystem.mention()
+
+  end
+
+  #@param type Name der Produktionsstaette ("Eisenmine", "Haus", ...)
   def get_production(type)
     # TODO Calculate production
     b = self.buildings.where(name: type).production

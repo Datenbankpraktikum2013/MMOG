@@ -65,4 +65,8 @@ class Galaxy < ActiveRecord::Base
     end
   end
 
+  def mention()
+      a = self.getCoords
+      GalaxiesHelper.generateNear(a[0],a[1])
+  end
 end
