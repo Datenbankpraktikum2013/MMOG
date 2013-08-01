@@ -6,7 +6,7 @@ class Ship < ActiveRecord::Base
 
 	def save(*)
 		create_or_update
-			if (self.has_attribute? :amount && self.has_attribute? :fleet_id)
+		if (self.has_attribute? :amount)
 			sf = Shipfleet.where(fleet_id: self.fleet_id, ship_id: self.id).first
 			sf.amount = self.amount
 			sf.save
@@ -18,7 +18,7 @@ class Ship < ActiveRecord::Base
 	def save!(*)
 
 		create_or_update || raise(RecordNotSaved)
-			if (self.has_attribute? :amount && self.has_attribute? :fleet_id)
+			if (self.has_attribute? :amount)
 			sf = Shipfleet.where(fleet_id: self.fleet_id, ship_id: self.id).first
 			sf.amount = self.amount
 			sf.save!

@@ -11,8 +11,8 @@
 </p>
 
 <p>
-	<strong>Founder_ID:</strong>
-	<%= @alliance.alliance_founder_id %>
+	<strong>Founder:</strong>
+	<%= @alliance.user.username %>
 </p>	
 
 <%= link_to 'Edit', edit_alliance_path(@alliance) %> |
