@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a80e5915-ae26-49fb-9eeb-ed1a773c9151" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/stylesheets/galaxies.css.scss" afterPath="$PROJECT_DIR$/app/assets/stylesheets/galaxies.css.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/galaxies_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/galaxies_controller.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/helpers/galaxies_helper.rb" afterPath="$PROJECT_DIR$/app/helpers/galaxies_helper.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/galaxies/index.html.erb" afterPath="$PROJECT_DIR$/app/views/galaxies/index.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/seeds.rb" afterPath="$PROJECT_DIR$/db/seeds.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/schema.rb" afterPath="$PROJECT_DIR$/db/schema.rb" />
     </list>
     <ignored path="MMOG.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,7 +24,7 @@
     <file path="/20130731080225_planets_fix_column_name.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375258311885" ignored="false" />
     <file path="/20130731081253_building_fix_column_name.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375258394821" ignored="false" />
     <file path="/20130731081346_buildingtype_fix_column_name.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375258496296" ignored="false" />
-    <file path="/galaxies_helper.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375344218726" ignored="false" />
+    <file path="/galaxies_helper.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375344443389" ignored="false" />
     <file path="/20130731092527_connect_universe_per_relation.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375262984140" ignored="false" />
     <file path="$PROJECT_DIR$/config/routes.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375263565963" ignored="false" />
     <file path="/building.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375272209200" ignored="false" />
@@ -77,7 +73,7 @@
       <file leaf-file-name="galaxies_helper.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/helpers/galaxies_helper.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="44" column="12" selection-start="1321" selection-end="1321" vertical-scroll-proportion="0.57036114">
+            <state line="43" column="100" selection-start="1311" selection-end="1311" vertical-scroll-proportion="0.5516812">
               <folding />
             </state>
           </provider>
@@ -1097,7 +1093,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/helpers/galaxies_helper.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="12" selection-start="1321" selection-end="1321" vertical-scroll-proportion="0.57036114">
+        <state line="43" column="100" selection-start="1311" selection-end="1311" vertical-scroll-proportion="0.5516812">
           <folding />
         </state>
       </provider>

@@ -33,14 +33,14 @@ module GalaxiesHelper
         k.times do |k2|
           name = "New Startplanet " + k2.to_s
           # TODO Weitere Startattribute festlegen!
-          p = Planet.new(pla_name: name, pla_z: pos2[k2], pla_specialty: false, pla_sunsystem_id: s_id)
+          p = Planet.new(pla_name: name, pla_z: pos2[k2], pla_specialty: false, pla_sunsystem_id: s.id)
         end
 
         j -= k
         j.times do |z|
           name = "New Planet " + (z + k).to_s
           # TODO Attribute nicht vergessen (Nullwerte vermeiden!)
-          p = Planet.new(pla_name: name, pla_z: pos2[z + k], pla_specialty: true, pla_sunsystem_id: s_id)
+          p = Planet.new(pla_name: name, pla_z: pos2[z + k], pla_specialty: true, pla_sunsystem_id: s.id)
         end
       end
     end
