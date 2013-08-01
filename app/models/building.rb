@@ -1,6 +1,8 @@
 class Building < Buildingtype
 
   # belongs_to :buildingtype
+  belongs_to :planet
+
 
 =begin
   def getStufe()

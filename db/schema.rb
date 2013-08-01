@@ -14,7 +14,7 @@
 ActiveRecord::Schema.define(version: 20130801131718) do
 
   create_table "alliances", force: true do |t|
-    t.integer  "user_id"
+    t.integer  "alliance_founder_id"
     t.string   "name"
     t.text     "description"
     t.string   "banner"
@@ -191,7 +191,6 @@ ActiveRecord::Schema.define(version: 20130801131718) do
     t.boolean  "deathstar",                   default: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "increased_spypower",          default: 1
   end
 
   create_table "user_technologies", force: true do |t|

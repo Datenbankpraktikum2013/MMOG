@@ -1,4 +1,4 @@
-<h1>Listing ranks</h1>
+<h1>Ränge</h1>
 
 <table border="1px">
   <thead>
@@ -8,7 +8,6 @@
       <th>Massenmail</th>
       <th>Editieren</th>
       <th>Einladen</th>
-      <th>Can Disband</th>
       <th></th>
       <th></th>
     </tr>
@@ -22,9 +21,8 @@
         <td><%= rank.can_massmail ? "Ja" : "Nein"  %></td>
         <td><%= rank.can_edit ? "Ja" : "Nein"  %></td>
         <td><%= rank.can_invite ? "Ja" : "Nein"  %></td>
-        <td><%= rank.can_disband ? "Ja" : "Nein"  %></td>
         <td><%= link_to 'Bearbeiten', edit_rank_path(rank) %></td>
-        <td><%= link_to 'Löschen', rank, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Löschen', rank, method: :delete, data: { confirm: 'Bist du dir sicher?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -32,4 +30,4 @@
 
 <br>
 
-<%= link_to 'New Rank', new_rank_path %>
+<%= link_to 'Neuer Rang', new_rank_path %>
