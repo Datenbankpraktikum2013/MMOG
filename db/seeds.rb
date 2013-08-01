@@ -7,9 +7,17 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 #Default-Werte von Planeten und Gebäude
+
+# Auskommentiert, damit schneller laedt
+$game_settings = Hash.new()
+$game_settings[:world_length] = 5
+$game_settings[:world_view_length] = 5
 GalaxiesHelper.generateNear(1,1)
 
 #Default-Werte von Technologien
+
+#######Default Technologies
+
 TechnologiesHelper.init_Technology
 TechnologiesHelper.init_Technology_Require
 TechnologiesHelper.test_user_technology
