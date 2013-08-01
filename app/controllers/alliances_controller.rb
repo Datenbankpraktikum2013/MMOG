@@ -17,7 +17,6 @@ class AlliancesController < ApplicationController
   def new
     if current_user.alliance_id==nil
       @alliance = Alliance.new
-      
     end
   end
 
@@ -28,21 +27,25 @@ class AlliancesController < ApplicationController
   # POST /alliances
   # POST /alliances.json
   def create
-    @alliance = Alliance.new(alliance_params)
-    
-    
-    respond_to do |format|
-
-      @alliance.admin=current_user
-      current_user.alliance=@alliance
-      if @alliance.save and current_user.save
-        format.html { redirect_to @alliance, notice: 'Alliance was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @alliance }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @alliance.errors, status: :unprocessable_entity }
+    #only do if user has no alliance.
+    if current_user.alliance_id==nil
+      @alliance = Alliance.new(alliance_params)
+      
+      respond_to do |format|
+        #set adminuser
+        @alliance.user=current_user
+        #set alliance of user to this one
+        current_user.alliance=@alliance
+        if @alliance.save and current_user.save #save both
+          format.html { redirect_to @alliance, notice: 'Alliance was successfully created.' }
+          format.json { render action: 'show', status: :created, location: @alliance }
+        else
+          format.html { render action: 'new' }
+          format.json { render json: @alliance.errors, status: :unprocessable_entity }
+        end
       end
     end
+
   end
 
   # PATCH/PUT /alliances/1
@@ -62,11 +65,16 @@ class AlliancesController < ApplicationController
   # DELETE /alliances/1
   # DELETE /alliances/1.json
   def destroy
-    @alliance.users.each do |user|
-      user.alliance=nil
-      user.save
+    #only if current user is founder
+    if @alliance.user==current_user
+      #cancel all alliance members
+      @alliance.users.each do |user|
+        user.alliance=nil
+        user.save
+      end
+      @alliance.destroy
     end
-    @alliance.destroy
+    #response
     respond_to do |format|
       format.html { redirect_to alliances_url }
       format.json { head :no_content }

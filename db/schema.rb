@@ -14,7 +14,7 @@
 ActiveRecord::Schema.define(version: 20130731151034) do
 
   create_table "alliances", force: true do |t|
-    t.integer  "alliance_founder_id"
+    t.integer  "user_id"
     t.string   "name"
     t.text     "description"
     t.datetime "created_at"
