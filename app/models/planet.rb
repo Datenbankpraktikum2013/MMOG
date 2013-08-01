@@ -18,7 +18,7 @@ class Planet < ActiveRecord::Base
  7 forschungfactor
   
 =end
-  SPEC_CONST[] = [1, 1, 1, 1, 1, 1, 1, 1] 
+  @spec = [1, 1, 1, 1, 1, 1, 1, 1] 
 
 
   def initialize(pla_name, pla_z, pla_specialty, pla_sunsystem_id)
@@ -41,13 +41,13 @@ class Planet < ActiveRecord::Base
       #Oreplanet
       if self.special = 1
          self.ore = 50
-         SPEC_CONST[0] = 1.3
+         @spec[0] = 1.3
       #Populationplanet   
       elsif self.special = 2
-         SPEC_CONST[1] = 1.3
+         @spec[1] = 1.3
       #Creditplanet   
       elsif self.special = 3
-         SPEC_CONST[3] = 1.3
+         @spec[3] = 1.3
       #Crystalplanet   
       elsif self.special = 4
          self.size = MIN_SIZE + Random.rand(3000)
@@ -56,25 +56,25 @@ class Planet < ActiveRecord::Base
          self.maxore = 75
          self.maxenergy = 175
          self.maxcrystal = 5
-         SPEC_CONST[] = [0.5, 0.5, 0.5, 0.5, 1, 1, 1,1]
+         @spec = [0.5, 0.5, 0.5, 0.5, 1, 1, 1,1]
       #Buildplanet
       elsif self.special = 5
          self.ore = 50
          self.energy = 100
-         SPEC_CONST[6] = 0.7
+         @spec[6] = 0.7
       #Lagerplanet   
       elsif self.special = 6
          self.maxore = 200
          self.maxenergy = 400
          self.maxcrystal = 5
-         SPEC_CONST[5] = 1.3
+         @spec[5] = 1.3
       #Scienceplanet
       elsif self.special = 7
-         SPEC_CONST[7] = 1.3
+         @spec[7] = 1.3
       #Energieplanet   
       else self.special = 8
         self.energy = 100
-         SPEC_CONST[2] = 1.3
+         @spec[2] = 1.3
       end   
 
       #Random für planetsize
@@ -111,28 +111,28 @@ class Planet < ActiveRecord::Base
 
     if type == :ore
       sci_factor = self.user.get_ironproduction
-      c = sci_factor * prod * SPEC_CONST[0]
+      c = sci_factor * prod * @spec[0]
       return c
     end
 
     if type == :population
-      c = SPEC_CONST[2] * prod
+      c = @spec[2] * prod
       return c
     end
 
     if type == :money
       sci_factor = self.user.get_income
-      c = sci_factor * prod * SPEC_CONST[3] * (self.population / 100) 
+      c = sci_factor * prod * @spec[3] * (self.population / 100) 
     end
 
     if type == :energy 
       sci_factor = self.user.get_energy_efficiency
-      c = sci_factor * prod * SPEC_CONST[1] 
+      c = sci_factor * prod * @spec[1] 
       return c
     end
 
     if type == :crystal
-      c = SPEC_CONST[4] * prod
+      c = @spec[4] * prod
       return c
     end
   end
