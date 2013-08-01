@@ -1,19 +1,38 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Alliance:</strong>
-  <%= @alliance.name %>
+  <h1><%= @alliance.name %></h1>
+</p>
+<p>
+	<img src=<%=@alliance.banner%> />
+</p>
+<p>
+	<strong>Gründer:</strong>
+	<%= @alliance.user.username %>
 </p>
 
 <p>
-	<strong>Description:</strong>
 	<%= @alliance.description %>
 </p>
 
 <p>
-	<strong>Founder:</strong>
-	<%= @alliance.user.username %>
-</p>	
+	<strong>Mitglieder:</strong><br />
+	<table border="1px">
+		<tr>
+			<th>Name</th>
+			<th>Spacecash</th>
+			<th>Userwertung</th>
+		</tr>
+		<% @alliance.users.each do |user| %>
+			<tr>
+				<td><%=user.username%></td>
+				<td><%=user.money%></td>
+				<td><%=user.score%></td>
+			</tr>
+		<% end %>
+	</table>
+</p>
+	
 
-<%= link_to 'Edit', edit_alliance_path(@alliance) %> |
-<%= link_to 'Back', alliances_path %>
+<%= link_to 'Bearbeiten', edit_alliance_path(@alliance) %> |
+<%= link_to 'Zurück', alliances_path %>

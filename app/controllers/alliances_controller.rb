@@ -5,7 +5,10 @@ class AlliancesController < ApplicationController
   # GET /alliances
   # GET /alliances.json
   def index
-    @alliances = Alliance.all
+    if current_user.alliance!=nil
+      redirect_to current_user.alliance
+    end
+    #@alliances = Alliance.all
   end
 
   # GET /alliances/1
