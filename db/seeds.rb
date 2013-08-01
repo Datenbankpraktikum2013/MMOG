@@ -12,7 +12,7 @@
 $game_settings = Hash.new()
 $game_settings[:world_length] = 5
 $game_settings[:world_view_length] = 5
-GalaxiesHelper.generateNear(1,1)
+GalaxiesHelper.generateRegion(0,0,4,4)
 
 #Default-Werte von Technologien
 

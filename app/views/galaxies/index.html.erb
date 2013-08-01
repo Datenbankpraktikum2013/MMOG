@@ -36,7 +36,7 @@
       k += 1
       real_x = Galaxy.calcX(j,i)
       if !@near.include?real_x then
-        %><td class="galaxy"></td><%
+        %><td class="galaxy">Unbekannt</td><%
       else
     %>
     <td class="galaxy <%= out = ""
@@ -49,7 +49,7 @@
     filename = GalaxiesHelper.getImageFilename(real_x, 80)
     out += filename[16] + filename[18, 4] %>"
     title="Galaxie<%= if(GalaxiesHelper.isMeins(real_x)) then " (gehört mir)" end %>: <%= real_x; %>, Koordinaten: (<%= j %>,<%= i
-    %>), Sichtbar:<%= if(GalaxiesHelper.isVisible(real_x)) then "Ja" else "Nein" end %>"></td>
+    %>), Sichtbar:<%= if(GalaxiesHelper.isVisible(real_x)) then "Ja" else "Nein" end %>"><%= real_x %></td>
     <% end end %>
   </tr>
   <% end %>

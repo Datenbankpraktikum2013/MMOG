@@ -14,7 +14,9 @@
 ActiveRecord::Schema.define(version: 20130801062130) do
 
   create_table "alliances", force: true do |t|
+    t.integer  "alliance_founder_id"
     t.string   "name"
+    t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -102,6 +104,7 @@ ActiveRecord::Schema.define(version: 20130801062130) do
     t.boolean  "can_massmail", default: false
     t.boolean  "can_edit",     default: false
     t.boolean  "can_invite",   default: false
+    t.boolean  "can_disband",  default: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "alliance_id"
@@ -179,7 +182,6 @@ ActiveRecord::Schema.define(version: 20130801062130) do
     t.boolean  "deathstar",                   default: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "increased_spypower",          default: 1
   end
 
   create_table "user_technologies", force: true do |t|
@@ -205,12 +207,13 @@ ActiveRecord::Schema.define(version: 20130801062130) do
     t.integer  "money",                  default: 100
     t.integer  "score",                  default: 0
     t.integer  "alliance_id"
-    t.integer  "rank_id"
+    t.integer  "alliance_rank"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["username"], name: "index_users_on_username", unique: true
 
 end
