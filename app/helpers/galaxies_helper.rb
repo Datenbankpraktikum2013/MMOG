@@ -58,9 +58,12 @@ module GalaxiesHelper
   end
 
   def self.generateRegion(from_x, from_y, to_x, to_y)
+    schritt = 100 / ((to_y - from_y + 1) * (to_x - from_x + 1))
+    proz = 0
     for act_x in from_x..to_x
       for act_y in from_y..to_y
         generateAt(act_x, act_y)
+        puts "Generating world " + (proz+=schritt).to_s + "%"
       end
     end
   end
