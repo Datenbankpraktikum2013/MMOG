@@ -4,7 +4,24 @@ class GalaxiesController < ApplicationController
   # GET /galaxies
   # GET /galaxies.json
   def index
-    @galaxies = Galaxy.all
+    $game_settings["game_speed" => 1.0]
+    $game_settings["world_length" => 5]
+    $game_settings["world_view_length" => 5]
+    pos = Array.new([0,0])
+    unless params[:pox_x].nil? || params[:pox_y].nil?
+      pos[0] = params[:x]
+      pos[1] = params[:y]
+    end
+
+    near = Array.new($game_settings["world_view_length"]*$game_settings["world_view_length"])
+    near = Array.new(25)
+    for x in (pos[0]-2)..(pos[0]+2)
+      for y in (pos[0]-2)..(pos[0]+2)
+        near[x*$game_settings["world_view_length"]+y] = Galaxy.calcX(x, y)
+        near[x*5+y] = Galaxy.calcX(x, y)
+      end
+    end
+    @galaxies = Galaxy.where(id: near)
   end
 
   # GET /galaxies/1

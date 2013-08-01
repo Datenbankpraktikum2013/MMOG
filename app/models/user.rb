@@ -6,12 +6,14 @@ class User < ActiveRecord::Base
 
   #validations
   validate :is_username_set
-  validate :is_username_taken
+  validate :is_username_taken, on: :create
 
   #relations
   has_one :user_setting, :dependent => :destroy
   has_many :user_technologies
   has_many :fleets
+  has_many :planets
+  belongs_to :alliance
 
   #functions
   def is_username_set
