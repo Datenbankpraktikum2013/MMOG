@@ -2,12 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a80e5915-ae26-49fb-9eeb-ed1a773c9151" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/schema.rb" afterPath="$PROJECT_DIR$/db/schema.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/seeds.rb" afterPath="$PROJECT_DIR$/db/seeds.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/helpers/technologies_helper.rb" afterPath="$PROJECT_DIR$/app/helpers/technologies_helper.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/technology_require.rb" afterPath="$PROJECT_DIR$/app/models/technology_require.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="MMOG.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375343436867" ignored="false" />
+    <file path="/Dummy.txt" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375343738348" ignored="false" />
     <file path="/worldgenerator.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375169276272" ignored="false" />
     <file path="/20130730074848_create_planets.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375174839857" ignored="false" />
     <file path="/20130730085926_change_planet_groesse_type_to_float.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375174789295" ignored="false" />
@@ -19,15 +22,15 @@
     <file path="/seitenaufteilung.erb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375194691486" ignored="false" />
     <file path="/style.css" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375195948472" ignored="false" />
     <file path="$PROJECT_DIR$/config/routes.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375196126131" ignored="false" />
-    <file path="/planet.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375258750059" ignored="false" />
+    <file path="/planet.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375343657546" ignored="false" />
     <file path="/galaxy.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375251721743" ignored="false" />
     <file path="/technology.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375261895377" ignored="false" />
     <file path="/20130731080225_planets_fix_column_name.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375258311885" ignored="false" />
     <file path="/20130731081253_building_fix_column_name.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375258394821" ignored="false" />
     <file path="/20130731081346_buildingtype_fix_column_name.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375258496296" ignored="false" />
-    <file path="/technology_require.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375342678802" ignored="false" />
-    <file path="/seeds.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375340939053" ignored="false" />
-    <file path="/technologies_helper.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375340994058" ignored="false" />
+    <file path="/technology_require.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375344666484" ignored="false" />
+    <file path="/seeds.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375344581046" ignored="false" />
+    <file path="/technologies_helper.rb" changelist="a80e5915-ae26-49fb-9eeb-ed1a773c9151" time="1375344572753" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +53,16 @@
       <file leaf-file-name="seeds.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/db/seeds.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="58" selection-start="479" selection-end="479" vertical-scroll-proportion="0.0">
+            <state line="17" column="32" selection-start="549" selection-end="549" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="technologies_helper.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/helpers/technologies_helper.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="8" column="93" selection-start="428" selection-end="428" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -59,7 +71,7 @@
       <file leaf-file-name="technology_require.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/models/technology_require.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="16" selection-start="514" selection-end="514" vertical-scroll-proportion="0.63706565">
+            <state line="17" column="42" selection-start="506" selection-end="506" vertical-scroll-proportion="0.49227798">
               <folding />
             </state>
           </provider>
@@ -67,6 +79,15 @@
       </file>
       <file leaf-file-name="planet.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models/planet.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="15" column="44" selection-start="319" selection-end="319" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="galaxies_helper.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/helpers/galaxies_helper.rb">
           <provider selected="true" editor-type-id="text-editor">
             <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding />
@@ -139,11 +160,11 @@
         <option value="$PROJECT_DIR$/db/migrate/20130731080225_planets_fix_column_name.rb" />
         <option value="$PROJECT_DIR$/db/migrate/20130731081253_building_fix_column_name.rb" />
         <option value="$PROJECT_DIR$/db/migrate/20130731081346_buildingtype_fix_column_name.rb" />
-        <option value="$PROJECT_DIR$/app/models/planet.rb" />
         <option value="$PROJECT_DIR$/db/migrate/20130730124519_create_user_settings.rb" />
         <option value="$PROJECT_DIR$/app/models/technology.rb" />
-        <option value="$PROJECT_DIR$/db/seeds.rb" />
+        <option value="$PROJECT_DIR$/app/models/planet.rb" />
         <option value="$PROJECT_DIR$/app/helpers/technologies_helper.rb" />
+        <option value="$PROJECT_DIR$/db/seeds.rb" />
         <option value="$PROJECT_DIR$/app/models/technology_require.rb" />
       </list>
     </option>
@@ -201,7 +222,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="RailsProjectView" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -305,6 +325,7 @@
         </subPane>
       </pane>
       <pane id="Scope" />
+      <pane id="RailsProjectView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -321,17 +342,17 @@
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="260" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="1053" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="1054" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="1053" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="259" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="255" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder3" value="3" />
     <property name="restartRequiresConfirmation" value="true" />
     <property name="RailsGeneratorsPopup.hiddenIncluded" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RunManager" selected="Rails.Development: MMOG">
     <configuration default="false" name="db:migrate" type="RakeRunConfigurationType" factoryName="Rake" temporary="true">
@@ -687,10 +708,14 @@
       <created>1375341078909</created>
       <updated>1375341078909</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="helper mit seeds gefüllt">
+      <created>1375343450917</created>
+      <updated>1375343450917</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
-  <component name="TodoView" selected-index="5">
+  <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
       <are-packages-shown value="false" />
       <are-modules-shown value="false" />
@@ -712,14 +737,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1600" height="771" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32817337" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294686" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.12229102" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22129032" sideWeight="0.877709" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22451612" sideWeight="0.877709" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294686" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -729,6 +753,7 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32969698" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32817337" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -829,13 +854,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/helpers/planets_helper.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/models/user_technology.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
@@ -850,28 +868,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/helpers/galaxies_helper.rb">
+    <entry file="file://$PROJECT_DIR$/app/models/galaxy.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/helpers/technologies_helper.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="18" selection-start="45" selection-end="45" vertical-scroll-proportion="0.056285176">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/db/seeds.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="58" selection-start="479" selection-end="479" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/galaxy.rb">
+    <entry file="file://$PROJECT_DIR$/app/models/player_setting.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
@@ -892,23 +896,44 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/planet.rb">
+    <entry file="file://$PROJECT_DIR$/app/helpers/planets_helper.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/player_setting.rb">
+    <entry file="file://$PROJECT_DIR$/app/models/planet.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="44" selection-start="319" selection-end="319" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/helpers/galaxies_helper.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/helpers/technologies_helper.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="93" selection-start="428" selection-end="428" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/seeds.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="32" selection-start="549" selection-end="549" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/models/technology_require.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="16" selection-start="514" selection-end="514" vertical-scroll-proportion="0.63706565">
+        <state line="17" column="42" selection-start="506" selection-end="506" vertical-scroll-proportion="0.49227798">
           <folding />
         </state>
       </provider>

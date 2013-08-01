@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130731092527) do
+ActiveRecord::Schema.define(version: 20130731151034) do
 
   create_table "alliances", force: true do |t|
     t.integer  "alliance_founder_id"
@@ -60,6 +60,7 @@ ActiveRecord::Schema.define(version: 20130731092527) do
     t.integer  "target_planet"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "origin_planet"
   end
 
   add_index "fleets", ["mission_id"], name: "index_fleets_on_mission_id"
