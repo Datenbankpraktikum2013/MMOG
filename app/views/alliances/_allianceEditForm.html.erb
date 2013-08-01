@@ -1,29 +1,55 @@
-<% if @alliance.user!=current_user %>
-  <div>
+<% unless current_user.rank_id.can_edit or current_user==@alliance.user_id %>
+  	<div>
 	  Du besitzt nicht die nötigen Rechte, um <%= current_user.alliance.name %> zu bearbeiten.
-  </div>
-<% else %>  
-  <table>
-	  <tbody>
-	  	<th>Ranks:</th>
-        <th>Can Kick</th>
-        <th>Can Massmail</th>
-        <th>Can Edit</th>
-        <th>Can Invite</th>
-        <th>Can Disband</th>
-	  	<% @alliance.ranks.each do |rank| %>		  	  
-	 	    <tr>
-	  	      <td><%=rank.name%></td>
-	  	      <td><%= rank.can_kick %></td>
-        	  <td><%= rank.can_massmail %></td>
-        	  <td><%= rank.can_edit %></td>
-        	  <td><%= rank.can_invite %></td>
-        	  <td><%= rank.can_disband %></td>  	    
-	          <td><%= link_to 'Edit', edit_rank_path(rank) %></td>
-	          <td><%= link_to 'Destroy', rank, method: :delete, data: { confirm: 'Delete this rank?' } %></td>
-	  	    </tr>	  	  
-	  	<%end%>
-	  	<td><%= link_to 'Create new rank', new_rank_path %></td>
-	  </tbody>
-  </table>	
+  	</div>
+<% else %>
+	<p>
+		<strong>Nutzer verwalten</strong>
+			<table border="1px">
+				<tr>
+					<th>Name</th>
+					<th>Spacecash</th>
+					<th>Userwertung</th>
+					<th>Rank</th>
+					<% if current_user.rank_id.can_kick or current_user==@alliance.user_id %>
+					<th></th>
+					<% end %>
+				</tr>
+				<% @alliance.users.each do |user| %>
+					<tr>
+						<td><%=user.username%></td>
+						<td><%=user.money%></td>
+						<td><%=user.score%></td>
+						<td><%=user.rank%></td>
+						<% if current_user.rank.can_kick or current.user==@alliance.user_id %>
+							<td><%= link_to 'Kicken' %>
+						<% end %>
+					</tr>
+				<% end %>
+			</table>
+	</p>
+	<p>
+		<strong>Ränge verwalten</strong>
+	  	<table>
+		  <tbody>
+		  	<th>Rang</th>
+	        <th>Kicken</th>
+	        <th>Rundmail</th>
+	        <th>Editieren</th>
+	        <th>Einladen</th>
+		  	<% @alliance.ranks.each do |rank| %>		  	  
+		 	    <tr>
+		  	      <td><%=rank.name%></td>
+		  	      <td><%= rank.can_kick ? "Ja" : "Nein" %></td>
+	        	  <td><%= rank.can_massmail ? "Ja" : "Nein" %></td>
+	        	  <td><%= rank.can_edit ? "Ja" : "Nein" %></td>
+	        	  <td><%= rank.can_invite ? "Ja" : "Nein" %></td> 	    
+		          <td><%= link_to 'Editieren', edit_rank_path(rank) %></td>
+		          <td><%= link_to 'Löschen', rank, method: :delete, data: { confirm: 'Möchtest du diesen Rank wirklich löschen?' } %></td>
+		  	    </tr>	  	  
+		  	<%end%>
+		  	<td><%= link_to 'Neuen Rang erstellen', new_rank_path %></td>
+		  </tbody>
+	  	</table>
+  	</p>	
 <% end %>
