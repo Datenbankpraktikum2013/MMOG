@@ -6,7 +6,7 @@ class Alliance < ActiveRecord::Base
 
 	has_many :users
 
-	has_one  :user
+	belongs_to  :user
 
 	validate :is_alliance_name_taken
 
