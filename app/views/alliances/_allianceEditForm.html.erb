@@ -1,0 +1,30 @@
+<% if @alliance.user!=current_user %>
+  <div>
+	  Du besitzt nicht die nötigen Rechte, um <%= current_user.alliance.name %> zu bearbeiten.
+  </div>
+<% else %>
+  <h1> <%= current_user.alliance.name %> bearbeiten: </h1>
+  <table>
+	  <tbody>
+	  	<th>Ranks:</th>
+        <th>Can Kick</th>
+        <th>Can Massmail</th>
+        <th>Can Edit</th>
+        <th>Can Invite</th>
+        <th>Can Disband</th>
+	  	<% @alliance.ranks.each do |rank| %>		  	  
+	 	    <tr>
+	  	      <td><%=rank.name%></td>
+	  	      <td><%= rank.can_kick %></td>
+        	  <td><%= rank.can_massmail %></td>
+        	  <td><%= rank.can_edit %></td>
+        	  <td><%= rank.can_invite %></td>
+        	  <td><%= rank.can_disband %></td>  	    
+	          <td><%= link_to 'Edit', edit_rank_path(rank) %></td>
+	          <td><%= link_to 'Destroy', rank, method: :delete, data: { confirm: 'Delete this rank?' } %></td>
+	  	    </tr>	  	  
+	  	<%end%>
+	  	<td><%= link_to 'Create new rank', new_rank_path %></td>
+	  </tbody>
+  </table>	
+<% end %>

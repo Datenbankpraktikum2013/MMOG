@@ -5,17 +5,27 @@ class TechnologyRequire < ActiveRecord::Base
 
 
   def self.technology_require? (user, tech)
-    #TODO   chech the requirements for a specific technology -- return true if fulfilled
+    #TODO   check the requirements for a specific technology -- return true if fulfilled
 
-    #
-    #buildingresult = TechnologyRequire.where(:tech_id => tech).first.building_rank
-    #  technoresult = TechnologyRequire.where(:tech_id => tech).
+    okay = true
 
-    #if
+    result= TechnologyRequire.where(:tech_id => tech)
+
+    result.each { |i|
+
+      rank = UserTechnology.where(:user_id =>  user, :technology_id => i.pre_tech_id).first.rank
+
+      if rank < i.pre_tech_rank
+        okay=false
+      end
+
       #TODO Abfrage des Technologie-Gebäude Rangs
 
 
-    #end
+    }
+
+    okay
+
   end
 
 
