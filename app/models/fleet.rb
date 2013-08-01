@@ -94,7 +94,10 @@ class Fleet < ActiveRecord::Base
     # calculate 
   end
 =end
-
+  def move_to_planet()
+    #self.target_planet=planet
+    Resque.enqueue(1.minute, MoveFleet, self.id)
+  end
 
 =begin
   # gets a Hash with ships as keys and amounts as values
