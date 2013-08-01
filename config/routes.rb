@@ -18,7 +18,7 @@ Mmog::Application.routes.draw do
 
   resources :alliances
 
-  resources :ranks  
+  resources :ranks, :except => :show
   
   resources :buildings
 
