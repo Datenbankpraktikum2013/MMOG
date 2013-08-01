@@ -8,22 +8,19 @@
 
 #Default-Werte von Planeten und Gebäude
 
+# Auskommentiert, damit schneller laedt
+$game_settings = Hash.new()
+$game_settings[:world_length] = 5
+$game_settings[:world_view_length] = 5
 GalaxiesHelper.generateNear(1,1)
 
 #Default-Werte von Technologien
 
 #######Default Technologies
 
-
-#######Default Technologie-requires
-
-
-
-
-
-
-
-
+TechnologiesHelper.init_Technology
+TechnologiesHelper.init_Technology_Require
+TechnologiesHelper.test_user_technology
 
 #Default-Werte von Schiffe und Missionen
 Ship.create({:construction_time => 1, :offense => 1, :defense => 10, :crystal_cost => 0, :credit_cost => 10, :ore_cost => 5, :name => 'Small cargo ship', :velocity => 3, :crew_capacity => 1, :ressource_capasity => 500, :fuel_capacity => 500, :consumption => 2})
@@ -38,7 +35,7 @@ Ship.create({:construction_time => 1, :offense => 1, :defense => 300, :crystal_c
 Ship.create({:construction_time => 1, :offense => 1, :defense => 10, :crystal_cost => 0, :credit_cost => 20, :ore_cost => 50, :name => 'Colony ship', :velocity => 2, :crew_capacity => 5, :ressource_capasity => 1000, :fuel_capacity => 3000, :consumption => 4})
 
 #Default-Werte von Spieler, Allianzen und Nachrichten
-Alliance.create({:name => 'test_alliance3', :description => 'testtesttest'})
+#Alliance.create({:name => 'test_alliance3', :description => 'testtesttest', :user_id => User.first})
 
 ##########DEFAULT USER!! demo:praktikum
-#User.create(:email => 'demo@demo.com',:password => 'praktikum',:username => 'demo',:money => 100,:score => 0)
+User.create(:email => 'demo@demo.com',:password => 'praktikum',:username => 'demo',:money => 100,:score => 0)

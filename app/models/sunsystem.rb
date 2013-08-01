@@ -28,5 +28,9 @@ class Sunsystem < ActiveRecord::Base
     end
   end
 
+  def mention()
+          self.galaxy.mention()
+  end
+
 
 end

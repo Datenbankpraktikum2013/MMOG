@@ -29,24 +29,10 @@ class User < ActiveRecord::Base
   end
 
   #get user-settings affected by Research
+
+  #affect ships
   def get_movement
     self.user_setting.increased_movement
-  end
-
-  def get_income
-    self.user_setting.increased_income
-  end
-
-  def get_ironproduction
-    self.user_setting.increased_ironproduction
-  end
-
-  def get_energy_efficiency
-    self.user_setting.increased_energy_efficiency
-  end
-
-  def get_research
-    self.user_setting.increased_research
   end
 
   def get_power
@@ -65,10 +51,30 @@ class User < ActiveRecord::Base
     self.user_setting.increased_spypower
   end
 
+  #affect ressources
+  def get_income
+    self.user_setting.increased_income
+  end
+
+  def get_ironproduction
+    self.user_setting.increased_ironproduction
+  end
+
+  def get_energy_efficiency
+    self.user_setting.increased_energy_efficiency
+  end
+
+  #affect resear_duration
+  def get_research
+    self.user_setting.increased_research
+  end
+
+  #
   def get_big_house
     self.user_setting.big_house
   end
 
+  #
   def has_hyperspace_technology?
     self.user_setting.hyperspace_technology
   end

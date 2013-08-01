@@ -95,10 +95,14 @@ class Planet < ActiveRecord::Base
       self.maxpopulation = 5000
       
     end
+  end
 
 
+  def mention()
+      self.sunsystem.mention()
 
   end
+
 
   #@param type Name der Produktionsstaette ("Eisenmine", "Haus", ...)
   def get_production(type)

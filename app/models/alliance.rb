@@ -6,9 +6,9 @@ class Alliance < ActiveRecord::Base
 
 	has_many :users
 
-	has_one  :user
+	belongs_to  :user
 
-	validate :is_alliance_name_taken
+	validate :is_alliance_name_taken, on: :create
 
 #checks if alliance name is already taken
 	def is_alliance_name_taken
