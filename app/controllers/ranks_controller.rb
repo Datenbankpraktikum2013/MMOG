@@ -27,6 +27,7 @@ class RanksController < ApplicationController
     @rank = Rank.new(rank_params)
 
     respond_to do |format|
+      @rank.alliance=current_user.alliance
       if @rank.save
         format.html { redirect_to @rank, notice: 'Rank was successfully created.' }
         format.json { render action: 'show', status: :created, location: @rank }
