@@ -94,10 +94,11 @@ class Fleet < ActiveRecord::Base
     # calculate 
   end
 =end
-  def move_to_planet()
-    #self.target_planet=planet
+  def move_to_planet(p,t)
+     
 
-    Resque.enqueue(1.minute, MoveFleet)
+    Resque.enqueue_in(t.second, MoveFleet, self.id ,p.id)
+    
   end
 
 =begin
