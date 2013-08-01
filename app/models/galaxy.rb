@@ -4,8 +4,8 @@ class Galaxy < ActiveRecord::Base
 
   def self.calcX(x, y)
     if x.integer? && y.integer? then
-      x %= $game_settings["world_length"]
-      y %= $game_settings["world_length"]
+      x %= $game_settings[:world_length]
+      y %= $game_settings[:world_length]
       (x + y) * (x + y + 1) / 2 + y + 1
     else
       -1
@@ -48,11 +48,11 @@ class Galaxy < ActiveRecord::Base
       dist.append(Math.sqrt(x^2 + y^2))
 
       # Indirekt "V" / Universum vertikal umklappen
-      y2 = $game_settings["world_length"] - y
+      y2 = $game_settings[:world_length] - y
       dist.append(Math.sqrt(x^2 + y2^2))
 
       # Indirekt "VH" / Universum vertikal und horizontal umklappen
-      x = $game_settings["world_length"] - x
+      x = $game_settings[:world_length] - x
       dist.append(Math.sqrt(x^2 + y2^2))
 
       # Indirekt "H" / Universum horizontal umklappen
