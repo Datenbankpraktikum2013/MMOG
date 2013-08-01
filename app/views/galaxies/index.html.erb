@@ -27,31 +27,35 @@
 </table>
 
 -->
-
+<div class=".galaxyfield">
 <table>
   <% id = 0
-    5.times do |x| %>
-  <tr>
-    <% 5.times do |y|
-      id=Galaxy.calcX(x, y); %>
+    $game_settings["world_view_length"].times do |i| %>
+  <tr class=".galaxyfield_tr">
+    <% $game_settings["world_view_length"].times do |j|
+      x=@galaxies[i*$game_settings["world_view_length"]+j];
+      unless x.nil? then
+      pos = x.getCoords()
+      x = x.x
+    %>
     <td class="galaxy <%= out = ""
-        if(GalaxiesHelper.isMeins(id)) then
+        if(GalaxiesHelper.isMeins(x)) then
                             out += "mygalaxy "
                           end
-                          if(GalaxiesHelper.isVisible(id)) then
+                          if(GalaxiesHelper.isVisible(x)) then
                             out += "visiblegalaxy "
                           end
-    filename = GalaxiesHelper.getImageFilename(id, 80)
+    filename = GalaxiesHelper.getImageFilename(x, 80)
     out += filename[16] + filename[18, 4] %>"
-    title="Galaxie<%= if(GalaxiesHelper.isMeins(id)) then " (gehört mir)" end %>: <%= id; %>, Koordinaten: (<%= y %>,<%= x
-    %>), Sichtbar:<%= if(GalaxiesHelper.isVisible(id)) then "Ja" else "Nein" end %>"></td>
-    <% end %>
+    title="Galaxie<%= if(GalaxiesHelper.isMeins(x)) then " (gehört mir)" end %>: <%= x; %>, Koordinaten: (<%= pos[0] %>,<%= pos[1]
+    %>), Sichtbar:<%= if(GalaxiesHelper.isVisible(x)) then "Ja" else "Nein" end %>"></td>
+    <% end end %>
   </tr>
   <% end %>
 
 
 </table>
-
+</div>
 <br>
 
-<%= link_to 'New Galaxy', new_galaxy_path %>
+#<%= link_to 'New Galaxy', new_galaxy_path %>
