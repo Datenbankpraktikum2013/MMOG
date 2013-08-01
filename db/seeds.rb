@@ -36,7 +36,7 @@ Ship.create({:construction_time => 1, :offense => 1, :defense => 300, :crystal_c
 Ship.create({:construction_time => 1, :offense => 1, :defense => 10, :crystal_cost => 0, :credit_cost => 20, :ore_cost => 50, :name => 'Colony ship', :velocity => 2, :crew_capacity => 5, :ressource_capasity => 1000, :fuel_capacity => 3000, :consumption => 4})
 
 #Default-Werte von Spieler, Allianzen und Nachrichten
-Alliance.create({:name => 'test_alliance3', :description => 'testtesttest'})
+#Alliance.create({:name => 'test_alliance3', :description => 'testtesttest', :user_id => User.first})
 
 ##########DEFAULT USER!! demo:praktikum
 User.create(:email => 'demo@demo.com',:password => 'praktikum',:username => 'demo',:money => 100,:score => 0)

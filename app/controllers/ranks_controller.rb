@@ -7,11 +7,6 @@ class RanksController < ApplicationController
     @ranks = Rank.all
   end
 
-  # GET /ranks/1
-  # GET /ranks/1.json
-  def show
-  end
-
   # GET /ranks/new
   def new
     @rank = Rank.new
@@ -27,8 +22,9 @@ class RanksController < ApplicationController
     @rank = Rank.new(rank_params)
 
     respond_to do |format|
+      @rank.alliance=current_user.alliance
       if @rank.save
-        format.html { redirect_to @rank, notice: 'Rank was successfully created.' }
+        format.html { redirect_to edit_alliance_url(@rank.alliance), notice: 'Rank was successfully created.' }
         format.json { render action: 'show', status: :created, location: @rank }
       else
         format.html { render action: 'new' }

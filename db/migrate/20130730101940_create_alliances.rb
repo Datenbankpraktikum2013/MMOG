@@ -4,6 +4,7 @@ class CreateAlliances < ActiveRecord::Migration
       t.integer  :user_id
       t.string   :name
       t.text 	 :description
+      t.string	 :banner
       t.timestamps
     end
   end
