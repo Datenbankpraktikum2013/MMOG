@@ -97,12 +97,11 @@ ActiveRecord::Schema.define(version: 20130801062130) do
   end
 
   create_table "ranks", force: true do |t|
-    t.string   "name"
-    t.boolean  "can_kick"
-    t.boolean  "can_massmail"
-    t.boolean  "can_edit"
-    t.boolean  "can_invite"
-    t.boolean  "can_disband"
+    t.string   "name",                         null: false
+    t.boolean  "can_kick",     default: false
+    t.boolean  "can_massmail", default: false
+    t.boolean  "can_edit",     default: false
+    t.boolean  "can_invite",   default: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "alliance_id"
@@ -202,11 +201,11 @@ ActiveRecord::Schema.define(version: 20130801062130) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.string   "nickname",                             null: false
+    t.string   "username",                             null: false
     t.integer  "money",                  default: 100
     t.integer  "score",                  default: 0
     t.integer  "alliance_id"
-    t.integer  "alliance_rank"
+    t.integer  "rank_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
