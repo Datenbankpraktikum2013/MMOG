@@ -1,12 +1,14 @@
 class Planet < ActiveRecord::Base
 
-
+  belongs_to :user
   belongs_to :sunsystem
   has_many :buildings
   has_many :fleets
 
   MIN_SIZE = 123456789
   MAX_SIZE = 987654321
+  SPEC_CONST = 1.02
+
 
   def initialize(pla_name, pla_z, pla_specialty, pla_sunsystem_id)
     self.name = pla_name
@@ -31,9 +33,30 @@ class Planet < ActiveRecord::Base
 
   end
 
-  def get_production_factor_of(type)
-    # TODO Calculate the factor of productionspeed
-    return 1
+  @param type Name der Produktionsstaette ("Eisenmine", "Haus", ...)
+  def get_production(type)
+    # TODO Calculate production
+    b = self.buildings.where(name: type).production
+
+    if( type == ore)
+         a = self.user.get_ironproduction
+         c = a * b
+         return c
+
+    end
+
+    if( type == population)
+      if(self.special = 2)
+        a = SPEC_CONST * b
+
+      else
+        1
+      end
+
+    end
+
+
+
   end
 
   def get_building_factor_of(type)
