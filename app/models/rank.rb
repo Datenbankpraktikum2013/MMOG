@@ -3,7 +3,8 @@ class Rank < ActiveRecord::Base
 	validates_presence_of :name
 
 	belongs_to :alliance
-
+	
+	#validate :is_rank_name_taken, on: :create, on: :update
 	validate :is_rank_name_taken, on: :create
 
 #check if rank name is taken

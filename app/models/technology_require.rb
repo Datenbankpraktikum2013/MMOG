@@ -15,15 +15,14 @@ class TechnologyRequire < ActiveRecord::Base
 
       if i.pre_tech_id != 0
 
-
-
-        rank = UserTechnology.where(:user_id => user, :technology_id => i.pre_tech_id).first
+      rank = UserTechnology.where(:user_id => user, :technology_id => i.pre_tech_id).first
 
         if rank.blank? then
           okay=false
 
         elsif rank.rank < i.pre_tech_rank && i.pre_tech_rank != 0
 
+          puts 'Fehlende Voraussetzung', i.pre_tech_id, i.pre_tech_rank
           okay=false
 
         end

@@ -7,19 +7,26 @@ class GalaxiesController < ApplicationController
     $game_settings = Hash.new()
     $game_settings[:world_length] = 5
     $game_settings[:world_view_length] = 5
-    pos = Array.new([0,0])
+    pos = [0, 0]
     unless params[:pox_x].nil? || params[:pox_y].nil?
       pos[0] = params[:x]
       pos[1] = params[:y]
     end
 
-    near = Array.new(($game_settings[:world_view_length] * $game_settings[:world_view_length]))
-    for x in (pos[0]-2)..(pos[0]+2)
-      for y in (pos[0]-2)..(pos[0]+2)
-        near[x*$game_settings[:world_view_length]+y] = Galaxy.calcX(x, y)
+    @near = Array.new()
+    for y in pos[1]..pos[1]+4
+      for x in pos[0]..pos[0]+4
+        g = Galaxy.where(id: Galaxy.calcX(x,y)).first
+        if g.nil? then
+          @near.append(nil)
+        else
+          @near.append(g.x)
+        end
+        #@near.append(Galaxy.where(id: Galaxy.calcX(x,y)).first(1))
       end
     end
-    @galaxies = Galaxy.where(id: near)
+
+#    @galaxies = Galaxy.all
   end
 
   # GET /galaxies/1

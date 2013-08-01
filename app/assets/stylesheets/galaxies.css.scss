@@ -1,9 +1,10 @@
 // Place all the styles related to the Galaxies controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-div.galaxyfield table{border: 0px; background-color: #000; padding: 0px; margin: 0px;}
-div.galaxyfield tr{padding: 0px; margin: 0px;}
-div.galaxyfield a{padding: 0px; margin: 0px;}
+table.galaxyfield {border: 0px; background-color: #000; padding: 0px; margin: 0px;}
+.galaxyfield tr{padding: 0px; margin: 0px;}
+.galaxyfield td{color: #FFF; text-align: right;}
+.galaxyfield a{padding: 0px; margin: 0px;}
 .galaxy{border-radius: 16px; border: 1px dotted #333; opacity: 0.5; width: 80px; height: 80px;}
 .visiblegalaxy{border: 1px dotted #99F; opacity: 1.0;}
 .mygalaxy{border: 1px dotted #9F9; opacity: 1.0;}

@@ -10,7 +10,10 @@ class User < ActiveRecord::Base
 
   #relations
   has_one :user_setting, :dependent => :destroy
+  has_one :rank
   has_many :user_technologies
+  has_many :technologies, :through => :user_technologies
+
   has_many :fleets
   has_many :planets
   has_many :battlereports

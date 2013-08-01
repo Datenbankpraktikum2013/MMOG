@@ -4,6 +4,8 @@ Mmog::Application.routes.draw do
 
   resources :battlereports
 
+  resources :messages
+
   resources :shipfleets
 
   resources :fleets
