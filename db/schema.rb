@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20130801062130) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "banner"
   end
 
   create_table "buildings", force: true do |t|

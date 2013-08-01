@@ -46,7 +46,6 @@ class AlliancesController < ApplicationController
         end
       end
     end
-
   end
 
   # PATCH/PUT /alliances/1
