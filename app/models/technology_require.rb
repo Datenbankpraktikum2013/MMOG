@@ -8,7 +8,14 @@ class TechnologyRequire < ActiveRecord::Base
     #TODO   chech the requirements for a specific technology -- return true if fulfilled
 
     #
-    result = TechnologyRequire.where()
+    buildingresult = TechnologyRequire.where(:tech_id => tech).first.building_rank
+      technoresult = TechnologyRequire.where(:tech_id => tech)
+
+    if
+      #TODO Abfrage des Technologie-Gebäude Rangs
+
+
+    end
   end
 
 
