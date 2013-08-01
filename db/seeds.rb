@@ -7,27 +7,12 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 #Default-Werte von Planeten und Gebäude
-
-# Auskommentiert, damit schneller laedt
-#GalaxiesHelper.generateNear(1,1)
+GalaxiesHelper.generateNear(1,1)
 
 #Default-Werte von Technologien
-
-#######Default Technologies
-
 TechnologiesHelper.init_Technology
 TechnologiesHelper.init_Technology_Require
-
-
-#######Default Technologie-requires
-
-
-
-
-
-
-
-
+TechnologiesHelper.test_user_technology
 
 #Default-Werte von Schiffe und Missionen
 Ship.create({:construction_time => 1, :offense => 1, :defense => 10, :crystal_cost => 0, :credit_cost => 10, :ore_cost => 5, :name => 'Small cargo ship', :velocity => 3, :crew_capacity => 1, :ressource_capasity => 500, :fuel_capacity => 500, :consumption => 2})
