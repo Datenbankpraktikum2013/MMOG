@@ -4,18 +4,16 @@
   </div>
 <% else %>
   <h1> <%= current_user.alliance.name %> bearbeiten: </h1>
-  
-  <tbody>
-  	<% self.ranks.each do |rank| %>	
-  	  <table>
- 	    <tr>	
-  	      <td>rank.name</td>  	    
-          <td><%= link_to 'Edit', edit_rank_path(rank) %></td>
-          <td><%= link_to 'Destroy', rank, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  	    </tr>
-
-  	  </table>
-  	<end>
-  	<td><%= link_to 'Create new rank', new_rank_path(rank) %></td>	
-  </tbody>	
+  <table>
+	  <tbody>
+	  	<% self.ranks.each do |rank| %>		  	  
+	 	    <tr>	
+	  	      <td>rank.name</td>  	    
+	          <td><%= link_to 'Edit', edit_rank_path(rank) %></td>
+	          <td><%= link_to 'Destroy', rank, method: :delete, data: { confirm: 'Delete this rank?' } %></td>
+	  	    </tr>	  	  
+	  	<end>
+	  	<td><%= link_to 'Create new rank', new_rank_path(rank) %></td>	
+	  </tbody>
+  </table>	
 <% end %>
