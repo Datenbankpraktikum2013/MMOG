@@ -22,6 +22,7 @@ class AlliancesController < ApplicationController
 
   # GET /alliances/1/edit
   def edit
+    @alliance=
   end
 
   # POST /alliances
@@ -45,7 +46,6 @@ class AlliancesController < ApplicationController
         end
       end
     end
-
   end
 
   # PATCH/PUT /alliances/1
