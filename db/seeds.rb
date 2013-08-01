@@ -39,3 +39,13 @@ Ship.create({:construction_time => 1, :offense => 1, :defense => 10, :crystal_co
 
 ##########DEFAULT USER!! demo:praktikum
 User.create(:email => 'demo@demo.com',:password => 'praktikum',:username => 'demo',:money => 100,:score => 0)
+
+#Buildingtypes
+Buildingtype.create({:name =>'Headquarter', level=> 1, production=> 1, energyusage=> 0})
+Buildingtype.create({:name =>'Oremine', level=> 1, production=> 10, energyusage=>0})
+Buildingtype.create({:name =>'Powerplant', level => 1, production=> 10, energyusage=>0})
+Buildingtype.create({:name =>'Research Lab', level => 1, production=> 0, energyusage=> 30})
+Buildingtype.create({:name =>'City', level=> 1, production=> 100, energyusage=> 20})
+Buildingtype.create({:name =>'Depot', level=> 1, production=> 200, energyusage=> 5})
+Buildingtype.create({:name =>'Crystalmine', level=> 1, production=> 1, energyusage=> 100})
+Buildingtype.create({:name =>'Starport', level=> 1, production=> 0, energyusage=> 100})
