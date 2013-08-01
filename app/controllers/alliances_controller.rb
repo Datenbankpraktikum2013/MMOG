@@ -5,10 +5,7 @@ class AlliancesController < ApplicationController
   # GET /alliances
   # GET /alliances.json
   def index
-    if current_user.alliance!=nil
-      redirect_to current_user.alliance
-    end
-    #@alliances = Alliance.all
+    @alliances = Alliance.all
   end
 
   # GET /alliances/1
@@ -48,7 +45,6 @@ class AlliancesController < ApplicationController
         end
       end
     end
-
   end
 
   # PATCH/PUT /alliances/1

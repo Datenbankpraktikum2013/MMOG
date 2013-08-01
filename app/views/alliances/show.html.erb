@@ -4,9 +4,6 @@
   <h1><%= @alliance.name %></h1>
 </p>
 <p>
-	<img src=<%=@alliance.banner%> />
-</p>
-<p>
 	<strong>Gründer:</strong>
 	<%= @alliance.user.username %>
 </p>
@@ -33,6 +30,7 @@
 	</table>
 </p>
 	
-
-<%= link_to 'Bearbeiten', edit_alliance_path(@alliance) %> |
+<% if current_user==@alliance.user%>
+	<%= link_to 'Bearbeiten', edit_alliance_path(@alliance) %> |
+<%end%>
 <%= link_to 'Zurück', alliances_path %>
