@@ -11,12 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130801062130) do
+ActiveRecord::Schema.define(version: 20130801131718) do
 
   create_table "alliances", force: true do |t|
     t.integer  "user_id"
     t.string   "name"
     t.text     "description"
+    t.string   "banner"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -73,6 +74,14 @@ ActiveRecord::Schema.define(version: 20130801062130) do
     t.datetime "updated_at"
   end
 
+  create_table "messages", force: true do |t|
+    t.text     "text"
+    t.text     "subject"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "missions", force: true do |t|
     t.string   "info_text"
     t.datetime "created_at"
@@ -105,9 +114,9 @@ ActiveRecord::Schema.define(version: 20130801062130) do
     t.boolean  "can_edit",     default: false
     t.boolean  "can_invite",   default: false
     t.boolean  "can_disband",  default: false
+    t.integer  "alliance_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "alliance_id"
   end
 
   create_table "shipfleets", force: true do |t|
