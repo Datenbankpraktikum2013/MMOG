@@ -5,7 +5,7 @@ class Rank < ActiveRecord::Base
 	belongs_to :alliance
 
 	has_many :users
-	
+
 	#validate :is_rank_name_taken, on: :create, on: :update
 	validate :is_rank_name_taken, on: :create
 

@@ -32,27 +32,40 @@ class Technology < ActiveRecord::Base
     end
   end
 
+
+  def update_usersettings(user, rank)
+
+    #TODO UserSetting innitiallisieren beim anlegen
+    record = UserSetting.find_by(:user_id => user)
+    record.update_attribute(self.name, self.factor**rank)
+
+  end
+
+
   def get_technology_cost(user)
 
-      result = user_technologies.where(:user_id => user).first
+    result = user_technologies.where(:user_id => user).first
 
 
     if !result.blank? then
       return  result.rank * self.cost
 
     else
-       return self.cost
+      return self.cost
     end
   end
 
+  def get_research_duration(user)
 
-  #def update_usersettings(user, rank)
+   result = user_technologies.where(:user_id => user).first
 
-    #TODO UserSetting innitiallisieren beim anlegen
-   # record = UserSetting.find(user)
-    #record.update_attribute(self.name, self.factor*rank)
+    if !result.blank? then
+      return  result.rank * self.duration
 
-  #end
+    else
+      return self.duration
+   end
+  end
 
 
 end

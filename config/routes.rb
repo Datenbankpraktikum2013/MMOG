@@ -18,7 +18,7 @@ Mmog::Application.routes.draw do
 
   resources :technologies
 
-  devise_for :users
+  devise_for :users #not needed any more, :controllers => { :registrations => "users/registrations"}
 
   root 'welcome#index'
 
@@ -33,6 +33,8 @@ Mmog::Application.routes.draw do
   resources :sunsystems
 
   resources :planets
+
+  #devise_for :controllers => {:registrations => "registrations"}
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
