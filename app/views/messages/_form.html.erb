@@ -26,6 +26,8 @@
     <% @allianceusers=current_user.alliance.users %>
     <% @allianceusers.each do |user|%>
       <%= user.username %>
+      <%= user.alliance.name %>
+      <%= user.rank.name %>
     <% end %>
   </div>
 

@@ -11,8 +11,6 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-
 ActiveRecord::Schema.define(version: 20130802112110) do
 
   create_table "alliances", force: true do |t|
