@@ -113,13 +113,18 @@ class Fleet < ActiveRecord::Base
 #=end
 
 #=begin
+
+  #Adds Ship to Fleet in t seconds
+  def add_ship_in(t,s)
+    Resque.enqueue_in(t.second, AddShip, self.id ,s.id)
+  end
+
   # fuegt einer Flotte ein Schiff hinzu
   # EVTL AUF SHIP_ID ALS INPUT AENDERN???
   def add_ship(s)
     unless s.is_a?Ship
       raise RuntimeError, "Input is no ship" # Fehlerbehandlung
     end
-
     ship_array = Shipfleet.where(fleet_id: self, ship_id: s)
     # if there is no entry of a shiptype of that fleet
     # else there is an entry, that just has to be incremented
