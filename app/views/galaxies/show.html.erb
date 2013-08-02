@@ -10,5 +10,24 @@
   <%= @galaxy.name %>
 </p>
 
+
+
+
+<p>
+<strong>Liste der Sonnensysteme in dieser Galaxie</strong>
+<% @galaxy.sunsystems.each do |s| %>
+
+    <p>
+    <%= s.name%>
+    <%= s.y %>
+    <%= link_to 'Sunsystem', sunsystem_path(s) %>
+    </p>
+<% end %>
+</p>
+
+
+<p>
 <%= link_to 'Edit', edit_galaxy_path(@galaxy) %> |
 <%= link_to 'Back', galaxies_path %>
+</p>
+

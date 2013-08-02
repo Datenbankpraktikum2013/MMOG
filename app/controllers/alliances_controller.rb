@@ -1,5 +1,5 @@
 class AlliancesController < ApplicationController
-  before_action :set_alliance, only: [:show, :edit, :update, :destroy]
+  before_action :set_alliance, only: [:show, :edit, :update, :destroy, :useradd, :user_add_action]
   before_filter :authenticate_user!
 
   # GET /alliances
@@ -25,6 +25,28 @@ class AlliancesController < ApplicationController
   def edit
   end
 
+  # POST /alliances/1/edit/user_add_action
+  def user_add_action
+    @users=User.all
+    @concrete_user=@users.where('username == ?',params['username']).first
+    if validate_useradd(@concrete_user)==0
+      respond_to do |format|
+        if @alliance.add_user(@concrete_user) #save both
+            format.html { redirect_to @alliance, notice: 'User has been successfully added.' }
+            format.json { render action: 'edit', status: :created, location: @alliance }
+        else
+          format.html { redirect_to @alliance, notice: 'User could not be added.' }
+          format.json { render json: @alliance.errors, status: :unprocessable_entity }
+        end
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to @alliance, notice: 'User could not be added.' }
+        format.json { render json: @alliance.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   # POST /alliances
   # POST /alliances.json
   def create
@@ -45,7 +67,6 @@ class AlliancesController < ApplicationController
 
   #GET  /alliances/1/edit/useradd
   def useradd
-      @available_users=User.where('alliance_id != ?',@alliance.id)
   end
 
   # PATCH/PUT /alliances/1
@@ -90,5 +111,19 @@ class AlliancesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def alliance_params
       params.require(:alliance).permit(:name, :default_rank, :description)
+    end
+
+    def validate_useradd(user)
+      if user==nil
+        return 1 #user does not exist
+      elsif user==current_user
+        return 2 #user cant add himself
+      elsif user.alliance!=nil
+        return 3 #user already has an alliance
+      elsif user.alliance==@alliance
+        return 4 #user is already part of this alliance
+      else
+        return 0
+      end
     end
 end

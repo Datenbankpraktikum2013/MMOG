@@ -10,5 +10,21 @@
   <%= @sunsystem.name %>
 </p>
 
+
+
+<p>
+  <strong>Liste der Planeten in diesem Sonnensystem</strong>
+  <% @sunsystem.planets.each do |s| %>
+
+    <p>
+      <%= s.name%>
+      <%= s.z %>
+      <%= link_to 'Planet', planet_path(s) %>
+    </p>
+<% end %>
+</p>
+
+
+
 <%= link_to 'Edit', edit_sunsystem_path(@sunsystem) %> |
 <%= link_to 'Back', sunsystems_path %>
