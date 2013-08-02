@@ -128,6 +128,7 @@ ActiveRecord::Schema.define(version: 20130801142000) do
     t.boolean  "can_edit",     default: false
     t.boolean  "can_invite",   default: false
     t.boolean  "can_disband",  default: false
+    t.boolean  "is_founder",   default: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "alliance_id"
@@ -240,7 +241,7 @@ ActiveRecord::Schema.define(version: 20130801142000) do
     t.integer  "money",                  default: 100
     t.integer  "score",                  default: 0
     t.integer  "alliance_id"
-    t.integer  "alliance_rank"
+    t.integer  "rank_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
