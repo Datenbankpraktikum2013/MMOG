@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130801142000) do
+ActiveRecord::Schema.define(version: 20130802073348) do
 
   create_table "alliances", force: true do |t|
     t.string   "name"
@@ -187,6 +187,7 @@ ActiveRecord::Schema.define(version: 20130801142000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "duration"
+    t.integer  "maxrank"
   end
 
   create_table "technology_requires", force: true do |t|
