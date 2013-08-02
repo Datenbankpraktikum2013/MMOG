@@ -17,6 +17,9 @@
       <th>Arrival time</th>
       <th>Start planet</th>
       <th>Target planet</th>
+      <% @shiptypes.each do |shiptype| %>
+      <th><%= shiptype.name %></td>
+      <% end %>
       <th></th>
       <th></th>
       <th></th>
@@ -40,6 +43,9 @@
         <td><%= fleet.arrival_time %></td>
         <td><%= fleet.start_planet %></td>
         <td><%= fleet.target_planet %></td>
+        <% @shiptypes.each do |shiptype| %>
+          <th><%= fleet.get_amount_of_ship( shiptype.id ) %></td>
+        <% end %>
         <td><%= link_to 'Show', fleet %></td>
         <td><%= link_to 'Edit', edit_fleet_path(fleet) %></td>
         <td><%= link_to 'Destroy', fleet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
