@@ -1,6 +1,6 @@
 class Fleet < ActiveRecord::Base
 	has_many :shipfleets
-	has_many :ships, :through => :shipfleets, :select => "ships.*, shipfleets.amount, shipfleets.fleet_id"
+	has_many :ships, :through => :shipfleets
 	belongs_to :start_planet, class_name: "Planet", foreign_key: "start_planet"
 	belongs_to :target_planet, class_name: "Planet", foreign_key: "target_planet"
 	belongs_to :origin_planet, class_name: "Planet", foreign_key: "origin_planet"
@@ -32,28 +32,28 @@ class Fleet < ActiveRecord::Base
 
 #=begin
   # returns the amount of a shiptype in one fleet
+  # EVTL MIT OBJEKTEN ANSTATT IDS?????????????
   def get_amount_of_ship(s_id)
-    amount = Shipfleet.where(fleet_id: self.id, ship_id: s_id).first.amount
-    if amount == nil then
-      return 0
+    sf = Shipfleet.where(fleet_id: self.id, ship_id: s_id).first
+    if sf.nil?
+      0
     else
-      return amount
+      sf.amount
     end
   end
 #=end
 
 #=begin
   # Returns a Hash of {Ship => Amount} pairs
-  #MIT SELF VERSUCHEN
   def get_ships()
-    if self.ships == nil
-      return null
+    ship_hash = {}
+    if self.ships.nil?
+      ship_hash
     else
-      ship_hash = {}
       self.ships.each do |s|
         ship_hash[s.name] = Shipfleet.where(fleet_id: self, ship_id: s).first.amount
       end
-      return ship_hash
+      ship_hash
     end
   end
 #=end
@@ -102,7 +102,7 @@ class Fleet < ActiveRecord::Base
     
   end
 
-=begin
+#=begin
   # gets a Hash with ships as keys and amounts as values
   def split_fleet(ships)
     # check wether the fleet has enough ships
@@ -110,14 +110,14 @@ class Fleet < ActiveRecord::Base
     # call add_ships(shiphash) on that new fleet and detroy_ships(shiphash) on the original fleet
     # returns the fleet
   end
-=end
+#=end
 
 #=begin
   # fuegt einer Flotte ein Schiff hinzu
   # EVTL AUF SHIP_ID ALS INPUT AENDERN???
   def add_ship(s)
     unless s.is_a?Ship
-      raise (RuntimeError,"Input is no ship") # Fehlerbehandlung
+      raise RuntimeError, "Input is no ship" # Fehlerbehandlung
     end
 
     ship_array = Shipfleet.where(fleet_id: self, ship_id: s)
@@ -176,7 +176,7 @@ class Fleet < ActiveRecord::Base
     ship_array.each do |s|
       if ship_hash.has_key?(s.ship_id)
         if s.amount < ship_hash[s.ship_id]
-          raise (RuntimeError,"Not enough ships to destroy")  #Fehlerbehandlung + ABBRUCH
+          raise RuntimeError, "Not enough ships to destroy"  #Fehlerbehandlung + ABBRUCH
         end
         s.amount -= ship_hash[s.ship_id]
         s.save
@@ -186,7 +186,7 @@ class Fleet < ActiveRecord::Base
 
     # throw exception if there are shiptypes to destroy that not exist
     unless ship_hash.has_value?(0)
-      raise (RuntimeError,"Ships to destry are not in fleet") #Fehlerbehandlung
+      raise RuntimeError, "Ships to destry are not in fleet" #Fehlerbehandlung
     end
   end
 #=end
@@ -197,7 +197,7 @@ class Fleet < ActiveRecord::Base
   # MAYBE ONLY SHIP_IDS
   def destroy_ship(s)
     unless s.is_a?Ship
-      raise (RuntimeError,"Input is no ship")
+      raise RuntimeError, "Input is no ship"
     end
 
     ship_array = Shipfleet.where(fleet_id: self, ship_id: s)

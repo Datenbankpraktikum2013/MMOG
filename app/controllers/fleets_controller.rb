@@ -5,11 +5,13 @@ class FleetsController < ApplicationController
   # GET /fleets.json
   def index
     @fleets = Fleet.all
+    @shiptypes=Ship.all
   end
 
   # GET /fleets/1
   # GET /fleets/1.json
   def show
+    @shiptypes=Ship.all
   end
 
   # GET /fleets/new
