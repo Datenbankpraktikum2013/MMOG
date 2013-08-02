@@ -26,8 +26,21 @@
     <% @allianceusers=current_user.alliance.users %>
     <% @allianceusers.each do |user|%>
       <%= user.username %>
+      <%= user.alliance.name %>
+      <%= user.rank.name %><br>
     <% end %>
   </div>
+  
+  <div class="field">
+    <%= f.label "Empfänger" %><br>
+    <%= collection_select(:ingredient, :supplier_ids, 
+              @allianceusers, 
+              :id, :username,
+              {:selected => @message.user_ids, :include_blank => false}, 
+              {:multiple => true}) %>
+  </div>
+
+
 
   <div class="actions">
     <%= f.submit %>
