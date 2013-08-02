@@ -55,14 +55,17 @@ class Technology < ActiveRecord::Base
     end
   end
 
-  #def get_research_duration(user)
+  def get_research_duration(user)
 
-   # result = user_technologies.where(:user_id => user).first
+   result = user_technologies.where(:user_id => user).first
 
-    #if !result.blank? then
-     # return  result.rank * self.cost
-   #end
-  #end
+    if !result.blank? then
+      return  result.rank * self.duration
+
+    else
+      return self.duration
+   end
+  end
 
 
 end
