@@ -32,12 +32,13 @@ class Fleet < ActiveRecord::Base
 
 #=begin
   # returns the amount of a shiptype in one fleet
+  # EVTL MIT OBJEKTEN ANSTATT IDS?????????????
   def get_amount_of_ship(s_id)
-    amount = Shipfleet.where(fleet_id: self.id, ship_id: s_id).first.amount
-    if amount == nil then
-      return 0
+    a = Shipfleet.where(fleet_id: self.id, ship_id: s_id).first
+    if a.nil?
+      0
     else
-      return amount
+      a.amount
     end
   end
 #=end
@@ -117,7 +118,7 @@ class Fleet < ActiveRecord::Base
   # EVTL AUF SHIP_ID ALS INPUT AENDERN???
   def add_ship(s)
     unless s.is_a?Ship
-      raise (RuntimeError,"Input is no ship") # Fehlerbehandlung
+      raise RuntimeError, "Input is no ship" # Fehlerbehandlung
     end
 
     ship_array = Shipfleet.where(fleet_id: self, ship_id: s)
@@ -176,7 +177,7 @@ class Fleet < ActiveRecord::Base
     ship_array.each do |s|
       if ship_hash.has_key?(s.ship_id)
         if s.amount < ship_hash[s.ship_id]
-          raise (RuntimeError,"Not enough ships to destroy")  #Fehlerbehandlung + ABBRUCH
+          raise RuntimeError, "Not enough ships to destroy"  #Fehlerbehandlung + ABBRUCH
         end
         s.amount -= ship_hash[s.ship_id]
         s.save
@@ -186,7 +187,7 @@ class Fleet < ActiveRecord::Base
 
     # throw exception if there are shiptypes to destroy that not exist
     unless ship_hash.has_value?(0)
-      raise (RuntimeError,"Ships to destry are not in fleet") #Fehlerbehandlung
+      raise RuntimeError, "Ships to destry are not in fleet" #Fehlerbehandlung
     end
   end
 #=end
@@ -197,7 +198,7 @@ class Fleet < ActiveRecord::Base
   # MAYBE ONLY SHIP_IDS
   def destroy_ship(s)
     unless s.is_a?Ship
-      raise (RuntimeError,"Input is no ship")
+      raise RuntimeError, "Input is no ship"
     end
 
     ship_array = Shipfleet.where(fleet_id: self, ship_id: s)
