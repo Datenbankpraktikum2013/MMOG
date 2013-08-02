@@ -28,15 +28,15 @@ class Planet < ActiveRecord::Base
 =end
     @spec = [1, 1, 1, 1, 1, 1, 1, 1]
     
-    self.size = Random.rand(MAX_SIZE-MIN_SIZE) + MIN_SIZE
-    self.ore = 20  
-    self.maxore = 100
-    self.maxcrystal = 1
-    self.maxenergy = 200
-    self.crystal = 0   
-    self.energy = 50
-    self.population = self.size/10
-    self.maxpopulation = self.size/2
+    self.size = Random.rand(MAX_SIZE-MIN_SIZE) + MIN_SIZE if self.size.nil?
+    self.ore = 20 if self.ore.nil?
+    self.maxore = 100 if self.maxore.nil?
+    self.maxcrystal = 1 if self.maxcrystal.nil?
+    self.maxenergy = 200 if self.maxenergy.nil?
+    self.crystal = 0 if self.crystal.nil?
+    self.energy = 50 if self.energy.nil?
+    self.population = self.size/10 if self.population.nil?
+    self.maxpopulation = self.size/2 if self.maxpopulation.nil?
 
     #Creates random Planet name
     if self.name.nil?
@@ -44,7 +44,7 @@ class Planet < ActiveRecord::Base
     end
 
     #Creates specialties for Planet
-    unless self.special.nil? 
+    unless self.special.nil? || self.special == 0
       self.special = Random.rand(7) + 1
       #Oreplanet
       if self.special == 1

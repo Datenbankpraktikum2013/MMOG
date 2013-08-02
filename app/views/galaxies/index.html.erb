@@ -30,12 +30,14 @@
 <table class="galaxyfield">
   <% id = 0
      k = 0
+=begin
      gall = @galaxies.sort do |a,b|
        x1 = a.getCoords
        x2 = b.getCoords
        comp = (x1[1] <=> x2[1])
        comp.zero? ? (x1[0] <=> x2[0]) : comp
      end
+=end
      $game_settings[:world_view_length].times do |i|
      i += @pos[1] - 2 %>
   <tr>
@@ -46,7 +48,8 @@
       unless @near.include?real_x then
         %><td class="galaxy">?</td><%
       else
-     g = gall[]
+     #g = gall[k-1]
+     g = Galaxy.where(x: real_x).first
     %>
     <td class="galaxy <%= out = ""
         if(GalaxiesHelper.isMeins(real_x)) then
@@ -61,7 +64,8 @@
     %>), Sonnensysteme:<%= if(GalaxiesHelper.isVisible(real_x)) then
      g.sunsystems.count
      else "Unbekannt"
-     end %>"><%= g.name %></td>
+     end %>">
+     <%= link_to 'Galaxy', galaxy_path(g) %><%= g.name %></td>
     <% end end %>
   </tr>
   <% end %>
