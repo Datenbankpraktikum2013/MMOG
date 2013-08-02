@@ -215,11 +215,26 @@ class Planet < ActiveRecord::Base
     self.create_production_job
   end
 
-  #grober entwurf
-  def create_building_job(buildingtyp_id)
-    Resque.enqueue(BuildBuildingjob, id_array(planet_id,buildingtyp_id))
+  def create_building_job(type)
+    upgrade_me = self.buildings.where(name: type)
+    
+    if upgrade_me.nil?
+      build_time = Buildingtype.where(name:type, level:1).build_time
+      build_me = Buildingtype.where(name:type, level:1).id
+    else  
+      upgrade_me = upgrade_me.first.id 
+      #build_time = Buildingtype.where(name:type level:upgrade_me.level+1).build_time
+      #build_me = Buildingtype.where(name:type level:upgrade_me.level+1).id
+    end
+    Resque.enqueue_in(buildtime.minute,BuildBuildingjob, id_array(self.id,build_me))
+
   end
 
+  def build(id)
+    destroy_me = self.buildings.where(name: Buildingtype.where(id: id).first.name).first.id
+    destroy_me.destroy unless destroy_me.nil?
+    reborn_me = Building.create(buildingtype_id: id, planet: seld.id)
+  end  
   def create_production_job()
     puts "Planeten ID #{self.id}"
     #Resque.enqueue(ProduceResources, self.id)
@@ -248,5 +263,6 @@ class Planet < ActiveRecord::Base
       -1
     end
   end
+
 
 end

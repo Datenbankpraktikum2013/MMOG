@@ -5,7 +5,7 @@
 </p>
 <p>
 	<strong>Gründer:</strong>
-	<%= @alliance.user.username %>
+	<%= @founder.username %>
 </p>
 
 <p>
@@ -30,7 +30,7 @@
 	</table>
 </p>
 	
-<% if current_user==@alliance.user%>
+<% if current_user==@founder%>
 	<%= link_to 'Bearbeiten', edit_alliance_path(@alliance) %> |
 <%end%>
 <%= link_to 'Zurück', alliances_path %>

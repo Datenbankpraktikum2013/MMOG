@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Battlereport:</strong>
+  <%= @shipcount.battlereport_id %>
+</p>
+
+<p>
+  <strong>Ship:</strong>
+  <%= @shipcount.ship_id %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @shipcount.amount %>
+</p>
+
+<p>
+  <strong>Shipowner time type:</strong>
+  <%= @shipcount.shipowner_time_type %>
+</p>
+
+<%= link_to 'Edit', edit_shipcount_path(@shipcount) %> |
+<%= link_to 'Back', shipcounts_path %>

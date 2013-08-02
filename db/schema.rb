@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130801062130) do
+ActiveRecord::Schema.define(version: 20130801142000) do
 
   create_table "alliances", force: true do |t|
     t.integer  "user_id"
@@ -20,6 +20,20 @@ ActiveRecord::Schema.define(version: 20130801062130) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "banner"
+  end
+
+  create_table "battlereports", force: true do |t|
+    t.integer  "defender_planet_id"
+    t.integer  "attacker_planet_id"
+    t.datetime "fightdate"
+    t.integer  "stolen_ore"
+    t.integer  "stolen_crystal"
+    t.integer  "stolen_space_cash"
+    t.integer  "defender_id"
+    t.integer  "attacker_id"
+    t.integer  "winner_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "buildings", force: true do |t|
@@ -74,6 +88,14 @@ ActiveRecord::Schema.define(version: 20130801062130) do
     t.datetime "updated_at"
   end
 
+  create_table "messages", force: true do |t|
+    t.text     "text"
+    t.text     "subject"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "missions", force: true do |t|
     t.string   "info_text"
     t.datetime "created_at"
@@ -109,6 +131,15 @@ ActiveRecord::Schema.define(version: 20130801062130) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "alliance_id"
+  end
+
+  create_table "shipcounts", force: true do |t|
+    t.integer  "battlereport_id"
+    t.integer  "ship_id"
+    t.integer  "amount"
+    t.integer  "shipowner_time_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "shipfleets", force: true do |t|

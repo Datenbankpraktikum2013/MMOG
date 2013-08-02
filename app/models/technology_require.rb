@@ -18,11 +18,20 @@ class TechnologyRequire < ActiveRecord::Base
       rank = UserTechnology.where(:user_id => user, :technology_id => i.pre_tech_id).first
 
         if rank.blank? then
+
+          name = Technology.where(:id => i.pre_tech_id).first.name
+          puts 'Technology_id: ' + i.pre_tech_id.to_s
+          puts 'Technology_rank: has: '+ '0' + ' need: '+i.pre_tech_rank.to_s
+          puts 'Name: '   + name.to_s
           okay=false
 
         elsif rank.rank < i.pre_tech_rank && i.pre_tech_rank != 0
 
-          puts 'Fehlende Voraussetzung', i.pre_tech_id, i.pre_tech_rank
+          puts 'Fehlende Voraussetzung'
+          name = Technology.where(:id => i.pre_tech_id).first.name
+          puts 'Technology_id: ' + i.pre_tech_id.to_s
+          puts 'Technology_rank: has:'+ rank.rank.to_s + ' need: '+i.pre_tech_rank.to_s
+          puts 'Name: '   + name.to_s
           okay=false
 
         end

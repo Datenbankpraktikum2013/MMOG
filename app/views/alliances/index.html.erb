@@ -13,9 +13,10 @@
   <tbody>
     <% @alliances.each do |alliance| %>
       <tr>
+        <% @foundername=alliance.ranks.where(:is_founder=>true)[0].users[0].username %>
         <td><%= alliance.name %></td>
         <td><%= alliance.id %></td>
-        <td><%= alliance.user.username %></td>
+        <td><%= @foundername %></td>
         <td><%= link_to 'Show', alliance %></td>
         <td><%= link_to 'Edit', edit_alliance_path(alliance) %></td>
         <td><%= link_to 'Destroy', alliance, method: :delete, data: { confirm: 'Are you sure?' } %></td>
