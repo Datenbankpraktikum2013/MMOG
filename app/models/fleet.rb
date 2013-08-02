@@ -7,6 +7,8 @@ class Fleet < ActiveRecord::Base
 	belongs_to :user
 	belongs_to :mission
   after_initialize :update_values
+  before_destroy :delete_shipfleets
+
 
 #=begin  
   # EVTL DEP ODER ARR IN DATE UMAENDERN??????????????????????????????
@@ -47,6 +49,15 @@ class Fleet < ActiveRecord::Base
     end
   end
 
+  def get_fuel_capacity
+    if self.ships.nil?
+      0
+    else
+      #GEHT AUCH BESTIMMT EINFACHER?!
+      self.ships.sort{|s1,s2| s1.fuel_capacity <=> s2.fuel_capacity}.first.fuel_capacity
+
+    end
+  end
 
 #=begin
   # returns the amount of a shiptype in one fleet
@@ -79,7 +90,17 @@ class Fleet < ActiveRecord::Base
 
 =begin
   #wie wird destination gepeichert?
-  def move(misson, destination)
+  def move(mission, destination)
+    if mission.id==1
+
+    elsif mission.id==2
+      distance=self.start_planet.getDistance(destination)
+      fuel=self.get_fuel_capacity
+      velocity=self.get_velocity
+      
+      travel_time=
+    end
+
     # calculate needed energy for that flight...cases:
     #
     # possible Directions
@@ -263,6 +284,7 @@ class Fleet < ActiveRecord::Base
       true
     end
 
+
     # calculates changing values for the whole fleet, if there were ships added or destroyed
     # Gets called after Fleet was initialized and after adding or destroying ships
     def update_values
@@ -280,5 +302,16 @@ class Fleet < ActiveRecord::Base
       self.defense = defense
       self.ressource_capacity = ressource_capacity
       self.save
+    end
+
+    # deletes all shipfleets from a fleet when it get destroyed
+    # before_detroy
+    def delete_shipfleets
+      tmp = Shipfleet.all.where(fleet_id: self.id)
+      unless tmp.empty?
+        tmp.each do |sf|
+          sf.destroy
+        end
+      end
     end
 end

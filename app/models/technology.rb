@@ -35,9 +35,11 @@ class Technology < ActiveRecord::Base
 
   def update_usersettings(user, rank)
 
-    #TODO UserSetting innitiallisieren beim anlegen
     record = UserSetting.find_by(:user_id => user)
     record.update_attribute(self.name, self.factor**rank)
+    #TODO Rank beim Geldabziehen eins zu hoch -> negatives Geld möglich
+    u = User.find(user)
+    u.update_attribute(:money, u.money - self.get_technology_cost(user))
 
   end
 
@@ -45,7 +47,6 @@ class Technology < ActiveRecord::Base
   def get_technology_cost(user)
 
     result = user_technologies.where(:user_id => user).first
-
 
     if !result.blank? then
       return  result.rank * self.cost

@@ -39,11 +39,11 @@
      end
 =end
      $game_settings[:world_view_length].times do |i|
-     i += @pos[1] - 2 %>
+     i += @pos[1] - 3 %>
   <tr>
     <% $game_settings[:world_view_length].times do |j|
       k += 1
-      j += @pos[0] - 2
+      j += @pos[0] - 3
       real_x = Galaxy.calcX(j,i)
       unless @near.include?real_x then
         %><td class="galaxy">?</td><%
@@ -65,7 +65,7 @@
      g.sunsystems.count
      else "Unbekannt"
      end %>">
-     <%= link_to 'Galaxy', galaxy_path(g) %><%= g.name %></td>
+     <%= link_to g.name, galaxy_path(g) if GalaxiesHelper.isVisible(real_x) %></td>
     <% end end %>
   </tr>
   <% end %>
