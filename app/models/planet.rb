@@ -245,7 +245,8 @@ class Planet < ActiveRecord::Base
     destroy_me = self.buildings.where(name: Buildingtype.where(id: id).first.name).first.id
     destroy_me.destroy unless destroy_me.nil?
     reborn_me = Building.create(buildingtype_id: id, planet: seld.id)
-  end  
+  end
+
   def create_production_job()
 
     Resque.enqueue_in(10.second, ProduceResources, self.id)
