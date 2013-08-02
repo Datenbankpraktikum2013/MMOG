@@ -11,14 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130802070053) do
+ActiveRecord::Schema.define(version: 20130801142000) do
 
   create_table "alliances", force: true do |t|
-    t.integer  "alliance_founder_id"
+    t.integer  "user_id"
     t.string   "name"
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "banner"
   end
 
   create_table "battlereports", force: true do |t|
@@ -50,7 +51,6 @@ ActiveRecord::Schema.define(version: 20130802070053) do
     t.integer  "energyusage"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "build_time"
   end
 
   create_table "buildingtypes_ships", id: false, force: true do |t|
@@ -214,6 +214,7 @@ ActiveRecord::Schema.define(version: 20130802070053) do
     t.boolean  "deathstar",                   default: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "increased_spypower",          default: 1
   end
 
   create_table "user_technologies", force: true do |t|

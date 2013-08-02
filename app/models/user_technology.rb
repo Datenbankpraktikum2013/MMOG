@@ -2,7 +2,7 @@ class UserTechnology < ActiveRecord::Base
   belongs_to :user
   belongs_to :technology
 
-  def self.getTechnology(user)
+  def self.get_user_technology(user)
 
     UserTechnology.where(:user_id => user).find_each do |i|
 
