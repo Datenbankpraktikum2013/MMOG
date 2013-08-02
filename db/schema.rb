@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130802112110) do
+ActiveRecord::Schema.define(version: 20130802141302) do
 
   create_table "alliances", force: true do |t|
     t.integer  "rank_id"
@@ -121,6 +121,11 @@ ActiveRecord::Schema.define(version: 20130802112110) do
     t.integer  "user_id"
   end
 
+  create_table "planets_users_visibility", id: false, force: true do |t|
+    t.integer "planet_id"
+    t.integer "user_id"
+  end
+
   create_table "ranks", force: true do |t|
     t.string   "name",                         null: false
     t.boolean  "can_kick",     default: false
@@ -218,6 +223,7 @@ ActiveRecord::Schema.define(version: 20130802112110) do
     t.datetime "updated_at"
     t.integer  "increased_spypower",          default: 1
     t.integer  "user_id"
+    t.integer  "researchlvl",                 default: 0
   end
 
   create_table "user_technologies", force: true do |t|

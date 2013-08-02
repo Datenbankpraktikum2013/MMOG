@@ -37,7 +37,7 @@ class Technology < ActiveRecord::Base
 
     record = UserSetting.find_by(:user_id => user)
     record.update_attribute(self.name, self.factor**rank)
-
+    #TODO Rank beim Geldabziehen eins zu hoch -> negatives Geld möglich
     u = User.find(user)
     u.update_attribute(:money, u.money - self.get_technology_cost(user))
 

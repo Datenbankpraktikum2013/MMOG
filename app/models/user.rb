@@ -111,7 +111,7 @@ class User < ActiveRecord::Base
   end
 
   def get_researchlvl
-    self.user_setting.reseachlvl
+    self.user_setting.researchlvl
   end
 
 end
