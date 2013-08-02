@@ -11,6 +11,7 @@ class FleetsController < ApplicationController
   # GET /fleets/1
   # GET /fleets/1.json
   def show
+    @shiptypes=Ship.all
   end
 
   # GET /fleets/new

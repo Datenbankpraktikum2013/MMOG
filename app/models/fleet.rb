@@ -6,6 +6,21 @@ class Fleet < ActiveRecord::Base
 	belongs_to :origin_planet, class_name: "Planet", foreign_key: "origin_planet"
 	belongs_to :user
 	belongs_to :mission
+  after_initialize :init
+
+  #Gets called ater Fleet was initialized
+  def init
+
+  end
+
+  #Returns Speed of Fleet
+  def get_velocity
+    if self.ships.nil?
+      0
+    else
+      self.ships.sort{|s1,s2| s1.velocity <=> s2.velocity}.first.velocity
+    end
+  end
 
 =begin
   # static Method that returns a ?set? of fleets that correspond to either a planet
@@ -95,7 +110,7 @@ class Fleet < ActiveRecord::Base
   end
 =end
 
-  def move_to_planet(p,t)
+  def move_to_planet_in(p,t)
 
 
     Resque.enqueue_in(t.second, MoveFleet, self.id ,p.id)
@@ -122,13 +137,18 @@ class Fleet < ActiveRecord::Base
 #=end
 
 #=begin
+
+  #Adds Ship to Fleet in t seconds
+  def add_ship_in(t,s)
+    Resque.enqueue_in(t.second, AddShip, self.id ,s.id)
+  end
+
   # fuegt einer Flotte ein Schiff hinzu
   # EVTL AUF SHIP_ID ALS INPUT AENDERN???
   def add_ship(s)
     unless s.is_a?Ship
       raise RuntimeError, "Input is no ship" # Fehlerbehandlung
     end
-
     ship_array = Shipfleet.where(fleet_id: self, ship_id: s)
     # if there is no entry of a shiptype of that fleet
     # else there is an entry, that just has to be incremented
@@ -207,6 +227,7 @@ class Fleet < ActiveRecord::Base
     ship_array.first.save
   end
 #=end
+
 
   # private methods
   private

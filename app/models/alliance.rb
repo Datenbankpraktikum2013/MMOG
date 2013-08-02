@@ -1,6 +1,6 @@
 class Alliance < ActiveRecord::Base
-	#call after save operation
-	after_save :create_default_ranks
+	#callback after save operation
+	after_save :create_default_ranks, on: :create
 
 	validates_presence_of :name
 
@@ -22,10 +22,13 @@ class Alliance < ActiveRecord::Base
 	#create default ranks
 	private
 	def create_default_ranks
+		#create default founder rank
 		self.ranks.create(:name => "Oberhaupt",:can_kick=>true,:can_massmail=>true,:can_edit=>true,:can_invite=>true,:is_founder=>true,:can_disband=>true)
       	self.ranks.create(:name=>"Anwärter")
       	@default=self.ranks[1]
+      	#add default-default rank to alliance
       	self.rank=@default
+      	#save!
       	self.save
 		@default.save      	
 	end
@@ -34,16 +37,22 @@ class Alliance < ActiveRecord::Base
 	def set_founder(founder)
 		#get founder rank
 		@rank=self.ranks.where(:is_founder=>true).first
+		#add user to this rank
 		@rank.users<<founder
+		#add user to alliance
 		self.users<<founder
+		#save
 		return (founder.save and self.ranks.first.save)
 	end		
 
+	#add user to alliance and set default rank
 	public
 	def add_user(user)
 		if user.alliance==nil
 			self.ranks.users<<user
 			self.rank.users<<user
+			return true
 		end
+		return false
 	end
 end
