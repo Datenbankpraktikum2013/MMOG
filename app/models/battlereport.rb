@@ -30,7 +30,7 @@ class Battlereport < ActiveRecord::Base
 	def add_attacker_pre(fleet)
 		self.attacker = fleet.user
 		self.attacker_planet = fleet.start_planet
-		self.fightdate = Date.now()
+		self.fightdate = Time.at(fleet.arrival_time)
 
 		fleet.shipfleets.each do |shipfleet|
 
