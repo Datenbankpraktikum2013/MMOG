@@ -31,12 +31,12 @@ module GalaxiesHelper
         end
 
         k.times do |k2|
-          p = Planet.create(z: pos2[k2 + 1], special: nil, sunsystem_id: s.id)
+          p = Planet.create(z: pos2[k2], special: 0, sunsystem_id: s.id)
         end
 
         j = j - k
         j.times do |z|
-          p = Planet.create(z: pos2[z + k + 1], special: 1, sunsystem_id: s.id)
+          p = Planet.create(z: pos2[z + k], special: 1, sunsystem_id: s.id)
         end
       end
     end
