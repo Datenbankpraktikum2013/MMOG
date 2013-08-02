@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130802133812) do
+ActiveRecord::Schema.define(version: 20130802150244) do
 
   create_table "alliances", force: true do |t|
     t.integer  "alliance_founder_id"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 20130802133812) do
     t.integer  "winner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "read",               default: false
   end
 
   create_table "buildings", force: true do |t|
@@ -216,7 +217,7 @@ ActiveRecord::Schema.define(version: 20130802133812) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
-    t.integer  "reseachlvl"
+    t.integer  "researchlvl",                 default: 0
   end
 
   create_table "user_technologies", force: true do |t|

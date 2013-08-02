@@ -9,6 +9,9 @@ class Battlereport < ActiveRecord::Base
 
 	before_destroy :delete_shipcounts
 
+	scope :read, -> { where(read: true) }
+	scope :unread, -> { where(read: false) }
+
 	def add_defender_pre(fleet)
 		self.defender = fleet.user
 		self.defender_planet = fleet.start_planet
@@ -27,6 +30,7 @@ class Battlereport < ActiveRecord::Base
 	def add_attacker_pre(fleet)
 		self.attacker = fleet.user
 		self.attacker_planet = fleet.start_planet
+		self.fightdate = Date.now()
 
 		fleet.shipfleets.each do |shipfleet|
 
