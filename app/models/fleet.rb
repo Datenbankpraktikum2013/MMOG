@@ -6,6 +6,21 @@ class Fleet < ActiveRecord::Base
 	belongs_to :origin_planet, class_name: "Planet", foreign_key: "origin_planet"
 	belongs_to :user
 	belongs_to :mission
+  after_initialize :init
+
+  #Gets called ater Fleet was initialized
+  def init
+
+  end
+
+  #Returns Speed of Fleet
+  def get_velocity
+    if self.ships.nil?
+      0
+    else
+      self.ships.sort{|s1,s2| s1.velocity <=> s2.velocity}.first.velocity
+    end
+  end
 
 =begin
   # static Method that returns a ?set? of fleets that correspond to either a planet
@@ -95,31 +110,45 @@ class Fleet < ActiveRecord::Base
   end
 =end
 
-  def move_to_planet(p,t)
+  def move_to_planet_in(p,t)
 
 
     Resque.enqueue_in(t.second, MoveFleet, self.id ,p.id)
     
   end
 
+
+
 #=begin
   # gets a Hash with ships as keys and amounts as values
-  def split_fleet(ships)
-    # check wether the fleet has enough ships
-    # make new fleet
-    # call add_ships(shiphash) on that new fleet and detroy_ships(shiphash) on the original fleet
-    # returns the fleet
+  def split_fleet(ship_hash)
+    
+    # check wether the fleet has enough ships ( negative amounts and really ships)
+    if enough_ships?(ship_hash)
+      raise RuntimeError, "Nicht genuegend Schiffe vorhanden zum splitten"
+    end
+
+    new_fleet = Fleet.new
+    new_fleet.save
+    new_fleet.add_ships(ship_hash)
+    self.destroy_ships(ship_hash)
+    new_fleet
   end
 #=end
 
 #=begin
+
+  #Adds Ship to Fleet in t seconds
+  def add_ship_in(t,s)
+    Resque.enqueue_in(t.second, AddShip, self.id ,s.id)
+  end
+
   # fuegt einer Flotte ein Schiff hinzu
   # EVTL AUF SHIP_ID ALS INPUT AENDERN???
   def add_ship(s)
     unless s.is_a?Ship
       raise RuntimeError, "Input is no ship" # Fehlerbehandlung
     end
-
     ship_array = Shipfleet.where(fleet_id: self, ship_id: s)
     # if there is no entry of a shiptype of that fleet
     # else there is an entry, that just has to be incremented
@@ -136,30 +165,27 @@ class Fleet < ActiveRecord::Base
 #=begin
   # adds ships dependant on a hash like {ship_id:amount}
   # CHECK WETHER THERE ARE NEGATIVE AMOUNTS AND FLEETS AND SHIPS EXIST
-  def add_ships(sh)
-    #temp copy
-    ship_hash = sh.clone
-    ship_array = Shipfleet.where(fleet_id: self)
+  def add_ships(ship_hash)
 
-    #change amounts of existing ships
-    ship_array.each do |s|
-      if ship_hash.has_key?(s.ship_id)
-        s.amount += ship_hash[s.ship_id]
-        s.save
-        ship_hash[s.ship_id] = 0
+    new_ships = Hash.new
+    
+    # add ships that exist in fleet
+    ship_hash.each do |key, value|
+      if self.ships.include?(key)
+        ship = Shipfleet.where(fleet_id: self, ship_id: key).first
+        ship.amount += value
+        ship.save
+      else
+        new_ships[key] = value
       end
     end
 
-    # add shiptypes that yet not exist: check wether there are still nonzero ships left in the hash
-    unless ship_hash.has_value?(0)
-      ship_hash.each do |key, value|
-        unless value == 0
-          self.ships << Ship.find(key)
-          s = Shipfleet.where(fleet_id: self, ship_id: key).first
-          s.amount = value
-          s.save
-        end
-      end
+    # Add ships, that did not exist in the fleet before
+    new_ships.each do |key, value|
+      self.ships << key
+      ship = Shipfleet.where(fleet_id: self, ship_id: key).first
+      ship.amount = value
+      ship.save
     end
   end
 #=end
@@ -168,25 +194,15 @@ class Fleet < ActiveRecord::Base
   # destroys ships dependant on a hash of ship_id:amount
   # FEHLERBEHANDLUNG AN DEN ANFANG SETZEN
   # CHECK WETHER THERE ARE NEGATIVE AMOUNTS AND FLEETS AND SHIPS EXIST
-  def destroy_ships(sh)
-    #temp copy
-    ship_hash = sh.clone
-    ship_array = Shipfleet.where(fleet_id: self)
-
-    ship_array.each do |s|
-      if ship_hash.has_key?(s.ship_id)
-        if s.amount < ship_hash[s.ship_id]
-          raise RuntimeError, "Not enough ships to destroy"  #Fehlerbehandlung + ABBRUCH
-        end
-        s.amount -= ship_hash[s.ship_id]
-        s.save
-        ship_hash[s.ship_id] = 0
-      end
+  def destroy_ships(ship_hash)
+    unless enough_ships?(ship_hash)
+      raise RuntimeError, "Not enough ships to destroy"
     end
 
-    # throw exception if there are shiptypes to destroy that not exist
-    unless ship_hash.has_value?(0)
-      raise RuntimeError, "Ships to destry are not in fleet" #Fehlerbehandlung
+    ship_hash.each do |key, value|
+      ship = Shipfleet.where(fleet_id: self, ship_id: key).first
+      ship.amount -= value
+      ship.save
     end
   end
 #=end
@@ -213,4 +229,32 @@ class Fleet < ActiveRecord::Base
 #=end
 
 
+  # private methods
+  private
+
+  # Checks wether self contains more or equal no. of ships of certain type
+  # returns true if enough and false if not enough or type not existent
+  # Fehlerbehandlung
+  def enough_ships?(hash)
+    ships = self.ships
+    hash.each do |key, value|
+      return false if value < 0
+      if ships.include?(key)
+        return false if Shipfleet.where(fleet_id: self, ship_id: key).first.amount - value < 0
+      else
+        return false
+      end
+    end
+    true
+  end
+
+  # checks if every entry is really a ship
+  # def check_ships (ship_hash)
+
+  # end
+
+  # checks for negative amounts of the hash
+  # def check_amounts (ship_hash)
+
+  # end
 end

@@ -19,6 +19,12 @@ class User < ActiveRecord::Base
   has_many :battlereports
   belongs_to :alliance
 
+  #init usersettings when user is created
+  after_create :init_usersettings
+  def init_usersettings
+    UserSetting.create(:user => self)
+  end
+
   #functions
   def is_username_set
   	if username.blank?

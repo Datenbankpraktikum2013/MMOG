@@ -188,6 +188,7 @@ ActiveRecord::Schema.define(version: 20130802082952) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "duration"
+    t.integer  "maxrank"
   end
 
   create_table "technology_requires", force: true do |t|

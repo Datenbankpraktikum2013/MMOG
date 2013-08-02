@@ -18,8 +18,7 @@ Mmog::Application.routes.draw do
 
   resources :technologies
 
-  devise_for :users, :controllers => { :registrations =>
-                                          "users/registrations"}
+  devise_for :users #not needed any more, :controllers => { :registrations => "users/registrations"}
 
   root 'welcome#index'
 
