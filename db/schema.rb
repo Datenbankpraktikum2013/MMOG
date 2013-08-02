@@ -11,13 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+
 ActiveRecord::Schema.define(version: 20130802112110) do
 
   create_table "alliances", force: true do |t|
     t.integer  "alliance_founder_id"
     t.string   "name"
     t.text     "description"
-    t.string   "banner"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -122,11 +122,6 @@ ActiveRecord::Schema.define(version: 20130802112110) do
     t.integer  "user_id"
   end
 
-  create_table "planets_users_visibility", id: false, force: true do |t|
-    t.integer "planet_id"
-    t.integer "user_id"
-  end
-
   create_table "ranks", force: true do |t|
     t.string   "name",                         null: false
     t.boolean  "can_kick",     default: false
@@ -134,9 +129,9 @@ ActiveRecord::Schema.define(version: 20130802112110) do
     t.boolean  "can_edit",     default: false
     t.boolean  "can_invite",   default: false
     t.boolean  "can_disband",  default: false
-    t.integer  "alliance_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "alliance_id"
   end
 
   create_table "shipcounts", force: true do |t|
