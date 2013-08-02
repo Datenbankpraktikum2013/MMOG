@@ -110,6 +110,8 @@ class User < ActiveRecord::Base
     self.user_setting.deathstar
   end
 
-
+  def get_researchlvl
+    self.user_setting.reseachlvl
+  end
 
 end

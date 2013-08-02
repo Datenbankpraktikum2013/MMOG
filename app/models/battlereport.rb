@@ -7,6 +7,8 @@ class Battlereport < ActiveRecord::Base
 	belongs_to :defender, class_name: "User", foreign_key: "defender_id"
 	belongs_to :attacker, class_name: "User", foreign_key: "attacker_id"
 
+	before_destroy :delete_shipcounts
+
 	def add_defender_pre(fleet)
 		self.defender = fleet.user
 		self.defender_planet = fleet.start_planet
@@ -68,6 +70,15 @@ class Battlereport < ActiveRecord::Base
 			tmp.shipowner_time_type = 3
 			tmp.save
 			self.shipcounts << tmp
+		end
+	end
+
+	def delete_shipcounts
+		tmp = Shipcount.all.where(battlereport_id: self.id)
+		unless tmp.empty?
+			tmp.each do |sc|
+				sc.destroy
+			end
 		end
 	end
 end
