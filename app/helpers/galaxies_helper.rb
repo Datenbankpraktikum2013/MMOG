@@ -14,16 +14,16 @@ module GalaxiesHelper
       pos = [1, 2, 3, 4, 5, 6, 7, 8]
       pos.shuffle!
 
-      i = Random.rand(4) + 4
+      i = Random.rand(5) + 4
       i.times do |y|
         name = "New Sunsystem " + y.to_s
         s = Sunsystem.new(name: name, y: pos[y])
-        s.galaxy_id = g.id
+        s.galaxy = g
         s.save
         pos2 = [1, 2, 3, 4, 5, 6, 7, 8]
         pos2.shuffle!
 
-        j = Random.rand(4)+4
+        j = Random.rand(5)+4
         if j > 6 then
           k = 2
         else
@@ -31,12 +31,12 @@ module GalaxiesHelper
         end
 
         k.times do |k2|
-          p = Planet.create(z: pos2[k2], special: nil, sunsystem_id: s.id)
+          p = Planet.create(z: pos2[k2 + 1], special: nil, sunsystem_id: s.id)
         end
 
-        j -= k
+        j = j - k
         j.times do |z|
-          p = Planet.new(z: pos2[z + k], special: 1, sunsystem_id: s.id)
+          p = Planet.create(z: pos2[z + k + 1], special: 1, sunsystem_id: s.id)
         end
       end
     end

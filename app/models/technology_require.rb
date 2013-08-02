@@ -9,6 +9,9 @@ class TechnologyRequire < ActiveRecord::Base
 
     okay = true
 
+    unless max_rank?(user,tech)
+      return okay = false
+    end
 
     TechnologyRequire.where(:tech_id => tech).find_each do |i|
 
@@ -50,5 +53,27 @@ class TechnologyRequire < ActiveRecord::Base
 
   end
 
+#Liefert false zurück sollte der max-rank erreicht sein
+def self.max_rank? (user, tech)
 
+  okay = true
+
+  maxrank = Technology.where(:id => tech).first.maxrank
+  result = UserTechnology.where(:user_id => user, :technology_id => tech ).first
+  if !result.blank? then
+    techrank = result.rank
+
+    if  techrank == maxrank
+
+      puts 'Maximal-rank'
+      puts 'Technology_id: ' + tech.to_s
+      puts 'Technology_rank: ' + techrank.to_s + ' Max-Rank: ' + maxrank.to_s
+      puts 'Name: ' +  Technology.where(:id => tech).first.name.to_s
+
+      okay=false
+
+    end
+  end
+  okay
+  end
 end

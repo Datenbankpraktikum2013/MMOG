@@ -20,6 +20,12 @@ class User < ActiveRecord::Base
   belongs_to :alliance
   has_and_belongs_to_many :messages
 
+  #init usersettings when user is created
+  after_create :init_usersettings
+  def init_usersettings
+    UserSetting.create(:user => self)
+  end
+
   #functions
   def is_username_set
   	if username.blank?
