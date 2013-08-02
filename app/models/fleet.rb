@@ -33,6 +33,15 @@ class Fleet < ActiveRecord::Base
     end
   end
 
+  def get_fuel_capacity
+    if self.ships.nil?
+      0
+    else
+      #GEHT AUCH BESTIMMT EINFACHER?!
+      self.ships.sort{|s1,s2| s1.fuel_capacity <=> s2.fuel_capacity}.first.fuel_capacity
+
+    end
+  end
 
 #=begin
   # returns the amount of a shiptype in one fleet
@@ -77,7 +86,17 @@ class Fleet < ActiveRecord::Base
 
 =begin
   #wie wird destination gepeichert?
-  def move(misson, destination)
+  def move(mission, destination)
+    if mission.id==1
+
+    elsif mission.id==2
+      distance=self.start_planet.getDistance(destination)
+      fuel=self.get_fuel_capacity
+      velocity=self.get_velocity
+      
+      travel_time=
+    end
+
     # calculate needed energy for that flight...cases:
     #
     # possible Directions

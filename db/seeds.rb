@@ -22,6 +22,14 @@ TechnologiesHelper.init_Technology
 TechnologiesHelper.init_Technology_Require
 TechnologiesHelper.test_user_technology
 
+#Default-Missionstypen
+Mission.create({:id => 1, :info_text => "Based"})
+Mission.create({:id => 2, :info_text => "Colonization"})
+Mission.create({:id => 3, :info_text => "Attack"})
+Mission.create({:id => 4, :info_text => "Travel"})
+Mission.create({:id => 5, :info_text => "Spy"})
+Mission.create({:id => 6, :info_text => "Transport"})
+
 #Default-Werte von Schiffe und Missionen
 Ship.create({:construction_time => 1, :offense => 1, :defense => 10, :crystal_cost => 0, :credit_cost => 10, :ore_cost => 5, :name => 'Small cargo ship', :velocity => 3, :crew_capacity => 1, :ressource_capacity => 500, :fuel_capacity => 500, :consumption => 2})
 Ship.create({:construction_time => 1, :offense => 1, :defense => 20, :crystal_cost => 0, :credit_cost => 20, :ore_cost => 20, :name => 'Large cargo ship', :velocity => 3, :crew_capacity => 3, :ressource_capacity => 3000, :fuel_capacity => 3000, :consumption => 3})
