@@ -43,6 +43,11 @@ class AlliancesController < ApplicationController
     end
   end
 
+  #GET  /alliances/1/edit/useradd
+  def useradd
+      @available_users=User.where('alliance_id != ?',@alliance.id)
+  end
+
   # PATCH/PUT /alliances/1
   # PATCH/PUT /alliances/1.json
   def update
