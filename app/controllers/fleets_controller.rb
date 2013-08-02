@@ -5,6 +5,7 @@ class FleetsController < ApplicationController
   # GET /fleets.json
   def index
     @fleets = Fleet.all
+    @shiptypes=Ship.all
   end
 
   # GET /fleets/1
