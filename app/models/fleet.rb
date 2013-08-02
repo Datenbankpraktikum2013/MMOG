@@ -7,6 +7,7 @@ class Fleet < ActiveRecord::Base
 	belongs_to :user
 	belongs_to :mission
   after_initialize :init
+  before_destroy :delete_shipfleets
 
   #Gets called ater Fleet was initialized
   def init
@@ -257,4 +258,15 @@ class Fleet < ActiveRecord::Base
       end
       true
     end
+
+  # deletes all shipfleets from a fleet when it get destroyed
+  # before_detroy
+  def delete_shipfleets
+    tmp = Shipfleet.all.where(fleet_id: self.id)
+    unless tmp.empty?
+      tmp.each do |sf|
+        sf.destroy
+      end
+    end
+  end
 end
