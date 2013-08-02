@@ -4,7 +4,7 @@ class Sunsystem < ActiveRecord::Base
   belongs_to :galaxy
 
   def getDistance(other)
-    if(other is_a? Sunsystem) then
+    if(other.is_a? Sunsystem) then
 
       dist1 = self.galaxy.getDistance(other.galaxy)
       if( dist1 < 0 ) then
@@ -19,7 +19,7 @@ class Sunsystem < ActiveRecord::Base
           dist2 = self.y - other.y
         end
       else
-        dist2 = ((self.y + other.y)^3)/((self.y - other.y)^2 + 1)
+        dist2 = ((self.y + other.y)**3)/((self.y - other.y)**2 + 1)
       end
       dist1 + 10 * dist2
 

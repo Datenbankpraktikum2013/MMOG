@@ -30,14 +30,23 @@
 <table class="galaxyfield">
   <% id = 0
      k = 0
-     $game_settings[:world_view_length].times do |i| %>
+     gall = @galaxies.sort do |a,b|
+       x1 = a.getCoords
+       x2 = b.getCoords
+       comp = (x1[1] <=> x2[1])
+       comp.zero? ? (x1[0] <=> x2[0]) : comp
+     end
+     $game_settings[:world_view_length].times do |i|
+     i += @pos[1] - 2 %>
   <tr>
     <% $game_settings[:world_view_length].times do |j|
       k += 1
+      j += @pos[0] - 2
       real_x = Galaxy.calcX(j,i)
-      if !@near.include?real_x then
-        %><td class="galaxy">Unbekannt</td><%
+      unless @near.include?real_x then
+        %><td class="galaxy">?</td><%
       else
+     g = gall[]
     %>
     <td class="galaxy <%= out = ""
         if(GalaxiesHelper.isMeins(real_x)) then
@@ -49,7 +58,10 @@
     filename = GalaxiesHelper.getImageFilename(real_x, 80)
     out += filename[16] + filename[18, 4] %>"
     title="Galaxie<%= if(GalaxiesHelper.isMeins(real_x)) then " (gehört mir)" end %>: <%= real_x; %>, Koordinaten: (<%= j %>,<%= i
-    %>), Sichtbar:<%= if(GalaxiesHelper.isVisible(real_x)) then "Ja" else "Nein" end %>"><%= real_x %></td>
+    %>), Sonnensysteme:<%= if(GalaxiesHelper.isVisible(real_x)) then
+     g.sunsystems.count
+     else "Unbekannt"
+     end %>"><%= g.name %></td>
     <% end end %>
   </tr>
   <% end %>
