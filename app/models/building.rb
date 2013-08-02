@@ -1,7 +1,8 @@
-class Building < Buildingtype
+class Building < ActiveRecord::Base
 
   # belongs_to :buildingtype
   belongs_to :planet
+  belongs_to :buildingtype
 
 
 =begin
