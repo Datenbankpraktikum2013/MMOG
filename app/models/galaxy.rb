@@ -25,6 +25,9 @@ class Galaxy < ActiveRecord::Base
   end
 
   def getDistance(other)
+    $game_settings = Hash.new()
+    $game_settings[:world_length] = 5
+
     if other.is_a?Galaxy then
       dist = Array.new()
       pos1 = self.getCoords()
@@ -46,18 +49,18 @@ class Galaxy < ActiveRecord::Base
       else
         y = pos1[1] - pos2[1]
       end
-      dist.append(Math.sqrt(x^2 + y^2))
+      dist.append(Math.sqrt(x**2 + y**2))
 
       # Indirekt "V" / Universum vertikal umklappen
       y2 = $game_settings[:world_length] - y
-      dist.append(Math.sqrt(x^2 + y2^2))
+      dist.append(Math.sqrt(x**2 + y2**2))
 
       # Indirekt "VH" / Universum vertikal und horizontal umklappen
       x = $game_settings[:world_length] - x
-      dist.append(Math.sqrt(x^2 + y2^2))
+      dist.append(Math.sqrt(x**2 + y2**2))
 
       # Indirekt "H" / Universum horizontal umklappen
-      dist.append(Math.sqrt(x^2 + y^2))
+      dist.append(Math.sqrt(x**2 + y**2))
 
       dist.sort().first() * 100
 

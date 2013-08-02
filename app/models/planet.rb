@@ -244,7 +244,7 @@ class Planet < ActiveRecord::Base
   def getDistance(other)
     if other.is_a?Planet then
 
-      dist1 = self.Sunsystem.getDistance(other.Sunsystem)
+      dist1 = self.sunsystem.getDistance(other.sunsystem)
       if dist1 < 0 then
         return -1
       end
@@ -256,7 +256,7 @@ class Planet < ActiveRecord::Base
           dist2 = self.z - other.z
         end
       else
-        dist2 = ((self.z + other.z)^3)/((self.z - other.z)^2 + 1)
+        dist2 = ((self.z + other.z)**3)/((self.z - other.z)**2 + 1)
       end
       dist1 + dist2
     else
