@@ -28,15 +28,15 @@ class Planet < ActiveRecord::Base
 =end
     @spec = [1, 1, 1, 1, 1, 1, 1, 1]
     
-    self.size = Random.rand(MAX_SIZE-MIN_SIZE) + MIN_SIZE
-    self.ore = 20  
-    self.maxore = 100
-    self.maxcrystal = 1
-    self.maxenergy = 200
-    self.crystal = 0   
-    self.energy = 50
-    self.population = self.size/10
-    self.maxpopulation = self.size/2
+    self.size = Random.rand(MAX_SIZE-MIN_SIZE) + MIN_SIZE if self.size.nil?
+    self.ore = 20 if self.ore.nil?
+    self.maxore = 100 if self.maxore.nil?
+    self.maxcrystal = 1 if self.maxcrystal.nil?
+    self.maxenergy = 200 if self.maxenergy.nil?
+    self.crystal = 0 if self.crystal.nil?
+    self.energy = 50 if self.energy.nil?
+    self.population = self.size/10 if self.population.nil?
+    self.maxpopulation = self.size/2 if self.maxpopulation.nil?
 
     #Creates random Planet name
     if self.name.nil?
@@ -44,7 +44,7 @@ class Planet < ActiveRecord::Base
     end
 
     #Creates specialties for Planet
-    unless self.special.nil? 
+    unless self.special.nil? || self.special == 0
       self.special = Random.rand(7) + 1
       #Oreplanet
       if self.special == 1
@@ -110,10 +110,19 @@ class Planet < ActiveRecord::Base
   #@param type Name der Produktionsstaette ("Eisenmine", "Haus", ...)
   def get_production(type)
     # TODO Calculate production
-    prod = self.buildings.where(name: type).production
-
-    if type == :ore
-      sci_factor = self.user.get_ironproduction
+    
+    btype = Buildingtype.where(name: type)
+    #puts "btype: #{btype}"
+    production_building = self.buildings.where(buildingtype_id: btype).first
+    #puts "production_building: #{production_building}"
+    prod_building_type = Buildingtype.where(id:production_building.buildingtype_id).first
+    #puts "prod_building_type: #{prod_building_type}"
+    prod = prod_building_type.production
+    #puts "prod: #{prod}"
+    
+    sci_factor =1
+    if type == :Oremine
+      #sci_factor = self.user.get_ironproduction
       c = sci_factor * prod * @spec[0]
       return c
     end
@@ -124,12 +133,12 @@ class Planet < ActiveRecord::Base
     end
 
     if type == :money
-      sci_factor = self.user.get_income
+      #sci_factor = self.user.get_income
       c = sci_factor * prod * @spec[3] * (self.population / 100) 
     end
 
     if type == :energy 
-      sci_factor = self.user.get_energy_efficiency
+      #sci_factor = self.user.get_energy_efficiency
       c = sci_factor * prod * @spec[1] 
       return c
     end
@@ -152,7 +161,7 @@ class Planet < ActiveRecord::Base
       #
       # updates ore production
       #
-      ore_production = self.get_production(:ore)
+      ore_production = self.get_production(:Oremine)
       if ore_production.integer? then
         if (self.ore + ore_production) < self.maxore then
           self.ore += ore_production
@@ -236,9 +245,9 @@ class Planet < ActiveRecord::Base
     reborn_me = Building.create(buildingtype_id: id, planet: seld.id)
   end  
   def create_production_job()
-    puts "Planeten ID #{self.id}"
-    #Resque.enqueue(ProduceResources, self.id)
-    Resque.enqueue_in(1.minute, ProduceResources, self.id)
+
+    Resque.enqueue_in(10.second, ProduceResources, self.id)
+    #puts "PLANETEN ID:#{self.id}"
   end
 
   def getDistance(other)

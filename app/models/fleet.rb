@@ -10,7 +10,11 @@ class Fleet < ActiveRecord::Base
 
   #Gets called ater Fleet was initialized
   def init
-
+    if self.ships.nil?
+      self.ressource_capacity=0
+    else
+      self.ressource_capacity=self.ships.sum("ressource_capacity")
+    end
   end
 
   #Returns Speed of Fleet
@@ -18,7 +22,9 @@ class Fleet < ActiveRecord::Base
     if self.ships.nil?
       0
     else
+      #GEHT AUCH BESTIMMT EINFACHER?!
       self.ships.sort{|s1,s2| s1.velocity <=> s2.velocity}.first.velocity
+
     end
   end
 
@@ -146,7 +152,9 @@ class Fleet < ActiveRecord::Base
     else
       ship_array.first.amount += 1
     end
+    self.init
     ship_array.first.save
+
   end
 #=end
 
