@@ -1,1 +1,14 @@
-hi!
+<% unless current_user.rank.alliance==@alliance and current_user.rank.can_edit %>
+  	<div>
+	  Du besitzt nicht die nötigen Rechte, um <%= current_user.alliance.name %> zu bearbeiten.
+  	</div>
+<% else %>
+<%= form_tag(edit_alliance_path+'/user_add_action')%>
+		<p><strong><%= label_tag ('Wen möchtest du hinzufügen?') %></strong></p>
+		<p>	<p><%=label_tag ('Username') %></p>
+			<%= text_field_tag('username') %>
+		</p>
+		<p><%= submit_tag 'Hinzufügen' %></p>
+<% end %>
+</form>
+<%= link_to 'Zurück', edit_alliance_path %>

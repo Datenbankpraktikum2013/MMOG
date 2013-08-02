@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130801142000) do
+ActiveRecord::Schema.define(version: 20130802082952) do
 
   create_table "alliances", force: true do |t|
     t.integer  "user_id"
@@ -216,6 +216,7 @@ ActiveRecord::Schema.define(version: 20130801142000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "increased_spypower",          default: 1
+    t.integer  "user_id"
   end
 
   create_table "user_technologies", force: true do |t|
