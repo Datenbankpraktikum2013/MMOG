@@ -45,14 +45,13 @@ class Technology < ActiveRecord::Base
     end
   end
 
-
-  #def update_usersettings(user, rank)
+  def update_usersettings(user, rank)
 
     #TODO UserSetting innitiallisieren beim anlegen
-   # record = UserSetting.find(user)
-    #record.update_attribute(self.name, self.factor*rank)
+    record = UserSetting.find_by(:user_id => user)
+    record.update_attribute(self.name, self.factor**rank)
 
-  #end
+  end
 
 
 end
