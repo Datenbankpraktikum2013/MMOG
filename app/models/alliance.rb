@@ -49,7 +49,7 @@ class Alliance < ActiveRecord::Base
 	public
 	def add_user(user)
 		if user.alliance==nil
-			self.ranks.users<<user
+			self.users<<user
 			self.rank.users<<user
 			return true
 		end

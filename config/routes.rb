@@ -34,7 +34,9 @@ Mmog::Application.routes.draw do
 
   resources :planets
 
-  #devise_for :controllers => {:registrations => "registrations"}
+  get 'alliances/:id/edit/useradd' => 'alliances#useradd'
+
+  post 'alliances/:id/edit/user_add_action' => 'alliances#user_add_action'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

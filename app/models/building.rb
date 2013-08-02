@@ -5,11 +5,12 @@ class Building < ActiveRecord::Base
   belongs_to :buildingtype
 
 
-=begin
-  def getStufe()
-    self.Buildingtype.stufe
+
+  def get_level()
+    self.buildingtype.level
   end
 
+=begin
   def getProduktion()
     self.Buildingtype.produktion
   end

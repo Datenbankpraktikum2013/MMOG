@@ -19,12 +19,14 @@
 			<th>Name</th>
 			<th>Spacecash</th>
 			<th>Userwertung</th>
+			<th>Rank</th>
 		</tr>
 		<% @alliance.users.each do |user| %>
 			<tr>
 				<td><%=user.username%></td>
 				<td><%=user.money%></td>
 				<td><%=user.score%></td>
+				<td><%=user.rank.name%></td>
 			</tr>
 		<% end %>
 	</table>
