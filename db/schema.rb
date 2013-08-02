@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 20130801142000) do
     t.integer  "user_id"
     t.string   "name"
     t.text     "description"
+    t.string   "banner"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "banner"
@@ -119,6 +120,11 @@ ActiveRecord::Schema.define(version: 20130801142000) do
     t.datetime "updated_at"
     t.integer  "sunsystem_id"
     t.integer  "user_id"
+  end
+
+  create_table "planets_users_visibility", id: false, force: true do |t|
+    t.integer "planet_id"
+    t.integer "user_id"
   end
 
   create_table "ranks", force: true do |t|
