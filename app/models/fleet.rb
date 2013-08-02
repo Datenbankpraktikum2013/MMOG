@@ -6,20 +6,35 @@ class Fleet < ActiveRecord::Base
 	belongs_to :origin_planet, class_name: "Planet", foreign_key: "origin_planet"
 	belongs_to :user
 	belongs_to :mission
-  after_initialize :init
+  after_initialize :update_values
 
-  #Gets called ater Fleet was initialized
-  def init
-    if self.ships.nil?
-      self.ressource_capacity=0
-      self.offense=0
-      self.defense=0
-    else
-      self.ressource_capacity=self.ships.sum("ressource_capacity")
-      self.offense=self.ships.sum("offense")
-      self.defense=self.ships.sum("defense")
+#=begin  
+  # EVTL DEP ODER ARR IN DATE UMAENDERN??????????????????????????????
+  # kreiert eine Flotte mit default werten. Es muss ein Planet als Argument uebergeben werden
+  def initialize(planet)
+    unless planet.is_a?(Planet)
+      raise RuntimeError, "Fleet needs a Planet to be created"
     end
+
+    super()
+    self.credit = 0
+    self.ressource_capacity = 0
+    self.ore = 0
+    self.crystal = 0
+    self.storage_factor = 1.0
+    self.velocity_factor = 1.0
+    self.offense = 0
+    self.defense = 0
+    self.user_id = planet.user_id
+    self.mission_id = 1
+    self.departure_time = 0
+    self.arrival_time = 0
+    self.start_planet = planet
+    self.target_planet = planet
+    self.origin_planet = planet
   end
+#=end
+
 
   #Returns Speed of Fleet
   def get_velocity
@@ -46,18 +61,6 @@ class Fleet < ActiveRecord::Base
   end
 #=end
 
-#=begin
-  # returns the amount of a shiptype in one fleet
-  # check if s is ship
-  def get_amount_of_ship(ship)
-    sf = Shipfleet.where(fleet_id: self, ship_id: ship).first
-    if sf.nil?
-      0
-    else
-      sf.amount
-    end
-  end
-#=end
 
 #=begin
   # Returns a Hash of {Ship => Amount} pairs
@@ -130,7 +133,7 @@ class Fleet < ActiveRecord::Base
     new_fleet.save
     new_fleet.add_ships(ship_hash)
     self.destroy_ships(ship_hash)
-    new_fleet
+    return new_fleet
   end
 #=end
 
@@ -156,9 +159,8 @@ class Fleet < ActiveRecord::Base
     else
       ship_array.first.amount += 1
     end
-    self.init
     ship_array.first.save
-
+    self.update_values
   end
 #=end
 
@@ -187,12 +189,12 @@ class Fleet < ActiveRecord::Base
       ship.amount = value
       ship.save
     end
+    self.update_values
   end
 #=end
 
 #=begin
   # destroys ships dependant on a hash of ship_id:amount
-  # FEHLERBEHANDLUNG AN DEN ANFANG SETZEN
   # CHECK WETHER THERE ARE NEGATIVE AMOUNTS AND FLEETS AND SHIPS EXIST
   def destroy_ships(ship_hash)
     unless enough_ships?(ship_hash)
@@ -204,12 +206,13 @@ class Fleet < ActiveRecord::Base
       ship.amount -= value
       ship.save
     end
+    self.update_values
   end
 #=end
 
 
 #=begin
-  # destroys a ship dependant on the shipobject
+  # destroys a shiptype in the fleet
   def destroy_ship(s)
     unless s.is_a?Ship
       raise RuntimeError, "Input is no ship"
@@ -224,16 +227,17 @@ class Fleet < ActiveRecord::Base
       ship_array.first.amount -= 1
     end
     ship_array.first.save
+    self.update_values
   end
 #=end
 
 
-  # private methods
   private
 
     # Checks wether self contains more or equal no. of ships of certain type
     # returns true if enough and false if not enough or type not existent
     # Fehlerbehandlung
+    # similar to check_hash, with numberchecking
     def enough_ships?(ship_hash)
       ship_hash.each do |key, value|
         return false if value < 0
@@ -250,11 +254,31 @@ class Fleet < ActiveRecord::Base
 
     # checks if the keys are ships and the amounts are >= 0
     # returns true, if everything ok, and false in other cases
+    # similar to enough_ships, without numberchecking
     def check_hash (ship_hash)
       ship_hash.each do |key, value|
         return false unless key.is_a?(Ship)
         return false if value < 0
       end
       true
+    end
+
+    # calculates changing values for the whole fleet, if there were ships added or destroyed
+    # Gets called after Fleet was initialized and after adding or destroying ships
+    def update_values
+      ship_hash = self.get_ships
+      offense = 0
+      defense = 0
+      ressource_capacity = 0
+
+      ship_hash.each do |ship, amount|
+        offense += ship.offense * amount
+        defense += ship.defense * amount
+        ressource_capacity += ship.ressource_capacity * amount
+      end
+      self.offense = offense
+      self.defense = defense
+      self.ressource_capacity = ressource_capacity
+      self.save
     end
 end
