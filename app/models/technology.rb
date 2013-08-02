@@ -32,18 +32,6 @@ class Technology < ActiveRecord::Base
     end
   end
 
-  def get_technology_cost(user)
-
-      result = user_technologies.where(:user_id => user).first
-
-
-    if !result.blank? then
-      return  result.rank * self.cost
-
-    else
-       return self.cost
-    end
-  end
 
   def update_usersettings(user, rank)
 
@@ -52,6 +40,29 @@ class Technology < ActiveRecord::Base
     record.update_attribute(self.name, self.factor**rank)
 
   end
+
+
+  def get_technology_cost(user)
+
+    result = user_technologies.where(:user_id => user).first
+
+
+    if !result.blank? then
+      return  result.rank * self.cost
+
+    else
+      return self.cost
+    end
+  end
+
+  #def get_research_duration(user)
+
+   # result = user_technologies.where(:user_id => user).first
+
+    #if !result.blank? then
+     # return  result.rank * self.cost
+   #end
+  #end
 
 
 end
