@@ -12,8 +12,12 @@ class Fleet < ActiveRecord::Base
   def init
     if self.ships.nil?
       self.ressource_capacity=0
+      self.offense=0
+      self.defense=0
     else
       self.ressource_capacity=self.ships.sum("ressource_capacity")
+      self.offense=self.ships.sum("offense")
+      self.defense=self.ships.sum("defense")
     end
   end
 
