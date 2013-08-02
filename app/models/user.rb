@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
   has_many :planets
   has_many :battlereports
   belongs_to :alliance
+  has_and_belongs_to_many :messages
 
   #init usersettings when user is created
   after_create :init_usersettings

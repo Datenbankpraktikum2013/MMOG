@@ -21,6 +21,14 @@
     <%= f.text_area :text %>
   </div>
 
+  <div class="field">
+    <%= f.label "Empfänger" %>
+    <% @allianceusers=current_user.alliance.users %>
+    <% @allianceusers.each do |user|%>
+      <%= user.username %>
+    <% end %>
+  </div>
+
   <div class="actions">
     <%= f.submit %>
   </div>
