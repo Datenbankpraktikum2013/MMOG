@@ -10,7 +10,7 @@ one:
   name: MyString
   velocity: 1
   crew_capacity: 1
-  ressource_capasity: 1
+  ressource_capacity: 1
   fuel_capacity: 1
   consumption: 1
 
@@ -24,6 +24,6 @@ two:
   name: MyString
   velocity: 1
   crew_capacity: 1
-  ressource_capasity: 1
+  ressource_capacity: 1
   fuel_capacity: 1
   consumption: 1

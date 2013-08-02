@@ -11,15 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130802091610) do
+ActiveRecord::Schema.define(version: 20130802112110) do
 
   create_table "alliances", force: true do |t|
-    t.integer  "user_id"
+    t.integer  "alliance_founder_id"
     t.string   "name"
     t.text     "description"
+    t.string   "banner"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "banner"
   end
 
   create_table "battlereports", force: true do |t|
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 20130802091610) do
     t.integer  "energyusage"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "build_time"
   end
 
   create_table "buildingtypes_ships", id: false, force: true do |t|
@@ -128,10 +129,9 @@ ActiveRecord::Schema.define(version: 20130802091610) do
     t.boolean  "can_edit",     default: false
     t.boolean  "can_invite",   default: false
     t.boolean  "can_disband",  default: false
-    t.boolean  "is_founder",   default: false
+    t.integer  "alliance_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "alliance_id"
   end
 
   create_table "shipcounts", force: true do |t|
@@ -161,7 +161,7 @@ ActiveRecord::Schema.define(version: 20130802091610) do
     t.string   "name"
     t.integer  "velocity"
     t.integer  "crew_capacity"
-    t.integer  "ressource_capasity"
+    t.integer  "ressource_capacity"
     t.integer  "fuel_capacity"
     t.integer  "consumption"
     t.datetime "created_at"
@@ -216,7 +216,6 @@ ActiveRecord::Schema.define(version: 20130802091610) do
     t.boolean  "deathstar",                   default: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "increased_spypower",          default: 1
     t.integer  "user_id"
   end
 
@@ -243,7 +242,7 @@ ActiveRecord::Schema.define(version: 20130802091610) do
     t.integer  "money",                  default: 100
     t.integer  "score",                  default: 0
     t.integer  "alliance_id"
-    t.integer  "rank_id"
+    t.integer  "alliance_rank"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
