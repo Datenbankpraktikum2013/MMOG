@@ -122,6 +122,11 @@ ActiveRecord::Schema.define(version: 20130802112110) do
     t.integer  "user_id"
   end
 
+  create_table "planets_users_visibility", id: false, force: true do |t|
+    t.integer "planet_id"
+    t.integer "user_id"
+  end
+
   create_table "ranks", force: true do |t|
     t.string   "name",                         null: false
     t.boolean  "can_kick",     default: false
