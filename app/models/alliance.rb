@@ -40,7 +40,7 @@ class Alliance < ActiveRecord::Base
 	def add_user(user)
 		if user.alliance==nil
 			self.users<<user
-			@def=self.ranks.where(:standard=>true)
+			@def=self.ranks.where(:standard=>true).first
 			@def.users<<user
 			return true
 		end
