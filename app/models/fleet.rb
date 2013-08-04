@@ -167,6 +167,8 @@ class Fleet < ActiveRecord::Base
 
   # fuegt einer Flotte ein Schiff hinzu
   def add_ship(s)
+    add_ships({s => 1})
+=begin
     unless s.is_a?Ship
       raise RuntimeError, "Input is no ship" # Fehlerbehandlung
     end
@@ -181,15 +183,19 @@ class Fleet < ActiveRecord::Base
       ship_array.first.amount += 1
     end
     ship_array.first.save
-    self.update_values
+    update_values
+=end
   end
 #=end
 
 #=begin
   # adds ships dependant on a hash like {ship_id:amount}
-  # CHECK WETHER THERE ARE NEGATIVE AMOUNTS AND FLEETS AND SHIPS EXIST
   def add_ships(ship_hash)
-
+    unless hash_is_valid?(ship_hash)
+      raise RuntimeError, "The Input is not valid (invalid amount or wrong objects), ships cannot be added"
+    end
+    # this hash contains the ships that the fleet not yet possesses.
+    # Those get added after the loop
     new_ships = Hash.new
     
     # add ships that exist in fleet
@@ -210,16 +216,15 @@ class Fleet < ActiveRecord::Base
       ship.amount = value
       ship.save
     end
-    self.update_values
+    update_values
   end
 #=end
 
 #=begin
-  # destroys ships dependant on a hash of ship_id:amount
-  # CHECK WETHER THERE ARE NEGATIVE AMOUNTS AND FLEETS AND SHIPS EXIST
+  # destroys ships dependant on a hash of ship:amount
   def destroy_ships(ship_hash)
     unless enough_ships?(ship_hash)
-      raise RuntimeError, "Not enough ships to destroy"
+      raise RuntimeError, "The Input is not valid (invalid amount or wrong objects), ships cannot be destroyed"
     end
 
     ship_hash.each do |key, value|
@@ -227,7 +232,7 @@ class Fleet < ActiveRecord::Base
       ship.amount -= value
       ship.save
     end
-    self.update_values
+    update_values
   end
 #=end
 
@@ -235,9 +240,10 @@ class Fleet < ActiveRecord::Base
 #=begin
   # destroys a shiptype in the fleet
   def destroy_ship(s)
-    unless s.is_a?Ship
-      raise RuntimeError, "Input is no ship"
-    end
+    destroy_ships({s => 1})
+=begin
+    unless enough_ships?({s => 1})
+      raise RuntimeError, "The Input is not valid, ship cannot be destroyed"
 
     ship_array = Shipfleet.where(fleet_id: self, ship_id: s)
     # if there is no entry of a shiptype of that fleet
@@ -248,7 +254,8 @@ class Fleet < ActiveRecord::Base
       ship_array.first.amount -= 1
     end
     ship_array.first.save
-    self.update_values
+    update_values
+=end
   end
 #=end
 
@@ -258,7 +265,7 @@ class Fleet < ActiveRecord::Base
     # Checks wether self contains more or equal no. of ships of certain type
     # returns true if enough and false if not enough or type not existent
     # Fehlerbehandlung
-    # similar to check_hash, with numberchecking
+    # similar to hash_is_valid?, with numberchecking
     def enough_ships?(ship_hash)
       ship_hash.each do |key, value|
         return false if value < 0
@@ -276,7 +283,7 @@ class Fleet < ActiveRecord::Base
     # checks if the keys are ships and the amounts are >= 0
     # returns true, if everything ok, and false in other cases
     # similar to enough_ships, without numberchecking
-    def check_hash (ship_hash)
+    def hash_is_valid? (ship_hash)
       ship_hash.each do |key, value|
         return false unless key.is_a?(Ship)
         return false if value < 0
