@@ -1,11 +1,25 @@
 class AlliancesController < ApplicationController
-  before_action :set_alliance, only: [:show, :edit, :update, :destroy, :useradd, :user_add_action]
+  before_action :set_alliance, only: [:show, :edit, :update, :destroy, :useradd, :user_add_action, :change_default_rank]
   before_filter :authenticate_user!
 
   # GET /alliances
   # GET /alliances.json
   def index
     @alliances = Alliance.all
+  end
+
+    # PATCH/PUT /alliances/1/edit/change_default_rank
+  def change_default_rank
+    @rank=@alliance.ranks.find_by_id(params['rank']['id'])
+    respond_to do |format|
+      if @alliance.change_rank(@rank)
+        format.html { redirect_to @alliance, notice: 'Standardrang erfolgreich geändert!.' }
+        format.json { render action: 'show', status: :created, location: @alliance }
+      else
+        format.html { redirect_to @alliance, notice: 'Standardrang konnte nicht geändert werden.' }
+        format.json { render json: @alliance.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   # GET /alliances/1

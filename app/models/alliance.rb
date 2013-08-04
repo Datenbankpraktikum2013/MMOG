@@ -4,8 +4,6 @@ class Alliance < ActiveRecord::Base
 
 	validates_presence_of :name
 
-	has_one	 :rank
-
 	has_many :ranks
 
 	has_many :users
@@ -23,14 +21,8 @@ class Alliance < ActiveRecord::Base
 	private
 	def create_default_ranks
 		#create default founder rank
-		self.ranks.create(:name => "Oberhaupt",:can_kick=>true,:can_massmail=>true,:can_edit=>true,:can_invite=>true,:is_founder=>true,:can_disband=>true)
-      	self.ranks.create(:name=>"Anwärter")
-      	@default=self.ranks[1]
-      	#add default-default rank to alliance
-      	self.rank=@default
-      	#save!
-      	self.save
-		@default.save      	
+      	self.ranks.create(:name=>"Anwärter",:standard=>true)
+      	self.ranks.create(:name => "Oberhaupt",:can_kick=>true,:can_massmail=>true,:can_edit=>true,:can_invite=>true,:is_founder=>true,:can_disband=>true)
 	end
 
 	public
@@ -41,8 +33,6 @@ class Alliance < ActiveRecord::Base
 		@rank.users<<founder
 		#add user to alliance
 		self.users<<founder
-		#save
-		return (founder.save and self.ranks.first.save)
 	end		
 
 	#add user to alliance and set default rank
@@ -50,9 +40,23 @@ class Alliance < ActiveRecord::Base
 	def add_user(user)
 		if user.alliance==nil
 			self.users<<user
-			self.rank.users<<user
+			@def=self.ranks.where(:standard=>true)
+			@def.users<<user
 			return true
 		end
 		return false
+	end
+
+	public
+	def change_rank(rank)
+		if rank == nil
+			return false
+		end
+		@old=self.ranks.where(:standard=>true).first
+		@old.standard=false
+		@old.save
+		rank.standard=true
+		rank.save
+		return true
 	end
 end

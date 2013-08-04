@@ -21,7 +21,7 @@
 						<td><%=user.money%></td>
 						<td><%=user.score%></td>
 						<td><%=user.rank.name%></td>
-						<% if current_user.rank.alliance==@alliance and current_user.rank.can_edit  %>
+						<% if current_user.rank.alliance==@alliance and current_user.rank.can_edit and current_user != user  %>
 							<td><%= link_to 'Kicken' %>
 						<% end %>
 					</tr>
@@ -40,19 +40,27 @@
 	        <th>Einladen</th>
 		  	<% @alliance.ranks.each do |rank| %>
 		  			  	  
-		 	    <tr style=<%= (rank==@alliance.rank) ? "font-weight:bold" : "" %>>
+		 	    <tr style=<%= (rank.standard) ? "font-weight:bold" : "" %>>
 			  	      <td><%= rank.name %></td>
 			  	      <td><%= rank.can_kick ? "Ja" : "Nein" %></td>
 		        	  <td><%= rank.can_massmail ? "Ja" : "Nein" %></td>
 		        	  <td><%= rank.can_edit ? "Ja" : "Nein" %></td>
 		        	  <td><%= rank.can_invite ? "Ja" : "Nein" %></td> 	    
 			          <td><%= link_to 'Editieren', edit_rank_path(rank) %></td>
-			          <td><%= link_to 'Löschen', rank, method: :delete, data: { confirm: 'Möchtest du diesen Rank wirklich löschen?' } %></td>
+			          <% unless rank.is_founder or rank.standard %>
+			          	<td><%= link_to 'Löschen', rank, method: :delete, data: { confirm: 'Möchtest du diesen Rank wirklich löschen?' } %></td>
+			          <% end %>
 		  	    </tr>
-
 		  	<%end%>
 		  </tbody>
 	  	</table>
+	  	<%= form_tag(edit_alliance_path+'/change_default_rank')%>
+			<p>	<%=label_tag ('Standardrank: ') %>
+				<%= collection_select(:rank, :id , @alliance.ranks.where('is_founder != ?',true) , :id, :name, {:selected => @alliance.ranks.where(:standard=>true).first.id }) %>
+				<%= submit_tag 'Ändern' %>
+			</p>
+
+		</form>
 	  	<%= link_to 'Neuen Rang erstellen', new_rank_path %>
   	</p>	
 <% end %>

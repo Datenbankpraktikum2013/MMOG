@@ -34,6 +34,8 @@ Mmog::Application.routes.draw do
 
   resources :planets
 
+  post 'alliances/:id/edit/change_default_rank' => 'alliances#change_default_rank'
+
   get 'alliances/:id/edit/useradd' => 'alliances#useradd'
 
   post 'alliances/:id/edit/user_add_action' => 'alliances#user_add_action'

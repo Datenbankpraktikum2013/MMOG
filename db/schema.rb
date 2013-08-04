@@ -14,9 +14,10 @@
 ActiveRecord::Schema.define(version: 20130802150244) do
 
   create_table "alliances", force: true do |t|
-    t.integer  "alliance_founder_id"
-    t.string   "name"
+    t.string   "name",        null: false
     t.text     "description"
+    t.string   "banner"
+    t.integer  "rank_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -128,7 +129,9 @@ ActiveRecord::Schema.define(version: 20130802150244) do
     t.boolean  "can_massmail", default: false
     t.boolean  "can_edit",     default: false
     t.boolean  "can_invite",   default: false
+    t.boolean  "is_founder",   default: false
     t.boolean  "can_disband",  default: false
+    t.boolean  "standard",     default: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "alliance_id"
@@ -188,7 +191,6 @@ ActiveRecord::Schema.define(version: 20130802150244) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "duration"
-    t.integer  "maxrank"
   end
 
   create_table "technology_requires", force: true do |t|
@@ -216,6 +218,7 @@ ActiveRecord::Schema.define(version: 20130802150244) do
     t.boolean  "deathstar",                   default: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "increased_spypower",          default: 1
     t.integer  "user_id"
     t.integer  "researchlvl",                 default: 0
   end
@@ -243,7 +246,7 @@ ActiveRecord::Schema.define(version: 20130802150244) do
     t.integer  "money",                  default: 100
     t.integer  "score",                  default: 0
     t.integer  "alliance_id"
-    t.integer  "alliance_rank"
+    t.integer  "rank_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

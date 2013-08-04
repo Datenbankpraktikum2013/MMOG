@@ -7,8 +7,8 @@ class CreateRanks < ActiveRecord::Migration
       t.boolean :can_edit,      :default => false
       t.boolean :can_invite,    :default => false
       t.boolean :is_founder,    :default => false
-      t.boolean :can_disband,   :default => false
-      t.integer :alliance_id
+      t.boolean :can_disband,   :default => false 
+      t.boolean :standard,       :default => false
       t.timestamps
     end
   end
