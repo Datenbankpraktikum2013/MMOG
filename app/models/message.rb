@@ -1,15 +1,5 @@
 class Message < ActiveRecord::Base
-
-	validates_presence_of :text
-	validates_presence_of :subject
-
-	belongs_to :user
-
-	has_many :users
-
-	def set_user(user)
-		self.user=user
-		self.save
-	end	
-
+  belongs_to :sender, :class_name => 'User', :foreign_key => 'sender_id'
+  has_many :messages_user
+  has_many :recipients, :class_name => 'User', :through => :messages_user, :source => :user
 end

@@ -40,7 +40,7 @@ class Planet < ActiveRecord::Base
 
     #Creates random Planet name
     if self.name.nil?
-      self.name = (0...8).map{(65 + Random.rand(26)).chr}.join
+      self.name = PlanetsHelper.namegen
     end
 
     #Creates specialties for Planet
@@ -102,24 +102,33 @@ class Planet < ActiveRecord::Base
 
 
   def mention()
-      self.sunsystem.mention()
+    self.sunsystem.mention()
+    #Hier weitere Aktionen starten: z.B. Rohstoffproduktion, falls gestoppt wurde
+  end
 
+
+  def claim(user)
+    if self.user.nil?
+      self.user = user;
+      self.create_building_job(:Oremine)
+      self.create_building_job(:Headquarter)
+      self.create_building_job(:Powerplant)
+      self.create_building_job(:City)
+      self.create_production_job;
+    else
+      self.user = user;
+    end
   end
 
 
   #@param type Name der Produktionsstaette ("Eisenmine", "Haus", ...)
   def get_production(type)
     # TODO Calculate production
-    puts"type: #{type} typetos #{type.to_s}"
     btype = Buildingtype.where(name: type.to_s)
-    puts "btype: #{btype.to_s}"
     production_building = self.buildings.where(buildingtype_id: btype).first
     return 0 if production_building.nil? 
-    puts "production_building: #{production_building}"
     prod_building_type = Buildingtype.where(id:production_building.buildingtype_id).first
-    puts "prod_building_type: #{prod_building_type}"
     prod = prod_building_type.production
-    puts "prod: #{prod}"
     
     sci_factor =1
     if type == :Oremine
@@ -135,7 +144,6 @@ class Planet < ActiveRecord::Base
 
     if type == :Headquarter
       #sci_factor = self.user.get_income
-      puts "Test"
       c = sci_factor * @spec[3] * (self.population / 100)# * prod 
       return c
     end
@@ -171,7 +179,6 @@ class Planet < ActiveRecord::Base
         else
           self.ore = self.maxore
         end
-        puts "#{ore_production}"
       end
 
       #
@@ -202,12 +209,7 @@ class Planet < ActiveRecord::Base
       # updates money 
       #
       income = self.get_production(:Headquarter)
-      puts "INCOME: #{income}!!!!!!!!!!!!!!!"
-      puts "#SPEC: #{@spec[3]}HHHHHHHHHHHHH"
-      puts "#{User.find_by id: self.user_id}"
-      #owner = User.find_by_id (self.user.id)
       owner = self.user
-      puts "OOOOOOOOOOOOOOOOWWWWWWWNER ::::#{owner}"
       owner.money += income
       owner.save
     end
@@ -232,29 +234,55 @@ class Planet < ActiveRecord::Base
     self.energy -= ener_usage 
  
     # Repeat Job imediately
-    #self.create_production_job
+    self.create_production_job
 
   end
 
   def create_building_job(type)
-    upgrade_me = self.buildings.where(name: type)
+    buildingtype_arr = Buildingtype.where(name: type.to_s)
+    id_list = []
+    buildingtype_arr.each do |x|
+      id_list << x.id
+    end
+    upgrade_me = self.buildings.where(buildingtype_id: id_list).first
     
     if upgrade_me.nil?
-      build_time = Buildingtype.where(name:type, level:1).build_time
-      build_me = Buildingtype.where(name:type, level:1).id
+      build_time = Buildingtype.where(name: type.to_s, level:1).first.build_time
+      build_me = Buildingtype.where(name: type.to_s, level:1).first.id
+      puts "1: " + build_me.to_s
     else  
-      upgrade_me = upgrade_me.first.id 
+      upgrade_me = upgrade_me.id
+      puts "2: "+ upgrade_me.to_s
       #build_time = Buildingtype.where(name:type level:upgrade_me.level+1).build_time
       #build_me = Buildingtype.where(name:type level:upgrade_me.level+1).id
     end
-    Resque.enqueue_in(buildtime.minute,BuildBuildingjob, id_array(self.id,build_me))
+    id_array = []
+    id_array << self.id
+    id_array << build_me
+    puts "ID ARRAY: #{id_array}"
+    Resque.enqueue_in(2.second,BuildBuildings, id_array)
 
   end
 
-  def build(id)
-    destroy_me = self.buildings.where(name: Buildingtype.where(id: id).first.name).first.id
-    destroy_me.destroy unless destroy_me.nil?
-    reborn_me = Building.create(buildingtype_id: id, planet: seld.id)
+  def build(buildingtype_id)
+    #destroy_me = self.buildings.where(name: Buildingtype.where(id: id).first.name).first.id
+    #destroy_me.destroy unless destroy_me.nil?
+    #reborn_me = Building.create(buildingtype_id: id, planet: seld.id)
+    return false if buildingtype_id.nil? || !buildingtype_id.integer?
+    build_me = Buildingtype.where(id: buildingtype_id).first
+    return false if build_me.nil?
+    builds = self.buildings
+    buildings.each do |b|
+      if b.buildingtype.name == build_me.name && b.buildingtype.level + 1 == build_me.level
+        b.buildingtype = build_me
+        return true
+      end
+    end
+    if build_me.level == 1 then
+      Building.create(buildingtype_id: buildingtype_id, planet: self)
+      return true
+    end
+    return false
   end
 
   def create_production_job()
@@ -285,6 +313,5 @@ class Planet < ActiveRecord::Base
       -1
     end
   end
-
 
 end

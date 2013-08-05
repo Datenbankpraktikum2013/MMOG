@@ -1,0 +1,2 @@
+module TradereportsHelper
+end

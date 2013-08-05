@@ -1,76 +1,24 @@
-<!-- Disabling old version
-
-<h1>Listing galaxies</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>X</th>
-      <th>Name</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <%# @galaxies.each do |galaxy| %>
-      <tr>
-        <td><%# galaxy.x %></td>
-        <td><%# galaxy.name %></td>
-        <td><%# link_to 'Show', galaxy %></td>
-        <td><%# link_to 'Edit', edit_galaxy_path(galaxy) %></td>
-        <td><%# link_to 'Destroy', galaxy, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <%# end %>
-  </tbody>
-</table>
-
--->
-<table class="galaxyfield">
-  <% id = 0
-     k = 0
-=begin
-     gall = @galaxies.sort do |a,b|
-       x1 = a.getCoords
-       x2 = b.getCoords
-       comp = (x1[1] <=> x2[1])
-       comp.zero? ? (x1[0] <=> x2[0]) : comp
-     end
-=end
-     $game_settings[:world_view_length].times do |i|
-     i += @pos[1] - 3 %>
-  <tr>
-    <% $game_settings[:world_view_length].times do |j|
-      k += 1
-      j += @pos[0] - 3
-      real_x = Galaxy.calcX(j,i)
-      unless @near.include?real_x then
-        %><td class="galaxy">?</td><%
-      else
-     #g = gall[k-1]
-     g = Galaxy.where(x: real_x).first
-    %>
-    <td class="galaxy <%= out = ""
-        if(GalaxiesHelper.isMeins(real_x)) then
-                            out += "mygalaxy "
-                          end
-                          if(GalaxiesHelper.isVisible(real_x)) then
-                            out += "visiblegalaxy "
-                          end
-    filename = GalaxiesHelper.getImageFilename(real_x, 80)
-    out += filename[16] + filename[18, 4] %>"
-    title="Galaxie<%= if(GalaxiesHelper.isMeins(real_x)) then " (gehört mir)" end %>: <%= real_x; %>, Koordinaten: (<%= j %>,<%= i
-    %>), Sonnensysteme:<%= if(GalaxiesHelper.isVisible(real_x)) then
-     g.sunsystems.count
-     else "Unbekannt"
-     end %>">
-     <%= link_to g.name, galaxy_path(g) if GalaxiesHelper.isVisible(real_x) %></td>
-    <% end end %>
-  </tr>
+<div class="galaxyfield" style="position: relative;">
+  <% @galaxies.each do |g| %>
+      <% pos = g.getCoords
+         pos[0] = (pos[0] + 2 + @pos[0]) % 5
+         pos[1] = (pos[1] + 2 + @pos[1]) % 5
+         filename = GalaxiesHelper.getImageFilename(g.x, 80)
+         out = filename[16] + filename[18, 4] %>
+      <a href="<%= galaxy_path(g) %>"><div class="galaxy visiblegalaxy <%= out %>" style="position: absolute; top: <%= 80*pos[1] %>px; left: <%= 80*pos[0] %>px;" onmouseover="javascript:showGalaxyInfo(<%= g.x %>)"></div></a>
   <% end %>
 
-
-</table>
 </div>
-<br>
+
+<div class="galaxy_info" >
+  <% @galaxies.each do |g| %>
+    <div id="galaxy_info_<%= g.x %>" class="galaxy_info_field">
+      <%= g.name %>
+      Position: <%= pos = g.getCoords
+        pos[0] %>, <%= pos[1] %>
+      Sonnensysteme: <%= g.sunsystems.count %>
+    </div>
+
+  <% end %>
+
+</div>

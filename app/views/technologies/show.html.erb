@@ -9,6 +9,18 @@
   <strong>Factor:</strong>
   <%= @technology.factor %>
 </p>
+<p>
+  <strong>Cost:</strong>
+  <%= @technology.cost %>
+</p>
+<p>
+  <strong>Duration:</strong>
+  <%= @technology.duration %>
+</p>
+<p>
+  <strong>Maxrank:</strong>
+  <%= @technology.maxrank %>
+</p>
 
 <%= link_to 'Edit', edit_technology_path(@technology) %> |
 <%= link_to 'Back', technologies_path %>

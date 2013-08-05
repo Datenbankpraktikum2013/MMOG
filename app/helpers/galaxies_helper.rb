@@ -9,14 +9,14 @@ module GalaxiesHelper
   def self.generateAt(x, y)
     x = Galaxy.calcX(x, y)
     unless x < 0 || Galaxy.where(x: x).exists? then
-      name = "New Galaxy " + x.to_s
+      name = namegen()
       g = Galaxy.create(x: x, name: name)
       pos = [1, 2, 3, 4, 5, 6, 7, 8]
       pos.shuffle!
 
       i = Random.rand(5) + 4
       i.times do |y|
-        name = "New Sunsystem " + y.to_s
+        name = SunsystemsHelper.namegen()
         s = Sunsystem.new(name: name, y: pos[y])
         s.galaxy = g
         s.save
