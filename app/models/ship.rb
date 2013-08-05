@@ -17,26 +17,4 @@ class Ship < ActiveRecord::Base
 		building_hash
 	end
 
-=begin
-	def save(*)
-		create_or_update
-			if self.has_attribute? :amount
-			sf = Shipfleet.where(fleet_id: self.fleet_id, ship_id: self.id).first
-			sf.amount = self.amount
-			sf.save
-		end
-		rescue ActiveRecord::RecordInvalid
-  		false
-	end
-
-	def save!(*)
-
-		create_or_update || raise(RecordNotSaved)
-			if self.has_attribute? :amount
-			sf = Shipfleet.where(fleet_id: self.fleet_id, ship_id: self.id).first
-			sf.amount = self.amount
-			sf.save!
-		end
-	end
-=end
 end

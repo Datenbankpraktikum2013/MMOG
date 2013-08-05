@@ -1,6 +1,6 @@
-<h1>Listing technologies</h1>
+<h1>Administrate Technologies</h1>
 
-<table>
+<table border="1">
   <thead>
     <tr>
       <th></th>
@@ -14,11 +14,11 @@
   <tbody>
     <% @technologies.each do |technology| %>
       <tr>
-        <td><%= technology.name %></td>
-        <td><%= technology.factor %></td>
-        <td><%= technology.cost%></td>
-        <td><%= technology.duration %></td>
-        <td><%= technology.maxrank %></td>
+        <td align="middle"  valign="middle"><%= technology.name %></td>
+        <td align="middle"  valign="middle"><%= technology.factor %></td>
+        <td align="middle"  valign="middle"><%= technology.cost%></td>
+        <td align="middle"  valign="middle"><%= technology.duration %></td>
+        <td align="middle"  valign="middle"><%= technology.maxrank %></td>
         <td><%= link_to 'Show', technology %></td>
         <td><%= link_to 'Edit', edit_technology_path(technology) %></td>
         <td><%= link_to 'Destroy', technology, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -30,3 +30,28 @@
 <br>
 
 <%= link_to 'New Technology', new_technology_path %>
+
+<table border="1">
+  <thead>
+  <tr>
+    <th></th>
+    <th>Description</th>
+    <th>rank</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @technologies.each do |technology| %>
+      <tr>
+        <td align="middle"  valign="middle"><%= 'icon'%></td>
+        <td align="middle"  valign="middle"><strong><%= 'Name: ' %></strong><%= technology.name %><br>
+          <strong><%= 'Name: ...' %></strong></td>
+        <td align="middle"  valign="middle"><%= technology.cost%></td>
+
+        <td><%= link_to 'Show', technology %></td>
+        <td><%= link_to 'Edit', edit_technology_path(technology) %></td>
+        <td><%= link_to 'Destroy', technology, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

@@ -1,5 +1,7 @@
 Mmog::Application.routes.draw do
 
+  resources :tradereports
+
   resources :reports
 
   resources :shipcounts
