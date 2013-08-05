@@ -65,14 +65,15 @@ Ship.find(10).buildingtypes << Buildingtype.where(name: "Starport", level: 1).fi
 #Building 
 Building.create({:planet_id => 1, :buildingtype_id => 1})
 Building.create({:planet_id => 1, :buildingtype_id => 2})
-
-
 #Default-Werte von Spieler, Allianzen und Nachrichten
 #Alliance.create({:name => 'test_alliance3', :description => 'testtesttest', :user_id => User.first})
+
 ##########DEFAULT USER!! demo:praktikum
 User.create(:email => 'demo@demo.com',:password => 'password',:username => 'demo',:money => 100,:score => 0)
 User.create(:email => 'demo2@demo.com',:password => 'password',:username=> 'demo2',:money => 10000,:score => 0)
 User.create(:email => 'demo3@demo.com',:password => 'password',:username=> 'demo3',:money => 10000,:score => 0)
 User.create(:email => 'demo4@demo.com',:password => 'password',:username=> 'demo4',:money => 10000,:score => 0)
 
-
+#Building 
+Building.create({:planet_id => 1, :buildingtype_id => 1})
+Building.create({:planet_id => 1, :buildingtype_id => 2})
