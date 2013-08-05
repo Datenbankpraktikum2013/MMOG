@@ -60,6 +60,29 @@ class Fleet < ActiveRecord::Base
   end
 
 #=begin
+  # calculates of a {ship => amount} hash, the building costs by returning a {ressource => cost} hash
+  def Fleet.get_ressource_cost (ship_hash)
+    unless hash_is_valid?(ship_hash)
+      raise RuntimeError, "The Input is not valid (invalid amount or wrong objects), ships cannot be added"
+    end
+    ressource_hash = Hash.new(0)
+    ship_hash.each do |ship, amount|
+      ressource_hash[:credit_cost] += ship.credit_cost * amount
+      ressource_hash[:ore_cost] += ship.ore_cost * amount
+      ressource_hash[:crystal_cost] += ship.crystal_cost * amount
+      ressource_hash[:crew_capacity] += ship.crew_capacity * amount
+    end
+    ressource_hash
+  end
+#=end
+
+#=begin
+  def Fleet.get_available_ships
+
+  end
+#=end  
+
+#=begin
   # returns the amount of a shiptype in one fleet
   # check if s is ship
   def get_amount_of_ship(ship)
@@ -143,8 +166,7 @@ class Fleet < ActiveRecord::Base
 
 #=begin
   # returns a fleet, that was created from self, with the amounts of ships that are in the argument hash
-  def split_fleet(ship_hash)
-    
+  def split_fleet(ship_hash)  
     # check wether the fleet has enough ships ( negative amounts and really ships)
     unless enough_ships?(ship_hash)
       raise RuntimeError, "Nicht genuegend Schiffe vorhanden zum splitten"
