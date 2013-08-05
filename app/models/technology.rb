@@ -206,17 +206,20 @@ class Technology < ActiveRecord::Base
   end
 
   def get_requirements
-    requirements = ""
+    requirements = ''
 
     technology_requires.find_each do |tech|
       unless tech.pre_tech_id == 0
-        requirements << Technology.find(tech.pre_tech_id).title << ", "
+        requirements << Technology.find(tech.pre_tech_id).name.to_s << ', '
       end
     end
 
-    unless requirements.length == 0
-      requirements[0..-1]
+    len = requirements.length
+    if len != 0
+      requirements = requirements[0..(len-3)]
     end
+
+    requirements
   end
 
 
