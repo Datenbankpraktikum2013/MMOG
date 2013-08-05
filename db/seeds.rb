@@ -19,16 +19,6 @@ TechnologiesHelper.init_Technology
 TechnologiesHelper.init_Technology_Require
 TechnologiesHelper.test_user_technology
 
-#Buildingtypes
-#Buildingtype.create({:name =>'Headquarter', :level=> 1, :production=> 1, :energyusage=> 0})
-#Buildingtype.create({:name =>'Oremine', :level=> 1, :production=> 10, :energyusage=>0})
-#Buildingtype.create({:name =>'Powerplant', :level => 1, :production=> 10, :energyusage=>0})
-#Buildingtype.create({:name =>'Research Lab', :level => 1, :production=> 0, :energyusage=> 30})
-#Buildingtype.create({:name =>'City', :level=> 1, :production=> 100, :energyusage=> 20})
-#Buildingtype.create({:name =>'Depot', :level=> 1, :production=> 200, :energyusage=> 5})
-#Buildingtype.create({:name =>'Crystalmine', :level=> 1, :production=> 1, :energyusage=> 100})
-#Buildingtype.create({:name =>'Starport', :level=> 1, :production=> 0, :energyusage=> 100})
-
 
 #Default-Missionstypen
 Mission.create({:id => 1, :info_text => "Based"})
@@ -65,7 +55,7 @@ Ship.find(10).buildingtypes << Buildingtype.where(name: "Starport", level: 1).fi
 #Building 
 Building.create({:planet_id => 1, :buildingtype_id => 1})
 Building.create({:planet_id => 1, :buildingtype_id => 2})
-Building.create({:planet_id => 1, :buildingtype_id => 8})
+Building.create({:planet_id => 1, :buildingtype_id => 36})
 
 #Default-Werte von Spieler, Allianzen und Nachrichten
 #Alliance.create({:name => 'test_alliance3', :description => 'testtesttest', :user_id => User.first})
