@@ -8,11 +8,7 @@
 
 #Default-Werte von Planeten und Gebäude
 
-# Auskommentiert, damit schneller laedt
-$game_settings = Hash.new()
-$game_settings[:world_length] = 5
-$game_settings[:world_view_length] = 5
-GalaxiesHelper.generateRegion(0,0,4,4)
+GalaxiesHelper.generateRegion(-1,-1,1,1)
 
 #Default-Werte von Technologien
 
@@ -53,7 +49,6 @@ Ship.create({:id => 8, :construction_time => 1, :offense => 1, :defense => 100, 
 Ship.create({:id => 9, :construction_time => 1, :offense => 1, :defense => 300, :crystal_cost => 0, :credit_cost => 0, :ore_cost => 30, :name => 'Large defense platform', :velocity => 0, :crew_capacity => 6, :ressource_capacity => 0, :fuel_capacity => 0, :consumption => 0})
 Ship.create({:id => 10, :construction_time => 1, :offense => 1, :defense => 10, :crystal_cost => 0, :credit_cost => 20, :ore_cost => 50, :name => 'Colony ship', :velocity => 2, :crew_capacity => 5, :ressource_capacity => 1000, :fuel_capacity => 3000, :consumption => 4})
 
-
 # Building Prerequisites for ships
 Ship.find(1).buildingtypes << Buildingtype.where(name: "Starport", level: 1).first
 Ship.find(2).buildingtypes << Buildingtype.where(name: "Starport", level: 1).first
@@ -66,28 +61,19 @@ Ship.find(8).buildingtypes << Buildingtype.where(name: "Starport", level: 1).fir
 Ship.find(9).buildingtypes << Buildingtype.where(name: "Starport", level: 1).first
 Ship.find(10).buildingtypes << Buildingtype.where(name: "Starport", level: 1).first
 
-Ship.find(1).buildingtypes << Buildingtype.where(name: "Research Lab", level: 1).first
-Ship.find(2).buildingtypes << Buildingtype.where(name: "Research Lab", level: 1).first
-Ship.find(3).buildingtypes << Buildingtype.where(name: "Research Lab", level: 1).first
-Ship.find(4).buildingtypes << Buildingtype.where(name: "Research Lab", level: 1).first
-Ship.find(5).buildingtypes << Buildingtype.where(name: "Research Lab", level: 1).first
-Ship.find(6).buildingtypes << Buildingtype.where(name: "Research Lab", level: 1).first
-Ship.find(7).buildingtypes << Buildingtype.where(name: "Research Lab", level: 1).first
-Ship.find(8).buildingtypes << Buildingtype.where(name: "Research Lab", level: 1).first
-Ship.find(9).buildingtypes << Buildingtype.where(name: "Research Lab", level: 1).first
-Ship.find(10).buildingtypes << Buildingtype.where(name: "Research Lab", level: 1).first
-
-# Technology Prerequisites for ships
+#Building 
+Building.create({:planet_id => 1, :buildingtype_id => 1})
+Building.create({:planet_id => 1, :buildingtype_id => 2})
 
 
 #Default-Werte von Spieler, Allianzen und Nachrichten
 #Alliance.create({:name => 'test_alliance3', :description => 'testtesttest', :user_id => User.first})
-
 ##########DEFAULT USER!! demo:praktikum
 User.create(:email => 'demo@demo.com',:password => 'password',:username => 'demo',:money => 100,:score => 0)
 User.create(:email => 'demo2@demo.com',:password => 'password',:username=> 'demo2',:money => 10000,:score => 0)
 User.create(:email => 'demo3@demo.com',:password => 'password',:username=> 'demo3',:money => 10000,:score => 0)
 User.create(:email => 'demo4@demo.com',:password => 'password',:username=> 'demo4',:money => 10000,:score => 0)
+
 
 
 
@@ -100,8 +86,4 @@ Buildingtype.create({:name =>'City', :level=> 1, :production=> 100, :energyusage
 Buildingtype.create({:name =>'Depot', :level=> 1, :production=> 200, :energyusage=> 5})
 Buildingtype.create({:name =>'Crystalmine', :level=> 1, :production=> 1, :energyusage=> 100})
 Buildingtype.create({:name =>'Starport', :level=> 1, :production=> 0, :energyusage=> 100})
-
-#Building 
-Building.create({:planet_id => 1, :buildingtype_id => 1})
-Building.create({:planet_id => 1, :buildingtype_id => 2})
 

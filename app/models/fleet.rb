@@ -74,13 +74,7 @@ class Fleet < ActiveRecord::Base
     end
     ressource_hash
   end
-#=end
-
-#=begin
-  def Fleet.get_available_ships
-
-  end
-#=end  
+#=end 
 
 #=begin
   # returns the amount of a shiptype in one fleet

@@ -102,8 +102,13 @@ class Planet < ActiveRecord::Base
 
 
   def mention()
-      self.sunsystem.mention()
+    self.sunsystem.mention()
+    #Hier weitere Aktionen starten: z.B. Rohstoffproduktion, falls gestoppt wurde
+  end
 
+
+  def claim(user)
+    self.user = user if user.is_a?User && !user.nil?
   end
 
 

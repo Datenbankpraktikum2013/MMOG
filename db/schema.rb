@@ -11,19 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 20130805070144) do
-=======
 ActiveRecord::Schema.define(version: 20130805095444) do
->>>>>>> aed070682b3066c03ba1a28ab35458fee0d6595f
 
   create_table "alliances", force: true do |t|
-    t.integer  "user_id"
-    t.string   "name"
+    t.string   "name",        null: false
     t.text     "description"
+    t.string   "banner"
+    t.integer  "rank_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "banner"
   end
 
   create_table "battlereports", force: true do |t|
@@ -41,6 +37,14 @@ ActiveRecord::Schema.define(version: 20130805095444) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "planet_id"
+  end
+
+  create_table "buildingtype_relations", id: false, force: true do |t|
+    t.integer "required_buildingtype_id"
+    t.integer "affected_buildingtype_id"
+  end
+
+  create_table "buildingtype_requires", force: true do |t|
   end
 
   create_table "buildingtypes", force: true do |t|
@@ -127,7 +131,9 @@ ActiveRecord::Schema.define(version: 20130805095444) do
     t.boolean  "can_massmail", default: false
     t.boolean  "can_edit",     default: false
     t.boolean  "can_invite",   default: false
+    t.boolean  "is_founder",   default: false
     t.boolean  "can_disband",  default: false
+    t.boolean  "standard",     default: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "alliance_id"
@@ -262,7 +268,7 @@ ActiveRecord::Schema.define(version: 20130805095444) do
     t.integer  "money",                  default: 100
     t.integer  "score",                  default: 0
     t.integer  "alliance_id"
-    t.integer  "alliance_rank"
+    t.integer  "rank_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
