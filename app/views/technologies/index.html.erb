@@ -43,7 +43,7 @@
   <tbody>
   <% @technologies.each do |technology| %>
       <tr>
-        <td align="middle"  valign="middle"><%= 'icon'%></td>
+        <td align="middle"  valign="middle"><img src=<%=TechnologiesHelper.(technology) %>> </td>
         <td align="middle"  valign="middle"><strong><%= 'Name: ' %></strong><%= technology.name %><br>
           <strong><%= 'Benötigte Technologien: ' %></strong><%=technology.get_requirements %><br>
           <strong><%= 'Kosten: ' %></strong><%= technology.get_technology_cost(current_user)%><br>
