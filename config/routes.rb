@@ -1,5 +1,7 @@
 Mmog::Application.routes.draw do
 
+  resources :reports
+
   resources :shipcounts
 
   resources :battlereports
@@ -39,6 +41,10 @@ Mmog::Application.routes.draw do
   get 'alliances/:id/edit/useradd' => 'alliances#useradd'
 
   post 'alliances/:id/edit/user_add_action' => 'alliances#user_add_action'
+
+  post 'alliances/:id/edit/change_user_rank' => 'alliances#change_user_rank'
+
+  post 'alliances/:id/edit/remove_user' => 'alliances#remove_user'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

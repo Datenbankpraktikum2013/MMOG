@@ -11,7 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20130805070144) do
+=======
+ActiveRecord::Schema.define(version: 20130805095444) do
+>>>>>>> aed070682b3066c03ba1a28ab35458fee0d6595f
 
   create_table "alliances", force: true do |t|
     t.integer  "user_id"
@@ -23,18 +27,12 @@ ActiveRecord::Schema.define(version: 20130805070144) do
   end
 
   create_table "battlereports", force: true do |t|
-    t.integer  "defender_planet_id"
-    t.integer  "attacker_planet_id"
-    t.datetime "fightdate"
     t.integer  "stolen_ore"
     t.integer  "stolen_crystal"
     t.integer  "stolen_space_cash"
-    t.integer  "defender_id"
-    t.integer  "attacker_id"
     t.integer  "winner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "read",               default: false
   end
 
   create_table "buildings", force: true do |t|
@@ -134,6 +132,25 @@ ActiveRecord::Schema.define(version: 20130805070144) do
     t.datetime "updated_at"
     t.integer  "alliance_id"
   end
+
+  create_table "reports", force: true do |t|
+    t.integer  "reportable_id"
+    t.string   "reportable_type"
+    t.integer  "defender_planet_id"
+    t.integer  "attacker_planet_id"
+    t.datetime "fightdate"
+    t.integer  "defender_id"
+    t.integer  "attacker_id"
+    t.boolean  "read",               default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "reports", ["attacker_id"], name: "index_reports_on_attacker_id"
+  add_index "reports", ["attacker_planet_id"], name: "index_reports_on_attacker_planet_id"
+  add_index "reports", ["defender_id"], name: "index_reports_on_defender_id"
+  add_index "reports", ["defender_planet_id"], name: "index_reports_on_defender_planet_id"
+  add_index "reports", ["reportable_id", "reportable_type"], name: "index_reports_on_reportable_id_and_reportable_type"
 
   create_table "shipcounts", force: true do |t|
     t.integer  "battlereport_id"
