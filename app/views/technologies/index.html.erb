@@ -45,18 +45,24 @@
       <tr>
         <td align="middle"  valign="middle"><%= 'icon'%></td>
         <td align="middle"  valign="middle"><strong><%= 'Name: ' %></strong><%= technology.name %><br>
-          <strong><%= 'Benötigte Technologien: ' %></strong><%technology.get_requirements %><br>
+          <strong><%= 'Benötigte Technologien: ' %></strong><%=technology.get_requirements %><br>
           <strong><%= 'Kosten: ' %></strong><%= technology.get_technology_cost(current_user)%><br>
           <strong><%= 'Dauer: ' %></strong><%= technology.get_research_duration(current_user).to_s + ' Sekunden'%> <br>
           <strong><%= 'Beschreibung: ' %></strong><%= technology.description%>
         </td>
         <td align="middle"  valign="middle"><%= technology.get_technology_rank(current_user)%></td>
 
-        <% unless technology.technology_require?(current_user) %>
-        <td><%= link_to 'Show', technology %></td>
+        <%unless technology.building_rank_require?(current_user)%>
+        <td><%='Fehlende Forschungsstufe' %></td>
+        <% else if technology.tech_require?(current_user)== false %>
+        <td><%='Fehlende Voraussetzung' %></td>
+        <%else if  technology.cost_required?(current_user) == false %>
+        <td><%='Nicht genug Geld' %></td>
         <%else %>
-        <td><%= link_to 'Destroy', technology, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Upgrade Technology', technology, method: :delete, data: { confirm: 'Are you sure?' } %></td>
          <%end %>
+         <%end %>
+         <%end%>
       </tr>
   <% end %>
   </tbody>
