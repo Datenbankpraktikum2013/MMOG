@@ -214,7 +214,9 @@ class Technology < ActiveRecord::Base
       end
     end
 
-    requirements[0..-1]
+    unless requirements.length == 0
+      requirements[0..-1]
+    end
   end
 
 
