@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
 
   has_many :fleets
   has_many :planets
-  has_many :battlereports
+  has_many :reports
   belongs_to :alliance
   #receiving messages
   has_and_belongs_to_many :messages, :foreign_key => 'recipient_id',:select => 'messages.*,messages_users.seen as seen'

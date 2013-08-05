@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  ore: 1
+  crystal: 1
+  space_cash: 1
+
+two:
+  ore: 1
+  crystal: 1
+  space_cash: 1

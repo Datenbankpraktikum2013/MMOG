@@ -1,0 +1,29 @@
+<%= form_for(@tradereport) do |f| %>
+  <% if @tradereport.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@tradereport.errors.count, "error") %> prohibited this tradereport from being saved:</h2>
+
+      <ul>
+      <% @tradereport.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :ore %><br>
+    <%= f.number_field :ore %>
+  </div>
+  <div class="field">
+    <%= f.label :crystal %><br>
+    <%= f.number_field :crystal %>
+  </div>
+  <div class="field">
+    <%= f.label :space_cash %><br>
+    <%= f.number_field :space_cash %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
