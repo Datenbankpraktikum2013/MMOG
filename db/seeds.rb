@@ -18,9 +18,11 @@ GalaxiesHelper.generateRegion(0,0,4,4)
 
 #######Default Technologies
 
-#TechnologiesHelper.init_Technology
-#TechnologiesHelper.init_Technology_Require
-#TechnologiesHelper.test_user_technology
+TechnologiesHelper.init_Technology
+TechnologiesHelper.init_Technology_Require
+TechnologiesHelper.test_user_technology
+
+
 
 #Default-Missionstypen
 Mission.create({:id => 1, :info_text => "Based"})

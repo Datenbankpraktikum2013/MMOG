@@ -1,25 +1,26 @@
 <p id="notice"><%= notice %></p>
 
-<p>
+<p class="ressourcenanzeige">
   <strong>Z:</strong>
   <%= @planet.z %>
 </p>
 
-<p>
+<p class="ressourcenanzeige">
   <strong>Name:</strong>
   <%= @planet.name %>
 </p>
 
-<p>
+<p class="ressourcenanzeige">
   <strong>Spezialisierung:</strong>
   <%= @planet.special%>
 </p>
 
-<p>
+<p class="ressourcenanzeige">
   <strong>Groesse:</strong>
   <%= @planet.size %>
 </p>
 
+<!--
 <p>
   <strong>Eisenerz:</strong>
   <%= @planet.ore %>
@@ -29,7 +30,16 @@
   <strong>Maxeisenerz:</strong>
   <%= @planet.maxore %>
 </p>
+-->
 
+<p class="ressourcenanzeige">
+
+  <strong>Eisenerz:</strong>
+  <%= @planet.ore %> / <%= @planet.maxore %>
+
+</p>
+
+<!--
 <p>
   <strong>Kristalle:</strong>
   <%= @planet.crystal %>
@@ -39,7 +49,13 @@
   <strong>Maxkristalle:</strong>
   <%= @planet.maxcrystal %>
 </p>
+-->
+<p class="ressourcenanzeige">
+  <strong>Kristalle:</strong>
+  <%= @planet.crystal %> / <%= @planet.maxcrystal  %>
+</p>
 
+<!--
 <p>
   <strong>Energie:</strong>
   <%= @planet.energy %>
@@ -49,7 +65,14 @@
   <strong>Maxenergie:</strong>
   <%= @planet.maxenergy %>
 </p>
+-->
 
+<p class="ressourcenanzeige">
+  <strong>Energie:</strong>
+  <%= @planet.energy %> / <%= @planet.maxenergy %>
+</p>
+
+<!--
 <p>
   <strong>Einwohner:</strong>
   <%= @planet.population %>
@@ -58,6 +81,11 @@
 <p>
   <strong>Maxeinwohner:</strong>
   <%= @planet.maxpopulation %>
+</p>
+-->
+<p class="ressourcenanzeige">
+  <strong>Einwohner:</strong>
+  <%= @planet.population %> / <%= @planet.maxpopulation %>
 </p>
 
 <%= link_to 'Edit', edit_planet_path(@planet) %> |
