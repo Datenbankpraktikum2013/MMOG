@@ -31,50 +31,50 @@ module TechnologiesHelper
                               :pre_tech_id => 0, :pre_tech_rank => 0})
     TechnologyRequire.create({:tech_id => Technology.where(:name => 'increased_energy_efficiency').first.id, :building_rank => 1,
                               :pre_tech_id => 0, :pre_tech_rank => 0})
-    TechnologyRequire.create({:tech_id => Technology.where(:name => 'increased_power').first.id, :building_rank => 1,
+    TechnologyRequire.create({:tech_id => Technology.where(:name => 'increased_power').first.id, :building_rank => 2,
                               :pre_tech_id => 0, :pre_tech_rank => 0})
-    TechnologyRequire.create({:tech_id => Technology.where(:name => 'increased_defense').first.id, :building_rank => 1,
+    TechnologyRequire.create({:tech_id => Technology.where(:name => 'increased_defense').first.id, :building_rank => 2,
                               :pre_tech_id => 0, :pre_tech_rank => 0})
-    TechnologyRequire.create({:tech_id => Technology.where(:name => 'increased_spypower').first.id, :building_rank => 1,
+    TechnologyRequire.create({:tech_id => Technology.where(:name => 'increased_spypower').first.id, :building_rank => 2,
                               :pre_tech_id => 0, :pre_tech_rank => 0})
-    TechnologyRequire.create({:tech_id => Technology.where(:name => 'increased_capacaty').first.id, :building_rank => 1,
+    TechnologyRequire.create({:tech_id => Technology.where(:name => 'increased_capacaty').first.id, :building_rank => 2,
                               :pre_tech_id => 0, :pre_tech_rank => 0})
-    TechnologyRequire.create({:tech_id => Technology.where(:name => 'increased_movement').first.id, :building_rank => 2,
+    TechnologyRequire.create({:tech_id => Technology.where(:name => 'increased_movement').first.id, :building_rank => 3,
                               :pre_tech_id => 0, :pre_tech_rank => 0})
-    TechnologyRequire.create({:tech_id => Technology.where(:name => 'large_cargo_ship').first.id, :building_rank => 2,
+    TechnologyRequire.create({:tech_id => Technology.where(:name => 'large_cargo_ship').first.id, :building_rank => 3,
                               :pre_tech_id => Technology.where(:name => 'increased_capacaty').first.id,
                               :pre_tech_rank => 1})
-    TechnologyRequire.create({:tech_id => Technology.where(:name => 'big_house').first.id, :building_rank =>2 ,
+    TechnologyRequire.create({:tech_id => Technology.where(:name => 'big_house').first.id, :building_rank =>3 ,
                               :pre_tech_id => Technology.where(:name => 'increased_energy_efficiency').first.id,
                               :pre_tech_rank => 1})
-    TechnologyRequire.create({:tech_id => Technology.where(:name => 'destroyer').first.id, :building_rank =>2 ,
+    TechnologyRequire.create({:tech_id => Technology.where(:name => 'destroyer').first.id, :building_rank =>3 ,
                               :pre_tech_id => Technology.where(:name => 'increased_power').first.id,
                               :pre_tech_rank => 1})
-    TechnologyRequire.create({:tech_id => Technology.where(:name => 'large_defense_platform').first.id, :building_rank =>3 ,
+    TechnologyRequire.create({:tech_id => Technology.where(:name => 'large_defense_platform').first.id, :building_rank =>4 ,
                               :pre_tech_id => Technology.where(:name => 'increased_defense').first.id,
                               :pre_tech_rank => 4})
-    TechnologyRequire.create({:tech_id => Technology.where(:name => 'cruiser').first.id, :building_rank =>3 ,
+    TechnologyRequire.create({:tech_id => Technology.where(:name => 'cruiser').first.id, :building_rank =>4 ,
                               :pre_tech_id => Technology.where(:name => 'destroyer').first.id,
                               :pre_tech_rank => 1})
-    TechnologyRequire.create({:tech_id => Technology.where(:name => 'cruiser').first.id, :building_rank =>3 ,
+    TechnologyRequire.create({:tech_id => Technology.where(:name => 'cruiser').first.id, :building_rank =>4 ,
                               :pre_tech_id => Technology.where(:name => 'increased_power').first.id,
                               :pre_tech_rank => 4})
-    TechnologyRequire.create({:tech_id => Technology.where(:name => 'hyperspacetechnology').first.id, :building_rank =>3 ,
+    TechnologyRequire.create({:tech_id => Technology.where(:name => 'hyperspacetechnology').first.id, :building_rank =>4 ,
                               :pre_tech_id => Technology.where(:name => 'increased_movement').first.id,
                               :pre_tech_rank => 4})
-    TechnologyRequire.create({:tech_id => Technology.where(:name => 'deathstar').first.id, :building_rank =>4 ,
+    TechnologyRequire.create({:tech_id => Technology.where(:name => 'deathstar').first.id, :building_rank =>5 ,
                               :pre_tech_id => Technology.where(:name => 'cruiser').first.id,
                               :pre_tech_rank => 1})
-    TechnologyRequire.create({:tech_id => Technology.where(:name => 'deathstar').first.id, :building_rank =>4 ,
+    TechnologyRequire.create({:tech_id => Technology.where(:name => 'deathstar').first.id, :building_rank =>5 ,
                               :pre_tech_id => Technology.where(:name => 'increased_power').first.id,
                               :pre_tech_rank => 8})
-    TechnologyRequire.create({:tech_id => Technology.where(:name => 'deathstar').first.id, :building_rank =>4 ,
+    TechnologyRequire.create({:tech_id => Technology.where(:name => 'deathstar').first.id, :building_rank =>5 ,
                               :pre_tech_id => Technology.where(:name => 'hyperspacetechnology').first.id,
                               :pre_tech_rank => 1})
-    TechnologyRequire.create({:tech_id => Technology.where(:name => 'deathstar').first.id, :building_rank =>4 ,
+    TechnologyRequire.create({:tech_id => Technology.where(:name => 'deathstar').first.id, :building_rank =>5 ,
                               :pre_tech_id => Technology.where(:name => 'increased_defense').first.id,
                               :pre_tech_rank => 8})
-    TechnologyRequire.create({:tech_id => Technology.where(:name => 'deathstar').first.id, :building_rank =>4 ,
+    TechnologyRequire.create({:tech_id => Technology.where(:name => 'deathstar').first.id, :building_rank =>5 ,
                               :pre_tech_id => Technology.where(:name => 'increased_energy_efficiency').first.id,
                               :pre_tech_rank => 8})
 
@@ -90,9 +90,12 @@ module TechnologiesHelper
     UserTechnology.create({:user_id => 3, :technology_id => 2, :rank => 4})
     UserTechnology.create({:user_id => 3, :technology_id => 4, :rank => 1})
   end
+
+  def self.get_icon_name(tech)
+    techname = Technology.find(tech).name
+    filename = 'images/icons/' + techname.to_s+'_icon.png'
+  end
+
 end
 
-def self.get_icon_name(tech)
-  techname = Technology.find(tech).name
-  filename = 'images/icons/' + techname.to_s+'_icon.png'
-end
+

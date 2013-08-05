@@ -1,5 +1,6 @@
 <h1>Administrate Technologies</h1>
 
+
 <table border="1">
   <thead>
     <tr>
@@ -35,15 +36,15 @@
   <thead>
   <tr>
     <th></th>
-    <th>Forschungen</th>
-    <th>Rang</th>
+    <th>Description</th>
+    <th>rank</th>
   </tr>
   </thead>
 
   <tbody>
   <% @technologies.each do |technology| %>
       <tr>
-        <td align="middle"  valign="middle"><%= 'icon'%></td>
+        <td align="middle"  valign="middle"><img src="<%=TechnologiesHelper.get_icon_name(technology).to_s%>"></td>
         <td align="middle"  valign="middle"><strong><%= 'Name: ' %></strong><%= technology.title %><br>
           <strong><%= 'Benötigte Technologien: ' %></strong><%=technology.get_requirements %><br>
           <strong><%= 'Kosten: ' %></strong><%= technology.get_technology_cost(current_user)%><br>
