@@ -79,15 +79,14 @@ Ship.find(10).buildingtypes << Buildingtype.where(name: "Research Lab", level: 1
 
 # Technology Prerequisites for ships
 
->>>>>>> 41a28cde0c1db76b700908ce2280cd93b3c6ff42
-
 #Default-Werte von Spieler, Allianzen und Nachrichten
 #Alliance.create({:name => 'test_alliance3', :description => 'testtesttest', :user_id => User.first})
 
 ##########DEFAULT USER!! demo:praktikum
 User.create(:email => 'demo@demo.com',:password => 'password',:username => 'demo',:money => 100,:score => 0)
 User.create(:email => 'demo2@demo.com',:password => 'password',:username=> 'demo2',:money => 10000,:score => 0)
-<<<<<<< HEAD
+User.create(:email => 'demo3@demo.com',:password => 'password',:username=> 'demo3',:money => 10000,:score => 0)
+User.create(:email => 'demo4@demo.com',:password => 'password',:username=> 'demo4',:money => 10000,:score => 0)
 
 
 #Buildingtypes
@@ -103,8 +102,3 @@ Buildingtype.create({:name =>'Starport', :level=> 1, :production=> 0, :energyusa
 #Building 
 Building.create({:planet_id => 1, :buildingtype_id => 1})
 Building.create({:planet_id => 1, :buildingtype_id => 2})
-=======
-User.create(:email => 'demo2@demo.com',:password => 'password',:username=> 'demo2',:money => 10000,:score => 0)
-User.create(:email => 'demo3@demo.com',:password => 'password',:username=> 'demo3',:money => 10000,:score => 0)
-User.create(:email => 'demo4@demo.com',:password => 'password',:username=> 'demo4',:money => 10000,:score => 0)
->>>>>>> aed070682b3066c03ba1a28ab35458fee0d6595f
