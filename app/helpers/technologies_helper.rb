@@ -91,3 +91,8 @@ module TechnologiesHelper
     UserTechnology.create({:user_id => 3, :technology_id => 4, :rank => 1})
   end
 end
+
+def self.get_icon_name(tech)
+  techname = Technology.find(tech).name
+  filename = 'images/icons/' + techname.to_s+'_icon.png'
+end

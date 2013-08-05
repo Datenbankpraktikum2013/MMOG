@@ -1,5 +1,5 @@
 class AlliancesController < ApplicationController
-  before_action :set_alliance, only: [:show, :edit, :update, :destroy, :useradd, :user_add_action, :change_default_rank, :change_user_rank, :remove_user]
+  before_action :set_alliance, only: [:show, :edit, :update, :destroy, :useradd, :user_add_action, :change_default_rank, :change_user_rank, :remove_user, :change_description]
   before_filter :authenticate_user!
 
   # GET /alliances
@@ -17,6 +17,18 @@ class AlliancesController < ApplicationController
         format.json { render action: 'show', status: :created, location: @alliance }
       else
         format.html { redirect_to @alliance, notice: 'Standardrang konnte nicht geändert werden.' }
+        format.json { render json: @alliance.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def change_description
+    respond_to do |format|
+      if @alliance.set_description(params['description'])
+        format.html { redirect_to @alliance, notice: "Beschreibung erfolgreich geändert" }
+        format.json { render action: 'show', status: :created, location: @alliance }
+      else
+        format.html { redirect_to @alliance, notice: "Konnte Beschreibung nicht ändern" }
         format.json { render json: @alliance.errors, status: :unprocessable_entity }
       end
     end
