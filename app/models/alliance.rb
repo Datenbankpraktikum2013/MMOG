@@ -81,4 +81,12 @@ class Alliance < ActiveRecord::Base
 		rank.users<<user
 		return true
 	end
+
+	#set description
+	public
+	def set_description(description)
+		self.description=description
+		self.save
+		return true
+	end
 end
