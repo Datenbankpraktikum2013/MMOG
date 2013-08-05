@@ -18,9 +18,10 @@ class Technology < ActiveRecord::Base
 
       #ziehe User Geld ab
       u = User.find(user)
-      u.update_attribute(:money, u.money - self.get_technology_cost(user)
+      u.update_attribute(:money, u.money - self.get_technology_cost(user)  )
 
-      Resque.enqueue_in(get_research_duration(user)), research_technology, user, id)
+      #Resque.enqueue_in(get_research_duration(user), ResearchTechnologyjob, user, id)
+      Resque.enqueue_in(get_research_duration(user), ResearchTechnology, user, id)
 
 
 
