@@ -23,7 +23,7 @@
 						<td><%=user.score%></td>
 						<td><%=user.rank.name%></td>
 						<td><% if current_user.rank.alliance==@alliance and current_user.rank.can_edit and current_user != user  %>
-								<%= link_to 'Kicken' %>
+								<%= button_to 'Kicken', {:controller => "alliances", :action => "remove_user",:uid=> user.id} , :method=>:post, data: { confirm: 'Bist du dir sicher, dass du '+user.username+" aus der Allianz entfernen willst?" }   %>
 							<%end%>
 						</td>
 						<td>
