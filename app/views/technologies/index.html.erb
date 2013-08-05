@@ -49,7 +49,7 @@
           <strong><%= 'Benötigte Technologien: ' %></strong><%=technology.get_requirements %><br>
           <strong><%= 'Kosten: ' %></strong><%= technology.get_technology_cost(current_user)%><br>
           <strong><%= 'Dauer: ' %></strong><%= technology.get_research_duration(current_user).to_s + ' Sekunden'%> <br>
-          <strong><%= 'Beschreibung: ' %></strong><%= technology.description%>
+          <strong><%= 'Beschreibung:' %></strong><%= technology.description%> <%=' hier muss in der Seeds noch Text eingefügt werden'%>
         </td>
         <td align="middle"  valign="middle"><%= technology.get_technology_rank(current_user)%></td>
 
