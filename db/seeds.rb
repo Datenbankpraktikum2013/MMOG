@@ -59,3 +59,7 @@ Buildingtype.create({:name =>'City', :level=> 1, :production=> 100, :energyusage
 Buildingtype.create({:name =>'Depot', :level=> 1, :production=> 200, :energyusage=> 5})
 Buildingtype.create({:name =>'Crystalmine', :level=> 1, :production=> 1, :energyusage=> 100})
 Buildingtype.create({:name =>'Starport', :level=> 1, :production=> 0, :energyusage=> 100})
+
+#Building 
+Building.create({:planet_id => 1, :buildingtype_id => 1})
+Building.create({:planet_id => 1, :buildingtype_id => 2})

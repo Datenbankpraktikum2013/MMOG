@@ -128,23 +128,25 @@ class Planet < ActiveRecord::Base
       return c
     end
 
-    if type == :population
+    if type == :City
       c = @spec[2] * prod
       return c
     end
 
-    if type == :money
+    if type == :Headquarter
       #sci_factor = self.user.get_income
-      c = sci_factor * prod * @spec[3] * (self.population / 100) 
+      puts "Test"
+      c = sci_factor * @spec[3] * (self.population / 100)# * prod 
+      return c
     end
 
-    if type == :energy 
+    if type == :Powerplant
       #sci_factor = self.user.get_energy_efficiency
       c = sci_factor * prod * @spec[1] 
       return c
     end
 
-    if type == :crystal
+    if type == :Crystalmine
       c = @spec[4] * prod
       return c
     end
@@ -169,12 +171,13 @@ class Planet < ActiveRecord::Base
         else
           self.ore = self.maxore
         end
+        puts "#{ore_production}"
       end
 
       #
       # updates population
       #
-      city_population = self.get_production(:population)
+      city_population = self.get_production(:City)
       if city_population.integer? then
         if (self.population + city_population) < self.maxpopulation then
           self.population += city_population
@@ -186,7 +189,7 @@ class Planet < ActiveRecord::Base
       #
       # updates crystal
       #
-      crystal_production = self.get_production(:crystal)
+      crystal_production = self.get_production(:Crystalmine)
       if crystal_production.integer? then
         if (self.crystal + crystal_production) < self.maxcrystal then
           self.crystal += crystal_production
@@ -198,15 +201,21 @@ class Planet < ActiveRecord::Base
       #
       # updates money 
       #
-      income = get_production(:money)
-      owner = User.find_by id: self.user_id
+      income = self.get_production(:Headquarter)
+      puts "INCOME: #{income}!!!!!!!!!!!!!!!"
+      puts "#SPEC: #{@spec[3]}HHHHHHHHHHHHH"
+      puts "#{User.find_by id: self.user_id}"
+      #owner = User.find_by_id (self.user.id)
+      owner = self.user
+      puts "OOOOOOOOOOOOOOOOWWWWWWWNER ::::#{owner}"
       owner.money += income
+      owner.save
     end
 
     #
     # Energy costs and production
     #
-    energy_production = self.get_production(:energy)
+    power_production = self.get_production(:Powerplant)
     if (self.energy + power_production) < self.maxenergy
       self.energy += power_production
     else
@@ -216,13 +225,14 @@ class Planet < ActiveRecord::Base
     @structures = self.buildings
     ener_usage = 0
     @structures.each do |str|
-      ener_usage += str.energyusage
+      building_typ = Buildingtype.find_by_id(str.buildingtype_id)
+      ener_usage += building_typ.energyusage
     end
 
     self.energy -= ener_usage 
  
     # Repeat Job imediately
-    self.create_production_job
+    #self.create_production_job
 
   end
 
