@@ -113,9 +113,7 @@ class Fleet < ActiveRecord::Base
   #ID=5 : Spy
   #ID=6 : Transport
   def move(mission, destination)
-    if mission.id==1
-
-    elsif mission.id==4
+    unless mission.id=1
       distance=self.start_planet.getDistance(destination)
       nfuel=0
       velocity=self.get_velocity
@@ -123,13 +121,34 @@ class Fleet < ActiveRecord::Base
       
       Ship.all.each do |ship|
         nfuel+=(get_needed_fuel(ship, time))*get_amount_of_ship(ship)
-        puts "needed fuel: #{nfuel}"
+        # puts "needed fuel: #{nfuel}"
       end
-      puts "needed fuel: #{nfuel}"
-      puts "velocity #{nfuel}"
-
-
     end
+
+    if mission.id==1
+
+    elsif mission.id==4
+      
+      
+      self.target_planet=destination
+
+      #Setzen der departure und arrival time!!!!!!!!!!!!!!!!
+
+      move_to_planet_in(destination,1)
+
+    elsif mission.id==5
+      nfuel*=2
+      move_to_planet_in(destination,1)
+      #Spy Create Spy-Report
+      move_to_planet_in(self.origin_planet,2)   
+    elsif mission.id==3
+      nfuel*=2
+      move_to_planet_in(destination,1)
+      #Spy Create Spy-Report
+      move_to_planet_in(self.origin_planet,2)   
+    end
+      
+    
       
   
 
@@ -168,7 +187,27 @@ class Fleet < ActiveRecord::Base
     # calculate 
   end
 #=end
-  
+  def fight(planet)
+    defender_fleets=Fleet.where(start_planet: planet.id, target_planet: planet.id)
+    defender_defense=defender_fleets.sum("defense")
+    #defender_offense=defender_fleets.sum("offense")
+    fight_factor=self.offense - defender_defense
+
+    #if lost...
+    if fight_factor<0
+      defener_new_defense=fight_factor.abs*rand(0.8 .. 1.2)
+      new_offense=0
+
+      tmp_defense=defender_defense
+      while tmp_defense>defener_new_defense do
+        
+        defener_fleets[rand(0 .. (defender_fleets.size -1) )]
+      end
+
+    elsif fight_factor>0
+    else
+    end
+  end
   def get_needed_time(velocity, distance)
       if velocity == 0 
         0
@@ -313,6 +352,7 @@ class Fleet < ActiveRecord::Base
 
     # calculates changing values for the whole fleet, if there were ships added or destroyed
     # Gets called after Fleet was initialized and after adding or destroying ships
+    # FACTORS NEED TO BE ADDED
     def update_values
       ship_hash = self.get_ships
       offense = 0
