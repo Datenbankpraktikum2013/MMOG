@@ -40,6 +40,8 @@ Mmog::Application.routes.draw do
 
   post 'alliances/:id/edit/user_add_action' => 'alliances#user_add_action'
 
+  post 'alliances/:id/edit/change_user_rank' => 'alliances#change_user_rank'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
