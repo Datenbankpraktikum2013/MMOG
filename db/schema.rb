@@ -11,15 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
+ActiveRecord::Schema.define(version: 20130805070144) do
+=======
 ActiveRecord::Schema.define(version: 20130805095444) do
+>>>>>>> aed070682b3066c03ba1a28ab35458fee0d6595f
 
   create_table "alliances", force: true do |t|
-    t.string   "name",        null: false
+    t.integer  "user_id"
+    t.string   "name"
     t.text     "description"
-    t.string   "banner"
-    t.integer  "rank_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "banner"
   end
 
   create_table "battlereports", force: true do |t|
@@ -117,20 +121,13 @@ ActiveRecord::Schema.define(version: 20130805095444) do
     t.integer  "user_id"
   end
 
-  create_table "planets_users_visibility", id: false, force: true do |t|
-    t.integer "planet_id"
-    t.integer "user_id"
-  end
-
   create_table "ranks", force: true do |t|
     t.string   "name",                         null: false
     t.boolean  "can_kick",     default: false
     t.boolean  "can_massmail", default: false
     t.boolean  "can_edit",     default: false
     t.boolean  "can_invite",   default: false
-    t.boolean  "is_founder",   default: false
     t.boolean  "can_disband",  default: false
-    t.boolean  "standard",     default: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "alliance_id"
@@ -265,7 +262,7 @@ ActiveRecord::Schema.define(version: 20130805095444) do
     t.integer  "money",                  default: 100
     t.integer  "score",                  default: 0
     t.integer  "alliance_id"
-    t.integer  "rank_id"
+    t.integer  "alliance_rank"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
