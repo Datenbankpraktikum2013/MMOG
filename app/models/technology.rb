@@ -18,22 +18,29 @@ class Technology < ActiveRecord::Base
 
       #ziehe User Geld ab
       u = User.find(user)
-      u.update_attribute(:money, u.money - self.get_technology_cost(user))
+      u.update_attribute(:money, u.money - self.get_technology_cost(user)  )
 
-      result = user_technologies.where(:user_id => user).first
-      new_rank = 1
+      #Resque.enqueue_in(get_research_duration(user), ResearchTechnologyjob, user, id)
+      Resque.enqueue_in(get_research_duration(user), ResearchTechnology, user, id)
 
-      if !result.blank? then
-        new_rank = result.rank + 1
-        result.update_attribute(:rank, new_rank)
-      else
-        user_technologies.create(:rank => 1, :user_id => user)
-      end
 
-      #Update UserSettings
-      self.update_usersettings(user, new_rank)
 
     end
+  end
+
+  def update_usertechnologies(user)
+    result = user_technologies.where(:user_id => user).first
+    new_rank = 1
+
+    if !result.blank? then
+      new_rank = result.rank + 1
+      result.update_attribute(:rank, new_rank)
+    else
+      user_technologies.create(:rank => 1, :user_id => user)
+    end
+
+    #Update UserSettings
+    self.update_usersettings(user, new_rank)
   end
 
 
