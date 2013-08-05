@@ -108,7 +108,16 @@ class Planet < ActiveRecord::Base
 
 
   def claim(user)
-    self.user = user if user.is_a?User && !user.nil?
+    if self.user.nil?
+      seld.user = user;
+      seld.create_building_job(:Oremine)
+      self.create_building_job(:Headquarter)
+      self.create_building_job(:Powerplant)
+      self.create_building_job(:City)
+      self.create_production_job;
+    else
+      self.user = user;
+    end
   end
 
 
