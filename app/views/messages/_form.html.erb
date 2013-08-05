@@ -1,28 +1,16 @@
-<%= form_for(@message) do |f| %>
-  <% if @message.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@message.errors.count, "error") %> prohibited this message from being saved:</h2>
-
-      <ul>
-      <% @message.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-  <div class="field">
-    <%= f.label :subject %><br>
-    <%= f.text_field :subject %>
-  </div>
-  <div class="field">
-    <%= f.label :body %><br>
-    <%= f.text_area :body %>
-  </div>  
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-  <div class="field">
-    <%= f.label 'Empfänger' %>
-    <%= f.text_area 'recipient' %>
-  </div>
-<% end %>
+<%= form_tag(messages_path)%>
+    <p><strong><%= label_tag ('Empfänger') %></strong></p>
+    <p> <p><%=label_tag ('Username') %></p>
+      <%= text_field_tag('recepient') %>
+    </p>
+    <p><strong><%= label_tag ('Betreff') %></strong></p>
+    <p> <p><%=label_tag ('Subject') %></p>
+      <%= text_field_tag('subject') %>
+    </p>
+    <p><strong><%= label_tag ('Text') %></strong></p>
+    <p> <p><%=label_tag ('Body') %></p>
+      <%= text_area_tag('body') %>
+    </p>
+    <p><%= submit_tag 'Annehmen' %></p>
+</form>
+<%= link_to 'Zurück', messages_path %>
