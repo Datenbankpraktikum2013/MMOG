@@ -217,9 +217,11 @@ class Technology < ActiveRecord::Base
     len = requirements.length
     if len != 0
       requirements = requirements[0..(len-3)]
+    else
+      requirements = "Keine"
     end
 
-    requirements
+
   end
 
 
