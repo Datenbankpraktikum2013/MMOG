@@ -1,5 +1,5 @@
 class AlliancesController < ApplicationController
-  before_action :set_alliance, only: [:show, :edit, :update, :destroy, :useradd, :user_add_action, :change_default_rank, :change_user_rank]
+  before_action :set_alliance, only: [:show, :edit, :update, :destroy, :useradd, :user_add_action, :change_default_rank, :change_user_rank, :remove_user]
   before_filter :authenticate_user!
 
   # GET /alliances
@@ -70,6 +70,19 @@ class AlliancesController < ApplicationController
     else
       respond_to do |format|
         format.html { redirect_to @alliance, notice: 'User could not be added.' }
+        format.json { render json: @alliance.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def remove_user
+    @user=@alliance.users.find_by_id(params['uid'])
+    respond_to do |format|
+      if @alliance.remove_user(@user)
+        format.html { redirect_to @alliance, notice: @user.username+" wurde aus der Allianz entfernt" }
+        format.json { render action: 'show', status: :created, location: @alliance }
+      else
+        format.html { redirect_to @alliance, notice: @user.username+" konnte nicht aus der Allianz entfernt werden" }
         format.json { render json: @alliance.errors, status: :unprocessable_entity }
       end
     end
