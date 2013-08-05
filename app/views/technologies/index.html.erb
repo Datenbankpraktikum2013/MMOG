@@ -35,8 +35,8 @@
   <thead>
   <tr>
     <th></th>
-    <th>Description</th>
-    <th>rank</th>
+    <th>Forschungen</th>
+    <th>Rang</th>
   </tr>
   </thead>
 
@@ -44,7 +44,7 @@
   <% @technologies.each do |technology| %>
       <tr>
         <td align="middle"  valign="middle"><%= 'icon'%></td>
-        <td align="middle"  valign="middle"><strong><%= 'Name: ' %></strong><%= technology.name %><br>
+        <td align="middle"  valign="middle"><strong><%= 'Name: ' %></strong><%= technology.title %><br>
           <strong><%= 'Benötigte Technologien: ' %></strong><%=technology.get_requirements %><br>
           <strong><%= 'Kosten: ' %></strong><%= technology.get_technology_cost(current_user)%><br>
           <strong><%= 'Dauer: ' %></strong><%= technology.get_research_duration(current_user).to_s + ' Sekunden'%> <br>
@@ -59,7 +59,8 @@
         <%else if  technology.cost_required?(current_user) == false %>
         <td><%='Nicht genug Geld' %></td>
         <%else %>
-        <td><%= link_to 'Upgrade Technology', technology, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= button_to 'Upgrade', {:controller => "technologies", :action => "upgrade",    :uid=> current_user, :id=> technology} , :method=>:post, data: { confirm: 'Möchtest du die Technologie ' + technology.title + ' aufwerten?' }
+        %></td>
          <%end %>
          <%end %>
          <%end%>
