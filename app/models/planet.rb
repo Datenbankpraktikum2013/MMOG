@@ -108,23 +108,27 @@ class Planet < ActiveRecord::Base
 
 
   def claim(user)
-    self.user = user if user.is_a?User && !user.nil?
+    if self.user.nil?
+      seld.user = user;
+      seld.create_building_job(:Oremine)
+      self.create_building_job(:Headquarter)
+      self.create_building_job(:Powerplant)
+      self.create_building_job(:City)
+      self.create_production_job;
+    else
+      self.user = user;
+    end
   end
 
 
   #@param type Name der Produktionsstaette ("Eisenmine", "Haus", ...)
   def get_production(type)
     # TODO Calculate production
-    puts"type: #{type} typetos #{type.to_s}"
     btype = Buildingtype.where(name: type.to_s)
-    puts "btype: #{btype.to_s}"
     production_building = self.buildings.where(buildingtype_id: btype).first
     return 0 if production_building.nil? 
-    puts "production_building: #{production_building}"
     prod_building_type = Buildingtype.where(id:production_building.buildingtype_id).first
-    puts "prod_building_type: #{prod_building_type}"
     prod = prod_building_type.production
-    puts "prod: #{prod}"
     
     sci_factor =1
     if type == :Oremine
@@ -140,7 +144,6 @@ class Planet < ActiveRecord::Base
 
     if type == :Headquarter
       #sci_factor = self.user.get_income
-      puts "Test"
       c = sci_factor * @spec[3] * (self.population / 100)# * prod 
       return c
     end
@@ -176,7 +179,6 @@ class Planet < ActiveRecord::Base
         else
           self.ore = self.maxore
         end
-        puts "#{ore_production}"
       end
 
       #
@@ -207,12 +209,7 @@ class Planet < ActiveRecord::Base
       # updates money 
       #
       income = self.get_production(:Headquarter)
-      puts "INCOME: #{income}!!!!!!!!!!!!!!!"
-      puts "#SPEC: #{@spec[3]}HHHHHHHHHHHHH"
-      puts "#{User.find_by id: self.user_id}"
-      #owner = User.find_by_id (self.user.id)
       owner = self.user
-      puts "OOOOOOOOOOOOOOOOWWWWWWWNER ::::#{owner}"
       owner.money += income
       owner.save
     end
@@ -237,7 +234,7 @@ class Planet < ActiveRecord::Base
     self.energy -= ener_usage 
  
     # Repeat Job imediately
-    #self.create_production_job
+    self.create_production_job
 
   end
 
@@ -290,6 +287,5 @@ class Planet < ActiveRecord::Base
       -1
     end
   end
-
 
 end
