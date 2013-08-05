@@ -189,6 +189,18 @@ class Technology < ActiveRecord::Base
     end
   end
 
+  def get_technology_rank(user)
+
+    result = user_technologies.where(:user_id => user).first
+
+    if !result.blank? then
+      return  result.rank
+
+    else
+      return 0.to_s
+    end
+  end
+
   def get_description
     description
   end
