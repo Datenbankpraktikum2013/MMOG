@@ -1,10 +1,5 @@
 module ShipsHelper
 
-	# temporary testing method
-	def self.make_testing_data
-		Building.create({:planet_id => 1, :buildingtype_id => 8})
-	end
-
 
 #=begin
   # returns an array that contains ships that can be built
