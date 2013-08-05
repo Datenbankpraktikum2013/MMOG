@@ -40,7 +40,7 @@ class Planet < ActiveRecord::Base
 
     #Creates random Planet name
     if self.name.nil?
-      self.name = (0...8).map{(65 + Random.rand(26)).chr}.join
+      self.name = PlanetsHelper.namegen
     end
 
     #Creates specialties for Planet
