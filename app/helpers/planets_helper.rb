@@ -1,9 +1,7 @@
 module PlanetsHelper
 
   def self.search_startplanet()
-
-
-
+    my_start_planet = Planet.where(special: 0, user_id: nil).first
   end
 
   def self.claim_startplanet_for(user)

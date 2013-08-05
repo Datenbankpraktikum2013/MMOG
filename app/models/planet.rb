@@ -109,8 +109,8 @@ class Planet < ActiveRecord::Base
 
   def claim(user)
     if self.user.nil?
-      seld.user = user;
-      seld.create_building_job(:Oremine)
+      self.user = user;
+      self.create_building_job(:Oremine)
       self.create_building_job(:Headquarter)
       self.create_building_job(:Powerplant)
       self.create_building_job(:City)
@@ -249,7 +249,7 @@ class Planet < ActiveRecord::Base
       #build_time = Buildingtype.where(name:type level:upgrade_me.level+1).build_time
       #build_me = Buildingtype.where(name:type level:upgrade_me.level+1).id
     end
-    Resque.enqueue_in(buildtime.minute,BuildBuildingjob, id_array(self.id,build_me))
+    Resque.enqueue_in(buildtime.second,BuildBuildingjob, id_array(self.id,build_me))
 
   end
 
