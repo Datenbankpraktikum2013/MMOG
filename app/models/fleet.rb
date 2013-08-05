@@ -88,18 +88,36 @@ class Fleet < ActiveRecord::Base
   end
 #=end
 
-=begin
+#=begin
   #wie wird destination gepeichert?
+  #ID=1 : Based
+  #ID=2 : Colonizsation
+  #ID=3 : Attack
+  #ID=4 : Travel
+  #ID=5 : Spy
+  #ID=6 : Transport
   def move(mission, destination)
     if mission.id==1
 
-    elsif mission.id==2
+    elsif mission.id==4
       distance=self.start_planet.getDistance(destination)
-      fuel=self.get_fuel_capacity
+      nfuel=0
       velocity=self.get_velocity
+      time=get_needed_time(velocity, distance)
       
-      travel_time=
+      Ship.all.each do |ship|
+        nfuel+=(get_needed_fuel(ship, time))*get_amount_of_ship(ship)
+        puts "needed fuel: #{nfuel}"
+      end
+      puts "needed fuel: #{nfuel}"
+      puts "velocity #{nfuel}"
+
+
     end
+      
+  
+
+
 
     # calculate needed energy for that flight...cases:
     #
@@ -133,7 +151,23 @@ class Fleet < ActiveRecord::Base
     # calculate time until arrival at foreign planet
     # calculate 
   end
-=end
+#=end
+  
+  def get_needed_time(velocity, distance)
+      if velocity == 0 
+        0
+      else
+        (distance/velocity)
+      end
+  end
+
+  def get_needed_fuel(ship, time)
+      if ship.consumption == 0 
+        0
+      else 
+        (time/(ship.consumption))
+      end 
+  end
 
   def move_to_planet_in(p,t)
     Resque.enqueue_in(t.second, MoveFleet, self.id ,p.id)
