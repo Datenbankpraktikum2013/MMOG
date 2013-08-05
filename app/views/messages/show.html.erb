@@ -7,7 +7,7 @@
 
 <p>
   <strong>User:</strong>
-  <%= @message.user_id %>
+  <%= @message.sender.username %>
 </p>
 
 <%= link_to 'Edit', edit_message_path(@message) %> |

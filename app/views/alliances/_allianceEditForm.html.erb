@@ -1,4 +1,4 @@
-<% unless current_user.rank.alliance==@alliance and current_user.rank.can_edit %>
+<% unless current_user.alliance==@alliance and current_user.rank.can_edit %>
   	<div>
 	  Du besitzt nicht die nötigen Rechte, um <%= current_user.alliance.name %> zu bearbeiten.
   	</div>
@@ -11,10 +11,10 @@
 					<th>Spacecash</th>
 					<th>Userwertung</th>
 					<th>Rank</th>
-					<% if current_user.rank.alliance==@alliance and current_user.rank.can_edit  %>
+					<% if current_user.rank.can_kick  %>
 					<th>Kicken</th>
-					<th>Rang ändern</th>
 					<% end %>
+					<th>Rang ändern</th>
 				</tr>
 				<% @alliance.users.each do |user| %>
 					<tr>
@@ -22,19 +22,20 @@
 						<td><%=user.money%></td>
 						<td><%=user.score%></td>
 						<td><%=user.rank.name%></td>
-						<td><% if current_user.rank.alliance==@alliance and current_user.rank.can_edit and current_user != user  %>
-								<%= button_to 'Kicken', {:controller => "alliances", :action => "remove_user",:uid=> user.id} , :method=>:post, data: { confirm: 'Bist du dir sicher, dass du '+user.username+" aus der Allianz entfernen willst?" }   %>
-							<%end%>
-						</td>
 						<td>
-						<% unless current_user==user or user.rank.is_founder %>
-						<%= form_tag(edit_alliance_path+'/change_user_rank')%>
-						<%= hidden_field_tag 'uid', user.id %>
-						<%= collection_select(:rank, :id , @alliance.ranks.where('is_founder != ?',true) , :id, :name, {:selected => user.rank.id }) %>
-						<%= submit_tag 'Ändern' %>
-						</form>
-						<% end %>
+							<% unless current_user==user or user.rank.is_founder %>
+								<%= form_tag(edit_alliance_path+'/change_user_rank')%>
+								<%= hidden_field_tag 'uid', user.id %>
+								<%= collection_select(:rank, :id , @alliance.ranks.where('is_founder != ?',true) , :id, :name, {:selected => user.rank.id }) %>
+								<%= submit_tag 'Ändern' %>
+								</form>
+							<% end %>
 						</td>
+						<% if current_user.rank.can_kick and current_user != user  %>
+							<td>
+								<%= button_to 'Kicken', {:controller => "alliances", :action => "remove_user",:uid=> user.id} , :method=>:post, data: { confirm: 'Bist du dir sicher, dass du '+user.username+" aus der Allianz entfernen willst?" }   %>
+							</td>
+						<%end%>
 					</tr>
 				<% end %>
 			</table>
@@ -55,9 +56,9 @@
 			  	      <td><%= rank.can_kick ? "Ja" : "Nein" %></td>
 		        	  <td><%= rank.can_massmail ? "Ja" : "Nein" %></td>
 		        	  <td><%= rank.can_edit ? "Ja" : "Nein" %></td>
-		        	  <td><%= rank.can_invite ? "Ja" : "Nein" %></td> 	    
-			          <td><%= link_to 'Editieren', edit_rank_path(rank) %></td>
-			          <% unless rank.is_founder or rank.standard %>
+		        	  <td><%= rank.can_invite ? "Ja" : "Nein" %></td> 	  
+		        	  <% unless rank.is_founder or rank.standard %>  
+			          	<td><%= link_to 'Editieren', edit_rank_path(rank) %></td>
 			          	<td><%= link_to 'Löschen', rank, method: :delete, data: { confirm: 'Möchtest du diesen Rank wirklich löschen?' } %></td>
 			          <% end %>
 		  	    </tr>

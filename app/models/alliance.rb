@@ -47,6 +47,7 @@ class Alliance < ActiveRecord::Base
 		return false
 	end
 
+	#removes a user from the alliance
 	public
 	def remove_user(user)
 		if user.alliance==self
@@ -57,6 +58,7 @@ class Alliance < ActiveRecord::Base
 		return false
 	end
 
+	#changes default rank of alliance
 	public
 	def change_default_rank(rank)
 		if rank == nil
@@ -70,6 +72,7 @@ class Alliance < ActiveRecord::Base
 		return true
 	end
 
+	#changes user rank
 	public
 	def change_user_rank(user,rank)
 		if rank == nil

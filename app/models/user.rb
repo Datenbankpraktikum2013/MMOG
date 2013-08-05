@@ -16,10 +16,12 @@ class User < ActiveRecord::Base
 
   has_many :fleets
   has_many :planets
-  has_many :battlereports
+  has_many :reports
   belongs_to :alliance
   #receiving messages
-  has_and_belongs_to_many :messages, :foreign_key => 'recipient_id',:select => 'messages.*,messages_users.seen as seen'
+  has_many :messages_user
+  has_many :messages, :through => :messages_user, :source => :message
+  accepts_nested_attributes_for :messages_user
   has_many :sent_messages, :class_name => 'Message', :foreign_key => 'sender_id'
 
   #init usersettings when user is created
