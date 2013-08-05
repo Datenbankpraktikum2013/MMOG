@@ -158,33 +158,18 @@ class Fleet < ActiveRecord::Base
   end
 #=end
 
-#=begin
 
+#=begin
   #Adds Ship to Fleet in t seconds
   def add_ship_in(t,s)
     Resque.enqueue_in(t.second, AddShip, self.id ,s.id)
   end
+#=end
 
+#=begin
   # fuegt einer Flotte ein Schiff hinzu
   def add_ship(s)
     add_ships({s => 1})
-=begin
-    unless s.is_a?Ship
-      raise RuntimeError, "Input is no ship" # Fehlerbehandlung
-    end
-
-    ship_array = Shipfleet.where(fleet_id: self, ship_id: s)
-    # if there is no entry of a shiptype of that fleet
-    # else there is an entry, that just has to be incremented
-    if ship_array.empty?
-      self.ships << s
-      ship_array.first.amount = 1
-    else
-      ship_array.first.amount += 1
-    end
-    ship_array.first.save
-    update_values
-=end
   end
 #=end
 
@@ -221,6 +206,13 @@ class Fleet < ActiveRecord::Base
 #=end
 
 #=begin
+  # destroys a shiptype in the fleet
+  def destroy_ship(s)
+    destroy_ships({s => 1})
+  end
+#=end
+
+#=begin
   # destroys ships dependant on a hash of ship:amount
   def destroy_ships(ship_hash)
     unless enough_ships?(ship_hash)
@@ -236,28 +228,6 @@ class Fleet < ActiveRecord::Base
   end
 #=end
 
-
-#=begin
-  # destroys a shiptype in the fleet
-  def destroy_ship(s)
-    destroy_ships({s => 1})
-=begin
-    unless enough_ships?({s => 1})
-      raise RuntimeError, "The Input is not valid, ship cannot be destroyed"
-
-    ship_array = Shipfleet.where(fleet_id: self, ship_id: s)
-    # if there is no entry of a shiptype of that fleet
-    # else there is an entry, that just has to be incremented
-    if (ship_array.empty? || ship_array.first.amount == 0)
-      return null #Fehlerbehandlung????
-    else
-      ship_array.first.amount -= 1
-    end
-    ship_array.first.save
-    update_values
-=end
-  end
-#=end
 
 
   private
