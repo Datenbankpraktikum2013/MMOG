@@ -84,4 +84,12 @@ module GalaxiesHelper
     Array.new([8,9,13,14,19,20,25,32]).include?(nr)
   end
 
+  def self.namegen()
+     prename = ["Alpha", "Beta", "Gamma", "Delta", "Epsilon", "Zeta", "Eta", "Theta", "Iota", "Kappa", "Lambda", "Orion", "Centauri", "Andromeda", "Omikron", "M 60", "M 73", "Sigma", "M 42", "Ypsilon", "NGC 95", "Rumpelstilz", "Troutt", "Omega"]
+     letter = ["A","B","C","D","E","F","G","H"]
+     x = Random.rand(prename.length)
+    prename[x] + "-" + letter[Random.rand(letter.length)] + letter[Random.rand(letter.length)].downcase
+
+  end
+
 end
