@@ -7,7 +7,7 @@ class GalaxiesController < ApplicationController
     $game_settings = Hash.new()
     $game_settings[:world_length] = 5
     $game_settings[:world_view_length] = 5
-    @pos = [1, 1]
+    @pos = [0, 0]
     unless params[:pox_x].nil? || params[:pox_y].nil?
       @pos[0] = params[:x]
       @pos[1] = params[:y]
