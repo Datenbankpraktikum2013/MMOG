@@ -314,6 +314,7 @@ class Fleet < ActiveRecord::Base
 
     # calculates changing values for the whole fleet, if there were ships added or destroyed
     # Gets called after Fleet was initialized and after adding or destroying ships
+    # FACTORS NEED TO BE ADDED
     def update_values
       ship_hash = self.get_ships
       offense = 0
