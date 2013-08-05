@@ -257,7 +257,10 @@ class Planet < ActiveRecord::Base
       #build_me = Buildingtype.where(name:type level:upgrade_me.level+1).id
     end
     id_array = []
-    Resque.enqueue_in(build_time.second,BuildBuildings, id_array[self.id,build_me])
+    id_array << self.id
+    id_array << build_me
+    puts "ID ARRAY: #{id_array}"
+    Resque.enqueue_in(2.second,BuildBuildings, id_array)
 
   end
 
@@ -266,7 +269,7 @@ class Planet < ActiveRecord::Base
     #destroy_me.destroy unless destroy_me.nil?
     #reborn_me = Building.create(buildingtype_id: id, planet: seld.id)
     return false if buildingtype_id.nil? || !buildingtype_id.integer?
-    build_me = Buildingtype.where(id: buildingtype_id)
+    build_me = Buildingtype.where(id: buildingtype_id).first
     return false if build_me.nil?
     builds = self.buildings
     buildings.each do |b|
