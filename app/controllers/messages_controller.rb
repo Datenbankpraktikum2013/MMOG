@@ -25,7 +25,7 @@ class MessagesController < ApplicationController
   # POST /messages.json
   def create
     @message = Message.new(message_params)
-    @recipient=User.all.where('username == ?',params['recipient']).first
+    @recipient=User.find_by_username('recipient')
     respond_to do |format|
       @message.sender=current_user
       if @message.save
