@@ -197,7 +197,9 @@ class Technology < ActiveRecord::Base
     requirements = ""
 
     technology_requires.find_each do |tech|
-      requirements << Technology.find(tech.pre_tech_id).title << ", "
+      unless tech.pre_tech_id == 0
+        requirements << Technology.find(tech.pre_tech_id).title << ", "
+      end
     end
 
     requirements[0..-1]
