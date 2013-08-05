@@ -1,6 +1,7 @@
 module TechnologiesHelper
 
   def self.init_Technology
+   puts 'Create Technologies... (100%)'
     Technology.create({:name => 'increased_income', :factor => 1.05, :cost => 100, :maxrank => -1,:duration => 1})
     Technology.create({:name => 'increased_ironproduction', :factor => 1.05, :cost => 80, :maxrank => -1,:duration => 1})
     Technology.create({:name => 'increased_research', :factor => 1.02, :cost => 140, :maxrank => -1,:duration => 1})
@@ -20,6 +21,8 @@ module TechnologiesHelper
   end
 
   def self.init_Technology_Require
+
+    puts 'Set technology requirements... (100%)'
     TechnologyRequire.create({:tech_id => Technology.where(:name => 'increased_income').first.id, :building_rank => 1,
                               :pre_tech_id => 0, :pre_tech_rank => 0})
     TechnologyRequire.create({:tech_id => Technology.where(:name => 'increased_ironproduction').first.id, :building_rank => 1,

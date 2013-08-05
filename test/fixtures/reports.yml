@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  reportable_id: 
+  defender_planet_id: 
+  attacker_planet_id: 
+  fightdate: 2013-08-05 11:44:35
+  defender_id: 
+  attacker_id: 
+  read: false
+
+two:
+  reportable_id: 
+  defender_planet_id: 
+  attacker_planet_id: 
+  fightdate: 2013-08-05 11:44:35
+  defender_id: 
+  attacker_id: 
+  read: false

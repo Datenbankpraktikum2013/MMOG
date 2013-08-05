@@ -60,6 +60,23 @@ class Fleet < ActiveRecord::Base
   end
 
 #=begin
+  # calculates of a {ship => amount} hash, the building costs by returning a {ressource => cost} hash
+  def Fleet.get_ressource_cost (ship_hash)
+    unless hash_is_valid?(ship_hash)
+      raise RuntimeError, "The Input is not valid (invalid amount or wrong objects), ships cannot be added"
+    end
+    ressource_hash = Hash.new(0)
+    ship_hash.each do |ship, amount|
+      ressource_hash[:credit_cost] += ship.credit_cost * amount
+      ressource_hash[:ore_cost] += ship.ore_cost * amount
+      ressource_hash[:crystal_cost] += ship.crystal_cost * amount
+      ressource_hash[:crew_capacity] += ship.crew_capacity * amount
+    end
+    ressource_hash
+  end
+#=end 
+
+#=begin
   # returns the amount of a shiptype in one fleet
   # check if s is ship
   def get_amount_of_ship(ship)
@@ -88,18 +105,36 @@ class Fleet < ActiveRecord::Base
   end
 #=end
 
-=begin
+#=begin
   #wie wird destination gepeichert?
+  #ID=1 : Based
+  #ID=2 : Colonizsation
+  #ID=3 : Attack
+  #ID=4 : Travel
+  #ID=5 : Spy
+  #ID=6 : Transport
   def move(mission, destination)
     if mission.id==1
 
-    elsif mission.id==2
+    elsif mission.id==4
       distance=self.start_planet.getDistance(destination)
-      fuel=self.get_fuel_capacity
+      nfuel=0
       velocity=self.get_velocity
+      time=get_needed_time(velocity, distance)
       
-      travel_time=
+      Ship.all.each do |ship|
+        nfuel+=(get_needed_fuel(ship, time))*get_amount_of_ship(ship)
+        puts "needed fuel: #{nfuel}"
+      end
+      puts "needed fuel: #{nfuel}"
+      puts "velocity #{nfuel}"
+
+
     end
+      
+  
+
+
 
     # calculate needed energy for that flight...cases:
     #
@@ -133,7 +168,23 @@ class Fleet < ActiveRecord::Base
     # calculate time until arrival at foreign planet
     # calculate 
   end
-=end
+#=end
+  
+  def get_needed_time(velocity, distance)
+      if velocity == 0 
+        0
+      else
+        (distance/velocity)
+      end
+  end
+
+  def get_needed_fuel(ship, time)
+      if ship.consumption == 0 
+        0
+      else 
+        (time/(ship.consumption))
+      end 
+  end
 
   def move_to_planet_in(p,t)
     Resque.enqueue_in(t.second, MoveFleet, self.id ,p.id)
@@ -143,8 +194,7 @@ class Fleet < ActiveRecord::Base
 
 #=begin
   # returns a fleet, that was created from self, with the amounts of ships that are in the argument hash
-  def split_fleet(ship_hash)
-    
+  def split_fleet(ship_hash)  
     # check wether the fleet has enough ships ( negative amounts and really ships)
     unless enough_ships?(ship_hash)
       raise RuntimeError, "Nicht genuegend Schiffe vorhanden zum splitten"

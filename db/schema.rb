@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130805070144) do
+ActiveRecord::Schema.define(version: 20130805095444) do
 
   create_table "alliances", force: true do |t|
     t.string   "name",        null: false
@@ -23,18 +23,12 @@ ActiveRecord::Schema.define(version: 20130805070144) do
   end
 
   create_table "battlereports", force: true do |t|
-    t.integer  "defender_planet_id"
-    t.integer  "attacker_planet_id"
-    t.datetime "fightdate"
     t.integer  "stolen_ore"
     t.integer  "stolen_crystal"
     t.integer  "stolen_space_cash"
-    t.integer  "defender_id"
-    t.integer  "attacker_id"
     t.integer  "winner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "read",               default: false
   end
 
   create_table "buildings", force: true do |t|
@@ -43,6 +37,14 @@ ActiveRecord::Schema.define(version: 20130805070144) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "planet_id"
+  end
+
+  create_table "buildingtype_relations", id: false, force: true do |t|
+    t.integer "required_buildingtype_id"
+    t.integer "affected_buildingtype_id"
+  end
+
+  create_table "buildingtype_requires", force: true do |t|
   end
 
   create_table "buildingtypes", force: true do |t|
@@ -123,11 +125,6 @@ ActiveRecord::Schema.define(version: 20130805070144) do
     t.integer  "user_id"
   end
 
-  create_table "planets_users_visibility", id: false, force: true do |t|
-    t.integer "planet_id"
-    t.integer "user_id"
-  end
-
   create_table "ranks", force: true do |t|
     t.string   "name",                         null: false
     t.boolean  "can_kick",     default: false
@@ -141,6 +138,25 @@ ActiveRecord::Schema.define(version: 20130805070144) do
     t.datetime "updated_at"
     t.integer  "alliance_id"
   end
+
+  create_table "reports", force: true do |t|
+    t.integer  "reportable_id"
+    t.string   "reportable_type"
+    t.integer  "defender_planet_id"
+    t.integer  "attacker_planet_id"
+    t.datetime "fightdate"
+    t.integer  "defender_id"
+    t.integer  "attacker_id"
+    t.boolean  "read",               default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "reports", ["attacker_id"], name: "index_reports_on_attacker_id"
+  add_index "reports", ["attacker_planet_id"], name: "index_reports_on_attacker_planet_id"
+  add_index "reports", ["defender_id"], name: "index_reports_on_defender_id"
+  add_index "reports", ["defender_planet_id"], name: "index_reports_on_defender_planet_id"
+  add_index "reports", ["reportable_id", "reportable_type"], name: "index_reports_on_reportable_id_and_reportable_type"
 
   create_table "shipcounts", force: true do |t|
     t.integer  "battlereport_id"

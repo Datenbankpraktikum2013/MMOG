@@ -102,24 +102,33 @@ class Planet < ActiveRecord::Base
 
 
   def mention()
-      self.sunsystem.mention()
+    self.sunsystem.mention()
+    #Hier weitere Aktionen starten: z.B. Rohstoffproduktion, falls gestoppt wurde
+  end
 
+
+  def claim(user)
+    if self.user.nil?
+      self.user = user;
+      self.create_building_job(:Oremine)
+      self.create_building_job(:Headquarter)
+      self.create_building_job(:Powerplant)
+      self.create_building_job(:City)
+      self.create_production_job;
+    else
+      self.user = user;
+    end
   end
 
 
   #@param type Name der Produktionsstaette ("Eisenmine", "Haus", ...)
   def get_production(type)
     # TODO Calculate production
-    puts"type: #{type} typetos #{type.to_s}"
     btype = Buildingtype.where(name: type.to_s)
-    puts "btype: #{btype.to_s}"
     production_building = self.buildings.where(buildingtype_id: btype).first
     return 0 if production_building.nil? 
-    puts "production_building: #{production_building}"
     prod_building_type = Buildingtype.where(id:production_building.buildingtype_id).first
-    puts "prod_building_type: #{prod_building_type}"
     prod = prod_building_type.production
-    puts "prod: #{prod}"
     
     sci_factor =1
     if type == :Oremine
@@ -128,23 +137,24 @@ class Planet < ActiveRecord::Base
       return c
     end
 
-    if type == :population
+    if type == :City
       c = @spec[2] * prod
       return c
     end
 
-    if type == :money
+    if type == :Headquarter
       #sci_factor = self.user.get_income
-      c = sci_factor * prod * @spec[3] * (self.population / 100) 
+      c = sci_factor * @spec[3] * (self.population / 100)# * prod 
+      return c
     end
 
-    if type == :energy 
+    if type == :Powerplant
       #sci_factor = self.user.get_energy_efficiency
       c = sci_factor * prod * @spec[1] 
       return c
     end
 
-    if type == :crystal
+    if type == :Crystalmine
       c = @spec[4] * prod
       return c
     end
@@ -174,7 +184,7 @@ class Planet < ActiveRecord::Base
       #
       # updates population
       #
-      city_population = self.get_production(:population)
+      city_population = self.get_production(:City)
       if city_population.integer? then
         if (self.population + city_population) < self.maxpopulation then
           self.population += city_population
@@ -186,7 +196,7 @@ class Planet < ActiveRecord::Base
       #
       # updates crystal
       #
-      crystal_production = self.get_production(:crystal)
+      crystal_production = self.get_production(:Crystalmine)
       if crystal_production.integer? then
         if (self.crystal + crystal_production) < self.maxcrystal then
           self.crystal += crystal_production
@@ -198,15 +208,16 @@ class Planet < ActiveRecord::Base
       #
       # updates money 
       #
-      income = get_production(:money)
-      owner = User.find_by id: self.user_id
+      income = self.get_production(:Headquarter)
+      owner = self.user
       owner.money += income
+      owner.save
     end
 
     #
     # Energy costs and production
     #
-    energy_production = self.get_production(:energy)
+    power_production = self.get_production(:Powerplant)
     if (self.energy + power_production) < self.maxenergy
       self.energy += power_production
     else
@@ -216,7 +227,8 @@ class Planet < ActiveRecord::Base
     @structures = self.buildings
     ener_usage = 0
     @structures.each do |str|
-      ener_usage += str.energyusage
+      building_typ = Buildingtype.find_by_id(str.buildingtype_id)
+      ener_usage += building_typ.energyusage
     end
 
     self.energy -= ener_usage 
@@ -237,7 +249,7 @@ class Planet < ActiveRecord::Base
       #build_time = Buildingtype.where(name:type level:upgrade_me.level+1).build_time
       #build_me = Buildingtype.where(name:type level:upgrade_me.level+1).id
     end
-    Resque.enqueue_in(buildtime.minute,BuildBuildingjob, id_array(self.id,build_me))
+    Resque.enqueue_in(buildtime.second,BuildBuildingjob, id_array(self.id,build_me))
 
   end
 
@@ -275,6 +287,5 @@ class Planet < ActiveRecord::Base
       -1
     end
   end
-
 
 end

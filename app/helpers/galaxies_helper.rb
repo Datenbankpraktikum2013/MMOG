@@ -9,34 +9,36 @@ module GalaxiesHelper
   def self.generateAt(x, y)
     x = Galaxy.calcX(x, y)
     unless x < 0 || Galaxy.where(x: x).exists? then
-      name = "New Galaxy " + x.to_s
-      g = Galaxy.create(x: x, name: name)
-      pos = [1, 2, 3, 4, 5, 6, 7, 8]
-      pos.shuffle!
+      ActiveRecord::Base.transaction do
+        name = "New Galaxy " + x.to_s
+        g = Galaxy.create(x: x, name: name)
+        pos = [1, 2, 3, 4, 5, 6, 7, 8]
+        pos.shuffle!
 
-      i = Random.rand(5) + 4
-      i.times do |y|
-        name = "New Sunsystem " + y.to_s
-        s = Sunsystem.new(name: name, y: pos[y])
-        s.galaxy = g
-        s.save
-        pos2 = [1, 2, 3, 4, 5, 6, 7, 8]
-        pos2.shuffle!
+        i = Random.rand(5) + 4
+        i.times do |y|
+          name = "New Sunsystem " + y.to_s
+          s = Sunsystem.create(name: name, y: pos[y])
+          s.galaxy = g
+          #s.save
+          pos2 = [1, 2, 3, 4, 5, 6, 7, 8]
+          pos2.shuffle!
 
-        j = Random.rand(5)+4
-        if j > 6 then
-          k = 2
-        else
-          k = 1
-        end
+          j = Random.rand(5)+4
+          if j > 6 then
+            k = 2
+          else
+            k = 1
+          end
 
-        k.times do |k2|
-          p = Planet.create(z: pos2[k2], special: 0, sunsystem_id: s.id)
-        end
+          k.times do |k2|
+            p = Planet.create(z: pos2[k2], special: 0, sunsystem_id: s.id)
+          end
 
-        j = j - k
-        j.times do |z|
-          p = Planet.create(z: pos2[z + k], special: 1, sunsystem_id: s.id)
+          j = j - k
+          j.times do |z|
+            p = Planet.create(z: pos2[z + k], special: 1, sunsystem_id: s.id)
+          end
         end
       end
     end
