@@ -22,6 +22,8 @@ TechnologiesHelper.init_Technology
 TechnologiesHelper.init_Technology_Require
 TechnologiesHelper.test_user_technology
 
+
+
 #Default-Missionstypen
 Mission.create({:id => 1, :info_text => "Based"})
 Mission.create({:id => 2, :info_text => "Colonization"})
