@@ -18,17 +18,32 @@ class Technology < ActiveRecord::Base
 
       #ziehe User Geld ab
       u = User.find(user)
-      u.update_attribute(:money, u.money - self.get_technology_cost(user)  )
 
-      Resque.enqueue_in(get_research_duration(user).second, ResearchTechnology, user, id)
+      if u.user_setting.researching? then
+        puts "Research in progress!"
 
+
+      else
+
+        duration = get_research_duration(user)
+        #researching + Timestamp
+        u.user_setting.update_attribute(:researching, true )
+        u.user_setting.update_attribute(:finished_at, duration.second.from_now)
+        #ziehe Geld ab
+        u.update_attribute(:money, u.money - self.get_technology_cost(user) )
+
+
+        Resque.enqueue_in(duration.second, ResearchTechnology, user, id )
+      end
     end
   end
 
 
-  def update_usertechnologies(user)
+  def update_uservalues(user)
 
     puts "In Methode UpdateUserTechnologies"
+
+    u = User.find(user).user_setting
 
     result = user_technologies.where(:user_id => user).first
     new_rank = 1
@@ -40,12 +55,15 @@ class Technology < ActiveRecord::Base
       user_technologies.create(:rank => 1, :user_id => user)
     end
 
-    puts "Update USERSETTINGS"
-    #Update UserSettings
-    self.update_usersettings(user, new_rank)
+    u.update_attribute(name, factor**new_rank)
+
+    #researching finished
+    u.update_attribute(:researching, false )
+
+
   end
 
-
+=begin
   def update_usersettings(user, rank)
 
     puts "In Methode Update Udersettings"
@@ -53,7 +71,7 @@ class Technology < ActiveRecord::Base
     record.update_attribute(self.name, self.factor**rank)
 
   end
-
+=end
 
   def technology_require?(user)
 
