@@ -1,19 +1,14 @@
 <p id="notice"><%= notice %></p>
 
-
 <p>
-  <strong>Betreff:</strong>
-  <%= @message.subject %>
+  <strong>Body:</strong>
+  <%= @message.body %>
 </p>
 
 <p>
-  <strong>Nachricht:</strong>
-  <%= @message.text %>
+  <strong>User:</strong>
+  <%= @message.user_id %>
 </p>
 
-<p>
-  <strong>Absender:</strong>
-  <%= @message.user.username %>
-</p>
-
-<%= link_to 'Zurück', messages_path %>
+<%= link_to 'Edit', edit_message_path(@message) %> |
+<%= link_to 'Back', messages_path %>
