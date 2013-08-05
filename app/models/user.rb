@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
 
   has_many :fleets
   has_many :planets
-  has_many :battlereports
+  has_many :reports
   belongs_to :alliance
   #receiving messages
   has_many :messages_user

@@ -1,5 +1,5 @@
 class Fleet < ActiveRecord::Base
-	has_many :shipfleets
+	has_many :shipfleets, dependent: :delete_all
 	has_many :ships, :through => :shipfleets
 	belongs_to :start_planet, class_name: "Planet", foreign_key: "start_planet"
 	belongs_to :target_planet, class_name: "Planet", foreign_key: "target_planet"
@@ -7,7 +7,6 @@ class Fleet < ActiveRecord::Base
 	belongs_to :user
 	belongs_to :mission
   after_initialize :update_values
-  before_destroy :delete_shipfleets
 
 
 #=begin  
@@ -314,6 +313,7 @@ class Fleet < ActiveRecord::Base
 
     # calculates changing values for the whole fleet, if there were ships added or destroyed
     # Gets called after Fleet was initialized and after adding or destroying ships
+    # FACTORS NEED TO BE ADDED
     def update_values
       ship_hash = self.get_ships
       offense = 0
@@ -329,16 +329,5 @@ class Fleet < ActiveRecord::Base
       self.defense = defense
       self.ressource_capacity = ressource_capacity
       self.save
-    end
-
-    # deletes all shipfleets from a fleet when it get destroyed
-    # before_detroy
-    def delete_shipfleets
-      tmp = Shipfleet.all.where(fleet_id: self.id)
-      unless tmp.empty?
-        tmp.each do |sf|
-          sf.destroy
-        end
-      end
     end
 end
