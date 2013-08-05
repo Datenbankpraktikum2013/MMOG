@@ -18,16 +18,18 @@ class Technology < ActiveRecord::Base
 
       #ziehe User Geld ab
       u = User.find(user)
-      u.update_attribute(:money, u.money - self.get_technology_cost(user)
+      u.update_attribute(:money, u.money - self.get_technology_cost(user)  )
 
-      Resque.enqueue_in(get_research_duration(user)), research_technology, user, id)
-
-
+      Resque.enqueue_in(get_research_duration(user).second, ResearchTechnology, user, id)
 
     end
   end
 
+
   def update_usertechnologies(user)
+
+    puts "In Methode UpdateUserTechnologies"
+
     result = user_technologies.where(:user_id => user).first
     new_rank = 1
 
@@ -38,6 +40,7 @@ class Technology < ActiveRecord::Base
       user_technologies.create(:rank => 1, :user_id => user)
     end
 
+    puts "Update USERSETTINGS"
     #Update UserSettings
     self.update_usersettings(user, new_rank)
   end
@@ -45,6 +48,7 @@ class Technology < ActiveRecord::Base
 
   def update_usersettings(user, rank)
 
+    puts "In Methode Update Udersettings"
     record = UserSetting.find_by(:user_id => user)
     record.update_attribute(self.name, self.factor**rank)
 

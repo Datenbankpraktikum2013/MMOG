@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Reportable:</strong>
+  <%= @report.reportable %>
+</p>
+
+<p>
+  <strong>Defender planet:</strong>
+  <%= @report.defender_planet %>
+</p>
+
+<p>
+  <strong>Attacker planet:</strong>
+  <%= @report.attacker_planet %>
+</p>
+
+<p>
+  <strong>Fightdate:</strong>
+  <%= @report.fightdate %>
+</p>
+
+<p>
+  <strong>Defender:</strong>
+  <%= @report.defender %>
+</p>
+
+<p>
+  <strong>Attacker:</strong>
+  <%= @report.attacker %>
+</p>
+
+<p>
+  <strong>Read:</strong>
+  <%= @report.read %>
+</p>
+
+<%= link_to 'Edit', edit_report_path(@report) %> |
+<%= link_to 'Back', reports_path %>

@@ -1,0 +1,45 @@
+<%= form_for(@report) do |f| %>
+  <% if @report.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@report.errors.count, "error") %> prohibited this report from being saved:</h2>
+
+      <ul>
+      <% @report.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :reportable %><br>
+    <%= f.text_field :reportable %>
+  </div>
+  <div class="field">
+    <%= f.label :defender_planet %><br>
+    <%= f.text_field :defender_planet %>
+  </div>
+  <div class="field">
+    <%= f.label :attacker_planet %><br>
+    <%= f.text_field :attacker_planet %>
+  </div>
+  <div class="field">
+    <%= f.label :fightdate %><br>
+    <%= f.datetime_select :fightdate %>
+  </div>
+  <div class="field">
+    <%= f.label :defender %><br>
+    <%= f.text_field :defender %>
+  </div>
+  <div class="field">
+    <%= f.label :attacker %><br>
+    <%= f.text_field :attacker %>
+  </div>
+  <div class="field">
+    <%= f.label :read %><br>
+    <%= f.check_box :read %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

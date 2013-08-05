@@ -1,5 +1,5 @@
 class AlliancesController < ApplicationController
-  before_action :set_alliance, only: [:show, :edit, :update, :destroy, :useradd, :user_add_action, :change_default_rank]
+  before_action :set_alliance, only: [:show, :edit, :update, :destroy, :useradd, :user_add_action, :change_default_rank, :change_user_rank, :remove_user]
   before_filter :authenticate_user!
 
   # GET /alliances
@@ -12,11 +12,25 @@ class AlliancesController < ApplicationController
   def change_default_rank
     @rank=@alliance.ranks.find_by_id(params['rank']['id'])
     respond_to do |format|
-      if @alliance.change_rank(@rank)
+      if @alliance.change_default_rank(@rank)
         format.html { redirect_to @alliance, notice: 'Standardrang erfolgreich geändert!.' }
         format.json { render action: 'show', status: :created, location: @alliance }
       else
         format.html { redirect_to @alliance, notice: 'Standardrang konnte nicht geändert werden.' }
+        format.json { render json: @alliance.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def change_user_rank
+    @rank=@alliance.ranks.find_by_id(params['rank']['id'])
+    @user=@alliance.users.find_by_id(params['uid'])
+    respond_to do |format|
+      if @alliance.change_user_rank(@user,@rank)
+        format.html { redirect_to @alliance, notice: @user.username+" wurde erfolgreich dem Rang "+@rank.name+" zugeordnet." }
+        format.json { render action: 'show', status: :created, location: @alliance }
+      else
+        format.html { redirect_to @alliance, notice: @user.username+" konnte dem Rang "+@rank.name+" nicht zugeordnet werden." }
         format.json { render json: @alliance.errors, status: :unprocessable_entity }
       end
     end
@@ -56,6 +70,19 @@ class AlliancesController < ApplicationController
     else
       respond_to do |format|
         format.html { redirect_to @alliance, notice: 'User could not be added.' }
+        format.json { render json: @alliance.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def remove_user
+    @user=@alliance.users.find_by_id(params['uid'])
+    respond_to do |format|
+      if @alliance.remove_user(@user)
+        format.html { redirect_to @alliance, notice: @user.username+" wurde aus der Allianz entfernt" }
+        format.json { render action: 'show', status: :created, location: @alliance }
+      else
+        format.html { redirect_to @alliance, notice: @user.username+" konnte nicht aus der Allianz entfernt werden" }
         format.json { render json: @alliance.errors, status: :unprocessable_entity }
       end
     end

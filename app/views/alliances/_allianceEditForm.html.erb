@@ -12,7 +12,8 @@
 					<th>Userwertung</th>
 					<th>Rank</th>
 					<% if current_user.rank.alliance==@alliance and current_user.rank.can_edit  %>
-					<th></th>
+					<th>Kicken</th>
+					<th>Rang ändern</th>
 					<% end %>
 				</tr>
 				<% @alliance.users.each do |user| %>
@@ -21,9 +22,19 @@
 						<td><%=user.money%></td>
 						<td><%=user.score%></td>
 						<td><%=user.rank.name%></td>
-						<% if current_user.rank.alliance==@alliance and current_user.rank.can_edit and current_user != user  %>
-							<td><%= link_to 'Kicken' %>
+						<td><% if current_user.rank.alliance==@alliance and current_user.rank.can_edit and current_user != user  %>
+								<%= button_to 'Kicken', {:controller => "alliances", :action => "remove_user",:uid=> user.id} , :method=>:post, data: { confirm: 'Bist du dir sicher, dass du '+user.username+" aus der Allianz entfernen willst?" }   %>
+							<%end%>
+						</td>
+						<td>
+						<% unless current_user==user or user.rank.is_founder %>
+						<%= form_tag(edit_alliance_path+'/change_user_rank')%>
+						<%= hidden_field_tag 'uid', user.id %>
+						<%= collection_select(:rank, :id , @alliance.ranks.where('is_founder != ?',true) , :id, :name, {:selected => user.rank.id }) %>
+						<%= submit_tag 'Ändern' %>
+						</form>
 						<% end %>
+						</td>
 					</tr>
 				<% end %>
 			</table>
@@ -39,7 +50,6 @@
 	        <th>Editieren</th>
 	        <th>Einladen</th>
 		  	<% @alliance.ranks.each do |rank| %>
-		  			  	  
 		 	    <tr style=<%= (rank.standard) ? "font-weight:bold" : "" %>>
 			  	      <td><%= rank.name %></td>
 			  	      <td><%= rank.can_kick ? "Ja" : "Nein" %></td>

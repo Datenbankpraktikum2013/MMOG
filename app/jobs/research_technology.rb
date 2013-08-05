@@ -1,11 +1,13 @@
 #require "/app/models/planet"
 
 class ResearchTechnology
-  @queue = "research technology"
+  @queue = "research_technology"
 
   def self.perform(user, tech)
+    puts "Loading job"
     t = Technology.find(tech)
-    t.upgrade_technology(user)
+    t.update_usertechnologies(user)
+    puts "Update UserTechnologies"
   end
 
 end

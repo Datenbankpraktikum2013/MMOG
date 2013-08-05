@@ -1,0 +1,39 @@
+<h1>Listing reports</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Reportable</th>
+      <th>Defender planet</th>
+      <th>Attacker planet</th>
+      <th>Fightdate</th>
+      <th>Defender</th>
+      <th>Attacker</th>
+      <th>Read</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @reports.each do |report| %>
+      <tr>
+        <td><%= report.reportable %></td>
+        <td><%= report.defender_planet %></td>
+        <td><%= report.attacker_planet %></td>
+        <td><%= report.fightdate %></td>
+        <td><%= report.defender %></td>
+        <td><%= report.attacker %></td>
+        <td><%= report.read %></td>
+        <td><%= link_to 'Show', report %></td>
+        <td><%= link_to 'Edit', edit_report_path(report) %></td>
+        <td><%= link_to 'Destroy', report, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Report', new_report_path %>
