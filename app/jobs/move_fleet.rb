@@ -11,7 +11,7 @@ class MoveFleet
 		# puts p
 		# f.target_planet=p
 		# f.save
-		f.target_planet=p
+		f.start_planet=p
 		f.save
 
 		puts "#{Time.now} === Moved Fleet #{f.id} to Planet #{p.id}"
