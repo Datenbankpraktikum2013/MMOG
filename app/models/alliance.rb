@@ -48,7 +48,7 @@ class Alliance < ActiveRecord::Base
 	end
 
 	public
-	def change_rank(rank)
+	def change_default_rank(rank)
 		if rank == nil
 			return false
 		end
@@ -57,6 +57,15 @@ class Alliance < ActiveRecord::Base
 		@old.save
 		rank.standard=true
 		rank.save
+		return true
+	end
+
+	public
+	def change_user_rank(user,rank)
+		if rank == nil
+			return false
+		end
+		rank.users<<user
 		return true
 	end
 end
