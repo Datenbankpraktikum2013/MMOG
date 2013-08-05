@@ -74,7 +74,16 @@ User.create(:email => 'demo2@demo.com',:password => 'password',:username=> 'demo
 User.create(:email => 'demo3@demo.com',:password => 'password',:username=> 'demo3',:money => 10000,:score => 0)
 User.create(:email => 'demo4@demo.com',:password => 'password',:username=> 'demo4',:money => 10000,:score => 0)
 
-#Building 
-Building.create({:planet_id => 1, :buildingtype_id => 1})
-Building.create({:planet_id => 1, :buildingtype_id => 2})
+
+
+
+#Buildingtypes
+Buildingtype.create({:name =>'Headquarter', :level=> 1, :production=> 1, :energyusage=> 0})
+Buildingtype.create({:name =>'Oremine', :level=> 1, :production=> 10, :energyusage=>0})
+Buildingtype.create({:name =>'Powerplant', :level => 1, :production=> 10, :energyusage=>0})
+Buildingtype.create({:name =>'Research Lab', :level => 1, :production=> 0, :energyusage=> 30})
+Buildingtype.create({:name =>'City', :level=> 1, :production=> 100, :energyusage=> 20})
+Buildingtype.create({:name =>'Depot', :level=> 1, :production=> 200, :energyusage=> 5})
+Buildingtype.create({:name =>'Crystalmine', :level=> 1, :production=> 1, :energyusage=> 100})
+Buildingtype.create({:name =>'Starport', :level=> 1, :production=> 0, :energyusage=> 100})
 
