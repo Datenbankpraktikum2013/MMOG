@@ -22,19 +22,17 @@ class Technology < ActiveRecord::Base
       if u.user_setting.researching? then
         puts "Research in progress!"
 
-
       else
-
         duration = get_research_duration(user)
         #researching + Timestamp
         u.user_setting.update_attribute(:researching, true )
         u.user_setting.update_attribute(:finished_at, duration.second.from_now)
+
         #ziehe Geld ab
         u.update_attribute(:money, u.money - self.get_technology_cost(user) )
-
-
         Resque.enqueue_in(duration.second, ResearchTechnology, user, id )
       end
+
     end
   end
 
@@ -59,19 +57,7 @@ class Technology < ActiveRecord::Base
 
     #researching finished
     u.update_attribute(:researching, false )
-
-
   end
-
-=begin
-  def update_usersettings(user, rank)
-
-    puts "In Methode Update Udersettings"
-    record = UserSetting.find_by(:user_id => user)
-    record.update_attribute(self.name, self.factor**rank)
-
-  end
-=end
 
   def technology_require?(user)
 
@@ -93,18 +79,6 @@ class Technology < ActiveRecord::Base
 
     return true
 
-  end
-
-  def get_technology_cost(user)
-
-    result = user_technologies.where(:user_id => user).first
-
-    if !result.blank? then
-      return  result.rank * cost
-
-    else
-      return cost
-    end
   end
 
   def get_research_duration(user)
@@ -188,7 +162,6 @@ class Technology < ActiveRecord::Base
     return okay
   end
 
-
   def cost_required?(user)
 
     costreq = get_technology_cost(user)
@@ -201,6 +174,33 @@ class Technology < ActiveRecord::Base
       return false
     end
     return true
+  end
+
+
+  def get_technology_cost(user)
+
+    result = user_technologies.where(:user_id => user).first
+
+    if !result.blank? then
+      return  result.rank * cost
+
+    else
+      return cost
+    end
+  end
+
+  def get_description
+    description
+  end
+
+  def get_requirements
+    requirements = ""
+
+    technology_requires.find_each do |tech|
+      requirements << Technology.find(tech.pre_tech_id).title << ", "
+    end
+
+    requirements[0..-1]
   end
 
 
