@@ -9,19 +9,19 @@ class Buildingtype < ActiveRecord::Base
 
   def self.initvalues()
 
-    Buildingtype.create({:name =>'Headquarter', :level=> 1, :production=> 1, :energyusage=> 0})
+    Buildingtype.create({:name =>'Headquarter', :level=> 1, :production=> 1, :energyusage=> 0, :build_time=>50})
     Buildingtype.create({:name =>'Headquarter', :level=> 2, :production=> 1, :energyusage=> 0})
     Buildingtype.create({:name =>'Headquarter', :level=> 3, :production=> 1, :energyusage=> 0})
     Buildingtype.create({:name =>'Headquarter', :level=> 4, :production=> 1, :energyusage=> 0})
     Buildingtype.create({:name =>'Headquarter', :level=> 5, :production=> 1, :energyusage=> 0})
 
-    Buildingtype.create({:name =>'Oremine', :level=> 1, :production=> 10, :energyusage=>0})
+    Buildingtype.create({:name =>'Oremine', :level=> 1, :production=> 10, :energyusage=>0, :build_time=>50})
     Buildingtype.create({:name =>'Oremine', :level=> 2, :production=> 20, :energyusage=>5})
     Buildingtype.create({:name =>'Oremine', :level=> 3, :production=> 30, :energyusage=>10})
     Buildingtype.create({:name =>'Oremine', :level=> 4, :production=> 40, :energyusage=>15})
     Buildingtype.create({:name =>'Oremine', :level=> 5, :production=> 50, :energyusage=>20})
 
-    Buildingtype.create({:name =>'Powerplant', :level => 1, :production=> 10, :energyusage=>0})
+    Buildingtype.create({:name =>'Powerplant', :level => 1, :production=> 10, :energyusage=>0, :build_time=>50})
     Buildingtype.create({:name =>'Powerplant', :level => 2, :production=> 20, :energyusage=>0})
     Buildingtype.create({:name =>'Powerplant', :level => 3, :production=> 30, :energyusage=>0})
     Buildingtype.create({:name =>'Powerplant', :level => 4, :production=> 40, :energyusage=>0})
@@ -32,7 +32,7 @@ class Buildingtype < ActiveRecord::Base
     Buildingtype.create({:name =>'Research Lab', :level => 3, :production=> 0, :energyusage=> 30})
     Buildingtype.create({:name =>'Research Lab', :level => 4, :production=> 0, :energyusage=> 30})
 
-    Buildingtype.create({:name =>'City', :level=> 1, :production=> 100, :energyusage=> 20})
+    Buildingtype.create({:name =>'City', :level=> 1, :production=> 100, :energyusage=> 20, :build_time=>50})
     Buildingtype.create({:name =>'City', :level=> 2, :production=> 200, :energyusage=> 30})
     Buildingtype.create({:name =>'City', :level=> 3, :production=> 300, :energyusage=> 34})
     Buildingtype.create({:name =>'City', :level=> 4, :production=> 400, :energyusage=> 38})
