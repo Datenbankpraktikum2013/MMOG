@@ -18,8 +18,6 @@ class Battlereport < ActiveRecord::Base
 
 		self.add_fleet_info(def_fleet, 0)
 		self.add_fleet_info(atk_fleet, 1)
-
-		
 	end
 
 	def finish_battlereport(def_fleet, atk_fleet, defended=false)
@@ -28,7 +26,7 @@ class Battlereport < ActiveRecord::Base
 
 		defended ? self.winner = def_fleet.user : self.winner = atk_fleet.user
 		self.save
-		self.report.save
+		@r.save
 	end
 
 	def add_fleet_info(fleet, type)
