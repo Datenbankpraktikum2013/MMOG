@@ -18,7 +18,9 @@ class User < ActiveRecord::Base
   has_many :planets
   has_many :battlereports
   belongs_to :alliance
-  has_and_belongs_to_many :messages
+  #receiving messages
+  has_and_belongs_to_many :messages, :foreign_key => 'recipient_id',:select => 'messages.*,messages_users.seen as seen'
+  has_many :sent_messages, :class_name => 'Message', :foreign_key => 'sender_id'
 
   #init usersettings when user is created
   after_create :init_usersettings
