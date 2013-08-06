@@ -33,7 +33,7 @@ class Spyreport < ActiveRecord::Base
 	def add_ships
 		tmp = Hash.new(0)
 
-		fleets =  Fleet.where(:startplanet self.planet, :target_planet self.planet)
+		fleets =  Fleet.where(:startplanet=> self.planet, :target_planet => self.planet)
 
 		fleets.each do |fleet|
 			fleet.shipfleets.each do |shipfleet|
