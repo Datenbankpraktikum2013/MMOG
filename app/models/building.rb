@@ -29,7 +29,7 @@ class Building < ActiveRecord::Base
     # TODO Ueberpruefen, ob ein neuer Typ zugewiesen wird
     # self.buildingtype = Buildingtype.where(name: self.getName(), stufe: self.getStufe() + 1)
     next_buildingtype  = self.buildingtype.where(name: self.buildingtype.name, level: self.buildingtype.level + 1)
-    if next_buildingtype.nil? || !self.has_enough_requirements? then
+    if next_buildingtype.nil? || !self.verifies_upgrade_requirements? then
       return false
     else
       anforderungen = next_buildingtype.first.requirements
@@ -55,42 +55,19 @@ class Building < ActiveRecord::Base
     end
   end
 
-  def has_enough_requirements?()
-    #TODO schreiben
+  def verifies_upgrade_requirements?()
+    builds = self.planet.buildings_to_hash
+    btype = self.buildingtype
+    required = btype.requirements
+    return true if required.nil? || required.empty?
+    allow = true
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    return c = false
-    a = self.buildingtype.requirements
-
-      b = []
-      b = ore[a]
-
-      a.each do |o|
-        name = t[o]
-
+    required.each do |req|
+      if required.level > builds[required.name.to_sym] then
+        allow = false
       end
-
+    end
+    return allow
 
   end
 

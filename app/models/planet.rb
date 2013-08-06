@@ -122,6 +122,9 @@ class Planet < ActiveRecord::Base
     self.mention()
   end
 
+  def spec
+    puts @spec
+  end
 
   #@param type Name der Produktionsstaette ("Eisenmine", "Haus", ...)
   def get_production(type)
@@ -317,14 +320,7 @@ class Planet < ActiveRecord::Base
   end
 
   def research_level
-
-   self.buildings.each do |t|
-     if t.buildingtype.name == "ResearchLab"
-       a = t.buildingtype.level
-     end
-   end
-
-
+    return self.buildings_to_hash[:ResearchLab]
   end
 
   def buildings_to_hash
