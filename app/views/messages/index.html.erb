@@ -5,7 +5,7 @@
     <tr>
       <th>Betreff</th>
       <th>Absender</th>
-      <th></th>
+      <th>Gesendet um:</th>
       <th></th>
     </tr>
   </thead>
@@ -16,13 +16,40 @@
       <tr>
         <td><%= message.subject %></td>
         <td><%= message.sender.username %></td>
+        <td><%= message.created_at %></td>
         <td><%= link_to 'Anzeigen', message %></td>
-        <td><%= link_to 'Destroy', message, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Löschen', message, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
+
+<h1>Postausgang</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Betreff</th>
+      <th>An</th>
+      <th>Gesendet um:</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @usermessages = current_user.sent_messages %>  
+    <% @usermessages.each do |message| %>
+      <tr>
+        <td><%= message.subject %></td>
+        <td><%= message.recipients.find(:all, :select => 'username').map{|u| u.username}.join(", ") %></td>
+        <td><%= message.created_at %></td>
+        <td><%= link_to 'Anzeigen', message %></td>
+        <td><%= link_to 'Löschen', message, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
 <%= link_to 'New Message', new_message_path %>

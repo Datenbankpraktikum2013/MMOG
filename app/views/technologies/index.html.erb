@@ -2,7 +2,6 @@
 
 <table border="1" align="center" valign="middle">
   <tbody>
-  <%# TechnologyRequire.find(:all, :select => "DISTINCT building_rank").each do |rank| %>
   <% array = current_user.get_researching_tech %>
   <%research_id = UserSetting.find(current_user).researching%>
   <% TechnologyRequire.all.map(&:building_rank).uniq.each do |rank| %>
@@ -15,7 +14,7 @@
               <strong><%= 'Benötigte Technologien: ' %></strong><%=technology.get_requirements %><br>
               <strong><%= 'Kosten: ' %></strong><%= technology.get_technology_cost(current_user)%><br>
               <strong><%= 'Dauer: ' %></strong><%= technology.get_research_duration(current_user).to_s + ' Sekunden'%> <br>
-              <strong><%= 'Beschreibung:' %></strong><%= technology.description%> <%=' hier muss in der Seeds noch Text eingefügt werden'%>
+              <strong><%= 'Beschreibung:' %></strong><%= technology.description%>
             </td>
             <td align="middle"  valign="middle" width="50"><%= technology.get_technology_rank(current_user)%></td>
 
@@ -26,9 +25,10 @@
             <%elsif  technology.cost_required?(current_user) == false %>
             <td><%='Nicht genug Geld' %></td>
             <%elsif research_id != 0%>
-                <td align="middle"  valign="middle" width="100"><%= button_to 'Forscht',
+                <td align="middle"  valign="middle" width="100">
+                <%= button_to 'Forscht',
                     {:controller => "technologies", :action => "show_index",    :uid=> current_user, :id=> technology} ,
-                    :method=>:post, data: { confirm: 'Folgende Technologie wird erforscht: ' + array[0] }
+                    :method=>:post, data: { confirm: array}
                 %></td>
             <%else%>
             <td align="middle"  valign="middle" width="100"><%= button_to 'Upgrade',
