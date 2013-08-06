@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130805160819) do
+ActiveRecord::Schema.define(version: 20130806090949) do
 
   create_table "alliances", force: true do |t|
     t.string   "name",        null: false
@@ -60,6 +60,11 @@ ActiveRecord::Schema.define(version: 20130805160819) do
   create_table "buildingtypes_ships", id: false, force: true do |t|
     t.integer "buildingtype_id"
     t.integer "ship_id"
+  end
+
+  create_table "buildingtypes_spyreports", force: true do |t|
+    t.integer "buildingtype_id"
+    t.integer "spyreport_id"
   end
 
   create_table "fleets", force: true do |t|
@@ -132,14 +137,15 @@ ActiveRecord::Schema.define(version: 20130805160819) do
   end
 
   create_table "ranks", force: true do |t|
-    t.string   "name",                         null: false
-    t.boolean  "can_kick",     default: false
-    t.boolean  "can_massmail", default: false
-    t.boolean  "can_edit",     default: false
-    t.boolean  "can_invite",   default: false
-    t.boolean  "is_founder",   default: false
-    t.boolean  "can_disband",  default: false
-    t.boolean  "standard",     default: false
+    t.string   "name",                                   null: false
+    t.boolean  "can_kick",               default: false
+    t.boolean  "can_massmail",           default: false
+    t.boolean  "can_edit_ranks",         default: false
+    t.boolean  "can_invite",             default: false
+    t.boolean  "is_founder",             default: false
+    t.boolean  "can_disband",            default: false
+    t.boolean  "standard",               default: false
+    t.boolean  "can_change_description", default: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "alliance_id"
@@ -203,6 +209,16 @@ ActiveRecord::Schema.define(version: 20130805160819) do
     t.integer "technology_id"
   end
 
+  create_table "spyreports", force: true do |t|
+    t.integer  "energy"
+    t.integer  "space_cash"
+    t.integer  "population"
+    t.integer  "ore"
+    t.integer  "crystall"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "sunsystems", force: true do |t|
     t.integer  "y"
     t.string   "name"
@@ -228,6 +244,14 @@ ActiveRecord::Schema.define(version: 20130805160819) do
     t.integer "building_rank"
     t.integer "pre_tech_id"
     t.integer "pre_tech_rank"
+  end
+
+  create_table "techstages", force: true do |t|
+    t.integer  "spyreport_id"
+    t.integer  "technology_id"
+    t.integer  "level"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "tradereports", force: true do |t|
@@ -259,7 +283,7 @@ ActiveRecord::Schema.define(version: 20130805160819) do
     t.integer  "increased_spypower",          default: 1
     t.integer  "user_id"
     t.integer  "researchlvl",                 default: 1
-    t.boolean  "researching",                 default: false
+    t.integer  "researching",                 default: 0
     t.datetime "finished_at"
   end
 

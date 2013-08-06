@@ -1,11 +1,25 @@
 class AlliancesController < ApplicationController
-  before_action :set_alliance, only: [:show, :edit, :update, :destroy, :useradd, :user_add_action, :change_default_rank, :change_user_rank, :remove_user, :change_description]
+  before_action :set_alliance, only: [:show, :edit, :update, :destroy, :useradd, :user_add_action, :change_default_rank, :change_user_rank, :remove_user, :change_description, :send_mail]
   before_filter :authenticate_user!
 
   # GET /alliances
   # GET /alliances.json
   def index
     @alliances = Alliance.all
+  end
+
+  def send_mail
+    @subj='[Allianznachricht] '+params['subject']
+    @body=params['body']
+    respond_to do |format|
+      if @alliance.send_mass_mail(current_user,@subj,@body)
+        format.html { redirect_to @alliance, notice: 'Rundmail wurde erfolgreich versendet.' }
+        format.json { render action: 'show', status: :created, location: @alliance }
+      else
+        format.html { redirect_to @alliance, notice: 'Rundmail konnte nicht versendet werden.' }
+        format.json { render json: @alliance.errors, status: :unprocessable_entity }
+      end
+    end    
   end
 
     # PATCH/PUT /alliances/1/edit/change_default_rank

@@ -89,4 +89,20 @@ class Alliance < ActiveRecord::Base
 		self.save
 		return true
 	end
+
+	public
+	def send_mass_mail(user, subject, body)
+		if user==nil or subject==nil or body==nil
+			return false
+		end
+		unless user.rank.can_massmail
+			return false
+		end
+		@msg = user.sent_messages.create(:subject => subject, :body => body)
+		@users = self.users.all
+		@users.each do |u|
+			u.messages<<@msg
+		end
+		return true
+	end
 end
