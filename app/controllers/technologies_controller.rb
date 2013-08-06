@@ -6,6 +6,7 @@ class TechnologiesController < ApplicationController
   # GET /technologies.json
   def index
     @technologies = Technology.all
+
   end
 
   # GET /technologies/1

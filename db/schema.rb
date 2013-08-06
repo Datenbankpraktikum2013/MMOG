@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130806144728) do
+ActiveRecord::Schema.define(version: 20130806205229) do
 
   create_table "alliances", force: true do |t|
     t.string   "name",        null: false
@@ -159,20 +159,18 @@ ActiveRecord::Schema.define(version: 20130806144728) do
     t.integer  "defender_planet_id"
     t.integer  "attacker_planet_id"
     t.datetime "fightdate"
+    t.integer  "defender_id"
     t.integer  "attacker_id"
+    t.boolean  "read",               default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "reports", ["attacker_id"], name: "index_reports_on_attacker_id"
   add_index "reports", ["attacker_planet_id"], name: "index_reports_on_attacker_planet_id"
+  add_index "reports", ["defender_id"], name: "index_reports_on_defender_id"
   add_index "reports", ["defender_planet_id"], name: "index_reports_on_defender_planet_id"
   add_index "reports", ["reportable_id", "reportable_type"], name: "index_reports_on_reportable_id_and_reportable_type"
-
-  create_table "reports_users", force: true do |t|
-    t.integer "user_id"
-    t.integer "report_id"
-  end
 
   create_table "shipcounts", force: true do |t|
     t.integer  "battlereport_id"
@@ -181,7 +179,6 @@ ActiveRecord::Schema.define(version: 20130806144728) do
     t.integer  "shipowner_time_type"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "user_id"
   end
 
   create_table "shipfleets", force: true do |t|
@@ -279,7 +276,7 @@ ActiveRecord::Schema.define(version: 20130806144728) do
     t.float    "increased_capacity",          default: 1.0
     t.boolean  "hyperspace_technology",       default: false
     t.boolean  "large_cargo_ship",            default: false
-    t.boolean  "large_defenseplattform",      default: false
+    t.boolean  "large_defense_platform",      default: false
     t.boolean  "destroyer",                   default: false
     t.boolean  "cruiser",                     default: false
     t.boolean  "deathstar",                   default: false
