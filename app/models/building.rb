@@ -57,6 +57,29 @@ class Building < ActiveRecord::Base
 
   def has_enough_requirements?()
     #TODO schreiben
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     return c = false
     a = self.buildingtype.requirements
 

@@ -327,4 +327,13 @@ class Planet < ActiveRecord::Base
 
   end
 
+  def buildings_to_hash
+    out = {:Oremine => 0, :ResearchLab => 0, :City => 0, :Powerplant =>  0, :Crystalmine => 0, :Headquarter => 0, :Starport => 0, :Depot => 0}
+    self.buildings.each do |b|
+      btype = b.buildingtype
+      out[btype.name.to_sym] = btype.level
+    end
+    return out
+  end
+
 end
