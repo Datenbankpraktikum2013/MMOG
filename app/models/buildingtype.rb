@@ -6,6 +6,7 @@ class Buildingtype < ActiveRecord::Base
   has_many :inverse_buildingtype_requires, :class_name => "BuildingtypeRequire", :foreign_key => "requirement_id"
   has_many :inverse_buildingtypes, :through => :inverse_buildingtype_requires, :source => :buildingtype
   has_and_belongs_to_many :ships
+  has_and_belongs_to_many :spyreports
 
   def self.init_all()
 

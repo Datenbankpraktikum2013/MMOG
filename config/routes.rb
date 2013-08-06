@@ -1,5 +1,9 @@
 Mmog::Application.routes.draw do
 
+  resources :techstages
+
+  resources :spyreports
+
   resources :tradereports
 
   resources :reports
