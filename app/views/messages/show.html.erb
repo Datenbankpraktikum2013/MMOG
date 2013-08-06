@@ -1,12 +1,15 @@
 <p id="notice"><%= notice %></p>
-
 <p>
-  <strong>Body:</strong>
+	<strong>Betreff:</strong>
+	<%= @message.subject %>
+</p>	
+<p>
+  <strong>Nachricht:</strong>
   <%= @message.body %>
 </p>
 
 <p>
-  <strong>User:</strong>
+  <strong>Von:</strong>
   <%= @message.sender.username %>
 </p>
 
