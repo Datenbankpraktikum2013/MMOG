@@ -251,6 +251,7 @@ class Fleet < ActiveRecord::Base
 #=begin
   def prepare_spy(planet)
     #calculate spyfactor and stuff and put it into the real spy method
+    own_spy_factor = User.find(self.user_id).user_setting.increased_spypower
   end
 #=end
 
@@ -395,7 +396,6 @@ class Fleet < ActiveRecord::Base
 
     # calculates changing values for the whole fleet, if there were ships added or destroyed
     # Gets called after Fleet was initialized and after adding or destroying ships
-    # FACTORS NEED TO BE ADDED
     def update_values
       ship_hash = self.get_ships
       offense = 0
