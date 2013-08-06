@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="86d27e9f-686d-4994-9465-0db65ee885bf" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/building.rb" afterPath="$PROJECT_DIR$/app/models/building.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/helpers/galaxies_helper.rb" afterPath="$PROJECT_DIR$/app/helpers/galaxies_helper.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/helpers/planets_helper.rb" afterPath="$PROJECT_DIR$/app/helpers/planets_helper.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/user.rb" afterPath="$PROJECT_DIR$/app/models/user.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="MMOG.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -14,7 +12,7 @@
     <file path="/technology_require.rb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1375428372874" ignored="false" />
     <file path="/technology.rb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1375428318552" ignored="false" />
     <file path="/20130802073348_add_maxrank_to_technology.rb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1375428923885" ignored="false" />
-    <file path="/planet.rb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1375773620362" ignored="false" />
+    <file path="/planet.rb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1375786359564" ignored="false" />
     <file path="/sunsystem.rb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1375437623208" ignored="false" />
     <file path="/galaxy.rb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1375435112371" ignored="false" />
     <file path="/galaxies_helper.rb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1375780000309" ignored="false" />
@@ -47,73 +45,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="planet.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/models/planet.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="120" column="4" selection-start="3003" selection-end="3003" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="galaxies_helper.rb" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/helpers/galaxies_helper.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="60" column="80" selection-start="1543" selection-end="1543" vertical-scroll-proportion="0.24096386">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="galaxies.css.scss" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/galaxies.css.scss">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="52" selection-start="853" selection-end="853" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.html.erb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/technologies/index.html.erb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="46" column="103" selection-start="1254" selection-end="1254" vertical-scroll-proportion="-14.833333">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="user.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/models/user.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="138" column="2" selection-start="2943" selection-end="2943" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="building.rb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="building.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/models/building.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="59" column="21" selection-start="1196" selection-end="1196" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="planets_helper.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/helpers/planets_helper.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="45" column="18" selection-start="1641" selection-end="1641" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="buildingtype.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/models/buildingtype.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="19" selection-start="428" selection-end="428" vertical-scroll-proportion="0.0">
+            <state line="68" column="9" selection-start="1320" selection-end="1320" vertical-scroll-proportion="0.78647685">
               <folding />
             </state>
           </provider>
@@ -162,11 +97,11 @@
         <option value="$PROJECT_DIR$/app/views/galaxies/index.html.erb" />
         <option value="$PROJECT_DIR$/app/models/buildingtype.rb" />
         <option value="$PROJECT_DIR$/db/seeds.rb" />
-        <option value="$PROJECT_DIR$/app/models/planet.rb" />
         <option value="$PROJECT_DIR$/app/helpers/galaxies_helper.rb" />
         <option value="$PROJECT_DIR$/app/helpers/planets_helper.rb" />
-        <option value="$PROJECT_DIR$/app/models/building.rb" />
         <option value="$PROJECT_DIR$/app/models/user.rb" />
+        <option value="$PROJECT_DIR$/app/models/planet.rb" />
+        <option value="$PROJECT_DIR$/app/models/building.rb" />
       </list>
     </option>
   </component>
@@ -297,6 +232,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="db" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MMOG" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MMOG" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="db" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="migrate" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -595,9 +548,12 @@
             <option name="mySupportsDeletion" value="false" />
             <option name="myCanBeAbsent" value="false" />
             <option name="myId" value="UPDATED" />
-            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/helpers/planets_helper.rb</PATH>
-            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/models/planet.rb</PATH>
-            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/models/user.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/models/building.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/models/buildingtype.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/models/buildingtype_require.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/models/fleet.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/config/routes.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/db/schema.rb</PATH>
           </FILE-GROUP>
           <FILE-GROUP>
             <option name="myUpdateName" value="Created" />
@@ -605,6 +561,41 @@
             <option name="mySupportsDeletion" value="false" />
             <option name="myCanBeAbsent" value="false" />
             <option name="myId" value="CREATED" />
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/assets/javascripts/spyreports.js.coffee</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/assets/javascripts/techstages.js.coffee</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/assets/stylesheets/spyreports.css.scss</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/assets/stylesheets/techstages.css.scss</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/controllers/spyreports_controller.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/controllers/techstages_controller.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/helpers/spyreports_helper.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/helpers/techstages_helper.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/models/spyreport.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/models/techstage.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/spyreports/_form.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/spyreports/edit.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/spyreports/index.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/spyreports/index.json.jbuilder</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/spyreports/new.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/spyreports/show.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/spyreports/show.json.jbuilder</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/techstages/_form.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/techstages/edit.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/techstages/index.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/techstages/index.json.jbuilder</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/techstages/new.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/techstages/show.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/techstages/show.json.jbuilder</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/db/migrate/20130806084511_create_spyreports.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/db/migrate/20130806085239_create_buildingtypes_spyreports.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/db/migrate/20130806090949_create_techstages.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/test/controllers/spyreports_controller_test.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/test/controllers/techstages_controller_test.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/test/fixtures/spyreports.yml</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/test/fixtures/techstages.yml</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/test/helpers/spyreports_helper_test.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/test/helpers/techstages_helper_test.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/test/models/spyreport_test.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/test/models/techstage_test.rb</PATH>
           </FILE-GROUP>
           <FILE-GROUP>
             <option name="myUpdateName" value="Deleted" />
@@ -958,13 +949,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/buildingtype.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="19" selection-start="428" selection-end="428" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/db/seeds.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="10" column="29" selection-start="414" selection-end="414" vertical-scroll-proportion="0.0">
@@ -972,51 +956,58 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/helpers/galaxies_helper.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="60" column="80" selection-start="1543" selection-end="1543" vertical-scroll-proportion="1.0843374">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/models/planet.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="120" column="4" selection-start="3003" selection-end="3003" vertical-scroll-proportion="0.0">
+        <state line="120" column="4" selection-start="3003" selection-end="3003" vertical-scroll-proportion="0.9644128">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/galaxies.css.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="52" selection-start="853" selection-end="853" vertical-scroll-proportion="0.0">
+        <state line="18" column="52" selection-start="853" selection-end="853" vertical-scroll-proportion="0.29893237">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/technologies/index.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="103" selection-start="1254" selection-end="1254" vertical-scroll-proportion="-14.833333">
+        <state line="46" column="103" selection-start="1254" selection-end="1254" vertical-scroll-proportion="0.44168735">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/models/user.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="138" column="2" selection-start="2943" selection-end="2943" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/building.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="59" column="21" selection-start="1196" selection-end="1196" vertical-scroll-proportion="0.0">
+        <state line="138" column="2" selection-start="2943" selection-end="2943" vertical-scroll-proportion="0.85765123">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/helpers/planets_helper.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="18" selection-start="1641" selection-end="1641" vertical-scroll-proportion="0.0">
+        <state line="45" column="18" selection-start="1641" selection-end="1641" vertical-scroll-proportion="0.8012048">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/helpers/galaxies_helper.rb">
+    <entry file="file://$PROJECT_DIR$/app/models/buildingtype.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="60" column="80" selection-start="1543" selection-end="1543" vertical-scroll-proportion="0.24096386">
+        <state line="10" column="19" selection-start="466" selection-end="466" vertical-scroll-proportion="0.12455516">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/building.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="68" column="9" selection-start="1320" selection-end="1320" vertical-scroll-proportion="0.78647685">
           <folding />
         </state>
       </provider>
