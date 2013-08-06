@@ -29,7 +29,7 @@ class Building < ActiveRecord::Base
     # TODO Ueberpruefen, ob ein neuer Typ zugewiesen wird
     # self.buildingtype = Buildingtype.where(name: self.getName(), stufe: self.getStufe() + 1)
     next_buildingtype  = self.buildingtype.where(name: self.buildingtype.name, level: self.buildingtype.level + 1)
-    if next_buildingtype.nil? then
+    if next_buildingtype.nil? || !self.has_enough_requirements() then
       return false
     else
       anforderungen = next_buildingtype.first.requirements
@@ -53,6 +53,11 @@ class Building < ActiveRecord::Base
       self.buildingtype = next_buildingtype
 
     end
+  end
+
+  def has_enough_requirements()
+    return false
+    # TODO schreiben!
   end
 
 end
