@@ -44,7 +44,6 @@ class Fleet < ActiveRecord::Base
     else
       #GEHT AUCH BESTIMMT EINFACHER?!
       self.ships.sort{|s1,s2| s1.velocity <=> s2.velocity}.first.velocity
-
     end
   end
 
@@ -232,17 +231,33 @@ class Fleet < ActiveRecord::Base
 
 #=begin
   # returns a fleet, that was created from self, with the amounts of ships that are in the argument hash
+  # PLANET!!!!!!!
   def split_fleet(ship_hash)  
     # check wether the fleet has enough ships ( negative amounts and really ships)
     unless enough_ships?(ship_hash)
       raise RuntimeError, "Nicht genuegend Schiffe vorhanden zum splitten"
     end
 
-    new_fleet = Fleet.new
+    new_fleet = Fleet.new(Planet.find(self.origin_planet))
     new_fleet.save
     new_fleet.add_ships(ship_hash)
     self.destroy_ships(ship_hash)
     return new_fleet
+  end
+#=end
+
+#=begin
+  # merges another fleet with self
+  # PRUEFEN OB DIE FLOTTEN AM SELBEN ORT SIND?????
+  def merge_fleet(fleet)  
+    unless fleet.is_a?(Fleet)
+      raise RuntimeError, "The Input is not valid (invalid amount or wrong objects), ships cannot be added"
+    end
+
+    ship_hash = fleet.get_ships
+    self.add_ships(ship_hash)
+    fleet.destroy
+
   end
 #=end
 
