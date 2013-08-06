@@ -1,5 +1,5 @@
 class TechnologiesController < ApplicationController
-  before_action :set_technology, only: [:show, :edit, :update, :destroy, :upgrade]
+  before_action :set_technology, only: [:show, :edit, :update, :destroy, :upgrade,:show_index]
   before_filter :authenticate_user!
 
   # GET /technologies
@@ -66,6 +66,13 @@ class TechnologiesController < ApplicationController
     @technology.upgrade_technology(params["uid"])
     respond_to do |format|
       format.html { redirect_to action: 'index', notice: 'Forschung erfolgreich aufgewertet.'}
+      format.json {head :no_content}
+    end
+  end
+
+  def show_index
+    respond_to do |format|
+      format.html { redirect_to action: 'index'}
       format.json {head :no_content}
     end
   end

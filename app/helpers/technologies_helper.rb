@@ -2,7 +2,7 @@ module TechnologiesHelper
 
   def self.init_Technology
    puts 'Create Technologies... (100%)'
-    Technology.create({:name => 'increased_income', :factor => 1.05, :cost => 100, :maxrank => -1,:duration => 1, :title => "höheres Einkommen"})
+    Technology.create({:name => 'increased_income', :factor => 1.05, :cost => 100, :maxrank => -1,:duration => 10, :title => "höheres Einkommen"})
     Technology.create({:name => 'increased_ironproduction', :factor => 1.05, :cost => 80, :maxrank => -1,:duration => 1, :title => "größere Eisenerzproduktion"})
     Technology.create({:name => 'increased_research', :factor => 1.02, :cost => 140, :maxrank => -1,:duration => 1, :title => "kürzere Forschungsdauert"})
     Technology.create({:name => 'increased_energy_efficiency', :factor => 1.02, :cost => 90, :maxrank => -1,:duration => 1, :title => "bessere Energieeffizienz"})

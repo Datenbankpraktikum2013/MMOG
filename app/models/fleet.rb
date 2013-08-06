@@ -190,12 +190,14 @@ class Fleet < ActiveRecord::Base
     # calculate 
   end
 #=end
+#=begin
+  
   def fight(planet)
     defender_fleets=Fleet.where(start_planet: planet.id, target_planet: planet.id)
     defender_defense=defender_fleets.sum("defense")
     #defender_offense=defender_fleets.sum("offense")
     fight_factor=self.offense - defender_defense
-    puts "defender defense: #{defender_defense} attacker offense: #{self.offense} factor: #{fight_factor}"
+    #puts "defender defense: #{defender_defense} attacker offense: #{self.offense} factor: #{fight_factor}"
     #if lost...
     if fight_factor<0
       defender_new_defense=fight_factor.abs*rand(0.8 .. 1.2)
@@ -204,21 +206,45 @@ class Fleet < ActiveRecord::Base
 
       tmp_defense=defender_defense
       while tmp_defense>defender_new_defense do
-        puts "new defense #{defender_new_defense} / #{tmp_defense}"
+        #puts "new defense #{defender_new_defense} / #{tmp_defense}"
         tmp_random_fleet=rand(0 .. ((defender_fleets.size) -1) )
-        puts "fleet nr: #{tmp_random_fleet}"
+        #puts "fleet nr: #{tmp_random_fleet}"
         tmp_ship_index=(defender_fleets[tmp_random_fleet].ships.size) -1
-        puts "shiptyp anzahl: #{tmp_ship_index}"
+        #puts "shiptyp anzahl: #{tmp_ship_index}"
         del_ship_index=rand(0 .. (tmp_ship_index) )
-        puts "shiptyp del: #{del_ship_index}"
+        #puts "shiptyp del: #{del_ship_index}"
         defender_fleets[tmp_random_fleet].destroy_ship(defender_fleets[tmp_random_fleet].ships[del_ship_index])
         tmp_defense=defender_fleets.sum("defense")
 
       end
+      self.destroy
+
     elsif fight_factor>0
+      attacker_new_offense=fight_factor.abs*rand(0.8 .. 1.2)
+      new_offense=0
+      tmp_offense=self.offense
+
+      while tmp_offense>attacker_new_offense do
+        tmp_ship_index=(self.ships.size) -1
+        del_ship_index=rand(0 .. (tmp_ship_index) )
+        self.destroy_ship(self.ships[del_ship_index])
+        tmp_offense=self.offense
+      end
+      defender_fleets.each do |f|
+        f.destroy
+      end
     else
+      defender_fleets.each do |f|
+        f.destroy
+      end
+      self.destroy
     end
+
+    
+   
   end
+
+#=end
 
 
   def get_needed_time(velocity, distance)
