@@ -37,12 +37,16 @@
         <td><%= fleet.velocity_factor %></td>
         <td><%= fleet.offense %></td>
         <td><%= fleet.defense %></td>
-        <td><%= fleet.user %></td>
-        <td><%= fleet.mission %></td>
+        <td><%= fleet.user.username %></td>
+        <td><%= fleet.mission.info_text %></td>
         <td><%= fleet.departure_time %></td>
         <td><%= fleet.arrival_time %></td>
-        <td><%= fleet.start_planet %></td>
-        <td><%= fleet.target_planet %></td>
+        <td><%= fleet.start_planet.name %></td>
+        <% if fleet.target_planet.name == fleet.start_planet.name %>
+        <td></td>
+        <% else %>
+        <td><%= fleet.target_planet.name %></td>
+        <% end %>
         <% @shiptypes.each do |shiptype| %>
           <th><%= fleet.get_amount_of_ship( shiptype.id ) %></td>
         <% end %>
