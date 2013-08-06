@@ -6,7 +6,7 @@ class Fleet < ActiveRecord::Base
 	belongs_to :origin_planet, class_name: "Planet", foreign_key: "origin_planet"
 	belongs_to :user
 	belongs_to :mission
-  after_initialize :update_values
+  #after_initialize :update_values
 
 
 #=begin  
@@ -23,14 +23,15 @@ class Fleet < ActiveRecord::Base
     self.ressource_capacity = 0
     self.ore = 0
     self.crystal = 0
-    self.storage_factor = planet.user_id.user_setting.increased_capacity
-    self.velocity_factor = planet.user_id.user_setting.increased_movement
-    self.offense = 0
-    self.defense = 0
     #self.user_id = planet.user_id
     # ACHTUNG, NUR ZU TESTZWECKEN
-    self.user_id = 1
+    self.user = User.find(1)
     # ACHTUNG, NUR ZU TESTZWECKEN
+    self.storage_factor = User.find(1).user_setting.increased_capacity
+    self.velocity_factor = User.find(1).user_setting.increased_movement
+    # ACHTUNG, NUR ZU TESTZWECKEN
+    self.offense = 0
+    self.defense = 0
     self.mission_id = 1
     self.departure_time = 0
     self.arrival_time = 0
