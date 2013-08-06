@@ -1,5 +1,6 @@
 class MessagesController < ApplicationController
   before_action :set_message, only: [:show, :edit, :update, :destroy]
+  before_filter :authenticate_user!
 
   # GET /messages
   # GET /messages.json
@@ -25,11 +26,19 @@ class MessagesController < ApplicationController
   # POST /messages.json
   def create
     @message = Message.new(message_params)
-    @recipient=User.find_by_username('recipient')
+    @users=User.all
+    @recipient=@users.where('username == ?',params['recipient']).first
     respond_to do |format|
+      #assign params
+      @message.subject=params['subject']
+      @message.body=params['body']
       @message.sender=current_user
-      if @message.save
+      #check if recipient exists
+      if @recipient!=nil
         @message.recipients<<@recipient
+      end
+
+      if @message.save        
         format.html { redirect_to @message, notice: 'Message was successfully created.' }
         format.json { render action: 'show', status: :created, location: @message }
       else
@@ -71,6 +80,6 @@ class MessagesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def message_params
-      params.require(:message).permit(:body, :user_id)
+      params.require(:message).permit(:text, :sender_id, :subject) if params[:message]
     end
 end

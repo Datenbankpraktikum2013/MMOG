@@ -23,6 +23,7 @@ class User < ActiveRecord::Base
   has_many :messages, :through => :messages_user, :source => :message
   accepts_nested_attributes_for :messages_user
   has_many :sent_messages, :class_name => 'Message', :foreign_key => 'sender_id'
+  
 
   #init usersettings when user is created
   after_create :init_usersettings

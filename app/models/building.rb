@@ -68,8 +68,6 @@ class Building < ActiveRecord::Base
 
       end
 
-    end
-
 
   end
 
