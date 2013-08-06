@@ -137,4 +137,38 @@ class User < ActiveRecord::Base
   end
 
 
+  def get_researching_tech
+
+    string = ""
+    tech = user_setting.researching
+
+    if tech != 0
+
+      result = user_technologies.where(:technology_id => tech).first
+
+
+      if result.blank? then
+        rank = 1
+      else
+        rank = (result.rank) +1
+      end
+      time = user_setting.finished_at - 0.from_now
+
+      stunden = time.to_i/3600
+      minuten = time.to_i/60 - stunden*60
+      sekunden = time.to_i - minuten*60 - stunden*3600
+
+      string << 'Folgende Technologie wird erforscht: ' << Technology.find(tech).title.to_s << "\n"
+      string << 'Erforsche Stufe :' << rank.to_s << "\n"
+      string << 'Verbleibende Dauer: ' 
+      string << stunden.to_s << ' Stunden '
+      string << minuten.to_s << ' Minuten '
+      string << sekunden.to_s << ' Sekunden'
+
+    end
+
+    string
+
+  end
+
 end

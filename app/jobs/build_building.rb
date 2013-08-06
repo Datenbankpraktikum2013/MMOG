@@ -7,6 +7,6 @@ class BuildBuildings
 		#puts "Baue gebäude auf #{id_array[0]}"
 		planet = Planet.find(id_array[0])
 		#noch nicht implementiert stand 11:07
-		planet.build(id_array[1])
+		planet.build_building(id_array[1])
 	end
 end

@@ -22,7 +22,7 @@ class Alliance < ActiveRecord::Base
 	def create_default_ranks
 		#create default founder rank
       	self.ranks.create(:name=>"Anwärter",:standard=>true)
-      	self.ranks.create(:name => "Oberhaupt",:can_kick=>true,:can_massmail=>true,:can_edit=>true,:can_invite=>true,:is_founder=>true,:can_disband=>true)
+      	self.ranks.create(:name => "Oberhaupt",:can_kick=>true,:can_massmail=>true,:can_edit_ranks=>true,:can_invite=>true,:is_founder=>true,:can_disband=>true,:can_change_description => true)
 	end
 
 	public
@@ -61,10 +61,10 @@ class Alliance < ActiveRecord::Base
 	#changes default rank of alliance
 	public
 	def change_default_rank(rank)
-		if rank == nil
+		@old=self.ranks.where(:standard=>true).first
+		if rank == nil or rank==@old
 			return false
 		end
-		@old=self.ranks.where(:standard=>true).first
 		@old.standard=false
 		@old.save
 		rank.standard=true
@@ -87,6 +87,22 @@ class Alliance < ActiveRecord::Base
 	def set_description(description)
 		self.description=description
 		self.save
+		return true
+	end
+
+	public
+	def send_mass_mail(user, subject, body)
+		if user==nil or subject==nil or body==nil
+			return false
+		end
+		unless user.rank.can_massmail
+			return false
+		end
+		@msg = user.sent_messages.create(:subject => subject, :body => body)
+		@users = self.users.all
+		@users.each do |u|
+			u.messages<<@msg
+		end
 		return true
 	end
 end

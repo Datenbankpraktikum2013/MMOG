@@ -11,12 +11,14 @@ module ShipsHelper
   	user = planet.user
   	
    	existing_buildings = planet.buildings
-  	existing_buildingtypes = Hash.new
-  	# only store the buildingtype_ids from the buildings of a planet
-  	existing_buildings.each do |building|
-  		buildingtype = Buildingtype.find(building.buildingtype_id)
-  		existing_buildingtypes[buildingtype.name] = buildingtype.level
-  	end
+    # testen!!!!!!!!!!!!!
+  	existing_buildingtypes = planet.buildings_to_hash
+  	
+    # only store the buildingtype_ids from the buildings of a planet
+    # existing_buildings.each do |building|
+  	# 	buildingtype = Buildingtype.find(building.buildingtype_id)
+  	# 	existing_buildingtypes[buildingtype.name] = buildingtype.level
+  	# end
 
     # go through every ship and check wether the planet/user has the
     # prerequisites necessary for that ship. "Buildable" ships are stored
