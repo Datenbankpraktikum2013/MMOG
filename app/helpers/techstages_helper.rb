@@ -1,0 +1,2 @@
+module TechstagesHelper
+end

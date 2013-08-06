@@ -1,0 +1,29 @@
+<%= form_for(@techstage) do |f| %>
+  <% if @techstage.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@techstage.errors.count, "error") %> prohibited this techstage from being saved:</h2>
+
+      <ul>
+      <% @techstage.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :spyreport_id %><br>
+    <%= f.number_field :spyreport_id %>
+  </div>
+  <div class="field">
+    <%= f.label :technology_id %><br>
+    <%= f.number_field :technology_id %>
+  </div>
+  <div class="field">
+    <%= f.label :level %><br>
+    <%= f.number_field :level %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
