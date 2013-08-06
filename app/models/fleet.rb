@@ -6,7 +6,7 @@ class Fleet < ActiveRecord::Base
 	belongs_to :origin_planet, class_name: "Planet", foreign_key: "origin_planet"
 	belongs_to :user
 	belongs_to :mission
-  after_initialize :update_values
+  #after_initialize :update_values
 
 
 #=begin  
@@ -23,11 +23,15 @@ class Fleet < ActiveRecord::Base
     self.ressource_capacity = 0
     self.ore = 0
     self.crystal = 0
-    self.storage_factor = planet.user_id.user_setting.increased_capacity
-    self.velocity_factor = planet.user_id.user_setting.increased_movement
+    #self.user_id = planet.user_id
+    # ACHTUNG, NUR ZU TESTZWECKEN
+    self.user = User.find(1)
+    # ACHTUNG, NUR ZU TESTZWECKEN
+    self.storage_factor = User.find(1).user_setting.increased_capacity
+    self.velocity_factor = User.find(1).user_setting.increased_movement
+    # ACHTUNG, NUR ZU TESTZWECKEN
     self.offense = 0
     self.defense = 0
-    self.user_id = planet.user_id
     self.mission_id = 1
     self.departure_time = 0
     self.arrival_time = 0
@@ -235,7 +239,9 @@ class Fleet < ActiveRecord::Base
     
    
   end
+
 #=end
+
 
   def get_needed_time(velocity, distance)
       if velocity == 0 
@@ -267,6 +273,7 @@ class Fleet < ActiveRecord::Base
 #=begin
   def prepare_spy(planet)
     #calculate spyfactor and stuff and put it into the real spy method
+    own_spy_factor = User.find(self.user_id).user_setting.increased_spypower
   end
 #=end
 
@@ -315,6 +322,7 @@ class Fleet < ActiveRecord::Base
 
 #=begin
   # fuegt einer Flotte ein Schiff hinzu
+  # after that the fleetattributes are updated
   def add_ship(s)
     add_ships({s => 1})
   end
@@ -322,6 +330,7 @@ class Fleet < ActiveRecord::Base
 
 #=begin
   # adds ships dependant on a hash like {ship_id:amount}
+  # after that the fleetattributes are updated
   def add_ships(ship_hash)
     unless hash_is_valid?(ship_hash)
       raise RuntimeError, "The Input is not valid (invalid amount or wrong objects), ships cannot be added"
@@ -354,13 +363,15 @@ class Fleet < ActiveRecord::Base
 
 #=begin
   # destroys a shiptype in the fleet
+  # after that the fleetattributes are updated
   def destroy_ship(s)
     destroy_ships({s => 1})
   end
 #=end
 
 #=begin
-  # destroys ships dependant on a hash of ship:amount
+  # destroys ships dependant on a hash of {ship: amount}
+  # after that the fleetattributes are updated
   def destroy_ships(ship_hash)
     unless enough_ships?(ship_hash)
       raise RuntimeError, "The Input is not valid (invalid amount or wrong objects), ships cannot be destroyed"
@@ -378,33 +389,33 @@ class Fleet < ActiveRecord::Base
     # calculates changing values for the whole fleet, if there were ships added or destroyed
     # Gets called after Fleet was initialized and after adding or destroying ships
     # FACTORS NEED TO BE ADDED
-    def update_values
-      ship_hash = self.get_ships
-      offense = 0
-      defense = 0
-      ressource_capacity = 0
-      #user = User.find(self.user_id) # IMPORTANT, ADD IT!
+  def update_values
+    ship_hash = self.get_ships
+    offense = 0
+    defense = 0
+    ressource_capacity = 0
+    user = User.find(self.user_id) # IMPORTANT, ADD IT!
 
-      ship_hash.each do |ship, amount|
-        offense += ship.offense * amount
-        defense += ship.defense * amount
-        ressource_capacity += ship.ressource_capacity * amount
-      end
-
-      # multiply with research factors
-      self.offense = offense * user.user_setting.increased_power
-      self.defense = defense * user.user_setting.increased_defense
-      
-      # when fleet is at home, calculate the newest technologies
-      if self.target_planet == self.start_planet
-        self.velocity_factor = user.user_setting.increased_movement # HYPERSPACE TECHNOLOGY???????????????
-        self.storage_factor = user.user_setting.increased_capacity
-        self.ressource_capacity = ressource_capacity * user.user_setting.increased_capacity
-      else
-        self.ressource_capacity = ressource_capacity * self.storage_factor
-      end
-      self.save
+    ship_hash.each do |ship, amount|
+      offense += ship.offense * amount
+      defense += ship.defense * amount
+      ressource_capacity += ship.ressource_capacity * amount
     end
+
+     # multiply with research factors
+    self.offense = offense * user.user_setting.increased_power
+    self.defense = defense * user.user_setting.increased_defense
+    
+    # when fleet is at home, calculate the newest technologies
+    if self.target_planet == self.start_planet
+      self.velocity_factor = user.user_setting.increased_movement # HYPERSPACE TECHNOLOGY???????????????
+      self.storage_factor = user.user_setting.increased_capacity
+      self.ressource_capacity = ressource_capacity * user.user_setting.increased_capacity
+    else
+      self.ressource_capacity = ressource_capacity * self.storage_factor
+    end
+    self.save
+  end
 
   private
 
@@ -436,9 +447,5 @@ class Fleet < ActiveRecord::Base
       end
       true
     end
-
-
-
-
 
 end

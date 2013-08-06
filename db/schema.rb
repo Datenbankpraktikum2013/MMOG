@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130806080758) do
+ActiveRecord::Schema.define(version: 20130805160819) do
 
   create_table "alliances", force: true do |t|
     t.string   "name",        null: false
@@ -95,20 +95,15 @@ ActiveRecord::Schema.define(version: 20130806080758) do
   create_table "messages", force: true do |t|
     t.text     "body"
     t.integer  "sender_id"
+    t.string   "subject"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "messages_user", force: true do |t|
+  create_table "messages_users", force: true do |t|
     t.integer "user_id"
     t.integer "message_id"
     t.boolean "read",       default: false
-  end
-
-  create_table "messages_users", id: false, force: true do |t|
-    t.boolean "seen"
-    t.integer "recipient_id"
-    t.integer "message_id"
   end
 
   create_table "missions", force: true do |t|
@@ -264,7 +259,7 @@ ActiveRecord::Schema.define(version: 20130806080758) do
     t.integer  "increased_spypower",          default: 1
     t.integer  "user_id"
     t.integer  "researchlvl",                 default: 1
-    t.integer  "researching",                 default: 0
+    t.boolean  "researching",                 default: false
     t.datetime "finished_at"
   end
 
