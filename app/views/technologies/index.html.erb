@@ -2,7 +2,6 @@
 
 <table border="1" align="center" valign="middle">
   <tbody>
-  <%# TechnologyRequire.find(:all, :select => "DISTINCT building_rank").each do |rank| %>
   <% array = current_user.get_researching_tech %>
   <%research_id = UserSetting.find(current_user).researching%>
   <% TechnologyRequire.all.map(&:building_rank).uniq.each do |rank| %>
@@ -29,7 +28,7 @@
                 <td align="middle"  valign="middle" width="100">
                 <%= button_to 'Forscht',
                     {:controller => "technologies", :action => "show_index",    :uid=> current_user, :id=> technology} ,
-                    :method=>:post, data: { confirm: 'Folgende Technologie wird erforscht: ' + array[0] }
+                    :method=>:post, data: { confirm: array}
                 %></td>
             <%else%>
             <td align="middle"  valign="middle" width="100"><%= button_to 'Upgrade',
