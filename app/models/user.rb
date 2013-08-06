@@ -152,7 +152,7 @@ class User < ActiveRecord::Base
       else
         rank = (result.rank) +1
       end
-      time = user_setting.finished_at - 0.from_now
+      time = user_setting.finished_at
 
       stunden = time.to_i/3600
       minuten = time.to_i/60 - stunden*60
@@ -160,10 +160,19 @@ class User < ActiveRecord::Base
 
       string << 'Folgende Technologie wird erforscht: ' << Technology.find(tech).title.to_s << "\n"
       string << 'Erforsche Stufe :' << rank.to_s << "\n"
-      string << 'Verbleibende Dauer: ' 
-      string << stunden.to_s << ' Stunden '
-      string << minuten.to_s << ' Minuten '
-      string << sekunden.to_s << ' Sekunden'
+      string << 'Forschung beendet am ' << time.day.to_s << '.' << time.month.to_s << '.' << time.year.to_s
+      string << ' um ' << time.hour.to_s << ':'
+      if time.min < 10 then
+        string << '0' << time.min.to_s
+      else
+        string << time.min.to_s
+      end
+      string << ":"
+      if time.sec < 10 then
+        string << '0' << time.sec.to_s
+      else
+        string << time.sec.to_s
+      end
 
     end
 
