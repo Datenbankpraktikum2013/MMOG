@@ -108,8 +108,8 @@ class User < ActiveRecord::Base
     self.user_setting.large_cargo_ship
   end
 
-  def has_large_defenseplattform?
-    self.user_setting.large_defenseplattform
+  def has_large_defense_platform?
+    self.user_setting.large_defense_platform
   end
 
   def has_destroyer?
