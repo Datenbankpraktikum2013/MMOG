@@ -54,6 +54,8 @@ Mmog::Application.routes.draw do
 
   post 'alliances/:id/edit/change_description' => 'alliances#change_description'
 
+  post 'alliances/:id/edit/send_mail' => 'alliances#send_mail'
+
   post 'technologies/upgrade' => 'technologies#upgrade'
 
   post 'technologies/show_index' => 'technologies#show_index'
