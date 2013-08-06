@@ -4,6 +4,7 @@
 	<%= render 'showUsers' %>
 	<%= render 'showRanks' %>
 	<%= render 'changeDescription' if current_user.rank.can_change_description %>
+	<%= render 'showMassMail' if current_user.rank.can_massmail %>
 <% else %>
 	<%= render 'notPermitted' if current_user.alliance!=@alliance %>
 <% end %>
