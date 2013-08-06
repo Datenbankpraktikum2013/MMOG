@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  energy: 1
+  space_cash: 1
+  population: 1
+  ore: 1
+  crystall: 1
+
+two:
+  energy: 1
+  space_cash: 1
+  population: 1
+  ore: 1
+  crystall: 1

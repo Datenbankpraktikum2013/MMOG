@@ -205,18 +205,26 @@ class Fleet < ActiveRecord::Base
     defender_defense=defender_fleets.sum("defense")
     #defender_offense=defender_fleets.sum("offense")
     fight_factor=self.offense - defender_defense
-
+    puts "defender defense: #{defender_defense} attacker offense: #{self.offense} factor: #{fight_factor}"
     #if lost...
     if fight_factor<0
-      defener_new_defense=fight_factor.abs*rand(0.8 .. 1.2)
+      defender_new_defense=fight_factor.abs*rand(0.8 .. 1.2)
       new_offense=0
 
-      tmp_defense=defender_defense
-      while tmp_defense>defener_new_defense do
-        
-        defener_fleets[rand(0 .. (defender_fleets.size -1) )]
-      end
 
+      tmp_defense=defender_defense
+      while tmp_defense>defender_new_defense do
+        puts "new defense #{defender_new_defense} / #{tmp_defense}"
+        tmp_random_fleet=rand(0 .. ((defender_fleets.size) -1) )
+        puts "fleet nr: #{tmp_random_fleet}"
+        tmp_ship_index=(defender_fleets[tmp_random_fleet].ships.size) -1
+        puts "shiptyp anzahl: #{tmp_ship_index}"
+        del_ship_index=rand(0 .. (tmp_ship_index) )
+        puts "shiptyp del: #{del_ship_index}"
+        defender_fleets[tmp_random_fleet].destroy_ship(defender_fleets[tmp_random_fleet].ships[del_ship_index])
+        tmp_defense=defender_fleets.sum("defense")
+
+      end
     elsif fight_factor>0
     else
     end
@@ -251,6 +259,7 @@ class Fleet < ActiveRecord::Base
 #=begin
   def prepare_spy(planet)
     #calculate spyfactor and stuff and put it into the real spy method
+    own_spy_factor = User.find(self.user_id).user_setting.increased_spypower
   end
 #=end
 
@@ -359,7 +368,36 @@ class Fleet < ActiveRecord::Base
   end
 #=end
 
+    # calculates changing values for the whole fleet, if there were ships added or destroyed
+    # Gets called after Fleet was initialized and after adding or destroying ships
+    # FACTORS NEED TO BE ADDED
+    def update_values
+      ship_hash = self.get_ships
+      offense = 0
+      defense = 0
+      ressource_capacity = 0
+      #user = User.find(self.user_id) # IMPORTANT, ADD IT!
 
+      ship_hash.each do |ship, amount|
+        offense += ship.offense * amount
+        defense += ship.defense * amount
+        ressource_capacity += ship.ressource_capacity * amount
+      end
+
+      # multiply with research factors
+      self.offense = offense * user.user_setting.increased_power
+      self.defense = defense * user.user_setting.increased_defense
+      
+      # when fleet is at home, calculate the newest technologies
+      if self.target_planet == self.start_planet
+        self.velocity_factor = user.user_setting.increased_movement # HYPERSPACE TECHNOLOGY???????????????
+        self.storage_factor = user.user_setting.increased_capacity
+        self.ressource_capacity = ressource_capacity * user.user_setting.increased_capacity
+      else
+        self.ressource_capacity = ressource_capacity * self.storage_factor
+      end
+      self.save
+    end
 
   private
 
@@ -392,35 +430,4 @@ class Fleet < ActiveRecord::Base
       true
     end
 
-
-    # calculates changing values for the whole fleet, if there were ships added or destroyed
-    # Gets called after Fleet was initialized and after adding or destroying ships
-    # FACTORS NEED TO BE ADDED
-    def update_values
-      ship_hash = self.get_ships
-      offense = 0
-      defense = 0
-      ressource_capacity = 0
-      #user = User.find(self.user_id) # IMPORTANT, ADD IT!
-
-      ship_hash.each do |ship, amount|
-        offense += ship.offense * amount
-        defense += ship.defense * amount
-        ressource_capacity += ship.ressource_capacity * amount
-      end
-
-      # multiply with research factors
-      self.offense = offense * user.user_setting.increased_power
-      self.defense = defense * user.user_setting.increased_defense
-      
-      # when fleet is at home, calculate the newest technologies
-      if self.target_planet == self.start_planet
-        self.velocity_factor = user.user_setting.increased_movement # HYPERSPACE TECHNOLOGY???????????????
-        self.storage_factor = user.user_setting.increased_capacity
-        self.ressource_capacity = ressource_capacity * user.user_setting.increased_capacity
-      else
-        self.ressource_capacity = ressource_capacity * self.storage_factor
-      end
-      self.save
-    end
 end
