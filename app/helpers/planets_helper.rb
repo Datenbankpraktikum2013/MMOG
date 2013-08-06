@@ -26,12 +26,26 @@ module PlanetsHelper
   end
 
   def self.namegen()
-
     prename = [ "Adrastea", "Aether", "Amalthea", "Ananke", "Asopos", "Atlas", "Callisto", "Calypso", "Carme", "Cronus", "Dactyli", "Deimos", "Demeter", "Despina", "Dione", "Elara", " Enceladus", "Epimetheus", "Eros", "Galatea", "Ganymed", "Hemera", "Hestia", "Himalia", "Hyperion", "Iapetus", "Jupiter", "Mars", "Merkur", "Naiad", "Okeanos", "Pandora", "Phobos", "Prometheus", " Proteus", "Thetys", "Triton", "Uranus", "Venus", "Fleet"]
     letter = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
     x = Random.rand(prename.length)
     prename[x] + "-" + letter[Random.rand(letter.length)] + letter[Random.rand(letter.length)].downcase
+  end
+
+=begin
+gibt ein Array wie folgt aus: [max_research_level, sum_research_levels, count_research_labs]
+=end
+  def fetch_research_data(user)
+    return [0, 0, 0] if user.nil? || user.planets.nil?
+    data = [0, 0, 0]
+    user.planets.each do |p|
+      a = p.research_level
+      data[0] = a if data[0] < a
+      data[1] += a
+      data[2] += 1
+    end
 
   end
+
 
 end

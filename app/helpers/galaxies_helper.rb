@@ -9,7 +9,8 @@ module GalaxiesHelper
   def self.generateAt(x, y)
     x = Galaxy.calcX(x, y)
     unless x < 0 || Galaxy.where(x: x).exists? then
-      name = namegen()
+      ActiveRecord::Base.transaction do
+        name = namegen()
       g = Galaxy.create(x: x, name: name)
       pos = [1, 2, 3, 4, 5, 6, 7, 8]
       pos.shuffle!
@@ -37,6 +38,7 @@ module GalaxiesHelper
         j = j - k
         j.times do |z|
           p = Planet.create(z: pos2[z + k], special: 1, sunsystem_id: s.id)
+          end
         end
       end
     end

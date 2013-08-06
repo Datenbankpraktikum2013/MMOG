@@ -19,13 +19,13 @@ class Technology < ActiveRecord::Base
       #ziehe User Geld ab
       u = User.find(user)
 
-      if u.user_setting.researching? then
+      if u.user_setting.researching != 0 then
         puts "Research in progress!"
 
       else
         duration = get_research_duration(user)
         #researching + Timestamp
-        u.user_setting.update_attribute(:researching, true )
+        u.user_setting.update_attribute(:researching, id )
         u.user_setting.update_attribute(:finished_at, duration.second.from_now)
 
         #ziehe Geld ab
@@ -56,7 +56,7 @@ class Technology < ActiveRecord::Base
     u.update_attribute(name, factor**new_rank)
 
     #researching finished
-    u.update_attribute(:researching, false )
+    u.update_attribute(:researching, 0 )
   end
 
   def technology_require?(user)

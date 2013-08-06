@@ -65,7 +65,7 @@ class TechnologiesController < ApplicationController
   def upgrade
     @technology.upgrade_technology(params["uid"])
     respond_to do |format|
-      format.html { redirect_to @technology, notice: 'Forschung erfolgreich aufgewertet.'}
+      format.html { redirect_to action: 'index', notice: 'Forschung erfolgreich aufgewertet.'}
       format.json {head :no_content}
     end
   end

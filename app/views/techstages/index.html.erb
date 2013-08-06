@@ -1,0 +1,31 @@
+<h1>Listing techstages</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Spyreport</th>
+      <th>Technology</th>
+      <th>Level</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @techstages.each do |techstage| %>
+      <tr>
+        <td><%= techstage.spyreport_id %></td>
+        <td><%= techstage.technology_id %></td>
+        <td><%= techstage.level %></td>
+        <td><%= link_to 'Show', techstage %></td>
+        <td><%= link_to 'Edit', edit_techstage_path(techstage) %></td>
+        <td><%= link_to 'Destroy', techstage, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Techstage', new_techstage_path %>
