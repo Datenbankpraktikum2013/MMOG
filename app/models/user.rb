@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
   belongs_to :alliance
   #receiving messages
   has_many :messages_user
-  has_many :messages, :through => :messages_user, :source => :message
+  has_many :messages, :through => :messages_user, :source => :message, :select => "messages.*, messages_users.read AS read"
   accepts_nested_attributes_for :messages_user
   has_many :sent_messages, :class_name => 'Message', :foreign_key => 'sender_id'
 
@@ -42,6 +42,15 @@ class User < ActiveRecord::Base
   	if User.exists?(:username => username)
   		errors.add :username, "is already taken."
   	end
+  end
+
+  public
+  def unread_messages
+    count=0
+    self.messages.each do |message|
+        count+=1 unless message.read?
+    end
+    return count
   end
 
   #get user-settings affected by Research

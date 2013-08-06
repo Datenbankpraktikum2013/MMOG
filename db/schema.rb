@@ -102,20 +102,15 @@ ActiveRecord::Schema.define(version: 20130806144728) do
   create_table "messages", force: true do |t|
     t.text     "body"
     t.integer  "sender_id"
+    t.string   "subject"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "messages_user", force: true do |t|
+  create_table "messages_users", force: true do |t|
     t.integer "user_id"
     t.integer "message_id"
     t.boolean "read",       default: false
-  end
-
-  create_table "messages_users", id: false, force: true do |t|
-    t.boolean "seen"
-    t.integer "recipient_id"
-    t.integer "message_id"
   end
 
   create_table "missions", force: true do |t|
@@ -144,14 +139,15 @@ ActiveRecord::Schema.define(version: 20130806144728) do
   end
 
   create_table "ranks", force: true do |t|
-    t.string   "name",                         null: false
-    t.boolean  "can_kick",     default: false
-    t.boolean  "can_massmail", default: false
-    t.boolean  "can_edit",     default: false
-    t.boolean  "can_invite",   default: false
-    t.boolean  "is_founder",   default: false
-    t.boolean  "can_disband",  default: false
-    t.boolean  "standard",     default: false
+    t.string   "name",                                   null: false
+    t.boolean  "can_kick",               default: false
+    t.boolean  "can_massmail",           default: false
+    t.boolean  "can_edit_ranks",         default: false
+    t.boolean  "can_invite",             default: false
+    t.boolean  "is_founder",             default: false
+    t.boolean  "can_disband",            default: false
+    t.boolean  "standard",               default: false
+    t.boolean  "can_change_description", default: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "alliance_id"

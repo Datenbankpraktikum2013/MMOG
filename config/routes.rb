@@ -13,7 +13,7 @@ Mmog::Application.routes.draw do
 
   resources :battlereports
 
-  resources :messages
+  resources :messages, :except => [:edit, :update]
 
   resources :shipfleets
 

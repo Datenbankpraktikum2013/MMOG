@@ -10,12 +10,18 @@ class MessagesController < ApplicationController
 
   # GET /messages/1
   # GET /messages/1.json
-  def show   
+  def show
+    if(@message.sender!=current_user)
+      @entry=MessagesUser.all.where(:user_id=>current_user,:message_id=>@message).first
+      @entry.read=true
+      @entry.save
+    end
   end
 
   # GET /messages/new
   def new
     @message = Message.new
+    @recipient = params['recipient']
   end
 
   # GET /messages/1/edit
@@ -33,12 +39,9 @@ class MessagesController < ApplicationController
       @message.subject=params['subject']
       @message.body=params['body']
       @message.sender=current_user
-      #check if recipient exists
-      if @recipient!=nil
-        @message.recipients<<@recipient
-      end
 
-      if @message.save        
+      if @recipient!=nil and current_user!=@recipient and @message.save 
+        @message.recipients<<@recipient      
         format.html { redirect_to @message, notice: 'Message was successfully created.' }
         format.json { render action: 'show', status: :created, location: @message }
       else
@@ -65,7 +68,14 @@ class MessagesController < ApplicationController
   # DELETE /messages/1
   # DELETE /messages/1.json
   def destroy
-    @message.recipients.delete(current_user)
+    if current_user==@message.sender
+      @message.sender=nil
+      @message.save
+    else
+      @message.recipients.delete(current_user)
+    end
+    
+
     respond_to do |format|
       format.html { redirect_to messages_url }
       format.json { head :no_content }

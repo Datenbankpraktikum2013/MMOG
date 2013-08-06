@@ -1,11 +1,11 @@
 <p id="notice"><%= notice %></p>
 <p>
 	<strong>Betreff:</strong>
-	<%= @message.subject %>
+	<%= text_field_tag 'subj', @message.subject, class: 'readmsgarea', disabled: true %>
 </p>	
 <p>
   <strong>Nachricht:</strong>
-  <%= @message.body %>
+  <%= text_area_tag 'body', @message.body, class: 'readmsgarea', disabled: true %>
 </p>
 
 <p>
@@ -13,5 +13,6 @@
   <%= @message.sender.username %>
 </p>
 
-<%= link_to 'Edit', edit_message_path(@message) %> |
-<%= link_to 'Back', messages_path %>
+
+<%= link_to 'Antworten', new_message_path+'/?recipient='+@message.sender.username , class: 'label label-success', :style=>'color:#FFFFFF;' %>
+<%= link_to 'Löschen', @message, method: :delete, class: 'label label-important', data: { confirm: 'Bist du dir sicher?' }, :style=>'color:#FFFFFF;' %>

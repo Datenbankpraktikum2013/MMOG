@@ -35,6 +35,10 @@ group :doc do
   gem 'sdoc', require: false
 end
 
+	gem "therubyracer"
+	gem "less-rails"
+	gem 'twitter-bootstrap-rails'
+
 # for joblists
 gem 'resque'
 # for job-scheduler

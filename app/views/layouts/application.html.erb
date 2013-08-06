@@ -1,25 +1,60 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Mmog</title>
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => false %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => false %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+	<head>
+	  	<title>Mmog</title>
+	  	<%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => false %>
+	  	<%= javascript_include_tag "application", "data-turbolinks-track" => false %>
+	  	<%= csrf_meta_tags %>
+	  	<style>
+    input {
+        max-width: 100%;
+    } 
+</style>
+	</head>
+	<body>
+	<div class="container">
+		<div class="row">
+		 	<div class="span2">
+		 		<ul class="nav nav-pills nav-stacked">
+		 			<li class="active">
+		 				<a href="#">
+			 				<% if controller_name == 'welcome'%>
+			 					Start
+			 				<% elsif controller_name == 'messages' %>
+			 					Nachrichten
+			 				<%end %>
+		 				</a>
+		 			</li>
+		  			<li><a href="/">Start</a></li>
+		  			<% if user_signed_in? %>
+		  				<li><a href="<%= messages_path %>">Nachrichten <span class="badge"><%= current_user.unread_messages %></span> </a></li>
+		  			<% end %>
+				</ul>
+		  	</div>
+		  	<div class="span8">
+		  		<div class="well">
+		  			<%= yield() %>
+		  		</div>
+			</div>
+		  	<div class="span2">
+			  		<div class="well span 2">
+					<% if user_signed_in? %>
 
-		
-
-	<div id="usr_nav">
-		<% if user_signed_in? %>
-			Willkommen zurück, <%= current_user.username %>!
-			<%= link_to "Ausloggen", destroy_user_session_path, method: :delete %>
-		<% else %>
-			Du bist nicht eingeloggt. <%= link_to "Logge dich ein ", new_user_session_path %> oder <%= link_to "registriere dich jetzt kostenlos!", new_user_registration_path %>
-		<% end %>
+						Willkommen zurück, <%= current_user.username %>!
+						<%= link_to "Ausloggen", destroy_user_session_path, method: :delete %>
+					<% else %>
+						<%= form_for("user", :url => user_session_path) do |f| %>
+						  <%= f.text_field :username, class: 'span2 pagination-centered', placeholder: 'username' %>
+						  <%= f.password_field :password, class: 'span2 pagination-centered', placeholder: 'password' %>
+						  <%= f.check_box :remember_me %>
+						  <%= f.label 'Eingeloggt bleiben' %>
+						  <%= f.submit 'Einloggen', class: 'btn' %>
+						<%end %>
+					<% end %>
+				</div>
+			</div>
+		</div>
 	</div>
 
-<%= yield %>
-
-</body>
+	</body>
 </html>
