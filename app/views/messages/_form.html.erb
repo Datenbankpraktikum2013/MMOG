@@ -1,14 +1,11 @@
 <%= form_tag(messages_path)%>
     <p><strong><%= label_tag ('Empfänger') %></strong></p>
-    <p> <p><%=label_tag ('Username') %></p>
-      <%= text_field_tag('recepient') %>
+      <%= text_field_tag('recipient') %>
     </p>
     <p><strong><%= label_tag ('Betreff') %></strong></p>
-    <p> <p><%=label_tag ('Subject') %></p>
       <%= text_field_tag('subject') %>
     </p>
     <p><strong><%= label_tag ('Text') %></strong></p>
-    <p> <p><%=label_tag ('Body') %></p>
       <%= text_area_tag('body') %>
     </p>
     <p><%= submit_tag 'Annehmen' %></p>
