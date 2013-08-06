@@ -22,7 +22,7 @@ class Alliance < ActiveRecord::Base
 	def create_default_ranks
 		#create default founder rank
       	self.ranks.create(:name=>"Anwärter",:standard=>true)
-      	self.ranks.create(:name => "Oberhaupt",:can_kick=>true,:can_massmail=>true,:can_edit=>true,:can_invite=>true,:is_founder=>true,:can_disband=>true)
+      	self.ranks.create(:name => "Oberhaupt",:can_kick=>true,:can_massmail=>true,:can_edit_ranks=>true,:can_invite=>true,:is_founder=>true,:can_disband=>true,:can_change_description => true)
 	end
 
 	public
@@ -61,10 +61,10 @@ class Alliance < ActiveRecord::Base
 	#changes default rank of alliance
 	public
 	def change_default_rank(rank)
-		if rank == nil
+		@old=self.ranks.where(:standard=>true).first
+		if rank == nil or rank==@old
 			return false
 		end
-		@old=self.ranks.where(:standard=>true).first
 		@old.standard=false
 		@old.save
 		rank.standard=true
