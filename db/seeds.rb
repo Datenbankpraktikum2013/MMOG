@@ -42,15 +42,15 @@ Ship.create({:id => 10, :construction_time => 1, :offense => 1, :defense => 10, 
 
 # Building Prerequisites for ships
 Ship.find(1).buildingtypes << Buildingtype.where(name: "Starport", level: 1).first
-Ship.find(2).buildingtypes << Buildingtype.where(name: "Starport", level: 1).first
+Ship.find(2).buildingtypes << Buildingtype.where(name: "Starport", level: 2).first
 Ship.find(3).buildingtypes << Buildingtype.where(name: "Starport", level: 1).first
-Ship.find(4).buildingtypes << Buildingtype.where(name: "Starport", level: 1).first
-Ship.find(5).buildingtypes << Buildingtype.where(name: "Starport", level: 1).first
-Ship.find(6).buildingtypes << Buildingtype.where(name: "Starport", level: 1).first
+Ship.find(4).buildingtypes << Buildingtype.where(name: "Starport", level: 3).first
+Ship.find(5).buildingtypes << Buildingtype.where(name: "Starport", level: 4).first
+Ship.find(6).buildingtypes << Buildingtype.where(name: "Starport", level: 5).first
 Ship.find(7).buildingtypes << Buildingtype.where(name: "Starport", level: 1).first
 Ship.find(8).buildingtypes << Buildingtype.where(name: "Starport", level: 1).first
-Ship.find(9).buildingtypes << Buildingtype.where(name: "Starport", level: 1).first
-Ship.find(10).buildingtypes << Buildingtype.where(name: "Starport", level: 1).first
+Ship.find(9).buildingtypes << Buildingtype.where(name: "Starport", level: 2).first
+Ship.find(10).buildingtypes << Buildingtype.where(name: "Starport", level: 3).first
 
 #Building 
 Building.create({:planet_id => 1, :buildingtype_id => 1})

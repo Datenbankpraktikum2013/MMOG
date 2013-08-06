@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130805160819) do
+ActiveRecord::Schema.define(version: 20130806080758) do
 
   create_table "alliances", force: true do |t|
     t.string   "name",        null: false
@@ -264,7 +264,7 @@ ActiveRecord::Schema.define(version: 20130805160819) do
     t.integer  "increased_spypower",          default: 1
     t.integer  "user_id"
     t.integer  "researchlvl",                 default: 1
-    t.boolean  "researching",                 default: false
+    t.integer  "researching",                 default: 0
     t.datetime "finished_at"
   end
 
