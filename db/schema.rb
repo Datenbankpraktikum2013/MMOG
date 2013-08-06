@@ -45,6 +45,8 @@ ActiveRecord::Schema.define(version: 20130806144728) do
   end
 
   create_table "buildingtype_requires", force: true do |t|
+    t.integer "buildingtype_id"
+    t.integer "requirement_id"
   end
 
   create_table "buildingtypes", force: true do |t|
