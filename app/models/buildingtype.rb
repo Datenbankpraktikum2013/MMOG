@@ -7,7 +7,7 @@ class Buildingtype < ActiveRecord::Base
   has_many :inverse_buildingtypes, :through => :inverse_buildingtype_requires, :source => :buildingtype
   has_and_belongs_to_many :ships
 
-  def self.initvalues()
+  def self.init_all()
 
     Buildingtype.create({:name =>'Headquarter', :level=> 1, :production=> 1, :energyusage=> 0, :build_time=>50})
     Buildingtype.create({:name =>'Headquarter', :level=> 2, :production=> 1, :energyusage=> 0})

@@ -1,7 +1,18 @@
 module PlanetsHelper
 
+  @@marker = []
+  @@marker_pos = 0
+
   def self.search_startplanet()
-    my_start_planet = Planet.where(special: 0, user_id: nil).first
+    if @@marker.nil? || @@marker.length < 8 then
+      @@marker = Planet.where(special: 0, user_id: nil).limit(8)
+    end
+    return false if @@marker.empty?
+    @@marker_pos = (@@marker_pos+1) % 8
+    planet = @@marker[@@marker_pos]
+    @@marker[@@marker_pos] = nil
+    @@marker.compact!
+    return planet
   end
 
   def self.claim_startplanet_for(user)
