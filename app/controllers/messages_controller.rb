@@ -10,7 +10,7 @@ class MessagesController < ApplicationController
 
   # GET /messages/1
   # GET /messages/1.json
-  def show
+  def show   
   end
 
   # GET /messages/new
@@ -65,7 +65,7 @@ class MessagesController < ApplicationController
   # DELETE /messages/1
   # DELETE /messages/1.json
   def destroy
-    @message.destroy
+    @message.recipients.delete(current_user)
     respond_to do |format|
       format.html { redirect_to messages_url }
       format.json { head :no_content }
