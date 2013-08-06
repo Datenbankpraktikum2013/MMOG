@@ -10,6 +10,7 @@
 
 GalaxiesHelper.generateAt(0,0)
 Buildingtype.init_all()
+BuildingtypeRequire.init_building_requirements()
 
 #Default-Werte von Technologien
 

@@ -117,6 +117,7 @@ class Fleet < ActiveRecord::Base
 ######### MISSION STUFF #########
 #################################
 
+
     # calculate needed energy for that flight...cases:
     #
     # possible Directions
@@ -220,6 +221,7 @@ class Fleet < ActiveRecord::Base
 #=begin
   def fight(planet)
     defender_fleets=Fleet.where(start_planet: planet.id, target_planet: planet.id)
+
     defender_defense=defender_fleets.sum("defense")
     #defender_offense=defender_fleets.sum("offense")
     fight_factor=self.offense - defender_defense
@@ -243,6 +245,7 @@ class Fleet < ActiveRecord::Base
         tmp_defense=defender_fleets.sum("defense")
 
       end
+
       self.destroy
 
     elsif fight_factor>0
