@@ -51,7 +51,7 @@ class User < ActiveRecord::Base
   end
 
   def get_power
-    self.user_setting.increased_power
+    self.user_setting.increased_current_userpower
   end
 
   def get_defense

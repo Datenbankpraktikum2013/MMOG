@@ -14,7 +14,7 @@
               <strong><%= 'Benötigte Technologien: ' %></strong><%=technology.get_requirements %><br>
               <strong><%= 'Kosten: ' %></strong><%= technology.get_technology_cost(current_user)%><br>
               <strong><%= 'Dauer: ' %></strong><%= technology.get_research_duration(current_user).to_s + ' Sekunden'%> <br>
-              <strong><%= 'Beschreibung:' %></strong><%= technology.description%> <%=' hier muss in der Seeds noch Text eingefügt werden'%>
+              <strong><%= 'Beschreibung:' %></strong><%= technology.description%>
             </td>
             <td align="middle"  valign="middle" width="50"><%= technology.get_technology_rank(current_user)%></td>
 
@@ -25,7 +25,8 @@
             <%elsif  technology.cost_required?(current_user) == false %>
             <td><%='Nicht genug Geld' %></td>
             <%elsif research_id != 0%>
-                <td align="middle"  valign="middle" width="100"><%= button_to 'Forscht',
+                <td align="middle"  valign="middle" width="100">
+                <%= button_to 'Forscht',
                     {:controller => "technologies", :action => "show_index",    :uid=> current_user, :id=> technology} ,
                     :method=>:post, data: { confirm: array}
                 %></td>
