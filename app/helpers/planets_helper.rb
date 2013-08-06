@@ -23,7 +23,4 @@ module PlanetsHelper
 
   end
 
-
-
-
 end
