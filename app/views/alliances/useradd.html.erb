@@ -1,4 +1,4 @@
-<% unless current_user.rank.alliance==@alliance and current_user.rank.can_edit %>
+<% unless current_user.rank.alliance==@alliance and current_user.rank.can_invite %>
   	<div>
 	  Du besitzt nicht die nötigen Rechte, um <%= current_user.alliance.name %> zu bearbeiten.
   	</div>

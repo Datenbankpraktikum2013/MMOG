@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130805160819) do
+ActiveRecord::Schema.define(version: 20130806080758) do
 
   create_table "alliances", force: true do |t|
     t.string   "name",        null: false
@@ -95,6 +95,7 @@ ActiveRecord::Schema.define(version: 20130805160819) do
   create_table "messages", force: true do |t|
     t.text     "body"
     t.integer  "sender_id"
+    t.string   "subject"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -103,12 +104,6 @@ ActiveRecord::Schema.define(version: 20130805160819) do
     t.integer "user_id"
     t.integer "message_id"
     t.boolean "read",       default: false
-  end
-
-  create_table "messages_users", id: false, force: true do |t|
-    t.boolean "seen"
-    t.integer "recipient_id"
-    t.integer "message_id"
   end
 
   create_table "missions", force: true do |t|
@@ -137,14 +132,15 @@ ActiveRecord::Schema.define(version: 20130805160819) do
   end
 
   create_table "ranks", force: true do |t|
-    t.string   "name",                         null: false
-    t.boolean  "can_kick",     default: false
-    t.boolean  "can_massmail", default: false
-    t.boolean  "can_edit",     default: false
-    t.boolean  "can_invite",   default: false
-    t.boolean  "is_founder",   default: false
-    t.boolean  "can_disband",  default: false
-    t.boolean  "standard",     default: false
+    t.string   "name",                                   null: false
+    t.boolean  "can_kick",               default: false
+    t.boolean  "can_massmail",           default: false
+    t.boolean  "can_edit_ranks",         default: false
+    t.boolean  "can_invite",             default: false
+    t.boolean  "is_founder",             default: false
+    t.boolean  "can_disband",            default: false
+    t.boolean  "standard",               default: false
+    t.boolean  "can_change_description", default: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "alliance_id"
@@ -264,7 +260,7 @@ ActiveRecord::Schema.define(version: 20130805160819) do
     t.integer  "increased_spypower",          default: 1
     t.integer  "user_id"
     t.integer  "researchlvl",                 default: 1
-    t.boolean  "researching",                 default: false
+    t.integer  "researching",                 default: 0
     t.datetime "finished_at"
   end
 
