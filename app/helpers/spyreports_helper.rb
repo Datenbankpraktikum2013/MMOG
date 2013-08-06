@@ -1,0 +1,2 @@
+module SpyreportsHelper
+end

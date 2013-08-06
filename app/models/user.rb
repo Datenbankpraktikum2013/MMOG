@@ -118,19 +118,23 @@ class User < ActiveRecord::Base
     self.user_setting.researchlvl
   end
 
-  def get_max_research_level
-
-    a = 0
-    b = [0,0]
-    self.planets.each do |p|
-
-      a = p.research_level
-      if b[0] < a
-        b[0] = a
-      end
-      b[1] += 1
-    end
-
+  #Planetengruppeneintrag
+  #Methoden fuer die Forschungsgruppe am User bereitstellen
+  def get_research_info
+    PlanetsHelper.fetch_research_data(self)
   end
+
+  def get_max_research_level
+    PlanetsHelper.fetch_research_data(self)[0]
+  end
+
+  def get_research_level_count
+    PlanetsHelper.fetch_research_data(self)[1]
+  end
+
+  def get_research_labs_count
+    PlanetsHelper.fetch_research_data(self)[2]
+  end
+
 
 end
