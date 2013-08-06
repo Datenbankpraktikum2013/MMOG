@@ -6,7 +6,6 @@ class Fleet < ActiveRecord::Base
 	belongs_to :origin_planet, class_name: "Planet", foreign_key: "origin_planet"
 	belongs_to :user
 	belongs_to :mission
-  #after_initialize :update_values
 
 
 #=begin  
@@ -23,13 +22,12 @@ class Fleet < ActiveRecord::Base
     self.ressource_capacity = 0
     self.ore = 0
     self.crystal = 0
-    #self.user_id = planet.user_id
+    #self.user = planet.user
     # ACHTUNG, NUR ZU TESTZWECKEN
     self.user = User.find(1)
     # ACHTUNG, NUR ZU TESTZWECKEN
-    self.storage_factor = User.find(1).user_setting.increased_capacity
-    self.velocity_factor = User.find(1).user_setting.increased_movement
-    # ACHTUNG, NUR ZU TESTZWECKEN
+    self.storage_factor = self.user.user_setting.increased_capacity
+    self.velocity_factor = self.user.user_setting.increased_movement
     self.offense = 0
     self.defense = 0
     self.mission_id = 1
@@ -244,16 +242,25 @@ class Fleet < ActiveRecord::Base
   end
 
 
-#=begin
-  def spy(planet)
-    # the actual spy action, that is triggered by the queue
+=begin
+  # the actual spy action, that is triggered by the queue
+  def spy_planet(own_spy_factor, planet)
+    
+    opp_spy_factor = planet.user.user_setting.increased_spypower
+    
+    # PASST DAS=???????????????
+    spyreport = Spyreport.new
+    spyreport.finisch_spyreport(planet, self, own_spy_factor, opp_spy_factor)
   end
-#=end
+=end
 
 #=begin
-  def prepare_spy(planet)
-    #calculate spyfactor and stuff and put it into the real spy method
-    own_spy_factor = User.find(self.user_id).user_setting.increased_spypower
+  # comment me!
+  # Fehlerbehandlung
+  def spy_planet_in(planet)
+    own_spy_factor = self.user.user_setting.increased_spypower
+    #TODO
+    #Resque.enqueue_in(t.second, MoveFleet, self.id ,p.id)
   end
 #=end
 
@@ -262,7 +269,7 @@ class Fleet < ActiveRecord::Base
   # gets the values for capacity and movement factor of the fleet that it was splitted from
   def split_fleet(ship_hash)  
     unless enough_ships?(ship_hash)
-      raise RuntimeError, "Nicht genuegend Schiffe vorhanden zum splitten"
+      raise RuntimeError, "Not enough ships for a split"
     end
     
     # get newest technologies
@@ -293,8 +300,9 @@ class Fleet < ActiveRecord::Base
 
 
 #=begin
-  #Adds Ship to Fleet in t seconds
-  # Methode aendern??????????????????????????????????
+  # Adds Ship to Fleet in t seconds
+  # Methode aendern?????????????????????????????????? add_ships
+  # Fehlerbehandlung
   def add_ship_in(t,s)
     Resque.enqueue_in(t.second, AddShip, self.id ,s.id)
   end
@@ -337,7 +345,7 @@ class Fleet < ActiveRecord::Base
       ship.amount = value
       ship.save
     end
-    update_values
+    self.update_values
   end
 #=end
 
@@ -362,7 +370,7 @@ class Fleet < ActiveRecord::Base
       ship.amount -= value
       ship.save
     end
-    update_values
+    self.update_values
   end
 #=end
 
@@ -387,7 +395,7 @@ class Fleet < ActiveRecord::Base
     self.defense = defense * user.user_setting.increased_defense
     
     # when fleet is at home, calculate the newest technologies
-    if self.target_planet == self.start_planet
+    if self.target_planet == self.origin_planet && self.start_planet == self.origin_planet 
       self.velocity_factor = user.user_setting.increased_movement # HYPERSPACE TECHNOLOGY???????????????
       self.storage_factor = user.user_setting.increased_capacity
       self.ressource_capacity = ressource_capacity * user.user_setting.increased_capacity
