@@ -315,4 +315,15 @@ class Planet < ActiveRecord::Base
     end
   end
 
+  def research_level
+
+   self.buildings.each do |t|
+     if t.buildingtype.name == "ResearchLab"
+       a = t.buildingtype.level
+     end
+   end
+
+
+  end
+
 end

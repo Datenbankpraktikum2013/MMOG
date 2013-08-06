@@ -118,4 +118,19 @@ class User < ActiveRecord::Base
     self.user_setting.researchlvl
   end
 
+  def get_max_research_level
+
+    a = 0
+    b = [0,0]
+    self.planets.each do |p|
+
+      a = p.research_level
+      if b[0] < a
+        b[0] = a
+      end
+      b[1] += 1
+    end
+
+  end
+
 end
