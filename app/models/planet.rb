@@ -27,7 +27,10 @@ class Planet < ActiveRecord::Base
     7 forschungfactor
 =end
     @spec = [1, 1, 1, 1, 1, 1, 1, 1]
+    self.calc_spec
+
     if self.name.nil?
+
       self.size = Random.rand(MAX_SIZE-MIN_SIZE) + MIN_SIZE if self.size.nil?
       self.ore = 20 if self.ore.nil?
       self.maxore = 100 if self.maxore.nil?
@@ -102,6 +105,34 @@ class Planet < ActiveRecord::Base
   end
 
 
+  def calc_spec
+    if self.special == 1
+      @spec[0] = 1.3
+      #Loveplanet
+    elsif self.special == 2
+      @spec[1] = 1.3
+      #Creditplanet
+    elsif self.special == 3
+      @spec[3] = 1.3
+      #Crystalplanet
+    elsif self.special == 4
+      @spec = [0.5, 0.5, 0.5, 0.5, 1, 1, 1,1]
+      #Buildplanet
+    elsif self.special == 5
+      @spec[6] = 0.7
+      #Lagerplanet
+    elsif self.special == 6
+      @spec[5] = 1.3
+      #Scienceplanet
+    elsif self.special == 7
+      @spec[7] = 1.3
+      #Energieplanet
+    else self.special == 8
+      @spec[2] = 1.3
+    end
+  end
+
+
   def mention()
     self.sunsystem.mention()
     #Hier weitere Aktionen starten: z.B. Rohstoffproduktion, falls gestoppt wurde
@@ -123,6 +154,9 @@ class Planet < ActiveRecord::Base
     self.mention()
   end
 
+  def spec
+    puts @spec
+  end
 
   #@param type Name der Produktionsstaette ("Eisenmine", "Haus", ...)
   def get_production(type)
@@ -261,7 +295,9 @@ class Planet < ActiveRecord::Base
       id_list << x.id
     end
     upgrade_me = self.buildings.where(buildingtype_id: id_list).first
-    
+
+    return false if !upgrade_me.nil? && !upgrade_me.verifies_upgrade_requirements?
+
     if upgrade_me.nil?
       build_time = Buildingtype.where(name: type.to_s, level:1).first.build_time
       build_me = Buildingtype.where(name: type.to_s, level:1).first.id
@@ -277,7 +313,7 @@ class Planet < ActiveRecord::Base
     id_array << self.id
     id_array << build_me
     puts "ID ARRAY: #{id_array}"
-    Resque.enqueue_in(2.second,BuildBuildings, id_array)
+    Resque.enqueue_in(5.minute,BuildBuildings, id_array)
 
   end
 
@@ -297,6 +333,7 @@ class Planet < ActiveRecord::Base
         puts b.buildingtype.level
         return true
       end
+      puts "aaaaaaaaaaaaaaaaa"
     end
     if build_me.level == 1 then
       Building.create(buildingtype_id: buildingtype_id, planet: self)
@@ -335,14 +372,7 @@ class Planet < ActiveRecord::Base
   end
 
   def research_level
-
-   self.buildings.each do |t|
-     if t.buildingtype.name == "ResearchLab"
-       a = t.buildingtype.level
-     end
-   end
-
-
+    return self.buildings_to_hash[:ResearchLab]
   end
 
   def buildings_to_hash
