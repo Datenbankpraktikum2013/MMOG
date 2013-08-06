@@ -38,19 +38,7 @@ class Fleet < ActiveRecord::Base
   end
 #=end
 
-##
-# multiply with research factors
-      self.offense = offense * user.user_setting.increased_power
-      self.defense = defense * user.user_setting.increased_defense
-      
-      # when fleet is at home, calculate the newest technologies
-      if self.target_planet == self.start_planet
-        self.velocity_factor = user.user_setting.increased_movement # HYPERSPACE TECHNOLOGY???????????????
-        self.storage_factor = user.user_setting.increased_capacity
-        self.ressource_capacity = ressource_capacity * user.user_setting.increased_capacity
-      else
-        self.ressource_capacity = ressource_capacity * self.storage_factor
-##
+
   #Returns Speed of Fleet
   def get_velocity
     if self.ships.nil?
@@ -126,7 +114,7 @@ class Fleet < ActiveRecord::Base
   #ID=5 : Spy
   #ID=6 : Transport
   def move(mission, destination)
-    unless mission.id=1
+    unless mission.id==1
       distance=self.start_planet.getDistance(destination)
       nfuel=0
       velocity=self.get_velocity
@@ -200,6 +188,7 @@ class Fleet < ActiveRecord::Base
     # calculate 
   end
 #=end
+#=begin
   def fight(planet)
     defender_fleets=Fleet.where(start_planet: planet.id, target_planet: planet.id)
     defender_defense=defender_fleets.sum("defense")
@@ -225,10 +214,29 @@ class Fleet < ActiveRecord::Base
         tmp_defense=defender_fleets.sum("defense")
 
       end
+      self.destroy
+
     elsif fight_factor>0
-    else
+      attacker_new_offense=fight_factor.abs*rand(0.8 .. 1.2)
+      new_offense=0
+      tmp_offense=self.offense
+
+      while tmp_offense>attacker_new_offense do
+        tmp_ship_index=(self.ships.size) -1
+        del_ship_index=rand(0 .. (tmp_ship_index) )
+        self.destroy_ship(self.ships[del_ship_index])
+
+      end
+      defender_fleets.each do |f|
+        f.destroy
+      end
     end
+
+    
+   
   end
+#=end
+
   def get_needed_time(velocity, distance)
       if velocity == 0 
         0
