@@ -147,7 +147,7 @@ class Fleet < ActiveRecord::Base
     elsif mission.id==3
       nfuel*=2
       move_to_planet_in(destination,1)
-      #Spy Create Spy-Report
+      Resque.enqueue_in(1.second, FleetFight, self.id ,destination.id)
       move_to_planet_in(self.origin_planet,2)   
     end
       
@@ -194,6 +194,7 @@ class Fleet < ActiveRecord::Base
   
   def fight(planet)
     defender_fleets=Fleet.where(start_planet: planet.id, target_planet: planet.id)
+
     defender_defense=defender_fleets.sum("defense")
     #defender_offense=defender_fleets.sum("offense")
     fight_factor=self.offense - defender_defense
@@ -217,6 +218,7 @@ class Fleet < ActiveRecord::Base
         tmp_defense=defender_fleets.sum("defense")
 
       end
+
       self.destroy
 
     elsif fight_factor>0
