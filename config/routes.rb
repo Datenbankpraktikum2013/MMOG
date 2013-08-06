@@ -1,5 +1,6 @@
 Mmog::Application.routes.draw do
 
+  get "starport" => "starport#index"
   resources :techstages
 
   resources :spyreports
