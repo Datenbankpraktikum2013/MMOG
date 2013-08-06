@@ -8,8 +8,8 @@
 
 #Default-Werte von Planeten und Gebäude
 
-GalaxiesHelper.generateRegion(-1,-1,1,1)
-Buildingtype.initvalues()
+GalaxiesHelper.generateAt(0,0)
+Buildingtype.init_all()
 
 #Default-Werte von Technologien
 
