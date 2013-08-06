@@ -3,27 +3,27 @@ module TechnologiesHelper
   def self.init_Technology
    puts 'Create Technologies... (100%)'
     Technology.create({:name => 'increased_income', :factor => 1.05, :cost => 100, :maxrank => -1,:duration => 10, :title => "höheres Einkommen",
-                      :description => ' Erhöht dein Einkommen pro Stufe'})
+                      :description => ' Erhöht dein Einkommen pro Stufe um x% '})
     Technology.create({:name => 'increased_ironproduction', :factor => 1.05, :cost => 80, :maxrank => -1,:duration => 1, :title => "größere Eisenerzproduktion",
-                       :description => ' Erhöht deine Eisenproduktion pro Stufe'})
+                       :description => ' Erhöht deine Eisenproduktion pro Stufe x% '})
     Technology.create({:name => 'increased_research', :factor => 1.02, :cost => 140, :maxrank => -1,:duration => 1, :title => "kürzere Forschungsdauert",
-                       :description => ' Beschleunigt deine Forschung pro Stufe '})
+                       :description => ' Beschleunigt deine Forschung pro Stufe x% '})
     Technology.create({:name => 'increased_energy_efficiency', :factor => 1.02, :cost => 90, :maxrank => -1,:duration => 1, :title => "bessere Energieeffizienz",
-                       :description => ' Veringert deine Energiekosten pro Stufe'})
+                       :description => ' Veringert deine Energiekosten pro Stufe x% '})
     Technology.create({:name => 'increased_power', :factor => 1.04, :cost => 80, :maxrank => -1,:duration => 1, :title => "stärkere Feuerkraft",
-                      :description => ' Erhöht die Feuerkraft deine Schiffe pro Stufe'})
+                      :description => ' Erhöht die Feuerkraft deine Schiffe pro Stufe x%'})
     Technology.create({:name => 'increased_defense', :factor => 1.03, :cost => 70, :maxrank => -1,:duration => 1, :title => "verstärkte Schilde",
-                      :description => ' Verbessert die Verteidigung deiner Schiffe pro Stufe'})
+                      :description => ' Verbessert die Verteidigung deiner Schiffe pro Stufe x%'})
     Technology.create({:name => 'increased_spypower', :factor => 1.05, :cost => 110, :maxrank => -1,:duration => 1, :title => "bessere Erkundungserfolge",
-                       :description => ' Erhöht die Spionagewerte deiner Sonden pro Stufe'})
+                       :description => ' Erhöht die Spionagewerte deiner Sonden pro Stufe x% '})
     Technology.create({:name => 'increased_capacaty', :factor => 1.25, :cost => 90, :maxrank => 3,:duration => 1, :title => "größere Kapazität",
-                      :description => ' Erhöht die Ladekapazität deiner Schiffe pro Stufe'})
+                      :description => ' Erhöht die Ladekapazität deiner Schiffe pro Stufe x% (Maxrank:3)'})
     Technology.create({:name => 'increased_movement', :factor => 1.05, :cost => 120, :maxrank => -1,:duration => 1, :title => "schnellere Schiffe",
-                       :description => ' Erhöht die Geschwindigkeit deiner Schiffe pro Stufe'})
+                       :description => ' Erhöht die Geschwindigkeit deiner Schiffe pro Stufe x%'})
     Technology.create({:name => 'large_cargo_ship', :factor => 0, :cost => 140, :maxrank => 1,:duration => 1, :title => "großes Transportschiff",
                        :description => ' Erforsche ein großes Transportschiff um Rohstoffe zu transportieren'})
     Technology.create({:name => 'large_defense_platform', :factor => 0, :cost => 200, :maxrank => 1,:duration => 1, :title => "große Verteidigungsplattform",
-                       :description => ' Erforsche eine grße verteidigunsplattform um deinen Planeten zu sichern'})
+                       :description => ' Erforsche eine große Verteidigunsplattform um deinen Planeten zu sichern'})
     Technology.create({:name => 'big_house', :factor => 0, :cost => 100, :maxrank => 3,:duration => 1, :title => "größere Häuser",
                        :description => ' Erhöht den Platz in deinen Gebäuden pro Stufe (Maxrank:3)'})
     Technology.create({:name => 'destroyer', :factor => 0, :cost => 100, :maxrank => 1,:duration => 1, :title => "Zerstörer",
