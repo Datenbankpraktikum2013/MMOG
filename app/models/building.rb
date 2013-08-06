@@ -58,12 +58,15 @@ class Building < ActiveRecord::Base
   def verifies_upgrade_requirements?()
     builds = self.planet.buildings_to_hash
     btype = self.buildingtype
+    btypenext = Buildingtype.where(name: btype.name, level: btype.level + 1)
+    return false if btypenext.nil? || btypenext.empty?
+    btype = btypenext.first()
     required = btype.requirements
     return true if required.nil? || required.empty?
     allow = true
 
     required.each do |req|
-      if required.level > builds[required.name.to_sym] then
+      if req.level > builds[req.name.to_sym] then
         allow = false
       end
     end

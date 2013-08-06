@@ -44,7 +44,7 @@ class Spyreport < ActiveRecord::Base
 		tmp.each do |ship_id, amoount|
 			sc = Shipcount.new
 			sc.ship_id = ship_id
-			sc.
+			#sc.
 		end
 	end
 
