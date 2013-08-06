@@ -24,7 +24,7 @@ class Spyreport < ActiveRecord::Base
 	end
 
 	def add_buildings
-		Buildingtype.where(:planet_id planet.id).each do |buidling|
+		Buildingtype.where(:planet_id => planet.id).each do |buidling|
 			self.buildingtypes << building
 		end
 	end
