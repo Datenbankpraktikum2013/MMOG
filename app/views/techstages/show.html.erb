@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Spyreport:</strong>
+  <%= @techstage.spyreport_id %>
+</p>
+
+<p>
+  <strong>Technology:</strong>
+  <%= @techstage.technology_id %>
+</p>
+
+<p>
+  <strong>Level:</strong>
+  <%= @techstage.level %>
+</p>
+
+<%= link_to 'Edit', edit_techstage_path(@techstage) %> |
+<%= link_to 'Back', techstages_path %>

@@ -118,18 +118,56 @@ class User < ActiveRecord::Base
     self.user_setting.researchlvl
   end
 
+  #Planetengruppeneintrag
+  #Methoden fuer die Forschungsgruppe am User bereitstellen
+  def get_research_info
+    PlanetsHelper.fetch_research_data(self)
+  end
+
   def get_max_research_level
+    PlanetsHelper.fetch_research_data(self)[0]
+  end
 
-    a = 0
-    b = [0,0]
-    self.planets.each do |p|
+  def get_research_level_count
+    PlanetsHelper.fetch_research_data(self)[1]
+  end
 
-      a = p.research_level
-      if b[0] < a
-        b[0] = a
+  def get_research_labs_count
+    PlanetsHelper.fetch_research_data(self)[2]
+  end
+
+
+  def get_researching_tech
+
+    string = ""
+    tech = user_setting.researching
+
+    if tech != 0
+
+      result = user_technologies.where(:technology_id => tech).first
+
+
+      if result.blank? then
+        rank = 1
+      else
+        rank = (result.rank) +1
       end
-      b[1] += 1
+      time = user_setting.finished_at - 0.from_now
+
+      stunden = time.to_i/3600
+      minuten = time.to_i/60 - stunden*60
+      sekunden = time.to_i - minuten*60 - stunden*3600
+
+      string << 'Folgende Technologie wird erforscht: ' << Technology.find(tech).title.to_s << "\n"
+      string << 'Erforsche Stufe :' << rank.to_s << "\n"
+      string << 'Verbleibende Dauer: ' 
+      string << stunden.to_s << ' Stunden '
+      string << minuten.to_s << ' Minuten '
+      string << sekunden.to_s << ' Sekunden'
+
     end
+
+    string
 
   end
 

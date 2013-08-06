@@ -1,5 +1,11 @@
-<h1> <%= current_user.alliance.name %> bearbeiten: </h1>
+<h1> <%= @alliance.name %> bearbeiten: </h1>
 
-<%= render 'allianceEditForm' %>
-
+<% if current_user.alliance==@alliance %>
+	<%= render 'showUsers' %>
+	<%= render 'showRanks' %>
+	<%= render 'changeDescription' if current_user.rank.can_change_description %>
+	<%= render 'showMassMail' if current_user.rank.can_massmail %>
+<% else %>
+	<%= render 'notPermitted' if current_user.alliance!=@alliance %>
+<% end %>
 <%= link_to 'Zurück', alliances_path %>

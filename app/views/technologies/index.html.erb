@@ -1,19 +1,62 @@
-<h1>Administrate Technologies</h1>
+<br><h1 align="middle">Update Technologies</h1><br><br><br>
+
+<table border="1" align="center" valign="middle">
+  <tbody>
+  <% array = current_user.get_researching_tech %>
+  <%research_id = UserSetting.find(current_user).researching%>
+  <% TechnologyRequire.all.map(&:building_rank).uniq.each do |rank| %>
+    <tr><th colspan="4"><%= "Forschungszentrum Stufe: "+ rank.to_s %></th></tr>
+      <% TechnologyRequire.where(:building_rank => rank).map(&:tech_id).uniq.each do |technology| %>
+        <% technology = Technology.find(technology) %>
+          <tr>
+            <td align="middle"  valign="middle"><img src="<%=TechnologiesHelper.get_icon_name(technology).to_s%>"></td>
+            <td align="middle"  valign="middle"><strong><%= 'Name: ' %></strong><%= technology.title %><br>
+              <strong><%= 'Benötigte Technologien: ' %></strong><%=technology.get_requirements %><br>
+              <strong><%= 'Kosten: ' %></strong><%= technology.get_technology_cost(current_user)%><br>
+              <strong><%= 'Dauer: ' %></strong><%= technology.get_research_duration(current_user).to_s + ' Sekunden'%> <br>
+              <strong><%= 'Beschreibung:' %></strong><%= technology.description%> <%=' hier muss in der Seeds noch Text eingefügt werden'%>
+            </td>
+            <td align="middle"  valign="middle" width="50"><%= technology.get_technology_rank(current_user)%></td>
+
+            <%if technology.building_rank_require?(current_user) == false%>
+            <td><%='Fehlende Forschungsstufe' %></td>
+            <%elsif technology.tech_require?(current_user)== false %>
+            <td><%='Fehlende Voraussetzung' %></td>
+            <%elsif  technology.cost_required?(current_user) == false %>
+            <td><%='Nicht genug Geld' %></td>
+            <%elsif research_id != 0%>
+                <td align="middle"  valign="middle" width="100"><%= button_to 'Forscht',
+                    {:controller => "technologies", :action => "show_index",    :uid=> current_user, :id=> technology} ,
+                    :method=>:post, data: { confirm: array}
+                %></td>
+            <%else%>
+            <td align="middle"  valign="middle" width="100"><%= button_to 'Upgrade',
+                {:controller => "technologies", :action => "upgrade",    :uid=> current_user, :id=> technology} ,
+                :method=>:post, data: { confirm: 'Möchtest du die Technologie "' + technology.title + '" aufwerten?' }
+            %></td>
+             <%end%>
+          </tr>
+      <% end %>
+  <% end %>
+  </tbody>
+</table>
+
+<br><br><br><h1 align="middle">Administrate Technologies</h1><br><br><br>
 
 
-<table border="1">
+<table border="1" align="center" und valign="middle">
   <thead>
-    <tr>
-      <th></th>
-      <th>Factor</th>
-      <th>cost</th>
-      <th>duration</th>
-      <th>maxrank</th>
-    </tr>
+  <tr>
+    <th></th>
+    <th>Factor</th>
+    <th>cost</th>
+    <th>duration</th>
+    <th>maxrank</th>
+  </tr>
   </thead>
 
   <tbody>
-    <% @technologies.each do |technology| %>
+  <% @technologies.each do |technology| %>
       <tr>
         <td align="middle"  valign="middle"><%= technology.name %></td>
         <td align="middle"  valign="middle"><%= technology.factor %></td>
@@ -24,50 +67,10 @@
         <td><%= link_to 'Edit', edit_technology_path(technology) %></td>
         <td><%= link_to 'Destroy', technology, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
-    <% end %>
+  <% end %>
   </tbody>
 </table>
 
 <br>
 
-<%= link_to 'New Technology', new_technology_path %><br><br><br>
-
-<h1>Update Technologies</h1>
-
-<table border="1">
-  <thead>
-  <tr>
-    <th></th>
-    <th>Description</th>
-    <th>rank</th>
-  </tr>
-  </thead>
-
-  <tbody>
-  <% @technologies.each do |technology| %>
-      <tr>
-        <td align="middle"  valign="middle"><img src="<%=TechnologiesHelper.get_icon_name(technology).to_s%>"></td>
-        <td align="middle"  valign="middle"><strong><%= 'Name: ' %></strong><%= technology.title %><br>
-          <strong><%= 'Benötigte Technologien: ' %></strong><%=technology.get_requirements %><br>
-          <strong><%= 'Kosten: ' %></strong><%= technology.get_technology_cost(current_user)%><br>
-          <strong><%= 'Dauer: ' %></strong><%= technology.get_research_duration(current_user).to_s + ' Sekunden'%> <br>
-          <strong><%= 'Beschreibung:' %></strong><%= technology.description%> <%=' hier muss in der Seeds noch Text eingefügt werden'%>
-        </td>
-        <td align="middle"  valign="middle"><%= technology.get_technology_rank(current_user)%></td>
-
-        <%unless technology.building_rank_require?(current_user)%>
-        <td><%='Fehlende Forschungsstufe' %></td>
-        <% else if technology.tech_require?(current_user)== false %>
-        <td><%='Fehlende Voraussetzung' %></td>
-        <%else if  technology.cost_required?(current_user) == false %>
-        <td><%='Nicht genug Geld' %></td>
-        <%else %>
-        <td><%= button_to 'Upgrade', {:controller => "technologies", :action => "upgrade",    :uid=> current_user, :id=> technology} , :method=>:post, data: { confirm: 'Möchtest du die Technologie ' + technology.title + ' aufwerten?' }
-        %></td>
-         <%end %>
-         <%end %>
-         <%end%>
-      </tr>
-  <% end %>
-  </tbody>
-</table>
+<%= link_to 'New Technology', new_technology_path %>
