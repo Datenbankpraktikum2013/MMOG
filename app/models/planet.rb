@@ -277,7 +277,7 @@ class Planet < ActiveRecord::Base
     id_array << self.id
     id_array << build_me
     puts "ID ARRAY: #{id_array}"
-    Resque.enqueue_in(2.second,BuildBuildings, id_array)
+    Resque.enqueue_in(5.minute,BuildBuildings, id_array)
 
   end
 
