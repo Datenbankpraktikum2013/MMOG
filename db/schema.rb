@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130806090949) do
+ActiveRecord::Schema.define(version: 20130806144728) do
 
   create_table "alliances", force: true do |t|
     t.string   "name",        null: false
@@ -100,15 +100,20 @@ ActiveRecord::Schema.define(version: 20130806090949) do
   create_table "messages", force: true do |t|
     t.text     "body"
     t.integer  "sender_id"
-    t.string   "subject"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "messages_users", force: true do |t|
+  create_table "messages_user", force: true do |t|
     t.integer "user_id"
     t.integer "message_id"
     t.boolean "read",       default: false
+  end
+
+  create_table "messages_users", id: false, force: true do |t|
+    t.boolean "seen"
+    t.integer "recipient_id"
+    t.integer "message_id"
   end
 
   create_table "missions", force: true do |t|
@@ -137,15 +142,14 @@ ActiveRecord::Schema.define(version: 20130806090949) do
   end
 
   create_table "ranks", force: true do |t|
-    t.string   "name",                                   null: false
-    t.boolean  "can_kick",               default: false
-    t.boolean  "can_massmail",           default: false
-    t.boolean  "can_edit_ranks",         default: false
-    t.boolean  "can_invite",             default: false
-    t.boolean  "is_founder",             default: false
-    t.boolean  "can_disband",            default: false
-    t.boolean  "standard",               default: false
-    t.boolean  "can_change_description", default: false
+    t.string   "name",                         null: false
+    t.boolean  "can_kick",     default: false
+    t.boolean  "can_massmail", default: false
+    t.boolean  "can_edit",     default: false
+    t.boolean  "can_invite",   default: false
+    t.boolean  "is_founder",   default: false
+    t.boolean  "can_disband",  default: false
+    t.boolean  "standard",     default: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "alliance_id"
@@ -157,18 +161,20 @@ ActiveRecord::Schema.define(version: 20130806090949) do
     t.integer  "defender_planet_id"
     t.integer  "attacker_planet_id"
     t.datetime "fightdate"
-    t.integer  "defender_id"
     t.integer  "attacker_id"
-    t.boolean  "read",               default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "reports", ["attacker_id"], name: "index_reports_on_attacker_id"
   add_index "reports", ["attacker_planet_id"], name: "index_reports_on_attacker_planet_id"
-  add_index "reports", ["defender_id"], name: "index_reports_on_defender_id"
   add_index "reports", ["defender_planet_id"], name: "index_reports_on_defender_planet_id"
   add_index "reports", ["reportable_id", "reportable_type"], name: "index_reports_on_reportable_id_and_reportable_type"
+
+  create_table "reports_users", force: true do |t|
+    t.integer "user_id"
+    t.integer "report_id"
+  end
 
   create_table "shipcounts", force: true do |t|
     t.integer  "battlereport_id"
@@ -177,6 +183,7 @@ ActiveRecord::Schema.define(version: 20130806090949) do
     t.integer  "shipowner_time_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
   end
 
   create_table "shipfleets", force: true do |t|
