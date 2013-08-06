@@ -23,7 +23,6 @@ class User < ActiveRecord::Base
   has_many :messages, :through => :messages_user, :source => :message
   accepts_nested_attributes_for :messages_user
   has_many :sent_messages, :class_name => 'Message', :foreign_key => 'sender_id'
-  
 
   #init usersettings when user is created
   after_create :init_usersettings
@@ -137,5 +136,38 @@ class User < ActiveRecord::Base
     PlanetsHelper.fetch_research_data(self)[2]
   end
 
+
+  def get_researching_tech
+
+    array = []
+    tech = user_setting.researching
+
+    if tech != 0
+
+      result = user_technologies.where(:technology_id => tech).first
+
+
+      if result.blank? then
+        rank = 1
+      else
+        rank = (result.rank) +1
+      end
+      time = user_setting.finished_at - 0.from_now
+
+      stunden = time.to_i/3600
+      minuten = time.to_i/60 - stunden*60
+      sekunden = time.to_i - minuten*60 - stunden*3600
+
+      array[0] = Technology.find(tech).title
+      array[1] = rank
+      array[2] = stunden
+      array[3] = minuten
+      array[4] = sekunden
+
+    end
+
+    array
+
+  end
 
 end
