@@ -108,7 +108,7 @@ class Planet < ActiveRecord::Base
 
 
   def claim(user)
-    if self.user.nil?
+    if self.user.nil? && self.user.planets.count <= 0
       self.user = user;
       self.create_building_job(:Oremine)
       self.create_building_job(:Headquarter)
@@ -118,6 +118,7 @@ class Planet < ActiveRecord::Base
     else
       self.user = user;
     end
+    self.mention()
   end
 
 

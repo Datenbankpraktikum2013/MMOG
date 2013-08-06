@@ -13,12 +13,10 @@
 <div class="galaxy_info" >
   <% @galaxies.each do |g| %>
     <div id="galaxy_info_<%= g.x %>" class="galaxy_info_field">
-      <%= g.name %>
+      <%= g.name %><br />
       Position: <%= pos = g.getCoords
-        pos[0] %>, <%= pos[1] %>
+        pos[0] %>, <%= pos[1] %><br />
       Sonnensysteme: <%= g.sunsystems.count %>
     </div>
-
   <% end %>
-
 </div>
