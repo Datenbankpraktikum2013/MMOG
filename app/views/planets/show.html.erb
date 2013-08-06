@@ -88,5 +88,10 @@
   <%= @planet.population %> / <%= @planet.maxpopulation %>
 </p>
 
+<p class="ressourcenanzeige">
+  <strong>User:</strong>
+  <%= @planet.user.username  %>
+</p>
+
 <%= link_to 'Edit', edit_planet_path(@planet) %> |
 <%= link_to 'Back', planets_path %>
