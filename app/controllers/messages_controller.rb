@@ -22,6 +22,13 @@ class MessagesController < ApplicationController
     @recipient = params['recipient']
   end
 
+  def fetch_unread_msgs
+    object = {:response => current_user.unread_messages}
+    respond_to do |format|
+      format.json { render json: object }
+    end
+  end
+
   # POST /messages
   # POST /messages.json
   def create

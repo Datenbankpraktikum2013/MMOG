@@ -6,6 +6,18 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+# Konstanten und Standardwerte bitte als Strings in den GameSettings eintragen
+# Eintragen: GameSettings.set "key", "value"
+# Abfragen: GameSettings.get "key"
+
+GameSettings.set "PLANET_MIN_SIZE", "10000"
+GameSettings.set "PLANET_MAX_SIZE", "100000"
+GameSettings.set "WORLD_DISTANCE_FACTOR", "60"
+GameSettings.set "WORLD_LENGTH", "5"
+GameSettings.set "WORLD_VIEW_LENGTH", "5"
+
+
+
 #Default-Werte von Planeten und Gebäude
 
 GalaxiesHelper.generateAt(0,0)
@@ -40,6 +52,7 @@ Ship.create({:id => 8, :construction_time => 1, :offense => 1, :defense => 100, 
 Ship.create({:id => 9, :construction_time => 1, :offense => 1, :defense => 300, :crystal_cost => 0, :credit_cost => 0, :ore_cost => 30, :name => 'Large defense platform', :velocity => 0, :crew_capacity => 6, :ressource_capacity => 0, :fuel_capacity => 0, :consumption => 0})
 Ship.create({:id => 10, :construction_time => 1, :offense => 1, :defense => 10, :crystal_cost => 0, :credit_cost => 20, :ore_cost => 50, :name => 'Colony ship', :velocity => 2, :crew_capacity => 5, :ressource_capacity => 1000, :fuel_capacity => 3000, :consumption => 4})
 
+
 #Building Prerequisites for ships
 Ship.find(1).buildingtypes << Buildingtype.where(name: "Starport", level: 1).first
 Ship.find(2).buildingtypes << Buildingtype.where(name: "Starport", level: 2).first
@@ -65,3 +78,15 @@ User.create(:email => 'demo@demo.com',:password => 'password',:username => 'demo
 User.create(:email => 'demo2@demo.com',:password => 'password',:username=> 'demo2',:money => 12000,:score => 0)
 User.create(:email => 'demo3@demo.com',:password => 'password',:username=> 'demo3',:money => 12000,:score => 0)
 User.create(:email => 'demo4@demo.com',:password => 'password',:username=> 'demo4',:money => 12000,:score => 0)
+
+
+# Testing values
+#Planet.find(1).claim(User.find(1))
+#Fleet.new(Planet.find(1))
+#Fleet.find(1).add_ships({Ship.find(1)=> 50, Ship.find(2)=> 50, Ship.find(3)=> 50, Ship.find(4)=> 50, Ship.find(5)=> 50,Ship.find(6)=> 50,Ship.find(7)=> 50,Ship.find(8)=> 50,Ship.find(9)=> 50,Ship.find(10)=> 50})
+#Planet.find(1).give(:Ore, 10000)
+#Planet.find(1).give(:Crystal, 10000)
+#Planet.find(1).give(:Money, 10000)
+#Planet.find(1).give(:Population, 10000)
+#Planet.find(1).give(:Energy, 10000)
+#Fleet.find(1).load_ressources(100, 100, 100, Planet.find(1))

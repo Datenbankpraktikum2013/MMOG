@@ -1,0 +1,31 @@
+<h1>Listing receiving_reports</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Report</th>
+      <th>User</th>
+      <th>Read</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @receiving_reports.each do |receiving_report| %>
+      <tr>
+        <td><%= receiving_report.report_id %></td>
+        <td><%= receiving_report.user_id %></td>
+        <td><%= receiving_report.read %></td>
+        <td><%= link_to 'Show', receiving_report %></td>
+        <td><%= link_to 'Edit', edit_receiving_report_path(receiving_report) %></td>
+        <td><%= link_to 'Destroy', receiving_report, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Receiving report', new_receiving_report_path %>
