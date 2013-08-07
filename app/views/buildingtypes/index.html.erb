@@ -1,30 +1,42 @@
-<h1>Listing buildingtypes</h1>
+<h1>Baubedingungen der Gebäude</h1>
 
 <table>
   <thead>
-    <tr>
-      <th>Name</th>
-      <th>Stufe</th>
-      <th>Produktion</th>
-      <th>Energieverbrauch</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
+  <tr>
+    <th>Name</th>
+    <th>Stufe</th>
+    <th>Produktion</th>
+    <th>Energieverbrauch</th>
+    <th>Baubedingungen</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
   </thead>
 
   <tbody>
-    <% @buildingtypes.each do |buildingtype| %>
-      <tr>
-        <td><%= buildingtype.name %></td>
-        <td><%= buildingtype.level %></td>
-        <td><%= buildingtype.production %></td>
-        <td><%= buildingtype.energyusage %></td>
+  <% @buildingtypes.each do |buildingtype| %>
+      <tr class="trennerunten">
+        <td class="trennerrechts"><%= buildingtype.name %></td>
+        <td class="trennerrechts"><%= buildingtype.level %></td>
+        <td class="trennerrechts"><%= buildingtype.production %></td>
+        <td class="trennerrechts"><%= buildingtype.energyusage %></td>
+        <td><% reqs = buildingtype.requirements%>
+          <% if reqs.empty? %>
+              <%= 'Keine Bedingungen' %>
+          <% else %>
+              <% reqs.each do |r| %>
+                  <%= r.name %> (<%= r.level %>)
+
+              <%end%>
+          <% end %>
+        </td>
+
         <td><%= link_to 'Show', buildingtype %></td>
         <td><%= link_to 'Edit', edit_buildingtype_path(buildingtype) %></td>
         <td><%= link_to 'Destroy', buildingtype, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
-    <% end %>
+  <% end %>
   </tbody>
 </table>
 
