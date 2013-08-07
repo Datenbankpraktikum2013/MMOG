@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
 
   has_many :fleets
   has_many :planets
+  has_and_belongs_to_many :sunsystems
   has_and_belongs_to_many :reports
   has_many :shipcounts
   belongs_to :alliance
@@ -185,6 +186,41 @@ class User < ActiveRecord::Base
 
     array
 
+  end
+
+  def visible_galaxies
+    out = []
+    suns = visible_sunsystems
+    for s in suns
+      out << s.galaxy
+    end
+    return out
+  end
+
+  def visible_sunsystems
+    out = []
+    a = self.alliance
+    if a.nil? then
+      out = self.sunsystems
+    else
+      a_users = a.users
+      a_users.each do |a_user|
+         a_user.sunsystems.each do |s|
+           out << s
+         end
+      end
+    end
+    return out
+  end
+
+  def visible_planets
+    out = []
+    for s in visible_sunsystems
+      s.planets.each do |p|
+        out << p
+      end
+    end
+    return out
   end
 
 end
