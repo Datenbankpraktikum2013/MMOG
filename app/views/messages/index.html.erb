@@ -20,7 +20,11 @@
             <% @read ? '' : '<strong>' %><%= message.subject %><% @read ? '' : '</strong>' %>
           </td>
           <td>
-            <%= message.sender.username %>
+            <% if message.sender!=nil %>
+              <%= message.sender.username %>
+            <% else %>
+              System
+            <% end %>
           </td>
           <td>
             <%= message.created_at %>

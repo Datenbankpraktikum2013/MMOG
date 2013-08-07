@@ -12,11 +12,15 @@
 
 	<p>
 	  <strong>Von:</strong>
-	  <%= @message.sender.username %>
+        <% if @message.sender!=nil %>
+          <%= @message.sender.username %>
+        <% else %>
+          System
+        <% end %>
 	</p>
 
 
-	<%= link_to 'Antworten', new_message_path+'/?recipient='+@message.sender.username , class: 'label label-success', :style=>'color:#FFFFFF;' %>
+	<%= link_to 'Antworten', new_message_path+'/?recipient='+@message.sender.username , class: 'label label-success', :style=>'color:#FFFFFF;' if @message.sender!=nil %>
 	<%= link_to 'Löschen', @message, method: :delete, class: 'label label-important', data: { confirm: 'Bist du dir sicher?' }, :style=>'color:#FFFFFF;' %>
 <% else %>
 	<strong>Es ist dir nicht erlaubt, diese Nachricht zu lesen</strong>
