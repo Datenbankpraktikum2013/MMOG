@@ -1,5 +1,7 @@
 Mmog::Application.routes.draw do
 
+  resources :relationships
+
   get "starport" => "starport#index"
   resources :techstages
 
