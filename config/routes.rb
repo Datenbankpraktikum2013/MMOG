@@ -1,5 +1,6 @@
 Mmog::Application.routes.draw do
 
+  get "starport" => "starport#index"
   resources :techstages
 
   resources :spyreports
@@ -12,7 +13,7 @@ Mmog::Application.routes.draw do
 
   resources :battlereports
 
-  resources :messages
+  resources :messages, :except => [:edit, :update]
 
   resources :shipfleets
 
@@ -24,7 +25,7 @@ Mmog::Application.routes.draw do
 
   resources :buildingtypes
 
-  resources :technologies
+  resources :technologies, :except => [:edit, :update, :create, :new, :destroy, :show]
 
   devise_for :users #not needed any more, :controllers => { :registrations => "users/registrations"}
 

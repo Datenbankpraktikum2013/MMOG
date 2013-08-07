@@ -5,7 +5,12 @@ class AlliancesController < ApplicationController
   # GET /alliances
   # GET /alliances.json
   def index
-    @alliances = Alliance.all
+    if current_user.alliance_id==nil
+      @alliance = Alliance.new
+    else
+      @alliance = current_user.alliance
+      redirect_to @alliance
+    end
   end
 
   def send_mail
@@ -70,9 +75,7 @@ class AlliancesController < ApplicationController
 
   # GET /alliances/new
   def new
-    if current_user.alliance_id==nil
-      @alliance = Alliance.new
-    end
+
   end
 
   # GET /alliances/1/edit

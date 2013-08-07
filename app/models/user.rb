@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
   belongs_to :alliance
   #receiving messages
   has_many :messages_user
-  has_many :messages, :through => :messages_user, :source => :message
+  has_many :messages, :through => :messages_user, :source => :message, :select => "messages.*, messages_users.read AS read, messages_users.recipient_deleted as deleted"
   accepts_nested_attributes_for :messages_user
   has_many :sent_messages, :class_name => 'Message', :foreign_key => 'sender_id'
 
@@ -42,6 +42,15 @@ class User < ActiveRecord::Base
   	if User.exists?(:username => username)
   		errors.add :username, "is already taken."
   	end
+  end
+
+  public
+  def unread_messages
+    count=0
+    self.messages.each do |message|
+        count+=1 unless message.read?
+    end
+    return count
   end
 
   #get user-settings affected by Research
@@ -99,8 +108,8 @@ class User < ActiveRecord::Base
     self.user_setting.large_cargo_ship
   end
 
-  def has_large_defenseplattform?
-    self.user_setting.large_defenseplattform
+  def has_large_defense_platform?
+    self.user_setting.large_defense_platform
   end
 
   def has_destroyer?
@@ -140,7 +149,13 @@ class User < ActiveRecord::Base
 
   def get_researching_tech
 
-    string = ""
+    array = []
+    # 1 TechnologyName
+    # 2 Stufe
+    # 3 Startzeitpunkt
+    # 4 Dauer
+    # 5 Endzeitpunkt
+
     tech = user_setting.researching
 
     if tech != 0
@@ -159,25 +174,16 @@ class User < ActiveRecord::Base
       minuten = time.to_i/60 - stunden*60
       sekunden = time.to_i - minuten*60 - stunden*3600
 
-      string << 'Folgende Technologie wird erforscht: ' << Technology.find(tech).title.to_s << "\n"
-      string << 'Erforsche Stufe :' << rank.to_s << "\n"
-      string << 'Forschung beendet am ' << time.day.to_s << '.' << time.month.to_s << '.' << time.year.to_s
-      string << ' um ' << time.hour.to_s << ':'
-      if time.min < 10 then
-        string << '0' << time.min.to_s
-      else
-        string << time.min.to_s
-      end
-      string << ":"
-      if time.sec < 10 then
-        string << '0' << time.sec.to_s
-      else
-        string << time.sec.to_s
-      end
+      array[0] = Technology.find(tech).title.to_s
+      array[1] = rank.to_s
+      array[2] = user_setting.updated_at
+      array[3] = Technology.find(tech).get_research_duration(self)
+      array[4] = time
+
 
     end
 
-    string
+    array
 
   end
 

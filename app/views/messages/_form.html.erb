@@ -1,13 +1,12 @@
 <%= form_tag(messages_path)%>
     <p><strong><%= label_tag ('Empfänger') %></strong></p>
-      <%= text_field_tag('recipient') %>
+      <%= text_field_tag('recipient',@recipient) %>
     </p>
     <p><strong><%= label_tag ('Betreff') %></strong></p>
-      <%= text_field_tag('subject') %>
+      <%= text_field_tag('subject',nil ,class: 'readmsgarea') %>
     </p>
     <p><strong><%= label_tag ('Text') %></strong></p>
-      <%= text_area_tag('body') %>
+      <%= text_area_tag('body',nil ,class: 'readmsgarea') %>
     </p>
-    <p><%= submit_tag 'Annehmen' %></p>
+    <p><%= submit_tag 'Absenden', class: 'btn' %></p>
 </form>
-<%= link_to 'Zurück', messages_path %>

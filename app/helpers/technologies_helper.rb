@@ -16,7 +16,7 @@ module TechnologiesHelper
                       :description => ' Verbessert die Verteidigung deiner Schiffe pro Stufe x%'})
     Technology.create({:name => 'increased_spypower', :factor => 1.05, :cost => 110, :maxrank => -1,:duration => 1, :title => "bessere Erkundungserfolge",
                        :description => ' Erhöht die Spionagewerte deiner Sonden pro Stufe x% '})
-    Technology.create({:name => 'increased_capacaty', :factor => 1.25, :cost => 90, :maxrank => 3,:duration => 1, :title => "größere Kapazität",
+    Technology.create({:name => 'increased_capacity', :factor => 1.25, :cost => 90, :maxrank => 3,:duration => 1, :title => "größere Kapazität",
                       :description => ' Erhöht die Ladekapazität deiner Schiffe pro Stufe x% (Maxrank:3)'})
     Technology.create({:name => 'increased_movement', :factor => 1.05, :cost => 120, :maxrank => -1,:duration => 1, :title => "schnellere Schiffe",
                        :description => ' Erhöht die Geschwindigkeit deiner Schiffe pro Stufe x%'})
@@ -30,7 +30,7 @@ module TechnologiesHelper
                        :description => ' Erfosche einen Zerstörer um Raubzüge zu starten'})
     Technology.create({:name => 'cruiser', :factor => 0, :cost => 250, :maxrank => 1, :duration => 1, :title => "Kreuzer",
                       :description => ' Erforsche einen mächtigen Kreuzer um fremde Planeten zu erobern'})
-    Technology.create({:name => 'hyperspacetechnology', :factor => 0, :cost => 350, :maxrank => 1,:duration => 1, :title => "Warp-Antrieb",
+    Technology.create({:name => 'hyperspace_technology', :factor => 0, :cost => 350, :maxrank => 1,:duration => 1, :title => "Warp-Antrieb",
                       :description => ' Ermöglicht deinen Schiffen Hyperraumsprünge zu vollziehen'})
     Technology.create({:name => 'deathstar', :factor => 0, :cost => 400, :maxrank => 1,:duration => 1, :title => "Todesstern",
                        :description => ' Erforsche einen furchteinflößenden Todesstern um deine Feinde zu zermalmen.'})
@@ -53,12 +53,12 @@ module TechnologiesHelper
                               :pre_tech_id => 0, :pre_tech_rank => 0})
     TechnologyRequire.create({:tech_id => Technology.where(:name => 'increased_spypower').first.id, :building_rank => 2,
                               :pre_tech_id => 0, :pre_tech_rank => 0})
-    TechnologyRequire.create({:tech_id => Technology.where(:name => 'increased_capacaty').first.id, :building_rank => 2,
+    TechnologyRequire.create({:tech_id => Technology.where(:name => 'increased_capacity').first.id, :building_rank => 2,
                               :pre_tech_id => 0, :pre_tech_rank => 0})
     TechnologyRequire.create({:tech_id => Technology.where(:name => 'increased_movement').first.id, :building_rank => 3,
                               :pre_tech_id => 0, :pre_tech_rank => 0})
     TechnologyRequire.create({:tech_id => Technology.where(:name => 'large_cargo_ship').first.id, :building_rank => 3,
-                              :pre_tech_id => Technology.where(:name => 'increased_capacaty').first.id,
+                              :pre_tech_id => Technology.where(:name => 'increased_capacity').first.id,
                               :pre_tech_rank => 1})
     TechnologyRequire.create({:tech_id => Technology.where(:name => 'big_house').first.id, :building_rank =>3 ,
                               :pre_tech_id => Technology.where(:name => 'increased_energy_efficiency').first.id,
@@ -75,7 +75,7 @@ module TechnologiesHelper
     TechnologyRequire.create({:tech_id => Technology.where(:name => 'cruiser').first.id, :building_rank =>4 ,
                               :pre_tech_id => Technology.where(:name => 'increased_power').first.id,
                               :pre_tech_rank => 4})
-    TechnologyRequire.create({:tech_id => Technology.where(:name => 'hyperspacetechnology').first.id, :building_rank =>4 ,
+    TechnologyRequire.create({:tech_id => Technology.where(:name => 'hyperspace_technology').first.id, :building_rank =>4 ,
                               :pre_tech_id => Technology.where(:name => 'increased_movement').first.id,
                               :pre_tech_rank => 4})
     TechnologyRequire.create({:tech_id => Technology.where(:name => 'deathstar').first.id, :building_rank =>5 ,
@@ -85,7 +85,7 @@ module TechnologiesHelper
                               :pre_tech_id => Technology.where(:name => 'increased_power').first.id,
                               :pre_tech_rank => 8})
     TechnologyRequire.create({:tech_id => Technology.where(:name => 'deathstar').first.id, :building_rank =>5 ,
-                              :pre_tech_id => Technology.where(:name => 'hyperspacetechnology').first.id,
+                              :pre_tech_id => Technology.where(:name => 'hyperspace_technology').first.id,
                               :pre_tech_rank => 1})
     TechnologyRequire.create({:tech_id => Technology.where(:name => 'deathstar').first.id, :building_rank =>5 ,
                               :pre_tech_id => Technology.where(:name => 'increased_defense').first.id,

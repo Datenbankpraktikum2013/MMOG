@@ -30,6 +30,8 @@ class Planet < ActiveRecord::Base
     self.calc_spec
 
     if self.name.nil?
+      self.under_construction = false
+
 
       self.size = Random.rand(MAX_SIZE-MIN_SIZE) + MIN_SIZE if self.size.nil?
       self.ore = 20 if self.ore.nil?
@@ -143,9 +145,13 @@ class Planet < ActiveRecord::Base
     if self.user.nil? then #&& self.user.planets.count == 0
       self.user = user;
       self.create_building_job(:Oremine)
+      self.under_construction = false
       self.create_building_job(:Headquarter)
+      self.under_construction = false   
       self.create_building_job(:Powerplant)
+      self.under_construction = false
       self.create_building_job(:City)
+      self.under_construction = false
       self.create_production_job;
     else
       self.user = user;
@@ -167,37 +173,32 @@ class Planet < ActiveRecord::Base
     prod_building_type = Buildingtype.where(id:production_building.buildingtype_id).first
     prod = prod_building_type.production
     
-    sci_factor =1
+    #sci_factor =1
     if type == :Oremine
-      #sci_factor = self.user.get_ironproduction
+      sci_factor = self.user.get_ironproduction
       c = sci_factor * prod * @spec[0]
-      puts "Ore+#{c}"
       return c
     end
 
     if type == :City
       c = @spec[2] * prod
-      puts "people +#{c}"
       return c
     end
 
     if type == :Headquarter
-      #sci_factor = self.user.get_income
+      sci_factor = self.user.get_income
       c = sci_factor * @spec[3] * (self.population / 100)# * prod 
-      puts "money +#{c}"
       return c
     end
 
     if type == :Powerplant
-      #sci_factor = self.user.get_energy_efficiency
+      sci_factor = self.user.get_energy_efficiency
       c = sci_factor * prod * @spec[1] 
-      puts "Energy +#{c}"
       return c
     end
 
     if type == :Crystalmine
       c = @spec[4] * prod
-      puts "Kristalle +#{c}"
       return c
     end
   end
@@ -221,7 +222,6 @@ class Planet < ActiveRecord::Base
         else
           self.ore = self.maxore
         end
-        puts "ERZ 1 jetzt: #{self.ore}"
       end
 
       #
@@ -248,7 +248,7 @@ class Planet < ActiveRecord::Base
         end
       end
       self.save
-      puts "#ERZ JETZT: #{self.ore}"
+
       #
       # updates money 
       #
@@ -289,6 +289,7 @@ class Planet < ActiveRecord::Base
   end
 
   def create_building_job(type)
+    return false if self.under_construction
     buildingtype_arr = Buildingtype.where(name: type.to_s)
     id_list = []
     buildingtype_arr.each do |x|
@@ -301,19 +302,29 @@ class Planet < ActiveRecord::Base
     if upgrade_me.nil?
       build_time = Buildingtype.where(name: type.to_s, level:1).first.build_time
       build_me = Buildingtype.where(name: type.to_s, level:1).first.id
-      puts "1: " + build_me.to_s
     else  
       upgrade_me = upgrade_me.buildingtype_id
       my_future_me = Buildingtype.find_by_id(upgrade_me)
-      puts "2: "+ upgrade_me.to_s
-      #build_time = Buildingtype.where(name:type level:upgrade_me.level+1).build_time
+      build_time = Buildingtype.where(name:type, level:(my_future_me.level)+1).first.build_time
       build_me = Buildingtype.where(name:type ,level:(my_future_me.level)+1).first.id
     end
+
+    if  (0 > self.ore - build_me.build_cost_ore || 0 > self.crystal - build_me.build_cost_crystal ||  0 > self.population - build_me.build_cost_population || 0 > User.find(self.user_id).money - build_me.build_cost_money)
+      return false
+    end   
+    self.ore -= build_me.build_cost_ore
+    self.crystal -= build_me.build_cost_crystal
+    self.population -= build_me.build_cost_population
+    User.find(self.user_id).money -= build_me.build_cost_money
+    User.find(self.user_id).save
+
     id_array = []
     id_array << self.id
-    id_array << build_me
-    puts "ID ARRAY: #{id_array}"
-    Resque.enqueue_in(5.minute,BuildBuildings, id_array)
+    id_array << build_me.id
+    self.under_construction = true
+    puts "ITS True eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee NOW #{self.under_construction}"
+    self.save
+    Resque.enqueue_in(build_time.second,BuildBuildings, id_array)
 
   end
 
@@ -321,6 +332,10 @@ class Planet < ActiveRecord::Base
     #destroy_me = self.buildings.where(name: Buildingtype.where(id: id).first.name).first.id
     #destroy_me.destroy unless destroy_me.nil?
     #reborn_me = Building.create(buildingtype_id: id, planet: seld.id)
+    self.under_construction = false
+    self.save
+
+    puts "ITS FFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALSE NOW #{self.under_construction}"
     return false if buildingtype_id.nil? || !buildingtype_id.integer?
     build_me = Buildingtype.where(id: buildingtype_id).first
     return false if build_me.nil?
@@ -328,24 +343,20 @@ class Planet < ActiveRecord::Base
     buildings.each do |b|
       if b.buildingtype.name == build_me.name && b.buildingtype.level + 1 == build_me.level
         b.buildingtype = build_me
-
         b.save
-        puts b.buildingtype.level
         return true
       end
-      puts "aaaaaaaaaaaaaaaaa"
     end
     if build_me.level == 1 then
       Building.create(buildingtype_id: buildingtype_id, planet: self)
+
       return true
     end
     return false
   end
 
   def create_production_job()
-
     Resque.enqueue_in(10.second, ProduceResources, self.id)
-    #puts "PLANETEN ID:#{self.id}"
   end
 
   def getDistance(other)
@@ -363,7 +374,8 @@ class Planet < ActiveRecord::Base
           dist2 = self.z - other.z
         end
       else
-        dist2 = ((self.z + other.z)**3)/((self.z - other.z)**2 + 1)
+        #dist2 = ((self.z + other.z)**3)/((self.z - other.z)**2 + 1)
+        dist2 = self.z + other.z
       end
       dist1 + dist2
     else
@@ -382,6 +394,116 @@ class Planet < ActiveRecord::Base
       out[btype.name.to_sym] = btype.level
     end
     return out
+  end
+
+  def give(type, number)
+    back = 0
+    if type == :Ore then
+      old = self.ore
+      if old + number >= self.maxore then
+        self.ore = self.maxore
+        back = self.maxore - old
+      else
+        self.ore = old + number
+      end
+
+    elsif  type == :Crystal then
+      old = self.crystal
+      if old + number >= self.maxcrystal then
+        self.crystal = self.maxcrystal
+        back = self.maxcrystal - old
+      else
+        self.ore = old + number
+      end
+
+    elsif type == :Population then
+      old = self.population
+      if old + number >= self.maxpopulation then
+        self.population = self.maxpopulation
+        back = self.maxpopulation - old
+      else
+        self.population = old + number
+      end
+
+    elsif type == :Energy then
+      old = self.energy
+      if old + number >= self.maxenergy then
+        self.energy = self.maxenergy
+        back = self.maxenergy - old
+      else
+        self.energy = old + number
+      end
+
+    elsif type == :Money then
+      u = self.user
+      if u.nil? then
+        back = number
+      else
+        u.money = u.money + number
+        u.save
+      end
+
+    end
+    return back
+  end
+
+  def take(type, number)
+    back = 0
+    if type == :Ore then
+      old = self.ore
+      if old < number then
+        self.ore = 0
+        back = old
+      else
+        self.ore = old - number
+      end
+
+    elsif type == :Crystal then
+      old = self.crystal
+      if old < number then
+        self.crystal = 0
+        back = old
+      else
+        self.crystal = old - number
+      end
+
+    elsif type == :Population then
+      old = self.population
+      if old < number then
+        self.population = 0
+        back = old
+      else
+        self.population = old - number
+      end
+
+    elsif type == :Energy then
+      old = self.energy
+      if old < number then
+        self.energy = 0
+        back = old
+      else
+        self.energy = old - number
+      end
+
+    elsif type == :Money then
+      u = self.user
+      if u.nil? then
+        back = number
+      else
+        old = u.money
+        if u.money >= number then
+          u.money = old - number
+        else
+          u.money = 0
+          back = old
+        end
+        u.save
+      end
+
+    else
+      back = number
+    end
+    return back
   end
 
 end

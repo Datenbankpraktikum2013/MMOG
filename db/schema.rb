@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130806144728) do
+ActiveRecord::Schema.define(version: 20130807112608) do
 
   create_table "alliances", force: true do |t|
     t.string   "name",        null: false
@@ -57,6 +57,10 @@ ActiveRecord::Schema.define(version: 20130806144728) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "build_time"
+    t.integer  "build_cost_ore",        default: 0
+    t.integer  "build_cost_crystal",    default: 0
+    t.integer  "build_cost_money",      default: 0
+    t.integer  "build_cost_population", default: 0
   end
 
   create_table "buildingtypes_ships", id: false, force: true do |t|
@@ -102,6 +106,8 @@ ActiveRecord::Schema.define(version: 20130806144728) do
   create_table "messages", force: true do |t|
     t.text     "body"
     t.integer  "sender_id"
+    t.string   "subject"
+    t.boolean  "sender_deleted", default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -109,7 +115,8 @@ ActiveRecord::Schema.define(version: 20130806144728) do
   create_table "messages_user", force: true do |t|
     t.integer "user_id"
     t.integer "message_id"
-    t.boolean "read",       default: false
+    t.boolean "read",              default: false
+    t.boolean "recipient_deleted", default: false
   end
 
   create_table "messages_users", id: false, force: true do |t|
@@ -141,6 +148,7 @@ ActiveRecord::Schema.define(version: 20130806144728) do
     t.datetime "updated_at"
     t.integer  "sunsystem_id"
     t.integer  "user_id"
+    t.boolean  "under_construction", default: false
   end
 
   create_table "ranks", force: true do |t|
@@ -186,6 +194,7 @@ ActiveRecord::Schema.define(version: 20130806144728) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+    t.integer  "spyreport_id"
   end
 
   create_table "shipfleets", force: true do |t|
@@ -223,7 +232,7 @@ ActiveRecord::Schema.define(version: 20130806144728) do
     t.integer  "space_cash"
     t.integer  "population"
     t.integer  "ore"
-    t.integer  "crystall"
+    t.integer  "crystal"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -283,13 +292,13 @@ ActiveRecord::Schema.define(version: 20130806144728) do
     t.float    "increased_capacity",          default: 1.0
     t.boolean  "hyperspace_technology",       default: false
     t.boolean  "large_cargo_ship",            default: false
-    t.boolean  "large_defenseplattform",      default: false
+    t.boolean  "large_defense_platform",      default: false
     t.boolean  "destroyer",                   default: false
     t.boolean  "cruiser",                     default: false
     t.boolean  "deathstar",                   default: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "increased_spypower",          default: 1
+    t.float    "increased_spypower",          default: 1.0
     t.integer  "user_id"
     t.integer  "researchlvl",                 default: 1
     t.integer  "researching",                 default: 0

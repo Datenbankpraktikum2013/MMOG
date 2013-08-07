@@ -45,7 +45,8 @@ gibt ein Array wie folgt aus: [max_research_level, sum_research_levels, count_re
       data[2] += 1
     end
 
+    user.user_setting.update_attribute :researchlvl, data[0]
+    data
   end
-
 
 end
