@@ -30,7 +30,7 @@ class StarportController < ApplicationController
 
   	params["ship"].each do |p|
   		p[1].to_i.times do
-  			Fleet.add_ship_to_planet(Ship.find(p[0]), Planet.find(params["planet"].first))
+  			ShipBuildingQueue.insert(Ship.find(p[0]), Planet.find(params["planet"].first))
 			end
   		#puts "Ship ID:#{p[0]} amount: #{p[1]} planet #{params["planet"].first}"
   	end

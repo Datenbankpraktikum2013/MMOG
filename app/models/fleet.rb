@@ -444,8 +444,9 @@ class Fleet < ActiveRecord::Base
   # Adds Ship to Fleet in t seconds
   # Methode aendern?????????????????????????????????? add_ships
   # Fehlerbehandlung
-  def add_ship_in(t,s)
-    Resque.enqueue_in(t.second, AddShip, self.id ,s.id)
+  def self.add_ship_in(t,s,p,id)
+    Resque.enqueue_at(t, AddShip, s.id, p.id, id)
+    puts 
   end
 #=end
 
@@ -454,6 +455,7 @@ class Fleet < ActiveRecord::Base
   def self.add_ship_to_planet(s,p)
     f=Fleet.where(mission_id: 1, origin_planet: p)
     unless f.empty?
+      btime=s.construction_time
       f.first.add_ship(s)
     else 
       f_new=Fleet.new(p)
