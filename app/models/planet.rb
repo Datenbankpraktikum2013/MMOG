@@ -322,10 +322,21 @@ class Planet < ActiveRecord::Base
     id_array << self.id
     id_array << build_me.id
     self.under_construction = true
-    puts "ITS True eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee NOW #{self.under_construction}"
+    
     self.save
     Resque.enqueue_in(build_time.second,BuildBuildings, id_array)
 
+  end
+
+  def delete_building_job(type_id)
+    id_array = []
+    id_array << self.id
+    id_array << type_id
+    if Resque.remove_delayed(BuildBuildings, id_array) == 1
+      self.under_construction = false
+      self.save
+    end
+    
   end
 
   def build_building(buildingtype_id)
@@ -335,7 +346,7 @@ class Planet < ActiveRecord::Base
     self.under_construction = false
     self.save
 
-    puts "ITS FFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALSE NOW #{self.under_construction}"
+    
     return false if buildingtype_id.nil? || !buildingtype_id.integer?
     build_me = Buildingtype.where(id: buildingtype_id).first
     return false if build_me.nil?
