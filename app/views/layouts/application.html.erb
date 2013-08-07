@@ -31,13 +31,9 @@
 		 			</li>
 		  			<li><a href="/">Start</a></li>
 		  			<% if user_signed_in? %>
-<<<<<<< HEAD
-                        <li><a href="<%= technologies_path %>">Meine Technologien</a></li>
-		  				<li><a href="<%= messages_path %>">Nachrichten <span id="msgupdate" class="badge"><%= current_user.unread_messages %></span> </a></li>
-=======
+
 		  				<li><a href="<%= messages_path %>">Nachrichten <span class="badge"><%= current_user.unread_messages %></span> </a></li>
                         <li><a href="<%= technologies_path %>">Meine Technologien</a></li>
->>>>>>> 26016d34256b22ef14fa694f92ab9e2e2e02e3b1
 		  				<li><a href="<%= alliances_path %>">Meine Allianz</a></li>
 		  			<% end %>
 				</ul>
