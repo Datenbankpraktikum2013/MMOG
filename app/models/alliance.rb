@@ -99,7 +99,7 @@ class Alliance < ActiveRecord::Base
 			return false
 		end
 		@msg = user.sent_messages.create(:subject => subject, :body => body)
-		@users = self.users.all
+		@users = self.users.where.not(:id=>user)
 		@users.each do |u|
 			u.messages<<@msg
 		end

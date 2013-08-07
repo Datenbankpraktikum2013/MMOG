@@ -19,6 +19,8 @@ Mmog::Application.routes.draw do
 
   resources :battlereports
 
+  get 'json/fetch_unread_msgs' => 'messages#fetch_unread_msgs'
+
   resources :messages, :except => [:edit, :update]
 
   resources :shipfleets
@@ -60,6 +62,8 @@ Mmog::Application.routes.draw do
   post 'alliances/:id/edit/change_description' => 'alliances#change_description'
 
   post 'alliances/:id/edit/send_mail' => 'alliances#send_mail'
+
+
 
   post 'technologies/upgrade' => 'technologies#upgrade'
 

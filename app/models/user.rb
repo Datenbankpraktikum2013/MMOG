@@ -251,4 +251,8 @@ class User < ActiveRecord::Base
     return out
   end
 
+  def system_notify(prefix,subject,message)
+    self.messages.create(:subject=>'['+prefix+']'+subject,:body=>message)
+  end
+
 end
