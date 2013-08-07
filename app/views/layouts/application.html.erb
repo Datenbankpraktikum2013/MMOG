@@ -24,6 +24,8 @@
 			 					Nachrichten
 			 				<% elsif controller_name == 'alliances' %>
 			 					Allianzen
+                            <% elsif controller_name == 'technologies' %>
+                                Technlogien
 			 				<%end %>
 		 				</a>
 		 			</li>
@@ -31,6 +33,7 @@
 		  			<% if user_signed_in? %>
 		  				<li><a href="<%= messages_path %>">Nachrichten <span class="badge"><%= current_user.unread_messages %></span> </a></li>
 		  				<li><a href="<%= alliances_path %>">Meine Allianz</a></li>
+                        <li><a href="<%= technologies_path %>">Meine Technologien</a></li>
 		  			<% end %>
 				</ul>
 		  	</div>
