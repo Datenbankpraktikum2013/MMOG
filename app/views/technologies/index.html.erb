@@ -13,10 +13,10 @@
   <tr>
 
     <div class='progress progress-striped active' >
-      <span><%= "Erforsche Technologie: " + array[0] + " Stufe " + array[1]%></span>
+      <span style="font-weight: bold"><%= "Erforsche Technologie: " + array[0] + " Stufe " + array[1]%></span>
         <div class='bar' id='auto-updating-progressbar' ></div>
     </div>
-    <div align="center"><span style="font-weight:bold; color:red"><%= 'Forschung beendet: ' + array[4].to_s %></span></div><br>
+    <div align="center"><span style="font-weight:bold; color:green"><%= 'Forschung beendet: ' + (array[4]+2.hour).to_s[0..-5] %></span></div><br>
 
   </tr>
   <% end %>
@@ -35,15 +35,15 @@
             <td align="middle"  valign="middle" width="50"><%= technology.get_technology_rank(current_user)%></td>
 
             <%if technology.building_rank_require?(current_user) == false%>
-            <td><%='Fehlende Forschungsstufe' %></td>
+            <td><p class="missing_research_lvl"><%='Fehlende Forschungsstufe' %></p></td>
             <%elsif technology.max_rank?(current_user)%>
-            <td><%='Maxrank erreicht' %></td>
+            <td><p class="maxrank"><%='Maxrank erreicht' %></p></td>
             <%elsif technology.tech_require?(current_user)== false %>
-            <td><%='Fehlende Voraussetzung' %></td>
+            <td><p class="missing_tech"><%='Fehlende Voraussetzung' %></td>
             <%elsif  technology.cost_required?(current_user) == false %>
-            <td><%='Nicht genug Geld' %></td>
+            <td><p class="missing_money"><%='Nicht genug Geld' %></p></td>
             <%elsif research_id != 0%>
-            <td align="middle"  valign="middle" ><%= 'Forscht.' %></td>
+            <td><p class="forscht"><%= 'Forscht.' %></p></td>
             <%else%>
             <td align="middle"  valign="middle" width="100"><%= button_to 'Upgrade',
                 {:controller => "technologies", :action => "upgrade",    :uid=> current_user, :id=> technology} ,
