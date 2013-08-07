@@ -30,6 +30,8 @@ class Planet < ActiveRecord::Base
     self.calc_spec
 
     if self.name.nil?
+      self.under_construction = false
+
 
       self.size = Random.rand(MAX_SIZE-MIN_SIZE) + MIN_SIZE if self.size.nil?
       self.ore = 20 if self.ore.nil?
@@ -143,9 +145,13 @@ class Planet < ActiveRecord::Base
     if self.user.nil? then #&& self.user.planets.count == 0
       self.user = user;
       self.create_building_job(:Oremine)
+      self.under_construction = false
       self.create_building_job(:Headquarter)
+      self.under_construction = false   
       self.create_building_job(:Powerplant)
+      self.under_construction = false
       self.create_building_job(:City)
+      self.under_construction = false
       self.create_production_job;
     else
       self.user = user;
@@ -283,6 +289,7 @@ class Planet < ActiveRecord::Base
   end
 
   def create_building_job(type)
+    return false if self.under_construction
     buildingtype_arr = Buildingtype.where(name: type.to_s)
     id_list = []
     buildingtype_arr.each do |x|
@@ -291,19 +298,32 @@ class Planet < ActiveRecord::Base
     upgrade_me = self.buildings.where(buildingtype_id: id_list).first
 
     return false if !upgrade_me.nil? && !upgrade_me.verifies_upgrade_requirements?
-
+  
     if upgrade_me.nil?
       build_time = Buildingtype.where(name: type.to_s, level:1).first.build_time
-      build_me = Buildingtype.where(name: type.to_s, level:1).first.id
+      build_me = Buildingtype.where(name: type.to_s, level:1).first
     else  
       upgrade_me = upgrade_me.buildingtype_id
       my_future_me = Buildingtype.find_by_id(upgrade_me)
       build_time = Buildingtype.where(name:type, level:(my_future_me.level)+1).first.build_time
-      build_me = Buildingtype.where(name:type ,level:(my_future_me.level)+1).first.id
+      build_me = Buildingtype.where(name:type ,level:(my_future_me.level)+1).first
     end
+
+    if  (0 > self.ore - build_me.build_cost_ore || 0 > self.crystal - build_me.build_cost_crystal ||  0 > self.population - build_me.build_cost_population || 0 > User.find(self.user_id).money - build_me.build_cost_money)
+      return false
+    end   
+    self.ore -= build_me.build_cost_ore
+    self.crystal -= build_me.build_cost_crystal
+    self.population -= build_me.build_cost_population
+    User.find(self.user_id).money -= build_me.build_cost_money
+    User.find(self.user_id).save
+
     id_array = []
     id_array << self.id
-    id_array << build_me
+    id_array << build_me.id
+    self.under_construction = true
+    puts "ITS True eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee NOW #{self.under_construction}"
+    self.save
     Resque.enqueue_in(build_time.second,BuildBuildings, id_array)
 
   end
@@ -312,6 +332,10 @@ class Planet < ActiveRecord::Base
     #destroy_me = self.buildings.where(name: Buildingtype.where(id: id).first.name).first.id
     #destroy_me.destroy unless destroy_me.nil?
     #reborn_me = Building.create(buildingtype_id: id, planet: seld.id)
+    self.under_construction = false
+    self.save
+
+    puts "ITS FFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALSE NOW #{self.under_construction}"
     return false if buildingtype_id.nil? || !buildingtype_id.integer?
     build_me = Buildingtype.where(id: buildingtype_id).first
     return false if build_me.nil?
@@ -325,6 +349,7 @@ class Planet < ActiveRecord::Base
     end
     if build_me.level == 1 then
       Building.create(buildingtype_id: buildingtype_id, planet: self)
+
       return true
     end
     return false
