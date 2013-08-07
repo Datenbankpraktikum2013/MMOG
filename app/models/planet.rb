@@ -167,37 +167,32 @@ class Planet < ActiveRecord::Base
     prod_building_type = Buildingtype.where(id:production_building.buildingtype_id).first
     prod = prod_building_type.production
     
-    sci_factor =1
+    #sci_factor =1
     if type == :Oremine
-      #sci_factor = self.user.get_ironproduction
+      sci_factor = self.user.get_ironproduction
       c = sci_factor * prod * @spec[0]
-      puts "Ore+#{c}"
       return c
     end
 
     if type == :City
       c = @spec[2] * prod
-      puts "people +#{c}"
       return c
     end
 
     if type == :Headquarter
-      #sci_factor = self.user.get_income
+      sci_factor = self.user.get_income
       c = sci_factor * @spec[3] * (self.population / 100)# * prod 
-      puts "money +#{c}"
       return c
     end
 
     if type == :Powerplant
-      #sci_factor = self.user.get_energy_efficiency
+      sci_factor = self.user.get_energy_efficiency
       c = sci_factor * prod * @spec[1] 
-      puts "Energy +#{c}"
       return c
     end
 
     if type == :Crystalmine
       c = @spec[4] * prod
-      puts "Kristalle +#{c}"
       return c
     end
   end
@@ -221,7 +216,6 @@ class Planet < ActiveRecord::Base
         else
           self.ore = self.maxore
         end
-        puts "ERZ 1 jetzt: #{self.ore}"
       end
 
       #
@@ -248,7 +242,7 @@ class Planet < ActiveRecord::Base
         end
       end
       self.save
-      puts "#ERZ JETZT: #{self.ore}"
+
       #
       # updates money 
       #
@@ -301,19 +295,16 @@ class Planet < ActiveRecord::Base
     if upgrade_me.nil?
       build_time = Buildingtype.where(name: type.to_s, level:1).first.build_time
       build_me = Buildingtype.where(name: type.to_s, level:1).first.id
-      puts "1: " + build_me.to_s
     else  
       upgrade_me = upgrade_me.buildingtype_id
       my_future_me = Buildingtype.find_by_id(upgrade_me)
-      puts "2: "+ upgrade_me.to_s
-      #build_time = Buildingtype.where(name:type level:upgrade_me.level+1).build_time
+      build_time = Buildingtype.where(name:type, level:(my_future_me.level)+1).first.build_time
       build_me = Buildingtype.where(name:type ,level:(my_future_me.level)+1).first.id
     end
     id_array = []
     id_array << self.id
     id_array << build_me
-    puts "ID ARRAY: #{id_array}"
-    Resque.enqueue_in(5.minute,BuildBuildings, id_array)
+    Resque.enqueue_in(build_time.second,BuildBuildings, id_array)
 
   end
 
@@ -328,12 +319,9 @@ class Planet < ActiveRecord::Base
     buildings.each do |b|
       if b.buildingtype.name == build_me.name && b.buildingtype.level + 1 == build_me.level
         b.buildingtype = build_me
-
         b.save
-        puts b.buildingtype.level
         return true
       end
-      puts "aaaaaaaaaaaaaaaaa"
     end
     if build_me.level == 1 then
       Building.create(buildingtype_id: buildingtype_id, planet: self)
@@ -343,9 +331,7 @@ class Planet < ActiveRecord::Base
   end
 
   def create_production_job()
-
     Resque.enqueue_in(10.second, ProduceResources, self.id)
-    #puts "PLANETEN ID:#{self.id}"
   end
 
   def getDistance(other)
