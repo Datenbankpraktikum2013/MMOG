@@ -17,9 +17,9 @@
     <% @buildingtypes.each do |buildingtype| %>
       <tr>
         <td><%= buildingtype.name %></td>
-        <td><%= buildingtype.stufe %></td>
-        <td><%= buildingtype.produktion %></td>
-        <td><%= buildingtype.energieverbrauch %></td>
+        <td><%= buildingtype.level %></td>
+        <td><%= buildingtype.production %></td>
+        <td><%= buildingtype.energyusage %></td>
         <td><%= link_to 'Show', buildingtype %></td>
         <td><%= link_to 'Edit', edit_buildingtype_path(buildingtype) %></td>
         <td><%= link_to 'Destroy', buildingtype, method: :delete, data: { confirm: 'Are you sure?' } %></td>

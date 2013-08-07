@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
   belongs_to :alliance
   #receiving messages
   has_many :messages_user
-  has_many :messages, :through => :messages_user, :source => :message, :select => "messages.*, messages_users.read AS read"
+  has_many :messages, :through => :messages_user, :source => :message, :select => "messages.*, messages_users.read AS read, messages_users.recipient_deleted as deleted"
   accepts_nested_attributes_for :messages_user
   has_many :sent_messages, :class_name => 'Message', :foreign_key => 'sender_id'
 
