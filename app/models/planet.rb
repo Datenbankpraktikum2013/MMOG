@@ -7,6 +7,9 @@ class Planet < ActiveRecord::Base
 
   MIN_SIZE = 10000
   MAX_SIZE = 100000
+  @start_maxore
+  @start_maxcrystal
+  @start_maxenergy
 
   after_initialize :init
 
@@ -103,11 +106,17 @@ class Planet < ActiveRecord::Base
         self.maxpopulation = 5000
         
       end
+        @start_maxore = maxore
+        @maxcrystal = maxcrystal
+        @start_maxenergy = maxenergy
     end
   end
 
 
   def calc_spec
+      @start_maxore = 100
+      @start_maxcrystal = 1
+      @start_maxenergy = 200
     if self.special == 1
       @spec[0] = 1.3
       #Loveplanet
@@ -117,6 +126,9 @@ class Planet < ActiveRecord::Base
     elsif self.special == 3
       @spec[3] = 1.3
       #Crystalplanet
+      @start_maxore = 75
+      @start_maxcrystal = 5
+      @start_maxenergy = 175
     elsif self.special == 4
       @spec = [0.5, 0.5, 0.5, 0.5, 1, 1, 1,1]
       #Buildplanet
@@ -124,6 +136,9 @@ class Planet < ActiveRecord::Base
       @spec[6] = 0.7
       #Lagerplanet
     elsif self.special == 6
+      @start_maxore = 200
+      @start_maxcrystal = 5
+      @start_maxenergy = 400
       @spec[5] = 1.3
       #Scienceplanet
     elsif self.special == 7
@@ -187,7 +202,7 @@ class Planet < ActiveRecord::Base
 
     if type == :Headquarter
       sci_factor = self.user.get_income
-      c = sci_factor * @spec[3] * (self.population / 100)# * prod 
+      c = sci_factor * @spec[3] * (self.population / 100) * prod 
       return c
     end
 
@@ -346,7 +361,11 @@ class Planet < ActiveRecord::Base
     end
     
   end
-
+  def depot_size_increase(prod_size)
+     self.maxore = @start_maxore * prod_size * @spec[5]
+     self.maxcrystal = @start_maxcrystal * prod_size * @spec[5]
+     self.maxenergy = @start_maxenergy * prod_size * @spec[5]
+  end
   def build_building(buildingtype_id)
     #destroy_me = self.buildings.where(name: Buildingtype.where(id: id).first.name).first.id
     #destroy_me.destroy unless destroy_me.nil?
@@ -362,13 +381,18 @@ class Planet < ActiveRecord::Base
     buildings.each do |b|
       if b.buildingtype.name == build_me.name && b.buildingtype.level + 1 == build_me.level
         b.buildingtype = build_me
+        if b.name== "Depot"
+          depot_size_increase(b.production)
+        end  
         b.save
         return true
       end
     end
     if build_me.level == 1 then
-      Building.create(buildingtype_id: buildingtype_id, planet: self)
-
+      b = Building.create(buildingtype_id: buildingtype_id, planet: self)
+        if build_me.name == "Depot"
+          depot_size_increase(build_me.production)
+        end  
       return true
     end
     return false
