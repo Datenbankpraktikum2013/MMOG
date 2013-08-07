@@ -15,7 +15,7 @@ class BuildingtypeRequire < ActiveRecord::Base
            [2,1,2,1,nil,1,1],
            [3,2,3,2,nil,2,2],
            [3,3,4,4,1,4,3],
-           [6,6,6,6,6,6,6,6]
+           [nil,5,nil,nil,nil,nil,nil,nil]
     ]
 
     pow = [[nil, nil, nil, nil, nil, nil, nil, nil],
@@ -65,7 +65,9 @@ class BuildingtypeRequire < ActiveRecord::Base
 
     inserts = []
 
+    #for r in 0..(regs.length-1)
     reqs.each do |r|
+      #for s in 0..(reqs[r].length-1)
       r.each do  |s|
         #s.each do |p|
         for p in 0..7

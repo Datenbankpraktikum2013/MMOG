@@ -19,9 +19,10 @@ class Sunsystem < ActiveRecord::Base
           dist2 = self.y - other.y
         end
       else
-        dist2 = ((self.y + other.y)**3)/((self.y - other.y)**2 + 1)
+        #dist2 = ((self.y + other.y)**3)/((self.y - other.y)**2 + 1)
+        dist2 = self.y + other.y
       end
-      dist1 + 10 * dist2
+      dist1 + 60 * dist2
 
     else
       -1
