@@ -3,18 +3,17 @@
     Du gehörst bereits zu der Allianz <b><%= current_user.alliance.name %></b>
   </div>
 <% else %>
-  <h1>Eine neue Allianz erstellen</h1>
   <%= form_for(@alliance) do |f| %>
     <div class="field">
       <%= f.label :name %><br>
-      <%= f.text_field :name %>
+      <%= f.text_field :name, class: 'span2' %>
     </div>
     <div class="field">
       <%= f.label "Beschreibung" %><br>
-      <%= f.text_area :description %>
+      <%= f.text_area :description, class: 'readmsgarea' %>
     </div>
     <div class="actions">
-      <%= f.submit %>
+      <%= f.submit 'Erstellen!', class: 'btn' %>
     </div>
   <% end %>
 <% end %>

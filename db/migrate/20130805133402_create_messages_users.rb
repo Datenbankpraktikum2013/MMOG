@@ -4,6 +4,7 @@ class CreateMessagesUsers < ActiveRecord::Migration
     	t.belongs_to :user
      	t.belongs_to :message
      	t.boolean	 :read, default: false
+     	t.boolean	 :recipient_deleted, default: false
     end
   end
 end

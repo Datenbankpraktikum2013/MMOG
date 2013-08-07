@@ -1,29 +1,9 @@
-<h1>Allianzen</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Anführer</th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @alliances.each do |alliance| %>
-      <tr>
-        <% @foundername=alliance.ranks.where(:is_founder=>true)[0].users[0].username %>
-        <td><%= alliance.name %></td>
-        <td><%= alliance.id %></td>
-        <td><%= @foundername %></td>
-        <td><%= link_to 'Show', alliance %></td>
-        <td><%= link_to 'Edit', edit_alliance_path(alliance) %></td>
-        <td><%= link_to 'Destroy', alliance, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'neue Allianz erstellen', new_alliance_path %>
+<% if current_user.alliance==nil %>
+  <p>
+    <strong>Du bist nicht Mitglied einer Allianz.</strong>
+  </p>
+  <p>
+    Lass dich einladen oder erstelle eine neue:
+  </p>
+  <%= render 'allianceCreateForm' %>
+<% end %>

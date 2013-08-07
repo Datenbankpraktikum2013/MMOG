@@ -103,6 +103,7 @@ ActiveRecord::Schema.define(version: 20130806205229) do
     t.text     "body"
     t.integer  "sender_id"
     t.string   "subject"
+    t.boolean  "sender_deleted", default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -110,7 +111,8 @@ ActiveRecord::Schema.define(version: 20130806205229) do
   create_table "messages_users", force: true do |t|
     t.integer "user_id"
     t.integer "message_id"
-    t.boolean "read",       default: false
+    t.boolean "read",              default: false
+    t.boolean "recipient_deleted", default: false
   end
 
   create_table "missions", force: true do |t|

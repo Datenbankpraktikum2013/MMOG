@@ -1,18 +1,22 @@
-<p id="notice"><%= notice %></p>
-<p>
-	<strong>Betreff:</strong>
-	<%= text_field_tag 'subj', @message.subject, class: 'readmsgarea', disabled: true %>
-</p>	
-<p>
-  <strong>Nachricht:</strong>
-  <%= text_area_tag 'body', @message.body, class: 'readmsgarea', disabled: true %>
-</p>
+<% if current_user!=@message.sender or @message.recipients.exists?(current_user)==false %>
+	<strong>Es ist dir nicht erlaubt, diese Nachricht zu lesen</strong>
+<% else %>
+	<p id="notice"><%= notice %></p>
+	<p>
+		<strong>Betreff:</strong>
+		<%= text_field_tag 'subj', @message.subject, class: 'readmsgarea', disabled: true %>
+	</p>	
+	<p>
+	  <strong>Nachricht:</strong>
+	  <%= text_area_tag 'body', @message.body, class: 'readmsgarea', disabled: true %>
+	</p>
 
-<p>
-  <strong>Von:</strong>
-  <%= @message.sender.username %>
-</p>
+	<p>
+	  <strong>Von:</strong>
+	  <%= @message.sender.username %>
+	</p>
 
 
-<%= link_to 'Antworten', new_message_path+'/?recipient='+@message.sender.username , class: 'label label-success', :style=>'color:#FFFFFF;' %>
-<%= link_to 'Löschen', @message, method: :delete, class: 'label label-important', data: { confirm: 'Bist du dir sicher?' }, :style=>'color:#FFFFFF;' %>
+	<%= link_to 'Antworten', new_message_path+'/?recipient='+@message.sender.username , class: 'label label-success', :style=>'color:#FFFFFF;' %>
+	<%= link_to 'Löschen', @message, method: :delete, class: 'label label-important', data: { confirm: 'Bist du dir sicher?' }, :style=>'color:#FFFFFF;' %>
+<% end %>
