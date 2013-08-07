@@ -23,10 +23,10 @@ class Fleet < ActiveRecord::Base
     self.ressource_capacity = 0
     self.ore = 0
     self.crystal = 0
-    self.user = planet.user
-    # # ACHTUNG, NUR ZU TESTZWECKEN
-    # self.user = User.find(1)
-    # # ACHTUNG, NUR ZU TESTZWECKEN
+    # self.user = planet.user
+    # ACHTUNG, NUR ZU TESTZWECKEN
+    self.user = User.find(1)
+    # ACHTUNG, NUR ZU TESTZWECKEN
     self.storage_factor = self.user.user_setting.increased_capacity
     self.velocity_factor = self.user.user_setting.increased_movement
     self.offense = 0
