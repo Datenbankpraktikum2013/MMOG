@@ -68,5 +68,4 @@ class Spyreport < ActiveRecord::Base
 		f = Fleet.find(1)
 		s.finish_spyreport(p, f)
 	end
-
 end

@@ -68,11 +68,9 @@ class MessagesController < ApplicationController
   # DELETE /messages/1
   # DELETE /messages/1.json
   def destroy
-    if current_user==@message.sender
-      @message.sender=nil
-      @message.save
-    else
+    if current_user!=@message.sender
       @message.recipients.delete(current_user)
+
     end
     
 

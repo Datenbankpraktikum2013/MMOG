@@ -23,6 +23,8 @@
 
             <%if technology.building_rank_require?(current_user) == false%>
             <td><%='Fehlende Forschungsstufe' %></td>
+            <%elsif technology.max_rank?(current_user)%>
+            <td><%='Maxrank erreicht' %></td>
             <%elsif technology.tech_require?(current_user)== false %>
             <td><%='Fehlende Voraussetzung' %></td>
             <%elsif  technology.cost_required?(current_user) == false %>

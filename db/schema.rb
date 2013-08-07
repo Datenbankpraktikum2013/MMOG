@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130807085615) do
+ActiveRecord::Schema.define(version: 20130807090812) do
 
   create_table "alliances", force: true do |t|
     t.string   "name",        null: false
@@ -57,6 +57,10 @@ ActiveRecord::Schema.define(version: 20130807085615) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "build_time"
+    t.integer  "build_cost_ore",        default: 0
+    t.integer  "build_cost_crystal",    default: 0
+    t.integer  "build_cost_money",      default: 0
+    t.integer  "build_cost_population", default: 0
   end
 
   create_table "buildingtypes_ships", id: false, force: true do |t|
@@ -141,6 +145,7 @@ ActiveRecord::Schema.define(version: 20130807085615) do
     t.datetime "updated_at"
     t.integer  "sunsystem_id"
     t.integer  "user_id"
+    t.boolean  "under_construction"
   end
 
   create_table "ranks", force: true do |t|
@@ -290,7 +295,7 @@ ActiveRecord::Schema.define(version: 20130807085615) do
     t.boolean  "deathstar",                   default: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "increased_spypower",          default: 1
+    t.float    "increased_spypower",          default: 1.0
     t.integer  "user_id"
     t.integer  "researchlvl",                 default: 1
     t.integer  "researching",                 default: 0

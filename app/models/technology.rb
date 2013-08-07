@@ -224,7 +224,11 @@ class Technology < ActiveRecord::Base
 
     technology_requires.find_each do |tech|
       unless tech.pre_tech_id == 0
-        requirements << Technology.find(tech.pre_tech_id).title.to_s << ', '
+        requirements << Technology.find(tech.pre_tech_id).title.to_s
+        if tech.pre_tech_rank != 1
+          requirements << ': ' << tech.pre_tech_rank.to_s
+        end
+        requirements << ', '
       end
     end
 
