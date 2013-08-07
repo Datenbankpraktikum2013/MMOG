@@ -5,7 +5,7 @@ class Tradereport < ActiveRecord::Base
 		r = Report.new
 		self.report = r
 
-		r.defender = planet.user
+		r.defenders << planet.user
 		r.defender_planet = planet
 
 		r.attacker = fleet.user

@@ -5,7 +5,12 @@ class AlliancesController < ApplicationController
   # GET /alliances
   # GET /alliances.json
   def index
-    @alliances = Alliance.all
+    if current_user.alliance_id==nil
+      @alliance = Alliance.new
+    else
+      @alliance = current_user.alliance
+      redirect_to @alliance
+    end
   end
 
   def send_mail
@@ -49,7 +54,7 @@ class AlliancesController < ApplicationController
   end
 
   def change_user_rank
-    @rank=@alliance.ranks.find_by_id(params['rank']['id'])
+    @rank=@alliance.ranks.find_by_id(params['rank'])
     @user=@alliance.users.find_by_id(params['uid'])
     respond_to do |format|
       if @alliance.change_user_rank(@user,@rank)
@@ -70,9 +75,7 @@ class AlliancesController < ApplicationController
 
   # GET /alliances/new
   def new
-    if current_user.alliance_id==nil
-      @alliance = Alliance.new
-    end
+
   end
 
   # GET /alliances/1/edit
@@ -130,10 +133,6 @@ class AlliancesController < ApplicationController
         end
       end
     end
-  end
-
-  #GET  /alliances/1/edit/useradd
-  def useradd
   end
 
   # PATCH/PUT /alliances/1

@@ -62,7 +62,7 @@ class Galaxy < ActiveRecord::Base
       # Indirekt "H" / Universum horizontal umklappen
       dist.append(Math.sqrt(x**2 + y**2))
 
-      dist.sort().first() * 100
+      dist.sort().first() * 600
 
     else
       -1
@@ -72,5 +72,10 @@ class Galaxy < ActiveRecord::Base
   def mention()
     pos = self.getCoords()
     GalaxiesHelper.generateNear(pos[0], pos[1])
+  end
+
+  def is_visible_by?(user)
+    return false if user.nil?
+    return user.visible_galaxies.include?(self)
   end
 end

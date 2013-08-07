@@ -1,12 +1,25 @@
 <%= javascript_include_tag :defaults %>
 <%= csrf_meta_tag %>
 
+
+
 <br><h1 align="middle">Update Technologies</h1><br><br><br>
 
 <table border="1" align="center" valign="middle">
   <tbody>
   <% array = current_user.get_researching_tech %>
   <%research_id = UserSetting.find(current_user).researching%>
+  <% if research_id != 0 %>
+  <tr>
+
+    <div class='progress progress-striped active' >
+      <span><%= "Erforsche Technologie: " + array[0] + " Stufe " + array[1]%></span>
+        <div class='bar' id='auto-updating-progressbar' ></div>
+    </div>
+    <div align="center"><span style="font-weight:bold; color:red"><%= 'Forschung beendet: ' + array[4].to_s %></span></div><br>
+
+  </tr>
+  <% end %>
   <% TechnologyRequire.all.map(&:building_rank).uniq.each do |rank| %>
     <tr><th colspan="4"><%= "Forschungszentrum Stufe: "+ rank.to_s %></th></tr>
       <% TechnologyRequire.where(:building_rank => rank).map(&:tech_id).uniq.each do |technology| %>
@@ -30,11 +43,7 @@
             <%elsif  technology.cost_required?(current_user) == false %>
             <td><%='Nicht genug Geld' %></td>
             <%elsif research_id != 0%>
-                <td align="middle"  valign="middle" width="100">
-                <%= button_to 'Forscht',
-                    {:controller => "technologies", :action => "show_index",    :uid=> current_user, :id=> technology} ,
-                    :method=>:post, data: { confirm: array}
-                %></td>
+            <td align="middle"  valign="middle" ><%= 'Forscht.' %></td>
             <%else%>
             <td align="middle"  valign="middle" width="100"><%= button_to 'Upgrade',
                 {:controller => "technologies", :action => "upgrade",    :uid=> current_user, :id=> technology} ,
@@ -47,36 +56,20 @@
   </tbody>
 </table>
 
-<br><br><br><h1 align="middle">Administrate Technologies</h1><br><br><br>
+<script>
+    gone = <%=Time.now.to_i - array[2].to_i %>;
+    end  = <%=(array[3].to_i) +2 %>;
+    function update_progressbar(){
+        if (gone == (end)) {
+            location.reload();
+        }
+        gone += 0.25;
+        p = (gone/end)*100;
+        d = document.getElementById('auto-updating-progressbar');
+        d.style.width = (p+"%");
+    };
+    if(end != 2) {
+        setInterval(update_progressbar, 250);
+    };
 
-
-<table border="1" align="center" und valign="middle">
-  <thead>
-  <tr>
-    <th></th>
-    <th>Factor</th>
-    <th>cost</th>
-    <th>duration</th>
-    <th>maxrank</th>
-  </tr>
-  </thead>
-
-  <tbody>
-  <% @technologies.each do |technology| %>
-      <tr>
-        <td align="middle"  valign="middle"><%= technology.name %></td>
-        <td align="middle"  valign="middle"><%= technology.factor %></td>
-        <td align="middle"  valign="middle"><%= technology.cost%></td>
-        <td align="middle"  valign="middle"><%= technology.duration %></td>
-        <td align="middle"  valign="middle"><%= technology.maxrank %></td>
-        <td><%= link_to 'Show', technology %></td>
-        <td><%= link_to 'Edit', edit_technology_path(technology) %></td>
-        <td><%= link_to 'Destroy', technology, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-  <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Technology', new_technology_path %>
+</script>

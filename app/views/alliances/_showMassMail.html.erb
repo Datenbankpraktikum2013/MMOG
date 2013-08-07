@@ -1,13 +1,14 @@
+<div class="well"><strong>Rundmail</strong></div>
+
 <%= form_tag(edit_alliance_path+'/send_mail')%>
-	<p>	<%=label_tag 'Rundmail: ' %>
-		<p>
-			<p>
-				<%= text_field_tag 'subject' %>
-			</p>
-			<p>
-				<%= text_area_tag 'body', nil , rows: 15, cols: 65%>
-			</p>
-			<%= submit_tag 'Abschicken' %>
-		</p>
+	<p>
+		<%= label_tag 'Betreff' %>
+		<%= text_field_tag 'subject' %>
+	</p>
+	<p>
+		<%=label_tag 'Nachricht' %>
+		<%= text_area_tag 'body', nil , class: 'readmsgarea' %>
+	</p>
+		<%= submit_tag 'Abschicken', class: 'btn' %>
 	</p>
 </form>

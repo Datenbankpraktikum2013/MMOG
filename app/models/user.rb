@@ -16,12 +16,13 @@ class User < ActiveRecord::Base
   
   has_many :fleets
   has_many :planets
+  has_and_belongs_to_many :sunsystems
   has_and_belongs_to_many :reports
   has_many :shipcounts
   belongs_to :alliance
   #receiving messages
   has_many :messages_user
-  has_many :messages, :through => :messages_user, :source => :message, :select => "messages.*, messages_users.read AS read"
+  has_many :messages, :through => :messages_user, :source => :message, :select => "messages.*, messages_users.read AS read, messages_users.recipient_deleted as deleted"
   accepts_nested_attributes_for :messages_user
   has_many :sent_messages, :class_name => 'Message', :foreign_key => 'sender_id'
   #relationships
@@ -170,7 +171,13 @@ class User < ActiveRecord::Base
 
   def get_researching_tech
 
-    string = ""
+    array = []
+    # 1 TechnologyName
+    # 2 Stufe
+    # 3 Startzeitpunkt
+    # 4 Dauer
+    # 5 Endzeitpunkt
+
     tech = user_setting.researching
 
     if tech != 0
@@ -189,26 +196,52 @@ class User < ActiveRecord::Base
       minuten = time.to_i/60 - stunden*60
       sekunden = time.to_i - minuten*60 - stunden*3600
 
-      string << 'Folgende Technologie wird erforscht: ' << Technology.find(tech).title.to_s << "\n"
-      string << 'Erforsche Stufe :' << rank.to_s << "\n"
-      string << 'Forschung beendet am ' << time.day.to_s << '.' << time.month.to_s << '.' << time.year.to_s
-      string << ' um ' << time.hour.to_s << ':'
-      if time.min < 10 then
-        string << '0' << time.min.to_s
-      else
-        string << time.min.to_s
-      end
-      string << ":"
-      if time.sec < 10 then
-        string << '0' << time.sec.to_s
-      else
-        string << time.sec.to_s
-      end
+      array[0] = Technology.find(tech).title.to_s
+      array[1] = rank.to_s
+      array[2] = user_setting.updated_at
+      array[3] = Technology.find(tech).get_research_duration(self)
+      array[4] = time
+
 
     end
 
-    string
+    array
 
+  end
+
+  def visible_galaxies
+    out = []
+    suns = visible_sunsystems
+    for s in suns
+      out << s.galaxy
+    end
+    return out
+  end
+
+  def visible_sunsystems
+    out = []
+    a = self.alliance
+    if a.nil? then
+      out = self.sunsystems
+    else
+      a_users = a.users
+      a_users.each do |a_user|
+         a_user.sunsystems.each do |s|
+           out << s
+         end
+      end
+    end
+    return out
+  end
+
+  def visible_planets
+    out = []
+    for s in visible_sunsystems
+      s.planets.each do |p|
+        out << p
+      end
+    end
+    return out
   end
 
 end

@@ -25,7 +25,7 @@ Mmog::Application.routes.draw do
 
   resources :buildingtypes
 
-  resources :technologies
+  resources :technologies, :except => [:edit, :update, :create, :new, :destroy, :show]
 
   devise_for :users #not needed any more, :controllers => { :registrations => "users/registrations"}
 
@@ -44,8 +44,6 @@ Mmog::Application.routes.draw do
   resources :planets
 
   post 'alliances/:id/edit/change_default_rank' => 'alliances#change_default_rank'
-
-  get 'alliances/:id/edit/useradd' => 'alliances#useradd'
 
   post 'alliances/:id/edit/user_add_action' => 'alliances#user_add_action'
 

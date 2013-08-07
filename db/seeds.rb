@@ -9,8 +9,7 @@
 #Default-Werte von Planeten und Gebäude
 
 GalaxiesHelper.generateAt(0,0)
-Buildingtype.init_all()
-BuildingtypeRequire.init_building_requirements()
+Buildingtype.init()
 
 #Default-Werte von Technologien
 

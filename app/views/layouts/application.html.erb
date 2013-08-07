@@ -6,10 +6,10 @@
 	  	<%= javascript_include_tag "application", "data-turbolinks-track" => false %>
 	  	<%= csrf_meta_tags %>
 	  	<style>
-    input {
-        max-width: 100%;
-    } 
-</style>
+		    input {
+		        max-width: 100%;
+		    } 
+		</style>
 	</head>
 	<body>
 	<div class="container">
@@ -22,12 +22,18 @@
 			 					Start
 			 				<% elsif controller_name == 'messages' %>
 			 					Nachrichten
+			 				<% elsif controller_name == 'alliances' %>
+			 					Allianzen
+                            <% elsif controller_name == 'technologies' %>
+                                Technlogien
 			 				<%end %>
 		 				</a>
 		 			</li>
 		  			<li><a href="/">Start</a></li>
 		  			<% if user_signed_in? %>
+                        <li><a href="<%= technologies_path %>">Meine Technologien</a></li>
 		  				<li><a href="<%= messages_path %>">Nachrichten <span class="badge"><%= current_user.unread_messages %></span> </a></li>
+		  				<li><a href="<%= alliances_path %>">Meine Allianz</a></li>
 		  			<% end %>
 				</ul>
 		  	</div>
@@ -37,7 +43,7 @@
 		  		</div>
 			</div>
 		  	<div class="span2">
-			  		<div class="well span 2">
+			  		<div class="well span2">
 					<% if user_signed_in? %>
 
 						Willkommen zurück, <%= current_user.username %>!
