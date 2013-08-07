@@ -5,7 +5,12 @@
          pos[1] = (pos[1] + 2 + @pos[1]) % 5
          filename = GalaxiesHelper.getImageFilename(g.x, 80)
          out = filename[16] + filename[18, 4] %>
-      <a href="<%= galaxy_path(g) %>"><div class="galaxy visiblegalaxy <%= out %>" style="position: absolute; top: <%= 80*pos[1] %>px; left: <%= 80*pos[0] %>px;" onmouseover="javascript:showGalaxyInfo(<%= g.x %>)"></div></a>
+      <%= puts current_user %>
+      <% if (g.is_visible_by?(current_user)) then %>
+          <a href="<%= galaxy_path(g) %>"><div class="galaxy visiblegalaxy <%= out %>" style="position: absolute; top: <%= 80*pos[1] %>px; left: <%= 80*pos[0] %>px;" onmouseover="javascript:showGalaxyInfo(<%= g.x %>)"></div></a>
+      <% else %>
+          <div class="galaxy <%= out %>" style="position: absolute; top: <%= 80*pos[1] %>px; left: <%= 80*pos[0] %>px;"></div>
+      <% end %>
   <% end %>
 
 </div>

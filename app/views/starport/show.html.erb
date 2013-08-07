@@ -1,0 +1,23 @@
+<p id="notice"><%= notice %></p>
+<%= form_tag("build", method: "post") do %>
+<h1>Available Ships on Planet</h1>
+<table>
+
+<% unless @shipshelper.get_available_ships(@planet).empty? %>
+  
+    <td><h2><%= @planet.name %></h2></td>
+    <tr>
+    <% @shipshelper.get_available_ships(@planet).each do |s| %>
+	    <td><%= s.name %></td>
+	    <td><%= text_field(:ship, s.id) %></td>
+    </tr>
+    <% end %>
+
+
+</table>
+<%= hidden_field_tag 'planet', @planet.id.to_s %>
+<%= submit_tag("Build") %> 
+<%= link_to 'Zurück', controller: "starport" %>
+    <% end %>
+  
+  <% end %>

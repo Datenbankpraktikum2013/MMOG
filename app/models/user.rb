@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
   belongs_to :rank
   has_many :user_technologies
   has_many :technologies, :through => :user_technologies
-
+  
   has_many :fleets
   has_many :planets
   has_and_belongs_to_many :sunsystems
@@ -25,7 +25,32 @@ class User < ActiveRecord::Base
   has_many :messages, :through => :messages_user, :source => :message, :select => "messages.*, messages_users.read AS read, messages_users.recipient_deleted as deleted"
   accepts_nested_attributes_for :messages_user
   has_many :sent_messages, :class_name => 'Message', :foreign_key => 'sender_id'
+  #relationships
+  has_many :relationship
+  has_many :friends, :through => :relationship, :source => :friend
+  has_many :users, :through => :relationship, :source => :user
+  has_many :reverse_relationships, foreign_key: "friend_id", class_name: "Relationship"
+  #has_many :friends, :foreign_key => 'friend_id', :class_name => 'Relationship'
+  #has_many :users, :foreign_key => 'user_id', :class_name => 'Relationship'
 
+  #check friendship
+  def friends?(other_user)
+    relationships.find_by_friend_id(other_user.id)
+  end
+
+  #create friendship
+  def make_friendship!(other_user)
+    self.friends.create(:user_id => self,:friend_id => other_user)
+    other_user.friends.create(:user_id => other_user, :friend_id => self)
+    return true
+  end
+
+  #end friendship
+  def end_friendship!(other_user)
+    relationships.find_by_friend_id(other_user.id).destroy
+    other_user.relationships.find_by_friend_id(current_user.id).destroy
+  end
+  
   #init usersettings when user is created
   after_create :init_usersettings
   def init_usersettings

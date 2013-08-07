@@ -6,6 +6,18 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+# Konstanten und Standardwerte bitte als Strings in den GameSettings eintragen
+# Eintragen: GameSettings.set "key", "value"
+# Abfragen: GameSettings.get "key"
+
+GameSettings.set "PLANET_MIN_SIZE", "10000"
+GameSettings.set "PLANET_MAX_SIZE", "100000"
+GameSettings.set "WORLD_DISTANCE_FACTOR", "60"
+GameSettings.set "WORLD_LENGTH", "5"
+GameSettings.set "WORLD_VIEW_LENGTH", "5"
+
+
+
 #Default-Werte von Planeten und Gebäude
 
 GalaxiesHelper.generateAt(0,0)
