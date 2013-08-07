@@ -23,10 +23,10 @@ class Fleet < ActiveRecord::Base
     self.ressource_capacity = 0
     self.ore = 0
     self.crystal = 0
-    #self.user = planet.user
-    # ACHTUNG, NUR ZU TESTZWECKEN
-    self.user = User.find(1)
-    # ACHTUNG, NUR ZU TESTZWECKEN
+    self.user = planet.user
+    # # ACHTUNG, NUR ZU TESTZWECKEN
+    # self.user = User.find(1)
+    # # ACHTUNG, NUR ZU TESTZWECKEN
     self.storage_factor = self.user.user_setting.increased_capacity
     self.velocity_factor = self.user.user_setting.increased_movement
     self.offense = 0
@@ -44,6 +44,22 @@ class Fleet < ActiveRecord::Base
 #################################
 ############# GETTER ############
 #################################
+  
+  
+  # calculates of a {ship => amount} hash, the building costs by returning a {ressource => cost} hash
+  def self.get_ressource_cost (ship_hash)
+    unless hash_is_valid?(ship_hash)
+      raise RuntimeError, "The Input is not valid (invalid amount or wrong objects), ships cannot be added"
+    end
+    ressource_hash = Hash.new(0)
+    ship_hash.each do |ship, amount|
+      ressource_hash[:credit_cost] += ship.credit_cost * amount
+      ressource_hash[:ore_cost] += ship.ore_cost * amount
+      ressource_hash[:crystal_cost] += ship.crystal_cost * amount
+      ressource_hash[:crew_capacity] += ship.crew_capacity * amount
+    end
+    ressource_hash
+  end
 
   def self.get_home_fleet(planet)
     unless planet.is_a?(Planet)
@@ -55,7 +71,15 @@ class Fleet < ActiveRecord::Base
 
   # returns the free capacity of a fleet
   def get_free_capacity
-    return diff = self.ressource_capacity - (self.ore + self.credit + self.crystal)
+    return self.get_capacity - self.get_amount_of_ressources
+  end
+
+  def get_capacity
+    capacity = self.ressource_capacity * self.storage_factor
+  end
+
+  def get_amount_of_ressources
+    self.ore + self.credit + self.crystal
   end
 
   #Returns Speed of slowest ship in the fleet
@@ -94,23 +118,7 @@ class Fleet < ActiveRecord::Base
         (time/(ship.consumption))
       end 
   end
-
-  # calculates of a {ship => amount} hash, the building costs by returning a {ressource => cost} hash
-  def Fleet.get_ressource_cost (ship_hash)
-    unless hash_is_valid?(ship_hash)
-      raise RuntimeError, "The Input is not valid (invalid amount or wrong objects), ships cannot be added"
-    end
-    ressource_hash = Hash.new(0)
-    ship_hash.each do |ship, amount|
-      ressource_hash[:credit_cost] += ship.credit_cost * amount
-      ressource_hash[:ore_cost] += ship.ore_cost * amount
-      ressource_hash[:crystal_cost] += ship.crystal_cost * amount
-      ressource_hash[:crew_capacity] += ship.crew_capacity * amount
-    end
-    ressource_hash
-  end
  
-
 
   # returns the amount of a shiptype in one fleet
   # check if s is ship
@@ -122,9 +130,6 @@ class Fleet < ActiveRecord::Base
       sf.amount
     end
   end
-
-
-
 
   # Returns a Hash of {Ship => Amount} pairs
   def get_ships()
@@ -139,13 +144,11 @@ class Fleet < ActiveRecord::Base
     end
   end
 
-
-
 #################################
 ######### MISSION STUFF #########
 #################################
 
-
+=begin
 # BASED
 # own > own (no fuel)
 
@@ -198,7 +201,7 @@ class Fleet < ActiveRecord::Base
     fleet = self.split_fleet(ship_hash)
 
     distance = fleet.origin_planet.getDistance(destination)
-    velocity = fleet.get_velocity * fleet.velocity_factor
+    velocity = fleet.get_velocity
     time = get_needed_time(velocity, distance)
 
     fleet.departure_time = Time.now.to_i
@@ -272,7 +275,7 @@ class Fleet < ActiveRecord::Base
 
 #=begin  
   def attack_planet_in(time, planet)
-      
+    #resqueue -> attack
   end
 #=end
 
@@ -349,10 +352,6 @@ class Fleet < ActiveRecord::Base
     end
   end
 #=end
-
-  # def move_to_planet_in(p,t)
-  #   Resque.enqueue_in(t.second, MoveFleet, self.id ,p.id)
-  # end
 
 ####
 # => Spy
@@ -569,7 +568,7 @@ class Fleet < ActiveRecord::Base
       raise RuntimeError, "Input is invalid --> Planet needed"
     end
 
-    velocity = self.get_velocity * self.velocity_factor
+    velocity = self.get_velocity
     distance = self.origin_planet.getDistance(planet)
     time = self.get_needed_time(velocity, distance)
     self.target_planet = self.origin_planet
@@ -581,7 +580,7 @@ class Fleet < ActiveRecord::Base
   end
 #=end
 
-
+=end
 #################################
 ######### MANIPULATION ##########
 #################################
@@ -619,6 +618,7 @@ class Fleet < ActiveRecord::Base
     unless planet.is_a?(Planet)
       raise RuntimeError, "Invalid Input -> Only Planets"
     end
+
     self.ore = self.ore - planet.give(:Ore, self.ore)
     self.crystal = self.crystal - planet.give(:Crystal, self.crystal)
     self.credit = self.credit - planet.give(:Money, self.credit)
@@ -627,9 +627,10 @@ class Fleet < ActiveRecord::Base
 #=end
 
 
-
+=begin
   # returns a fleet, that was created from self, with the amounts of ships that are in the argument hash
-  # gets the values for capacity and movement factor of the fleet that it was splitted from
+  # if there are ressources in the original fleet, those will only be transferred into the new fleet,
+  # if the original fleet has enough space after splitting
   def split_fleet(ship_hash)  
     unless enough_ships?(ship_hash)
       raise RuntimeError, "Not enough ships for a split"
@@ -642,24 +643,29 @@ class Fleet < ActiveRecord::Base
     new_fleet.save
     new_fleet.add_ships(ship_hash)
     self.destroy_ships(ship_hash)
+    # calculate amount of ressources in self
+    old_ress = self.get_amount_of_ressources
+    unless self.get_capacity >= old_ress
+
+    new_ress = new_fleet.get_amount_of_ressources
     return new_fleet
   end
+=end
 
-
-
+=begin
   # merges another fleet with self
   # PRUEFEN OB DIE FLOTTEN AM SELBEN ORT SIND?????
   def merge_fleet(fleet)  
     unless fleet.is_a?(Fleet)
       raise RuntimeError, "The Input is not valid (invalid amount or wrong objects), ships cannot be added"
     end
-
+    # RESSOURCEN
     ship_hash = fleet.get_ships
     self.add_ships(ship_hash)
     fleet.destroy
     self.update_values
   end
-
+=end
 
 
   # Adds Ship to Fleet in t seconds
@@ -754,7 +760,7 @@ class Fleet < ActiveRecord::Base
 
 
   # calculates changing values for the whole fleet, if there were ships added or destroyed
-  # Gets called after Fleet was initialized and after adding or destroying ships
+  # Gets called after Fleet was initialized and after adding or destroying ships, or splitting...merging...
   def update_values
     ship_hash = self.get_ships
     offense = 0
@@ -776,9 +782,6 @@ class Fleet < ActiveRecord::Base
     if self.target_planet == self.origin_planet && self.start_planet == self.origin_planet 
       self.velocity_factor = user.user_setting.increased_movement # HYPERSPACE TECHNOLOGY???????????????
       self.storage_factor = user.user_setting.increased_capacity
-      self.ressource_capacity = ressource_capacity * user.user_setting.increased_capacity
-    else
-      self.ressource_capacity = ressource_capacity * self.storage_factor
     end
     self.save
   end
