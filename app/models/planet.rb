@@ -485,8 +485,10 @@ class Planet < ActiveRecord::Base
         u.money = u.money + number
         u.save
       end
-
+    else
+      back = number
     end
+    self.save
     return back
   end
 
@@ -546,7 +548,13 @@ class Planet < ActiveRecord::Base
     else
       back = number
     end
+    self.save
     return back
+  end
+
+  def is_visible_by?(user)
+    return false if user.nil?
+    return user.visible_planets.include?(self)
   end
 
 end
