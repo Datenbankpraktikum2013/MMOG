@@ -9,12 +9,8 @@ class Fleet < ActiveRecord::Base
 
 ############################
 #!!!!!!!!!!!!!!!!!!!!MENTION???????????????????????????
-#SAVE????????????
 ############################
 
-
-  
-  # EVTL DEP ODER ARR IN DATE UMAENDERN??????????????????????????????
   # kreiert eine Flotte mit default werten und den aktuellen Forschungsfaktoren.
   # Es muss ein Planet als Argument uebergeben werden
   def initialize(planet)
@@ -55,6 +51,11 @@ class Fleet < ActiveRecord::Base
     end
 
     Fleet.where(mission_id: 1, origin_planet: planet).first
+  end
+
+  # returns the free capacity of a fleet
+  def get_free_capacity
+    return diff = self.ressource_capacity - (self.ore + self.credit + self.crystal)
   end
 
   #Returns Speed of slowest ship in the fleet
@@ -185,9 +186,7 @@ class Fleet < ActiveRecord::Base
   #ID=6 : Transport
 
 #=begin
-  # HIER SOLL NOCH EIN HASH MITGEGEBEN WERDEN, WELCHES DIE TEILMENGE AN SCHIFFEN DARSTELLT DIE BEWEGET WERDEN SOLLEN
-  # SO KANN SICHERGESTELLT WERDEN,DAS EINE FLOTTE IMMER AM HEIMATPLANETEN BLEIBT
-  def move(mission, destination)
+  def move(mission, destination, ship_hash, ore, crystal, credit)
     unless destination.is_a?(Planet)
       raise RuntimeError, "Cannot Move fleet, because Input is no Planet"
     end
@@ -195,73 +194,110 @@ class Fleet < ActiveRecord::Base
     unless self.origin_planet == self.start_planet && self.origin_planet == self.target_planet
       raise RuntimeError, "Cannot move fleet that is not situated at home -> You can only send it back to origin"
     end
+    # throws runtimeException??????????
+    fleet = self.split_fleet(ship_hash)
 
-    distance = self.start_planet.getDistance(destination)
-    velocity = self.get_velocity
+    distance = fleet.origin_planet.getDistance(destination)
+    velocity = fleet.get_velocity * fleet.velocity_factor
     time = get_needed_time(velocity, distance)
 
-    self.departure_time = Time.now.to_i
-    self.arrival_time = self.departure_time + time
+    fleet.departure_time = Time.now.to_i
+    fleet.arrival_time = fleet.departure_time + time
 
     energy = 0
 
-    ships = self.get_ships  
+    ships = fleet.get_ships  
     ships.each do |ship, amount|
       energy += get_needed_fuel(ship, time) * amount
     end
 
     #origin and start planet are ok, only target planet needs to be changed
-    self.target_planet = destination
+    fleet.target_planet = destination
+    home = fleet.origin_planet
+
 
     case mission.id
       when 2 then # Colonization
         energy *= 2
-        # subtract energy from planet!!!!!!!!!!!!!!!!!!!!!!!!!
-        colonize_planet_in(self.arrival_time, destination)
+        # subtract energy from planet if enough, else Error
+        if home.take(:Energy, energy) - energy == 0
+          fleet.load_ressources(ore, crystal, credit, fleet.origin_planet)
+          colonize_planet_in(fleet.arrival_time, destination)
+        else
+          raise RuntimeError, "Not enough energy to move the fleet"
+        end
       when 3 then # Attack
         energy *= 2
-        # subtract energy from planet!!!!!!!!!!!!!!!!!!!!!!!!!
-        attack_planet_in(self.arrival_time, destination)
+        # subtract energy from planet if enough, else Error
+        if home.take(:Energy, energy) - energy == 0
+          attack_planet_in(fleet.arrival_time, destination)
+        else
+          raise RuntimeError, "Not enough energy to move the fleet"
+        end
       when 4 then # Travel
-        # subtract energy from planet!!!!!!!!!!!!!!!!!!!!!!!!!
-        travel_to_planet_in(self.arrival_time, destination)
+        # subtract energy from planet if enough, else Error
+        if home.take(:Energy, energy) - energy == 0
+          travel_planet_in(fleet.arrival_time, destination)
+        else
+          raise RuntimeError, "Not enough energy to move the fleet"
+        end
       when 5 then # Spy
         energy *= 2
-        # subtract energy from planet!!!!!!!!!!!!!!!!!!!!!!!!!
-        spy_planet_in(self.arrival_time, destination)
+        # subtract energy from planet if enough, else Error
+        if home.take(:Energy, energy) - energy == 0
+          spy_planet_in(fleet.arrival_time, destination)
+        else
+          raise RuntimeError, "Not enough energy to move the fleet"
+        end
       when 6 then # Transport
+        energy *= 2
+        # subtract energy from planet if enough, else Error
+        if home.take(:Energy, energy) - energy == 0
+          fleet.load_ressources(ore, crystal, credit, fleet.origin_planet)
+          transport_to_planet_in(fleet.arrival_time, destination)
+        else
+          raise RuntimeError, "Not enough energy to move the fleet"
+        end
       else 
         raise RuntimeError "Invalid Mission for Movement (needed 1 < id <= 6)"
     end
   end
 #=end
 
+
+
 ####
 # => Attack
 ####
 
-=begin  
+#=begin  
   def attack_planet_in(time, planet)
-    
+      
   end
+#=end
 
+#=begin  
   def attack(planet)
-    #BAUSTELLE#
     other_user = planet.user
     if other_user.nil? # unknown planet
-
+      # => battle_report.do_me
+      self.return_to_origin(planet)
     elsif other_user == self.user # own planet
-
+      # => battle_report.do_me
+      self.return_to_origin(planet)
     elsif other_user.alliance == self.user.alliance # alliance planet
-
+      # => battle_report.do_me
+      self.return_to_origin(planet)
     else # enemy
-
+      # FIGHT
+      # => battle_report.do_me
+      #if survived:
+      #  self.return_to_origin(planet)
     end
-    #BAUSTELLE#
   end
-=end
+#=end
 
-=begin
+#=begin
   def fight(planet)
     defender_fleets=Fleet.where(start_planet: planet.id, target_planet: planet.id)
 
@@ -312,7 +348,7 @@ class Fleet < ActiveRecord::Base
       self.destroy
     end
   end
-=end
+#=end
 
   # def move_to_planet_in(p,t)
   #   Resque.enqueue_in(t.second, MoveFleet, self.id ,p.id)
@@ -321,7 +357,7 @@ class Fleet < ActiveRecord::Base
 ####
 # => Spy
 ####
-=begin
+#=begin
   # comment me!
   # Fehlerbehandlung
   def spy_planet_in(time, planet)
@@ -336,7 +372,7 @@ class Fleet < ActiveRecord::Base
     #Resque.enqueue_in(t.second, MoveFleet, self.id ,p.id)
   end
 
-=end
+#=end
 
 #=begin
   # the actual spy action, that is triggered by the queue
@@ -350,15 +386,15 @@ class Fleet < ActiveRecord::Base
     if other_user.nil? # unknown
       factor = 0
       type = 1
-      self.return_to_origin
+      self.return_to_origin(planet)
     elsif other_user == self.user # own planet
       factor = 0
       type = 2
-      self.return_to_origin
+      self.return_to_origin(planet)
     elsif other_user.alliance == self.user.alliance # alliance planet
       factor = 0
       type = 3
-      self.return_to_origin
+      self.return_to_origin(planet)
     else  # enemy
       factor = planet.user.user_setting.increased_spypower
       type = 4
@@ -367,7 +403,7 @@ class Fleet < ActiveRecord::Base
       if own_spy_factor - r < 1
         f.destroy
       else
-        self.return_to_origin
+        self.return_to_origin(planet)
       end
     end
     # make spyreport
@@ -413,26 +449,29 @@ class Fleet < ActiveRecord::Base
 
     other_user = planet.user
     if other_user.nil? # unknown
+      # take Planet
+      planet.claim(self.user)
+
       self.start_planet = planet
       self.target_planet = planet
       self.origin_planet = planet
       self.arrival_time = 0
       self.departure_time = 0
       self.mission_id = 1
-      # delete the Colony Ship
       self.unload_ressources(planet)
+      # delete the Colony Ship
       self.destroy_ship(Ship.find(10))
       self.update_values
       # => colonization_report.do_me
     elsif other_user == self.user # own planet
       # => colonization_report.do_me
-      self.return_to_origin
+      self.return_to_origin(planet)
     elsif other_user.alliance == self.user.alliance # alliance planet
       # => colonization_report.do_me
-      self.return_to_origin
+      self.return_to_origin(planet)
     else # enemy
       # => colonization_report.do_me
-      self.return_to_origin
+      self.return_to_origin(planet)
     end
   end
 #=end
@@ -442,7 +481,7 @@ class Fleet < ActiveRecord::Base
 # => Travel
 ####
 
-=begin  
+#=begin  
   def travel_to_planet_in(time, planet)
     unless planet.is_a?(Planet)
       raise RuntimeError, "Input is invalid -> only Planets are allowed"
@@ -450,8 +489,9 @@ class Fleet < ActiveRecord::Base
     if time < 0
       raise RuntimeError, "Input is invalid -> only positive timevalues are allowed"
     end
+    # resqueue -> travel
   end
-=end
+#=end
 
 #=begin  
   def travel(planet)
@@ -462,7 +502,7 @@ class Fleet < ActiveRecord::Base
     other_user = planet.user
     if other_user.nil? # unknown planet
       # => travel_report.do_me muss hier bleiben, da self destroyed wird
-      self.return_to_origin
+      self.return_to_origin(planet)
     elsif other_user == self.user # own planet
       # => travel_report.do_me muss hier bleiben, da self destroyed wird
       home_fleet = Fleet.get_home_fleet(planet)
@@ -474,7 +514,7 @@ class Fleet < ActiveRecord::Base
       self.departure_time = 0
     else # enemy
       # => travel_report.do_me muss hier bleiben, da self destroyed wird
-      self.return_to_origin
+      self.return_to_origin(planet)
     end
   end
 #=end
@@ -491,6 +531,7 @@ class Fleet < ActiveRecord::Base
     if time < 0
       raise RuntimeError, "Input is invalid -> only positive timevalues are allowed"
     end
+    # resqueue --> planet
   end
 #=end
 
@@ -501,18 +542,18 @@ class Fleet < ActiveRecord::Base
     other_user = planet.user
     if other_user.nil? # unknown planet
       # => transport_report.do_me
-      self.return_to_origin
+      self.return_to_origin(planet)
     elsif other_user == self.user # own planet
       self.unload_ressources(planet)
       # => transport_report.do_me
-      self.return_to_origin
+      self.return_to_origin(planet)
     elsif other_user.alliance == self.user.alliance # alliance planet
       self.unload_ressources(planet)
       # => transport_report.do_me
-      self.return_to_origin
+      self.return_to_origin(planet)
     else # enemy
       # => transport_report.do_me
-      self.return_to_origin
+      self.return_to_origin(planet)
     end
   end
 #=end
@@ -521,47 +562,66 @@ class Fleet < ActiveRecord::Base
 # => Return
 ####
 
-=begin  
-  def return_to_origin()
-    # time difference berechnen und dann in die resqueue ein mergefleet triggern mit dem timeinterval
+#=begin  
+  # sends a fleet from planet to the planet that is stored in their origin_planet attribute
+  def return_to_origin(planet)
+    if planet.is_a?(Planet)
+      raise RuntimeError, "Input is invalid --> Planet needed"
+    end
+
+    velocity = self.get_velocity * self.velocity_factor
+    distance = self.origin_planet.getDistance(planet)
+    time = self.get_needed_time(velocity, distance)
+    self.target_planet = self.origin_planet
+    self.start_planet = planet
+    self.departure_time = Time.now.to_i
+    self.arrival_time = time + self.departure_time
+
+    # requeueueue --> mergefleet nach self.arrival time
   end
-=end
+#=end
 
 
 #################################
 ######### MANIPULATION ##########
 #################################
 
-
+#=begin
   # loads ressources in a fleet after checking if there is enough space for it
+  # if there is not enough space for them, it divides the 
   # additionally those ressources are subtracted from the planet, where the fleet is stationated
+  # check wether the planet is self.origin??????????????????????
   def load_ressources(ore, crystal, credit, planet)
+    if ore < 0 || crystal < 0 || credit < 0
+      raise RuntimeError, "You cannot load negative amounts of ressources in your fleet"
+    end
     unless planet.is_a?(Planet)
       raise RuntimeError, "Invalid Input -> Only Planets"
     end
-    if (ore + crystal + credit) > self.ressource_capacity
-      raise RuntimeError, "Not enough capacity in the fleet, to load that ressources"
+    if (ore + crystal + credit) > self.get_free_capacity
+      part = self.get_free_capacity / 3
+      self.ore += planet.take(:Ore, part)
+      self.crystal += planet.take(:Crystal, part)
+      self.credit += planet.take(:Money, part)      
+    else
+      self.ore += planet.take(:Ore, ore)
+      self.crystal += planet.take(:Crystal, crystal)
+      self.credit += planet.take(:Money, credit)
     end
-
-    self.ore += planet.take(:Ore, ore)
-    self.crystal += planet.take(:Crystal, crystal)
-    self.credit += planet.take(:Money, credit)
-
-    # METHODE GIBTS NOCH NICHT
-    #planet.subtract_ressources(ore, crystal, credit)
   end
+#=end
 
 #=begin
 
   # unloads all ressources in a fleet and puts them on the planet.
   # Ressources that exceed the capacity of the planet are  stored back in the fleet again
   def unload_ressources(planet)
-    ore = self.ore - planet.give(:Ore, self.ore)
-    crystal = self.crystal - planet.give(:Crystal, self.crystal)
-    credit = self.credit - planet.give(:Money, self.credit)
-    
-    # fill the rest of those ressources that didnt fit the capacity of the planet
-    self.load_ressources(ore, crystal, credit, planet)
+    unless planet.is_a?(Planet)
+      raise RuntimeError, "Invalid Input -> Only Planets"
+    end
+    self.ore = self.ore - planet.give(:Ore, self.ore)
+    self.crystal = self.crystal - planet.give(:Crystal, self.crystal)
+    self.credit = self.credit - planet.give(:Money, self.credit)
   end
 
 #=end
@@ -578,7 +638,7 @@ class Fleet < ActiveRecord::Base
     # get newest technologies
     self.update_values
 
-    new_fleet = Fleet.new(Planet.find(self.origin_planet))
+    new_fleet = Fleet.new(self.origin_planet)
     new_fleet.save
     new_fleet.add_ships(ship_hash)
     self.destroy_ships(ship_hash)
@@ -676,9 +736,8 @@ class Fleet < ActiveRecord::Base
   end
 
 
-    # calculates changing values for the whole fleet, if there were ships added or destroyed
-    # Gets called after Fleet was initialized and after adding or destroying ships
-    # FACTORS NEED TO BE ADDED
+  # calculates changing values for the whole fleet, if there were ships added or destroyed
+  # Gets called after Fleet was initialized and after adding or destroying ships
   def update_values
     ship_hash = self.get_ships
     offense = 0
