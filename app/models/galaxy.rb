@@ -2,12 +2,12 @@ class Galaxy < ActiveRecord::Base
 
   has_many :sunsystems
 
+  @@gal_factor = (GameSettings.get("WORLD_DISTANCE_FACTOR").to_i) **2
+
   def self.calcX(x, y)
     if x.integer? && y.integer? then
-      x = x % 5
-      y = y % 5
-      #x = x % $game_settings[:world_length]
-      #y = y % $game_settings[:world_length]
+      x = x % (GameSettings.get("WORLD_LENGTH").to_i)
+      y = y % (GameSettings.get("WORLD_LENGTH").to_i)
       (x + y) * (x + y + 1) / 2 + y + 1
     else
       -1
@@ -25,8 +25,7 @@ class Galaxy < ActiveRecord::Base
   end
 
   def getDistance(other)
-    $game_settings = Hash.new()
-    $game_settings[:world_length] = 5
+    w_length = GameSettings.get("WORLD_LENGTH").to_i
 
     if other.is_a?Galaxy then
       dist = Array.new()
@@ -52,17 +51,17 @@ class Galaxy < ActiveRecord::Base
       dist.append(Math.sqrt(x**2 + y**2))
 
       # Indirekt "V" / Universum vertikal umklappen
-      y2 = $game_settings[:world_length] - y
+      y2 = w_length - y
       dist.append(Math.sqrt(x**2 + y2**2))
 
       # Indirekt "VH" / Universum vertikal und horizontal umklappen
-      x = $game_settings[:world_length] - x
+      x = w_length - x
       dist.append(Math.sqrt(x**2 + y2**2))
 
       # Indirekt "H" / Universum horizontal umklappen
       dist.append(Math.sqrt(x**2 + y**2))
 
-      dist.sort().first() * 600
+      dist.sort().first() * @@gal_factor
 
     else
       -1
@@ -72,5 +71,10 @@ class Galaxy < ActiveRecord::Base
   def mention()
     pos = self.getCoords()
     GalaxiesHelper.generateNear(pos[0], pos[1])
+  end
+
+  def is_visible_by?(user)
+    return false if user.nil?
+    return user.visible_galaxies.include?(self)
   end
 end

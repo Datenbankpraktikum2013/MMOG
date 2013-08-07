@@ -8,4 +8,3 @@
 <% else %>
 	<%= render 'notPermitted' if current_user.alliance!=@alliance %>
 <% end %>
-<%= link_to 'Zurück', alliances_path %>

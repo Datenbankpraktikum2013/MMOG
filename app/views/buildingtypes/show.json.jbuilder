@@ -1,1 +1,1 @@
-json.extract! @buildingtype, :name, :stufe, :produktion, :energieverbrauch, :created_at, :updated_at
+json.extract! @buildingtype, :name, :level, :production, :energyusage, :created_at, :updated_at

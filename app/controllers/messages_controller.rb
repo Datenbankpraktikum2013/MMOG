@@ -11,10 +11,8 @@ class MessagesController < ApplicationController
   # GET /messages/1
   # GET /messages/1.json
   def show
-    if(@message.sender!=current_user)
-      @entry=MessagesUser.all.where(:user_id=>current_user,:message_id=>@message).first
-      @entry.read=true
-      @entry.save
+    if current_user!=@message.sender and @message.recipients.exists?(current_user)
+      tag_msg_as_seen(@message)
     end
   end
 
@@ -22,10 +20,6 @@ class MessagesController < ApplicationController
   def new
     @message = Message.new
     @recipient = params['recipient']
-  end
-
-  # GET /messages/1/edit
-  def edit
   end
 
   # POST /messages
@@ -39,10 +33,9 @@ class MessagesController < ApplicationController
       @message.subject=params['subject']
       @message.body=params['body']
       @message.sender=current_user
-
       if @recipient!=nil and current_user!=@recipient and @message.save 
         @message.recipients<<@recipient      
-        format.html { redirect_to @message, notice: 'Message was successfully created.' }
+        format.html { redirect_to @message, notice: 'Nachricht erfolgreich gesendet' }
         format.json { render action: 'show', status: :created, location: @message }
       else
         format.html { render action: 'new' }
@@ -51,29 +44,18 @@ class MessagesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /messages/1
-  # PATCH/PUT /messages/1.json
-  def update
-    respond_to do |format|
-      if @message.update(message_params)
-        format.html { redirect_to @message, notice: 'Message was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @message.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
   # DELETE /messages/1
   # DELETE /messages/1.json
   def destroy
-    if current_user!=@message.sender
-      @message.recipients.delete(current_user)
-
+    if @message.recipients.exists?(current_user)
+      @entry=MessagesUser.all.where(:user_id=>current_user,:message_id=>@message).first
+      @entry.recipient_deleted=true
+      @entry.save
+      tag_msg_as_seen(@message)
+    elsif current_user==@message.sender
+      @message.sender_deleted=true
+      @message.save
     end
-    
-
     respond_to do |format|
       format.html { redirect_to messages_url }
       format.json { head :no_content }
@@ -89,5 +71,14 @@ class MessagesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def message_params
       params.require(:message).permit(:text, :sender_id, :subject) if params[:message]
+    end
+
+  private
+    def tag_msg_as_seen(msg)
+      if(@message.sender!=current_user)
+        @entry=MessagesUser.all.where(:user_id=>current_user,:message_id=>@message).first
+        @entry.read=true
+        @entry.save
+      end
     end
 end

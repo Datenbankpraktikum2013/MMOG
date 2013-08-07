@@ -50,9 +50,17 @@ class RanksController < ApplicationController
   # DELETE /ranks/1
   # DELETE /ranks/1.json
   def destroy
-    @rank.destroy
+    unless @rank.standard
+      #find default rank
+      @alliance=@rank.alliance
+      @default=@alliance.ranks.where(:standard=>true).first
+      @rank.users.each do |u|
+        @default.users<<u
+      end
+      @rank.destroy
+    end
     respond_to do |format|
-      format.html { redirect_to ranks_url }
+      format.html { redirect_to @alliance }
       format.json { head :no_content }
     end
   end

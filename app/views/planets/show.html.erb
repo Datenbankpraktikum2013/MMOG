@@ -1,104 +1,77 @@
 <p id="notice"><%= notice %></p>
 
-<p class="ressourcenanzeige">
-  <strong>Z:</strong>
-  <%= @planet.z %>
-</p>
 
-<p class="ressourcenanzeige">
-  <strong>Name:</strong>
-  <%= @planet.name %>
-</p>
+<div class="planetbox">
+  <div class="ressources">
 
-<p class="ressourcenanzeige">
-  <strong>Spezialisierung:</strong>
-  <%= @planet.special%>
-</p>
+    <div class="ressource_item_anzeige" title="Bevölkerung">
+      <%= image_tag('/images/icons/menschen32px.png', :alt => "rss feed") %>
+      <%= @planet.population %> / <%= @planet.maxpopulation %>
+    </div>
 
-<p class="ressourcenanzeige">
-  <strong>Groesse:</strong>
-  <%= @planet.size %>
-</p>
+    <div class="ressource_item_anzeige" title="Energie">
+      <%= image_tag('/images/icons/energy32px.png', :alt => "rss feed") %>
+      <%= @planet.energy %> / <%= @planet.maxenergy %>
+    </div>
 
-<!--
-<p>
-  <strong>Eisenerz:</strong>
-  <%= @planet.ore %>
-</p>
+    <div class="ressource_item_anzeige" title="Eisen">
+      <%= image_tag('/images/icons/eisen32px.png', :alt => "rss feed") %>
+      <%= @planet.ore %> / <%= @planet.maxore %>
+    </div>
 
-<p>
-  <strong>Maxeisenerz:</strong>
-  <%= @planet.maxore %>
-</p>
--->
-
-<p class="ressourcenanzeige">
-
-  <strong>Eisenerz:</strong>
-  <%= @planet.ore %> / <%= @planet.maxore %>
-
-</p>
-
-<!--
-<p>
-  <strong>Kristalle:</strong>
-  <%= @planet.crystal %>
-</p>
-
-<p>
-  <strong>Maxkristalle:</strong>
-  <%= @planet.maxcrystal %>
-</p>
--->
-<p class="ressourcenanzeige">
-  <strong>Kristalle:</strong>
-  <%= @planet.crystal %> / <%= @planet.maxcrystal  %>
-</p>
-
-<!--
-<p>
-  <strong>Energie:</strong>
-  <%= @planet.energy %>
-</p>
-
-<p>
-  <strong>Maxenergie:</strong>
-  <%= @planet.maxenergy %>
-</p>
--->
-
-<p class="ressourcenanzeige">
-  <strong>Energie:</strong>
-  <%= @planet.energy %> / <%= @planet.maxenergy %>
-</p>
-
-<!--
-<p>
-  <strong>Einwohner:</strong>
-  <%= @planet.population %>
-</p>
-
-<p>
-  <strong>Maxeinwohner:</strong>
-  <%= @planet.maxpopulation %>
-</p>
--->
-<p class="ressourcenanzeige">
-  <strong>Einwohner:</strong>
-  <%= @planet.population %> / <%= @planet.maxpopulation %>
-</p>
+    <div class="ressource_item_anzeige" title="Kristalle">
+      <%= image_tag('/images/icons/kristall_blau32px.png', :alt => "rss feed") %>
+      <%= @planet.crystal %> / <%= @planet.maxcrystal  %>
+    </div>
+  </div>
 
 
 
-<p class="ressourcenanzeige">
-  <strong>User:</strong>
-  <% if @planet.user.present? %>
-     <%= @planet.user.username  %>
-  <% else %>
-     Nicht besetzt
-  <% end %>
-</p>
 
+  <div class="planetinfos">
+
+    <div class="planet_info_anzeige">
+
+      <strong>User:</strong>
+      <% if @planet.user.present? %>
+          <%= @planet.user.username  %>
+      <% else %>
+          Nicht besetzt
+      <% end %>
+
+    </div>
+
+    <div class="planet_info_anzeige">
+
+      <strong>Z-Koordinate:</strong>
+      <%= @planet.z %>
+
+    </div>
+
+    <div class="planet_info_anzeige">
+
+      <strong>Name:</strong>
+      <%= @planet.name %>
+
+    </div>
+
+    <div class="planet_info_anzeige">
+
+      <strong>Spezialisierung:</strong>
+      <%= @planet.special%>
+
+    </div>
+
+    <div class="planet_info_anzeige">
+
+      <strong>Groesse:</strong>
+      <%= @planet.size %>
+
+    </div>
+
+  </div>
+
+</div>
 
 <%= link_to 'Edit', edit_planet_path(@planet) %> |
 <%= link_to 'Back', planets_path %>

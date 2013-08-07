@@ -7,3 +7,11 @@ function showGalaxyInfo(item){
   $("#galaxy_info_"+item).show();
   old = item;
 };
+
+//function update_progressbar(){
+//    secondsvorbei += 1
+//    actualprogress = secondsvorbei / secongsgesamt
+//    $("#progressbarname").width(actualprogress+"%");
+//}
+
+//setInterval(update_progressbar, 1000);
