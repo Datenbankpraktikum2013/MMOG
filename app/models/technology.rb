@@ -24,16 +24,18 @@ class Technology < ActiveRecord::Base
       else
         duration = get_research_duration user
 
-        #Speichere aktuelle Forschung + Forschungsende
-        user.user_setting.update_attribute :researching, id
-        user.user_setting.update_attribute :finished_at, duration.second.from_now
+        #transaction do
+          #Speichere aktuelle Forschung + Forschungsende
+          user.user_setting.update_attribute :researching, id
+          user.user_setting.update_attribute :finished_at, duration.second.from_now
 
-        #ziehe Geld ab
-        user.update_attribute :money, (user.money - get_technology_cost(user) )
+          #ziehe Geld ab
+          user.update_attribute :money, (user.money - get_technology_cost(user) )
 
-        ####
-        #Resque.enqueue_in(duration.second, ResearchTechnology, user, id )
-        update_uservalues user
+          ####
+          Resque.enqueue_in(duration.second, ResearchTechnology, user.id, id )
+          #update_uservalues user
+        #end
       end
 
     end
@@ -42,6 +44,7 @@ class Technology < ActiveRecord::Base
   #Update Werte in UserSetting und UserTechnology
   def update_uservalues user
 
+    puts "Update UserValues"
     #Suche vorhanden Eintrag
     record = user_technologies.where(:user => user).first
 
@@ -224,7 +227,11 @@ class Technology < ActiveRecord::Base
 
     technology_requires.find_each do |tech|
       unless tech.pre_tech_id == 0
-        requirements << Technology.find(tech.pre_tech_id).title.to_s << ', '
+        requirements << Technology.find(tech.pre_tech_id).title.to_s
+        if tech.pre_tech_rank != 1
+          requirements << ': ' << tech.pre_tech_rank.to_s
+        end
+        requirements << ', '
       end
     end
 

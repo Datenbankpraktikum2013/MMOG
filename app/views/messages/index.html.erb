@@ -13,20 +13,22 @@
   <tbody>
     <% @usermessages = current_user.messages %>  
     <% @usermessages.each do |message| %>
-      <% @read=message.read %>
-      <tr>
-        <td>
-          <% @read ? '' : '<strong>' %><%= message.subject %><% @read ? '' : '</strong>' %>
-        </td>
-        <td>
-          <%= message.sender.username %>
-        </td>
-        <td>
-          <%= message.created_at %>
-        </td>
-        <td><%= link_to 'Anzeigen', message, class: 'label label-info', :style=>'color:#FFFFFF;' %></td>
-        <td><%= link_to 'Löschen', message, method: :delete, class: 'label label-important', data: { confirm: 'Bist du dir sicher?' }, :style=>'color:#FFFFFF;' %></td>
-      </tr>
+      <% unless message.deleted == 't' %>
+        <% @read=message.read %>
+        <tr>
+          <td>
+            <% @read ? '' : '<strong>' %><%= message.subject %><% @read ? '' : '</strong>' %>
+          </td>
+          <td>
+            <%= message.sender.username %>
+          </td>
+          <td>
+            <%= message.created_at %>
+          </td>
+          <td><%= link_to 'Anzeigen', message, class: 'label label-info', :style=>'color:#FFFFFF;' %></td>
+          <td><%= link_to 'Löschen', message, method: :delete, class: 'label label-important', data: { confirm: 'Bist du dir sicher?' }, :style=>'color:#FFFFFF;' %></td>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>
@@ -45,14 +47,14 @@
   </thead>
 
   <tbody>
-    <% @usermessages = current_user.sent_messages %>  
+    <% @usermessages = current_user.sent_messages.where(:sender_deleted=>false) %>  
     <% @usermessages.each do |message| %>
       <tr>
         <td><%= message.subject %></td>
         <td><%= message.recipients.find(:all, :select => 'username').map{|u| u.username}.join(", ") %></td>
         <td><%= message.created_at %></td>
         <td><%= link_to 'Anzeigen', message, class: 'label label-info', :style=>'color:#FFFFFF;' %></td>
-        <td><%= link_to 'Löschen', message, method: :delete, class: 'label label-important', data: { confirm: 'Bist du dir sicher?' }, :style=>'color:#FFFFFF;' %>
+        <td><%= link_to 'Löschen', message, method: :delete, class: 'label label-important', data: { confirm: 'Bist du dir sicher?' }, :style=>'color:#FFFFFF;' %></td>
       </tr>
     <% end %>
   </tbody>

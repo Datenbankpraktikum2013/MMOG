@@ -27,7 +27,7 @@ Mmog::Application.routes.draw do
 
   resources :buildingtypes
 
-  resources :technologies
+  resources :technologies, :except => [:edit, :update, :create, :new, :destroy, :show]
 
   devise_for :users #not needed any more, :controllers => { :registrations => "users/registrations"}
 
