@@ -14,7 +14,7 @@
 
     <div class='progress progress-striped active' >
       <span><%= "Erforsche Technologie: " + array[0] + " Stufe " + array[1]%></span>
-        <div class='bar' id='testtest' ></div>
+        <div class='bar' id='auto-updating-progressbar' ></div>
     </div>
     <span><%= 'Forschung beendet: ' + array[4].to_s %></span>
 
@@ -57,14 +57,19 @@
 </table>
 
 <script>
-    gone = <%=array[2] %>   ;
-    end  = <%=array[3] %>   ;
+    gone = <%=Time.now.to_i - array[2].to_i %>;
+    end  = <%=(array[3].to_i) +2 %>;
     function update_progressbar(){
-        p = (gone/end)*100
-        //document.getElementById("testtest").width = p;
-        getElementById('testtest').setAttribute("style",p+"%");
-    }     ;
-    setInterval(update_progressbar, 1000)    ;
-
+        if (gone == (end)) {
+            location.reload();
+        }
+        gone += 0.25;
+        p = (gone/end)*100;
+        d = document.getElementById('auto-updating-progressbar');
+        d.style.width = (p+"%");
+    };
+    if(end != 2) {
+        setInterval(update_progressbar, 250);
+    };
 
 </script>
