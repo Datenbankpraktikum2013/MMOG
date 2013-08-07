@@ -349,7 +349,8 @@ class Planet < ActiveRecord::Base
           dist2 = self.z - other.z
         end
       else
-        dist2 = ((self.z + other.z)**3)/((self.z - other.z)**2 + 1)
+        #dist2 = ((self.z + other.z)**3)/((self.z - other.z)**2 + 1)
+        dist2 = self.z + other.z
       end
       dist1 + dist2
     else

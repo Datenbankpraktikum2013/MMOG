@@ -62,7 +62,7 @@ class Galaxy < ActiveRecord::Base
       # Indirekt "H" / Universum horizontal umklappen
       dist.append(Math.sqrt(x**2 + y**2))
 
-      dist.sort().first() * 100
+      dist.sort().first() * 600
 
     else
       -1
