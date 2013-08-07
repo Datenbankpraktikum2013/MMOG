@@ -5,12 +5,11 @@ class Planet < ActiveRecord::Base
   has_many :buildings
   has_many :fleets
 
-  MIN_SIZE = 10000
-  MAX_SIZE = 100000
+  @@MIN_SIZE = GameSettings.get("PLANET_MIN_SIZE").to_i
+  @@MAX_SIZE = GameSettings.get("PLANET_MAX_SIZE").to_i
   @start_maxore
   @start_maxcrystal
   @start_maxenergy
-
   after_initialize :init
 
   #
@@ -36,7 +35,9 @@ class Planet < ActiveRecord::Base
       #self.under_construction = false
 
 
-      self.size = Random.rand(MAX_SIZE-MIN_SIZE) + MIN_SIZE if self.size.nil?
+      if self.size.nil?
+        self.size = Random.rand(@@MAX_SIZE-@@MIN_SIZE) + @@MIN_SIZE
+      end
       self.ore = 20 if self.ore.nil?
       self.maxore = 100 if self.maxore.nil?
       self.maxcrystal = 1 if self.maxcrystal.nil?
@@ -66,7 +67,7 @@ class Planet < ActiveRecord::Base
            @spec[3] = 1.3
         #Crystalplanet   
         elsif self.special == 4
-           self.size = MIN_SIZE + Random.rand(3000)
+           self.size = @@MIN_SIZE + Random.rand(@@MIN_SIZE*2)
            self.population = self.size/10
            self.maxpopulation = self.size/2
            self.maxore = 75
@@ -94,7 +95,7 @@ class Planet < ActiveRecord::Base
         end   
       else
          
-        self.size = (MAX_SIZE/2)
+        self.size = (@@MAX_SIZE/2)
         self.ore = 20
         self.special = 0
         self.maxore = 100
@@ -550,6 +551,11 @@ class Planet < ActiveRecord::Base
     end
     self.save
     return back
+  end
+
+  def seen_by(user)
+    s = self.sunsytem
+    s.users << user if !user.nil? && !s.is_visible_by?(user)
   end
 
   def is_visible_by?(user)
