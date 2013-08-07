@@ -298,15 +298,15 @@ class Planet < ActiveRecord::Base
     upgrade_me = self.buildings.where(buildingtype_id: id_list).first
 
     return false if !upgrade_me.nil? && !upgrade_me.verifies_upgrade_requirements?
-  
+
     if upgrade_me.nil?
       build_time = Buildingtype.where(name: type.to_s, level:1).first.build_time
-      build_me = Buildingtype.where(name: type.to_s, level:1).first
+      build_me = Buildingtype.where(name: type.to_s, level:1).first.id
     else  
       upgrade_me = upgrade_me.buildingtype_id
       my_future_me = Buildingtype.find_by_id(upgrade_me)
       build_time = Buildingtype.where(name:type, level:(my_future_me.level)+1).first.build_time
-      build_me = Buildingtype.where(name:type ,level:(my_future_me.level)+1).first
+      build_me = Buildingtype.where(name:type ,level:(my_future_me.level)+1).first.id
     end
 
     if  (0 > self.ore - build_me.build_cost_ore || 0 > self.crystal - build_me.build_cost_crystal ||  0 > self.population - build_me.build_cost_population || 0 > User.find(self.user_id).money - build_me.build_cost_money)
@@ -394,6 +394,116 @@ class Planet < ActiveRecord::Base
       out[btype.name.to_sym] = btype.level
     end
     return out
+  end
+
+  def give(type, number)
+    back = 0
+    if type == :Ore then
+      old = self.ore
+      if old + number >= self.maxore then
+        self.ore = self.maxore
+        back = self.maxore - old
+      else
+        self.ore = old + number
+      end
+
+    elsif  type == :Crystal then
+      old = self.crystal
+      if old + number >= self.maxcrystal then
+        self.crystal = self.maxcrystal
+        back = self.maxcrystal - old
+      else
+        self.ore = old + number
+      end
+
+    elsif type == :Population then
+      old = self.population
+      if old + number >= self.maxpopulation then
+        self.population = self.maxpopulation
+        back = self.maxpopulation - old
+      else
+        self.population = old + number
+      end
+
+    elsif type == :Energy then
+      old = self.energy
+      if old + number >= self.maxenergy then
+        self.energy = self.maxenergy
+        back = self.maxenergy - old
+      else
+        self.energy = old + number
+      end
+
+    elsif type == :Money then
+      u = self.user
+      if u.nil? then
+        back = number
+      else
+        u.money = u.money + number
+        u.save
+      end
+
+    end
+    return back
+  end
+
+  def take(type, number)
+    back = 0
+    if type == :Ore then
+      old = self.ore
+      if old < number then
+        self.ore = 0
+        back = old
+      else
+        self.ore = old - number
+      end
+
+    elsif type == :Crystal then
+      old = self.crystal
+      if old < number then
+        self.crystal = 0
+        back = old
+      else
+        self.crystal = old - number
+      end
+
+    elsif type == :Population then
+      old = self.population
+      if old < number then
+        self.population = 0
+        back = old
+      else
+        self.population = old - number
+      end
+
+    elsif type == :Energy then
+      old = self.energy
+      if old < number then
+        self.energy = 0
+        back = old
+      else
+        self.energy = old - number
+      end
+
+    elsif type == :Money then
+      u = self.user
+      if u.nil? then
+        back = number
+      else
+        old = u.money
+        if u.money >= number then
+          u.money = old - number
+        else
+          u.money = 0
+          back = old
+        end
+        u.save
+      end
+
+    else
+      back = number
+    end
+    return back
   end
 
 end
