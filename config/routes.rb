@@ -3,6 +3,8 @@ Mmog::Application.routes.draw do
   resources :relationships
 
   get "starport" => "starport#index"
+  get "starport/:id" => "starport#show"
+  post "starport/build" => "starport#build"
   resources :techstages
 
   resources :spyreports
@@ -33,7 +35,7 @@ Mmog::Application.routes.draw do
 
   root 'welcome#index'
 
-  resources :alliances
+  resources :alliances, :except => [:new]
 
   resources :ranks, :except => :show
   
