@@ -4,7 +4,7 @@ class Spyreport < ActiveRecord::Base
 	has_many :techstages, dependent: :delete_all
 	has_many :technologies, :through => :techstages
 	has_and_belongs_to_many :buildingtypes
-=begin
+
 	def finish_spyreport(planet, fleet, own_spy_factor, opp_spy_factor)
 		@r = Report.new
 		self.report = @r
@@ -33,7 +33,7 @@ class Spyreport < ActiveRecord::Base
 	def add_ships
 		tmp = Hash.new(0)
 
-		fleets =  Fleet.where(startplanet: self.planet, target_planet: self.planet)
+		fleets =  Fleet.where(:startplanet=> self.planet, :target_planet => self.planet)
 
 		fleets.each do |fleet|
 			fleet.shipfleets.each do |shipfleet|
@@ -46,7 +46,7 @@ class Spyreport < ActiveRecord::Base
 			sc.ship_id = ship_id
 			#sc.
 		end
-	end
+    end
 
 	def add_buildings
 		Buildingtype.where(:planet_id => planet.id).each do |buidling|
@@ -57,5 +57,4 @@ class Spyreport < ActiveRecord::Base
 	def add_tech
 
 	end
-=end
 end
