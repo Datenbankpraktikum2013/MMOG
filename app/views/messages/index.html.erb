@@ -52,7 +52,6 @@
         <td><%= message.recipients.find(:all, :select => 'username').map{|u| u.username}.join(", ") %></td>
         <td><%= message.created_at %></td>
         <td><%= link_to 'Anzeigen', message, class: 'label label-info', :style=>'color:#FFFFFF;' %></td>
-        <td><%= link_to 'Löschen', message, method: :delete, class: 'label label-important', data: { confirm: 'Bist du dir sicher?' }, :style=>'color:#FFFFFF;' %>
       </tr>
     <% end %>
   </tbody>
