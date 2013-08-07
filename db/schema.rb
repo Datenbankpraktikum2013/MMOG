@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130806205229) do
+ActiveRecord::Schema.define(version: 20130807121925) do
 
   create_table "alliances", force: true do |t|
     t.string   "name",        null: false
@@ -151,6 +151,11 @@ ActiveRecord::Schema.define(version: 20130806205229) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "alliance_id"
+  end
+
+  create_table "relationships", force: true do |t|
+    t.integer "user_id"
+    t.integer "friend_id"
   end
 
   create_table "reports", force: true do |t|
