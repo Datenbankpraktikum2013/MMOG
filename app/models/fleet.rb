@@ -670,7 +670,24 @@ class Fleet < ActiveRecord::Base
   end
 
 
+#=begin
+  #Adds Ship (Planet as Parameter)
+  def self.add_ship_to_planet(s,p)
+    f=Fleet.where(mission_id: 1, origin_planet: p)
+    unless f.empty?
+      f.first.add_ship(s)
+    else 
+      f_new=Fleet.new(p)
+      f_new.add_ship(s)
+      f_new.save
+    end
 
+  end
+#=end
+
+
+
+#=begin
   # fuegt einer Flotte ein Schiff hinzu
   # after that the fleetattributes are updated
   def add_ship(s)

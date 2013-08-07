@@ -22,11 +22,11 @@ class Buildingtype < ActiveRecord::Base
     Buildingtype.create({:name =>'Oremine', :level=> 4, :production=> 40, :energyusage=>15, :build_time=>50, :build_cost_ore =>0, :build_cost_crystal =>0, :build_cost_money =>0, :build_cost_population =>0})
     Buildingtype.create({:name =>'Oremine', :level=> 5, :production=> 50, :energyusage=>20, :build_time=>50, :build_cost_ore =>0, :build_cost_crystal =>0, :build_cost_money =>0, :build_cost_population =>0})
 
-    Buildingtype.create({:name =>'Powerplant', :level => 1, :production=> 10, :energyusage=>0, :build_time=>0, :build_cost_ore =>0, :build_cost_crystal =>0, :build_cost_money =>0, :build_cost_population =>0})
-    Buildingtype.create({:name =>'Powerplant', :level => 2, :production=> 20, :energyusage=>0, :build_time=>120, :build_cost_ore =>0, :build_cost_crystal =>0, :build_cost_money =>0, :build_cost_population =>0})
-    Buildingtype.create({:name =>'Powerplant', :level => 3, :production=> 30, :energyusage=>0, :build_time=>50, :build_cost_ore =>0, :build_cost_crystal =>0, :build_cost_money =>0, :build_cost_population =>0})
-    Buildingtype.create({:name =>'Powerplant', :level => 4, :production=> 40, :energyusage=>0, :build_time=>50, :build_cost_ore =>0, :build_cost_crystal =>0, :build_cost_money =>0, :build_cost_population =>0})
-    Buildingtype.create({:name =>'Powerplant', :level => 5, :production=> 50, :energyusage=>0, :build_time=>50, :build_cost_ore =>0, :build_cost_crystal =>0, :build_cost_money =>0, :build_cost_population =>0})
+    Buildingtype.create({:name =>'Powerplant', :level => 1, :production=> 100, :energyusage=>0, :build_time=>0, :build_cost_ore =>0, :build_cost_crystal =>0, :build_cost_money =>0, :build_cost_population =>0})
+    Buildingtype.create({:name =>'Powerplant', :level => 2, :production=> 200, :energyusage=>0, :build_time=>120, :build_cost_ore =>0, :build_cost_crystal =>0, :build_cost_money =>0, :build_cost_population =>0})
+    Buildingtype.create({:name =>'Powerplant', :level => 3, :production=> 300, :energyusage=>0, :build_time=>50, :build_cost_ore =>0, :build_cost_crystal =>0, :build_cost_money =>0, :build_cost_population =>0})
+    Buildingtype.create({:name =>'Powerplant', :level => 4, :production=> 400, :energyusage=>0, :build_time=>50, :build_cost_ore =>0, :build_cost_crystal =>0, :build_cost_money =>0, :build_cost_population =>0})
+    Buildingtype.create({:name =>'Powerplant', :level => 5, :production=> 500, :energyusage=>0, :build_time=>50, :build_cost_ore =>0, :build_cost_crystal =>0, :build_cost_money =>0, :build_cost_population =>0})
 
     Buildingtype.create({:name =>'ResearchLab', :level => 1, :production=> 0, :energyusage=> 30, :build_time=>50, :build_cost_ore =>0, :build_cost_crystal =>0, :build_cost_money =>0, :build_cost_population =>0})
     Buildingtype.create({:name =>'ResearchLab', :level => 2, :production=> 0, :energyusage=> 30, :build_time=>50, :build_cost_ore =>0, :build_cost_crystal =>0, :build_cost_money =>0, :build_cost_population =>0})

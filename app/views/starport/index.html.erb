@@ -1,13 +1,19 @@
-<h1>Available Ships</h1>
+<p id="notice"><%= notice %></p>
+<h1>Available Starports</h1>
 <table>
-<% @planets.each do |p|%>
-<% unless @shipshelper.get_available_ships(p).empty? %>
-  <tr>
-    <td><%= p.name %></td>
-    <% @shipshelper.get_available_ships(p).each do |s| %>
-    <td><%= s.name %></td>
-    <% end %>
-  </tr>
-  <% end %>
-<% end %>
+  <% @planets.each do |p|%>
+  <% unless @shipshelper.get_available_ships(p).empty? %>
+
+
+      
+      <tr>
+      
+        
+        <td><%= link_to p.name , controller: "starport", action: "show", id: p  %></td>
+      </tr>
+      <% end %>
+      <% end %>
 </table>
+
+
+
