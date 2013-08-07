@@ -5,11 +5,14 @@ class Tradereport < ActiveRecord::Base
 		r = Report.new
 		self.report = r
 
-		r.defenders << planet.user
+		r.defender << planet.user
 		r.defender_planet = planet
 
 		r.attacker = fleet.user
 		r.attacker_planet = fleet.start_planet
+
+		r.receivers << planet.user
+		r.receivers << fleet.user
 
 		r.fightdate = Time.at(fleet.arrival_time)
 

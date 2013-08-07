@@ -6,28 +6,51 @@ class Spyreport < ActiveRecord::Base
 	has_and_belongs_to_many :buildingtypes
 	has_one :report, as: :reportable
 
-	def finish_spyreport(planet, fleet)#, own_spy_factor, opp_spy_factor)
+	# types: 0 = Gegner
+	# 		 1 = unbewohnter Planet
+	#        2 = Allianzmitglied
+	#        3 = eigener Planet
+	#        4 = sonde beim versuch zerstört
+	def finish_spyreport(planet, fleet, atk_spy_factor, def_spy_factor, mode)
+
+		self.calc_spylevel(atk_spy_factor, def_spy_factor)
+
 		@r = Report.new
+		self.mode = mode
 		self.report = @r
-		@r.defenders << planet.user
+		@r.defender = planet.user
 		@r.defender_planet = planet
 
 		@r.attacker = fleet.user
 		@r.attacker_planet = fleet.start_planet
 
+		@r.receivers << planet.user
+		@r.receivers << fleet.user
+
 		@r.fightdate = Time.at(fleet.arrival_time)
+		if mode < 2
+			unless spylevel < 1
+				self.energy = planet.energy
+				self.population = planet.population
+				self.ore = planet.ore
+				self.crystal = planet.crystal
+				self.space_cash = planet.user.money
+			end
 
-		self.energy = planet.energy
-		self.population = planet.population
-		self.ore = planet.ore
-		self.crystal = planet.crystal
-		self.space_cash = planet.user.money
+			if mode < 1
+				unless self.spylevel < 2
+					self.add_buildings
+				end
 
-		add_buildings
+				unless self.spylevel < 4
+					self.add_ships
+				end	
 
-		add_ships
-
-		add_tech
+				unless self.spylevel < 3
+					self.add_tech
+				end
+			end
+		end
 
 		self.save
 		@r.save
@@ -54,7 +77,7 @@ class Spyreport < ActiveRecord::Base
 	end
 
 	def add_tech
-		UserTechnology.where(user: @r.defenders.first).each do |tech|
+		UserTechnology.where(user: @r.defender).each do |tech|
 			tmp = Techstage.new
 			tmp.technology = tech.technology
 			tmp.level = tech.rank
@@ -66,6 +89,28 @@ class Spyreport < ActiveRecord::Base
 		s = Spyreport.new
 		p = Planet.find(1)
 		f = Fleet.find(1)
-		s.finish_spyreport(p, f)
+		s.finish_spyreport(p, f, 1, 2, 0)
+	end
+
+	def calc_spylevel(atk_spy_factor, def_spy_factor)
+		tmp = def_spy_factor - atk_spy_factor
+
+		r = rand 0.8..1.2
+
+		tmp *= r
+
+		tmp = (tmp + 1)* 0.5
+
+		if tmp > 0.7
+			self.spylevel = 4
+		elsif tmp > 0.5
+			self.spylevel = 3
+		elsif tmp > 0.3
+			self.spylevel = 2
+		elsif tmp > 0.05
+			self.spylevel = 1
+		else
+			self.spylevel = 0
+		end		
 	end
 end

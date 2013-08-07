@@ -9,6 +9,7 @@ class Battlereport < ActiveRecord::Base
 		self.report = @r
 
 		@r.defender_planet = def_fleets.first.start_planet
+		@r.defender = @r.defender_planet.user
 
 		@r.attacker = atk_fleet.user
 		@r.attacker_planet = atk_fleet.start_planet
@@ -16,9 +17,11 @@ class Battlereport < ActiveRecord::Base
 		@r.fightdate = Time.at(atk_fleet.arrival_time)
 
 		def_fleets.each do |fleet|
-			@r.defenders << fleet.user
+			@r.receivers << fleet.user
 			self.add_fleet_info(fleet, 0)
 		end
+
+		@r.receivers << atk_fleet.user
 		self.add_fleet_info(atk_fleet, 1)
 	end
 

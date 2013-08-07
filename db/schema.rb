@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130807090812) do
+ActiveRecord::Schema.define(version: 20130807141025) do
 
   create_table "alliances", force: true do |t|
     t.string   "name",        null: false
@@ -162,6 +162,17 @@ ActiveRecord::Schema.define(version: 20130807090812) do
     t.integer  "alliance_id"
   end
 
+  create_table "receiving_reports", force: true do |t|
+    t.integer  "report_id"
+    t.integer  "user_id"
+    t.boolean  "read",       default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "receiving_reports", ["report_id"], name: "index_receiving_reports_on_report_id"
+  add_index "receiving_reports", ["user_id"], name: "index_receiving_reports_on_user_id"
+
   create_table "reports", force: true do |t|
     t.integer  "reportable_id"
     t.string   "reportable_type"
@@ -171,17 +182,14 @@ ActiveRecord::Schema.define(version: 20130807090812) do
     t.integer  "attacker_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "defender_id"
   end
 
   add_index "reports", ["attacker_id"], name: "index_reports_on_attacker_id"
   add_index "reports", ["attacker_planet_id"], name: "index_reports_on_attacker_planet_id"
+  add_index "reports", ["defender_id"], name: "index_reports_on_defender_id"
   add_index "reports", ["defender_planet_id"], name: "index_reports_on_defender_planet_id"
   add_index "reports", ["reportable_id", "reportable_type"], name: "index_reports_on_reportable_id_and_reportable_type"
-
-  create_table "reports_users", force: true do |t|
-    t.integer "user_id"
-    t.integer "report_id"
-  end
 
   create_table "shipcounts", force: true do |t|
     t.integer  "battlereport_id"
@@ -232,6 +240,8 @@ ActiveRecord::Schema.define(version: 20130807090812) do
     t.integer  "crystal"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "spylevel"
+    t.integer  "mode"
   end
 
   create_table "sunsystems", force: true do |t|
