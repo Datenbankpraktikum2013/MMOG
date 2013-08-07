@@ -33,7 +33,7 @@ Mmog::Application.routes.draw do
 
   root 'welcome#index'
 
-  resources :alliances
+  resources :alliances, :except => [:new]
 
   resources :ranks, :except => :show
   
