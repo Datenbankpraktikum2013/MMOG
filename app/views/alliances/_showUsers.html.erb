@@ -8,12 +8,8 @@
 			<th>Spacecash</th>
 			<th>Score</th>
 			<th>Rang</th>
-			<% if current_user.rank.can_edit_ranks %>
-				<th>Rang ändern</th>
-			<% end %>
-			<% if current_user.rank.can_kick  %>
-				<th>Kicken</th>
-			<% end %>
+			<th>Rang ändern</th>
+			<th>Kicken</th>
 		</tr>
 		<% @ranks=@alliance.ranks.where('is_founder != ?',true) %>
 		<% @alliance.users.each do |user| %>
@@ -22,8 +18,8 @@
 				<td><%=user.money%></td>
 				<td><%=user.score%></td>
 				<td><%=user.rank.name%></td>
+				<td>
 				<% if current_user.rank.can_edit_ranks %>
-					<td>
 						<% unless current_user==user or user.rank.is_founder %>
 						    <div class="btn-group">
 							    <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#" %>
@@ -41,8 +37,8 @@
 						<% else %>
 							<div class="label label-info">Nicht möglich</div>
 						<% end %>
-					</td>
 				<% end %>
+				</td>
 				<% if current_user.rank.can_kick and current_user != user and user.rank.is_founder == false %>
 					<td>
 						<%= link_to 'Kicken', {:controller => "alliances", :action => "remove_user",:uid=> user.id} , :method=>:post, data: { confirm: 'Bist du dir sicher, dass du '+user.username+" aus der Allianz entfernen willst?" }, class: 'label label-important', :style => 'color:#FFFFFF;' %>
