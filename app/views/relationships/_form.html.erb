@@ -1,0 +1,7 @@
+<%= form_tag(relationships_path)%>
+    <p><strong><%= label_tag ('Wen möchtest du hinzufügen?') %></strong></p>
+    <p> <p><%=label_tag ('Username') %></p>
+      <%= text_field_tag('username') %>
+    </p>
+    <p><%= submit_tag 'Hinzufügen' %></p>
+</form>

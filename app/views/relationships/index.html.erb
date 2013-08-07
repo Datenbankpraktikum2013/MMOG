@@ -1,0 +1,24 @@
+<h1>Listing relationships</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Befreundet mit:</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% current_user.friends.each do |friend| %>
+      <tr>
+        <td><%= friend.username %></td>
+        <td><%= link_to 'Edit', edit_relationship_path(self) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Relationship', new_relationship_path %>

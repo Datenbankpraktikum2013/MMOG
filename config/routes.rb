@@ -1,5 +1,9 @@
 Mmog::Application.routes.draw do
 
+  resources :receiving_reports
+
+  resources :relationships
+
   get "starport" => "starport#index"
   get "starport/:id" => "starport#show"
   post "starport/build" => "starport#build"
@@ -14,6 +18,8 @@ Mmog::Application.routes.draw do
   resources :shipcounts
 
   resources :battlereports
+
+  get 'json/fetch_unread_msgs' => 'messages#fetch_unread_msgs'
 
   resources :messages, :except => [:edit, :update]
 
@@ -56,6 +62,8 @@ Mmog::Application.routes.draw do
   post 'alliances/:id/edit/change_description' => 'alliances#change_description'
 
   post 'alliances/:id/edit/send_mail' => 'alliances#send_mail'
+
+
 
   post 'technologies/upgrade' => 'technologies#upgrade'
 
