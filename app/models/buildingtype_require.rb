@@ -65,10 +65,10 @@ class BuildingtypeRequire < ActiveRecord::Base
 
     inserts = []
 
-    for r in 0..(regs.length-1)
-    #reqs.each do |r|
-      for s in 0..(reqs[r].length-1)
-      #r.each do  |s|
+    #for r in 0..(regs.length-1)
+    reqs.each do |r|
+      #for s in 0..(reqs[r].length-1)
+      r.each do  |s|
         #s.each do |p|
         for p in 0..7
           unless p.nil? then
