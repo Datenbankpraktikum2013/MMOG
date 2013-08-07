@@ -61,7 +61,8 @@
     end  = <%=array[3] %>   ;
     function update_progressbar(){
         p = (gone/end)*100
-        document.getElementById("testtest").width = p;
+        //document.getElementById("testtest").width = p;
+        getElementById('testtest').setAttribute("style",p+"%");
     }     ;
     setInterval(update_progressbar, 1000)    ;
 
