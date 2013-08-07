@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130807090812) do
+ActiveRecord::Schema.define(version: 20130807112608) do
 
   create_table "alliances", force: true do |t|
     t.string   "name",        null: false
@@ -106,8 +106,6 @@ ActiveRecord::Schema.define(version: 20130807090812) do
   create_table "messages", force: true do |t|
     t.text     "body"
     t.integer  "sender_id"
-    t.string   "subject"
-    t.boolean  "sender_deleted", default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -115,8 +113,7 @@ ActiveRecord::Schema.define(version: 20130807090812) do
   create_table "messages_users", force: true do |t|
     t.integer "user_id"
     t.integer "message_id"
-    t.boolean "read",              default: false
-    t.boolean "recipient_deleted", default: false
+    t.boolean "read",       default: false
   end
 
   create_table "missions", force: true do |t|
@@ -142,7 +139,7 @@ ActiveRecord::Schema.define(version: 20130807090812) do
     t.datetime "updated_at"
     t.integer  "sunsystem_id"
     t.integer  "user_id"
-    t.boolean  "under_construction"
+    t.boolean  "under_construction", default: false
   end
 
   create_table "ranks", force: true do |t|
