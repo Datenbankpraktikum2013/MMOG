@@ -1,8 +1,8 @@
+<div class="well"><strong>Beschreibung</strong></div>
 <%= form_tag(edit_alliance_path+'/change_description')%>
-	<p>	<%=label_tag ('Beschreibung: ') %>
-		<p>
-		<%= text_area_tag :description, @alliance.description, rows: 15, cols: 65%>
-		<%= submit_tag 'Speichern' %>
-		</p>
+	<p>
+		<%= text_area_tag :description, @alliance.description, class: 'readmsgarea' %>
+		<br>
+		<%= submit_tag 'Speichern', class: 'btn' %>
 	</p>
 </form>
