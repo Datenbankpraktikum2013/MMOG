@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130807090812) do
+ActiveRecord::Schema.define(version: 20130807112608) do
 
   create_table "alliances", force: true do |t|
     t.string   "name",        null: false
@@ -148,7 +148,7 @@ ActiveRecord::Schema.define(version: 20130807090812) do
     t.datetime "updated_at"
     t.integer  "sunsystem_id"
     t.integer  "user_id"
-    t.boolean  "under_construction"
+    t.boolean  "under_construction", default: false
   end
 
   create_table "ranks", force: true do |t|
