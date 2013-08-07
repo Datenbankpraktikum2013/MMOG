@@ -30,7 +30,7 @@ class Planet < ActiveRecord::Base
     self.calc_spec
 
     if self.name.nil?
-      self.under_construction = false
+      #self.under_construction = false
 
 
       self.size = Random.rand(MAX_SIZE-MIN_SIZE) + MIN_SIZE if self.size.nil?
@@ -289,6 +289,7 @@ class Planet < ActiveRecord::Base
   end
 
   def create_building_job(type)
+    return false if type == :Crystalmine && self.special != 4
     return false if self.under_construction
     buildingtype_arr = Buildingtype.where(name: type.to_s)
     id_list = []
@@ -301,12 +302,12 @@ class Planet < ActiveRecord::Base
 
     if upgrade_me.nil?
       build_time = Buildingtype.where(name: type.to_s, level:1).first.build_time
-      build_me = Buildingtype.where(name: type.to_s, level:1).first.id
+      build_me = Buildingtype.where(name: type.to_s, level:1).first
     else  
       upgrade_me = upgrade_me.buildingtype_id
       my_future_me = Buildingtype.find_by_id(upgrade_me)
       build_time = Buildingtype.where(name:type, level:(my_future_me.level)+1).first.build_time
-      build_me = Buildingtype.where(name:type ,level:(my_future_me.level)+1).first.id
+      build_me = Buildingtype.where(name:type ,level:(my_future_me.level)+1).first
     end
 
     if  (0 > self.ore - build_me.build_cost_ore || 0 > self.crystal - build_me.build_cost_crystal ||  0 > self.population - build_me.build_cost_population || 0 > User.find(self.user_id).money - build_me.build_cost_money)
@@ -324,6 +325,7 @@ class Planet < ActiveRecord::Base
     self.under_construction = true
     
     self.save
+
     Resque.enqueue_in(build_time.second,BuildBuildings, id_array)
 
   end
@@ -335,6 +337,12 @@ class Planet < ActiveRecord::Base
     if Resque.remove_delayed(BuildBuildings, id_array) == 1
       self.under_construction = false
       self.save
+      destroy_me = Buildingtype.find(type_id)
+      give(:Ore, destroy_me.build_cost_ore/2)
+      give(:Crystal, destroy_me.build_cost_crystal/2)
+      give(:Population, destroy_me.build_cost_population/2)
+      give(:Money, destroy_me.build_cost_money/2)
+
     end
     
   end
