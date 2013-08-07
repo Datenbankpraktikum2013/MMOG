@@ -8,7 +8,7 @@ class Buildingtype < ActiveRecord::Base
   has_and_belongs_to_many :ships
   has_and_belongs_to_many :spyreports
 
-  def self.init_all()
+  def self.init()
 
     Buildingtype.create({:name =>'Headquarter', :level=> 1, :production=> 1, :energyusage=> 0, :build_time=>0, :build_cost_ore =>0, :build_cost_crystal =>0, :build_cost_money =>0, :build_cost_population =>0})
     Buildingtype.create({:name =>'Headquarter', :level=> 2, :production=> 1, :energyusage=> 0, :build_time=>30, :build_cost_ore =>0, :build_cost_crystal =>0, :build_cost_money =>0, :build_cost_population =>0})
@@ -57,6 +57,8 @@ class Buildingtype < ActiveRecord::Base
     Buildingtype.create({:name =>'Starport', :level=> 4, :production=> 0, :energyusage=> 90, :build_time=>50, :build_cost_ore =>0, :build_cost_crystal =>0, :build_cost_money =>0, :build_cost_population =>0})
     Buildingtype.create({:name =>'Starport', :level=> 5, :production=> 0, :energyusage=> 100, :build_time=>50, :build_cost_ore =>0, :build_cost_crystal =>0, :build_cost_money =>0, :build_cost_population =>0})
 
+
+    BuildingtypeRequire.init()
 
   end
 
