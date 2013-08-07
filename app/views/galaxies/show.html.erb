@@ -17,14 +17,14 @@
 <strong>Liste der Sonnensysteme in dieser Galaxie</strong>
 <% @galaxy.sunsystems.each do |s| %>
 
-    <p class="ressourcenanzeige">
+    <p>
     <%= "Name des Sonnensystems: " + s.name.to_s%>
     </p>
-    <p class="ressourcenanzeige">
+    <p>
     <%= "Y-Koordinate:" + s.y.to_s %>
     </p>
 
-    <p style="margin-bottom: 50px" class="ressourcenanzeige">
+    <p style="margin-bottom: 50px">
     <%= link_to 'Sunsystem', sunsystem_path(s) %>
     </p>
     </p>

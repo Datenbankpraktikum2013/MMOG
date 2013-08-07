@@ -54,7 +54,7 @@ class AlliancesController < ApplicationController
   end
 
   def change_user_rank
-    @rank=@alliance.ranks.find_by_id(params['rank']['id'])
+    @rank=@alliance.ranks.find_by_id(params['rank'])
     @user=@alliance.users.find_by_id(params['uid'])
     respond_to do |format|
       if @alliance.change_user_rank(@user,@rank)
@@ -133,10 +133,6 @@ class AlliancesController < ApplicationController
         end
       end
     end
-  end
-
-  #GET  /alliances/1/edit/useradd
-  def useradd
   end
 
   # PATCH/PUT /alliances/1
