@@ -73,4 +73,9 @@ class Galaxy < ActiveRecord::Base
     pos = self.getCoords()
     GalaxiesHelper.generateNear(pos[0], pos[1])
   end
+
+  def is_visible_by?(user)
+    return false if user.nil?
+    return user.visible_galaxies.include?(self)
+  end
 end

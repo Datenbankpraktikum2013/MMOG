@@ -1,6 +1,7 @@
 class Sunsystem < ActiveRecord::Base
 
   has_many :planets
+  has_and_belongs_to_many :users
   belongs_to :galaxy
 
   def getDistance(other)
@@ -30,8 +31,16 @@ class Sunsystem < ActiveRecord::Base
   end
 
   def mention()
-          self.galaxy.mention()
+    self.galaxy.mention()
   end
 
+  def seen_by(user)
+    self.users << user if !user.nil? && !self.is_visible_by?(user)
+  end
+
+  def is_visible_by?(user)
+    return false if user.nil?
+    return user.visible_sunsystems.include?(self)
+  end
 
 end
