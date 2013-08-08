@@ -1,8 +1,3 @@
-<%= javascript_include_tag :defaults %>
-<%= csrf_meta_tag %>
-
-
-
 <br><h1 align="middle">Update Technologies</h1><br><br><br>
 
 <table border="1" align="center" valign="middle">
@@ -19,7 +14,7 @@
     <div align="right">
      <%= button_to 'Abbrechen',
                    {:controller=>"technologies", :action=>"abort", :uid=>current_user, :id=>research_id},
-                   :onclick => "return confirm('Möchtest du die aktuelle Forschung abbrechen? Der Fortschritt geht verloren')",:method=>:post,
+                   :onclick => "return confirm('Möchtest du die aktuelle Forschung abbrechen? Der Fortschritt geht verloren')",:method=>:post
      %>
     </div>
     <br>
