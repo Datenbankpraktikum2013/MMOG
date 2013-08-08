@@ -1,6 +1,10 @@
 Mmog::Application.routes.draw do
 
 
+  resources :colonisationreports
+
+  resources :travelreports
+
   resources :ship_building_queues
 
   resources :receiving_reports
