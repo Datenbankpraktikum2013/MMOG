@@ -20,7 +20,7 @@
         <td><%= ship_building_queue.ship_id %></td>
         <td><%= link_to 'Show', ship_building_queue %></td>
         <td><%= link_to 'Edit', edit_ship_building_queue_path(ship_building_queue) %></td>
-        <td><%= link_to 'Destroy', ship_building_queue, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to "Destroy" , controller: "ship_building_queues", action: "destroy_queue", id:  ship_building_queue.id%></td>
       </tr>
     <% end %>
   </tbody>
