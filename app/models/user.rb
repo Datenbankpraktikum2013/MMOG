@@ -276,4 +276,12 @@ class User < ActiveRecord::Base
     self.messages.create(:subject=>'['+prefix+']'+subject,:body=>message)
   end
 
+  private
+    def set_initial_money(initial=GameSettings.get("INITIAL_BUDGET"))
+      if self.money==0
+        self.money=initial
+        self.save
+      end
+  end
+
 end
