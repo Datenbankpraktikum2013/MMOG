@@ -115,3 +115,5 @@ User.create(:email => 'demo4@demo.com',:password => 'password',:username=> 'demo
 
   Planet.first.seen_by(User.first)
   Planet.first.seen_by(User.find(2))
+
+end
