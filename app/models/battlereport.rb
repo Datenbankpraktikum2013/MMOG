@@ -16,7 +16,7 @@ class Battlereport < ActiveRecord::Base
 
 		self.mode = mode
 		
-		@r.defender_planet = def_fleets.first.start_planet
+		@r.defender_planet = atk_fleet.target_planet
 		@r.defender = @r.defender_planet.user
 
 		@r.attacker = atk_fleet.user
@@ -40,7 +40,7 @@ class Battlereport < ActiveRecord::Base
 		end
 		self.add_fleet_info(atk_fleet, 3)
 
-		defended ? self.winner = @r.defender_planet.user : self.winner = atk_fleet.user
+		defended ? self.winner = @r.defender : self.winner = @r.attacker
 		self.save
 		@r.save
 	end
