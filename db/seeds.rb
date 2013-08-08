@@ -30,7 +30,9 @@ GameSettings.set "ERRMSG_ALLIANCE_SHOWEDIT", "Du hast keine Berechtigung, diese 
 GameSettings.set "ERRMSG_ALLIANCE_USERALLIANCENOTNIL", "Hey, du hast bereits eine Allianz!"
 GameSettings.set "SUCCESSMSG_ALLIANCE_USERADDED","Mitglied erfolgreich hinzugefügt"
 GameSettings.set "ERRMSG_ALLIANCE_USERADDED", "Mitglied konnte nicht hinzugefügt werden."
-
+GameSettings.set "SUCCESSMSG_ALLIANCE_CREATED", "Allianz erfolgreich erstellt."
+GameSettings.set "SUCCESSMSG_ALLIANCE_USERREMOVED","Mitglied wurde erfolgreich aus der Allianz entfernt"
+GameSettings.set "ERRMSG_ALLIANCE_USERREMOVED", "Mitglied konnte nicht entfernt werden."
 
 GalaxiesHelper.generateAt(0,0)
 Buildingtype.init()
