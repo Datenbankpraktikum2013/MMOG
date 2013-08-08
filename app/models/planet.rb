@@ -231,7 +231,7 @@ class Planet < ActiveRecord::Base
       #
       # updates ore production
       #
-      ore_production = self.get_production(:Oremine)
+      ore_production = self.get_production(:Oremine).to_i
       if ore_production.integer? then
         if (self.ore + ore_production) < self.maxore then
           self.ore += ore_production
@@ -263,7 +263,7 @@ class Planet < ActiveRecord::Base
           self.crystal = self.maxcrystal
         end
       end
-      self.save
+      #self.save
 
       #
       # updates money 
@@ -366,6 +366,7 @@ class Planet < ActiveRecord::Base
      self.maxore = @start_maxore * prod_size * @spec[5]
      self.maxcrystal = @start_maxcrystal * prod_size * @spec[5]
      self.maxenergy = @start_maxenergy * prod_size * @spec[5]
+    self.save
   end
   def build_building(buildingtype_id)
     #destroy_me = self.buildings.where(name: Buildingtype.where(id: id).first.name).first.id
@@ -551,6 +552,10 @@ class Planet < ActiveRecord::Base
     end
     self.save
     return back
+  end
+
+  def ressources_to_hash
+
   end
 
   def seen_by(user)
