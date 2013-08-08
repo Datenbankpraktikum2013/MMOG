@@ -117,7 +117,7 @@ p.maxenergy = 100000
 p.maxcrystal = 100000
 p.maxpopulation = 100000
 p.save
-Fleet.find(1).add_ships({Ship.find(1)=> 50, Ship.find(2)=> 50, Ship.find(3)=> 50, Ship.find(4)=> 50, Ship.find(5)=> 50,Ship.find(6)=> 50,Ship.find(7)=> 50,Ship.find(8)=> 50,Ship.find(9)=> 50,Ship.find(10)=> 50})
+Fleet.find(1).add_ships({Ship.find(1)=> 5000, Ship.find(2)=> 5000, Ship.find(3)=> 5000, Ship.find(4)=> 5000, Ship.find(5)=> 5000,Ship.find(6)=> 5000,Ship.find(7)=> 5000,Ship.find(8)=> 5000,Ship.find(9)=> 5000,Ship.find(10)=> 5000})
 Planet.find(1).give(:Ore, 10000)
 Planet.find(1).give(:Crystal, 10000)
 Planet.find(1).give(:Money, 10000)
