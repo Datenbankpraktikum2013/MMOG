@@ -93,9 +93,9 @@ class Spyreport < ActiveRecord::Base
 	end
 
 	def calc_spylevel(atk_spy_factor, def_spy_factor)
-		tmp = def_spy_factor - atk_spy_factor
+		tmp = atk_spy_factor - def_spy_factor
 
-		r = rand 0.8..1.2
+		r = rand 0.6..1.1
 
 		tmp *= r
 

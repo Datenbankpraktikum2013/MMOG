@@ -23,7 +23,7 @@
         <td><%= report.fightdate.strftime('%d.%m.%y') %> <br /> <%= report.fightdate.strftime('%H:%M Uhr') %></td>
         <td><%= report.defender.nil? ?  "-" : report.defender.username %></td>
         <td><%= report.attacker.username %></td>
-        <td><%= link_to 'Show', report, class: "btn btn-small" %></td>
+        <td><%= link_to 'Show', report.reportable, class: "btn btn-small" %></td>
         <td><b><%= link_to 'X', report, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %></b></td>
      </tr>
     <% end %>

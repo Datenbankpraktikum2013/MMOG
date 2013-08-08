@@ -314,7 +314,7 @@ class Planet < ActiveRecord::Base
       build_me = Buildingtype.where(name:type ,level:(my_future_me.level)+1).first
       build_time = build_me.build_time
     end
-    puts "Erz auf Planet: #{self.ore} Kosten fuer Gebaeude: #{build_me.build_cost_ore}"
+
     if  (0 > self.ore - build_me.build_cost_ore || 0 > self.crystal - build_me.build_cost_crystal ||  0 > self.population - build_me.build_cost_population || 0 > self.user.money - build_me.build_cost_money)
       return false
     end   
@@ -372,6 +372,7 @@ class Planet < ActiveRecord::Base
       btype = b.buildingtype
       if btype.name == build_me.name && btype.level + 1 == build_me.level
         b.buildingtype = build_me
+
         if btype.name== "Depot"
           depot_size_increase(btype.production)
         end  
