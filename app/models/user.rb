@@ -49,9 +49,9 @@ class User < ActiveRecord::Base
   end
 
   #end friendship
-  def end_friendship!(other_user)
-    relationships.find_by_friend_id(other_user.id).destroy
-    other_user.relationships.find_by_friend_id(current_user.id).destroy
+  def end_friendship!(other_user)   
+    relationship.find_by_user_id(other_user.id).destroy
+    relationship.find_by_friend_id(other_user.id).destroy
   end
   
   #init usersettings when user is created

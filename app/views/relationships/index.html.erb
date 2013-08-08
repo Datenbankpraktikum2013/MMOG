@@ -1,4 +1,4 @@
-<h1>Listing relationships</h1>
+<h3>Freundesliste</h3>
 
 <table>
   <thead>
@@ -13,7 +13,7 @@
     <% current_user.friends.each do |friend| %>
       <tr>
         <td><%= friend.username %></td>
-        <td><%= link_to 'Edit', edit_relationship_path(self) %></td>
+        <td><%= link_to 'entfernen', {:controller => "relationships", :action => "destroy",:id=> friend.id} , :method=>:delete, data: {confirm: 'Bist du dir sicher, dass du '+friend.username+" aus der Freundesliste entfernen willst?" }, class: 'label label-important', :style => 'color:#FFFFFF;' %> </td>
       </tr>
     <% end %>
   </tbody>
@@ -21,4 +21,4 @@
 
 <br>
 
-<%= link_to 'New Relationship', new_relationship_path %>
+<%= link_to 'Freunde hinzufügen', new_relationship_path %>
