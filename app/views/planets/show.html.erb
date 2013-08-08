@@ -30,6 +30,13 @@
 
   <div class="planetinfos">
 
+
+    <div class="planet_info_anzeige">
+
+      <div><%= link_to '↶', sunsystem_path(@planet.sunsystem) %></div>
+
+    </div>
+
     <div class="planet_info_anzeige">
 
       <strong>User:</strong>
@@ -73,5 +80,5 @@
 
 </div>
 
-<%= link_to 'Edit', edit_planet_path(@planet) %> |
+<%= link_to 'Edit', edit_planet_path(@planet) %>
 <%= link_to 'Back', planets_path %>

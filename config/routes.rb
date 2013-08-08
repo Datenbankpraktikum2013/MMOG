@@ -1,6 +1,10 @@
 Mmog::Application.routes.draw do
 
 
+  resources :colonisationreports
+
+  resources :travelreports
+
   resources :ship_building_queues
 
   resources :receiving_reports
@@ -42,7 +46,7 @@ Mmog::Application.routes.draw do
 
   resources :alliances, :except => [:new]
 
-  resources :ranks, :except => :show
+  resources :ranks, :except => [:show, :index]
   
   resources :buildings
 
@@ -70,11 +74,11 @@ Mmog::Application.routes.draw do
 
   post 'alliances/:id/edit/send_mail' => 'alliances#send_mail'
 
-
-
   post 'technologies/upgrade' => 'technologies#upgrade'
 
   post 'technologies/show_index' => 'technologies#show_index'
+
+  post 'technologies/abort' => 'technologies#abort'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

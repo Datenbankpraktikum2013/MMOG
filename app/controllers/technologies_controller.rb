@@ -71,6 +71,14 @@ class TechnologiesController < ApplicationController
     end
   end
 
+  def abort
+    Technology.find(params["id"]).abort_technology(params["uid"])
+    respond_to do |format|
+      format.html { redirect_to action: 'index', notice: 'Forschung abgebrochen.'}
+      format.json {head :no_content}
+    end
+  end
+
   def show_index
     respond_to do |format|
       format.html { redirect_to action: 'index'}

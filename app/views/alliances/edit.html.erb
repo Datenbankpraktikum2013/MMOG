@@ -2,7 +2,7 @@
 
 <% if current_user.alliance==@alliance %>
 	<%= render 'showUsers' %>
-	<%= render 'showRanks' %>
+	<%= render 'showRanks' if current_user.rank.can_edit_ranks %> 
 	<%= render 'changeDescription' if current_user.rank.can_change_description %>
 	<%= render 'showMassMail' if current_user.rank.can_massmail %>
 <% else %>

@@ -10,13 +10,13 @@
 # Eintragen: GameSettings.set "key", "value"
 # Abfragen: GameSettings.get "key"
 
-GameSettings.set "PLANET_MIN_SIZE", "10000"
-GameSettings.set "PLANET_MAX_SIZE", "100000"
-GameSettings.set "WORLD_DISTANCE_FACTOR", "60"
-GameSettings.set "WORLD_LENGTH", "5"
-GameSettings.set "WORLD_VIEW_LENGTH", "5"
-
-
+GameSettings.set "INITIAL_BUDGET", "1000"
+GameSettings.set "PLANET_MIN_SIZE", 10000
+GameSettings.set "PLANET_MAX_SIZE", 100000
+GameSettings.set "WORLD_DISTANCE_FACTOR", 60
+GameSettings.set "WORLD_LENGTH", 5
+GameSettings.set "WORLD_VIEW_LENGTH", 5
+GameSettings.set "ERROR_MESSAGE_NOT_ALLOWED", "Du hast nicht genug Rechte dafür."
 
 #Default-Werte von Planeten und Gebäude
 
@@ -77,7 +77,7 @@ Building.create({:planet_id => 2, :buildingtype_id => 36})
 #Alliance.create({:name => 'test_alliance3', :description => 'testtesttest', :user_id => User.first})
 
 ##########DEFAULT USER!! demo:praktikum
-User.create(:email => 'demo@demo.com',:password => 'password',:username => 'demo',:money => 1200,:score => 0)
+User.create(:email => 'demo@demo.com',:password => 'password',:username => 'demo',:score => 0)
 User.create(:email => 'demo2@demo.com',:password => 'password',:username=> 'demo2',:money => 12000,:score => 0)
 User.create(:email => 'demo3@demo.com',:password => 'password',:username=> 'demo3',:money => 12000,:score => 0)
 User.create(:email => 'demo4@demo.com',:password => 'password',:username=> 'demo4',:money => 12000,:score => 0)
