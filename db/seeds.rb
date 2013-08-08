@@ -87,7 +87,7 @@ Building.create({:planet_id => 2, :buildingtype_id => 36})
 #Alliance.create({:name => 'test_alliance3', :description => 'testtesttest', :user_id => User.first})
 
 ##########DEFAULT USER!! demo:praktikum
-User.create(:email => 'demo@demo.com',:password => 'password',:username => 'demo',:score => 0)
+User.create(:email => 'demo@demo.com',:password => 'password',:username => 'demo', :money => 12000,:score => 0)
 User.create(:email => 'demo2@demo.com',:password => 'password',:username=> 'demo2',:money => 12000,:score => 0)
 User.create(:email => 'demo3@demo.com',:password => 'password',:username=> 'demo3',:money => 12000,:score => 0)
 User.create(:email => 'demo4@demo.com',:password => 'password',:username=> 'demo4',:money => 12000,:score => 0)
@@ -95,17 +95,17 @@ User.create(:email => 'demo4@demo.com',:password => 'password',:username=> 'demo
 
 # Testing values
 
-# Planet.find(1).claim(User.find(1))
-# Fleet.new(Planet.find(1))
-# p=Planet.find(1)
-# p.maxore = 100000
-# p.maxenergy = 100000
-# p.maxcrystal = 100000
-# p.maxpopulation = 100000
-# p.save
-# Fleet.find(1).add_ships({Ship.find(1)=> 50, Ship.find(2)=> 50, Ship.find(3)=> 50, Ship.find(4)=> 50, Ship.find(5)=> 50,Ship.find(6)=> 50,Ship.find(7)=> 50,Ship.find(8)=> 50,Ship.find(9)=> 50,Ship.find(10)=> 50})
-# Planet.find(1).give(:Ore, 10000)
-# Planet.find(1).give(:Crystal, 10000)
-# Planet.find(1).give(:Money, 10000)
-# Planet.find(1).give(:Population, 10000)
-# Planet.find(1).give(:Energy, 10000)
+Planet.find(1).claim(User.find(1))
+Fleet.new(Planet.find(1))
+p=Planet.find(1)
+p.maxore = 100000
+p.maxenergy = 100000
+p.maxcrystal = 100000
+p.maxpopulation = 100000
+p.save
+Fleet.find(1).add_ships({Ship.find(1)=> 50, Ship.find(2)=> 50, Ship.find(3)=> 50, Ship.find(4)=> 50, Ship.find(5)=> 50,Ship.find(6)=> 50,Ship.find(7)=> 50,Ship.find(8)=> 50,Ship.find(9)=> 50,Ship.find(10)=> 50})
+Planet.find(1).give(:Ore, 10000)
+Planet.find(1).give(:Crystal, 10000)
+Planet.find(1).give(:Money, 10000)
+Planet.find(1).give(:Population, 10000)
+Planet.find(1).give(:Energy, 10000)
