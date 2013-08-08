@@ -1,5 +1,6 @@
 class GalaxiesController < ApplicationController
   before_action :set_galaxy, only: [:show, :edit, :update, :destroy]
+  before_filter :authenticate_user!
 
   # GET /galaxies
   # GET /galaxies.json

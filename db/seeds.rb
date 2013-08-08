@@ -6,6 +6,8 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+ActiveRecord::Base.transaction do
+
 # Konstanten und Standardwerte bitte als Strings in den GameSettings eintragen
 # Eintragen: GameSettings.set "key", "value"
 # Abfragen: GameSettings.get "key"
@@ -109,3 +111,9 @@ User.create(:email => 'demo4@demo.com',:password => 'password',:username=> 'demo
 # Planet.find(1).give(:Money, 10000)
 # Planet.find(1).give(:Population, 10000)
 # Planet.find(1).give(:Energy, 10000)
+
+
+  Planet.first.seen_by(User.first)
+  Planet.first.seen_by(User.find(2))
+
+end
