@@ -40,8 +40,8 @@ class User < ActiveRecord::Base
 
   #create friendship
   def make_friendship!(other_user)
-    self.friends.create(:user_id => self,:friend_id => other_user)
-    other_user.friends.create(:user_id => other_user, :friend_id => self)
+    relationship.create!(friend_id: other_user.id)
+    other_user.relationship.create!(friend_id: self.id)
     return true
   end
 

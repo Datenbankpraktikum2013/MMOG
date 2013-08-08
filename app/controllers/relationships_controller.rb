@@ -29,7 +29,7 @@ class RelationshipsController < ApplicationController
       if current_user.make_friendship!(@user)
         #current_user.friends<<@user
         #@user.friends<<current_user
-        format.html { redirect_to @relationship, notice: 'Relationship was successfully created.' }
+        format.html { redirect_to relationships_url, notice: 'Relationship was successfully created.' }
         format.json { render action: 'show', status: :created, location: @relationship }
       else
         format.html { render action: 'new' }
