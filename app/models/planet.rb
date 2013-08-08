@@ -383,7 +383,7 @@ class Planet < ActiveRecord::Base
     buildings.each do |b|
       if b.buildingtype.name == build_me.name && b.buildingtype.level + 1 == build_me.level
         b.buildingtype = build_me
-        if b.name== "Depot"
+        if build_me.name== "Depot"
           depot_size_increase(b.production)
         end  
         b.save
