@@ -8,6 +8,14 @@ class Technology < ActiveRecord::Base
   has_many :technology_requires, :foreign_key => :tech_id
 
 
+  def abort_technology u
+    user =  User.find u
+    user.user_setting.update_attribute :researching, 0
+    user.update_attribute :money, (user.money + get_technology_cost(user)/2 )
+    Resque.dequeue(ResearchTechnology, user.id, id)
+
+  end
+
   #Updated die TechnolgieStufe des Users user
   def upgrade_technology u
 
@@ -98,10 +106,10 @@ class Technology < ActiveRecord::Base
    record = user_technologies.where(:user => user).first
 
     if !record.blank? then
-      return  record.rank * duration
+      return  ((1.3**record.rank) * duration) / user.user_setting.increased_research
 
     else
-      return duration
+      return duration / user.user_setting.increased_research
    end
   end
 
@@ -199,8 +207,8 @@ class Technology < ActiveRecord::Base
     record = user_technologies.where(:user_id => user).first
 
     if !record.blank? then
-      return  record.rank * cost
 
+      return (1.5**record.rank) * cost
     else
       return cost
     end
