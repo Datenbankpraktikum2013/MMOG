@@ -36,7 +36,7 @@
 			    <ul class="dropdown-menu">
 					<% @ranks.each do |rank| %>
 					<li>
-						<%= link_to rank.name, { :action => "change_default_rank", 'rank' => rank.id }, :method => :post, class: 'link' %>
+						<%= link_to rank.name, { :action => "change_default_rank", 'rank' => rank.id }, class: 'link' %>
 					</li>
 					<% end %>
 			    </ul>

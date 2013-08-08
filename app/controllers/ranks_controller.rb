@@ -1,12 +1,6 @@
 class RanksController < ApplicationController
   before_action :set_rank, only: [:show, :edit, :update, :destroy]
-
-  # GET /ranks
-  # GET /ranks.json
-  def index
-    @ranks = Rank.all
-  end
-
+  before_filter :authenticate_user!
   # GET /ranks/new
   def new
     @rank = Rank.new
@@ -19,16 +13,17 @@ class RanksController < ApplicationController
   # POST /ranks
   # POST /ranks.json
   def create
-    @rank = Rank.new(rank_params)
-
-    respond_to do |format|
-      @rank.alliance=current_user.alliance
-      if @rank.save
-        format.html { redirect_to edit_alliance_url(@rank.alliance), notice: 'Rank was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @rank }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @rank.errors, status: :unprocessable_entity }
+    if current_user.alliance!=nil and current_user.rank.can_edit_ranks
+      @rank = Rank.new(rank_params)
+      respond_to do |format|
+        @rank.alliance=current_user.alliance
+        if @rank.save
+          format.html { redirect_to edit_alliance_url(@rank.alliance), notice: 'Rang wurde erstellt.' }
+          format.json { render action: 'show', status: :created, location: @rank }
+        else
+          format.html { render action: 'new' }
+          format.json { render json: @rank.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -36,13 +31,15 @@ class RanksController < ApplicationController
   # PATCH/PUT /ranks/1
   # PATCH/PUT /ranks/1.json
   def update
-    respond_to do |format|
-      if @rank.update(rank_params)
-        format.html { redirect_to @rank, notice: 'Rank was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @rank.errors, status: :unprocessable_entity }
+    if current_user.alliance==@rank.alliance and current_user.rank.can_edit_ranks and @rank.is_founder == false
+      respond_to do |format|
+        if @rank.update(rank_params)
+          format.html { redirect_to @rank, notice: 'Rang wurde erfolgreich bearbeitet.' }
+          format.json { head :no_content }
+        else
+          format.html { render action: 'edit' }
+          format.json { render json: @rank.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -50,14 +47,16 @@ class RanksController < ApplicationController
   # DELETE /ranks/1
   # DELETE /ranks/1.json
   def destroy
-    unless @rank.standard
-      #find default rank
-      @alliance=@rank.alliance
-      @default=@alliance.ranks.where(:standard=>true).first
-      @rank.users.each do |u|
-        @default.users<<u
+    if current_user.alliance==@alliance and current_user.rank.can_edit_ranks
+      unless @rank.standard or @rank.is_founder
+        #find default rank
+        @alliance=@rank.alliance
+        @default=@alliance.ranks.where(:standard=>true).first
+        @rank.users.each do |u|
+          @default.users<<u
+        end
+        @rank.destroy
       end
-      @rank.destroy
     end
     respond_to do |format|
       format.html { redirect_to @alliance }

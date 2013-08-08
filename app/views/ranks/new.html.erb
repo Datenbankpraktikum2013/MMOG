@@ -1,5 +1,6 @@
-<h1>New rank</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Back', ranks_path %>
+<% if current_user.rank.can_edit_ranks %>
+	<h1>Rang erstellen</h1>
+	<%= render 'form' %>
+<% else %>
+	<strong> Du hast keine Erlaubnis,diesen Rang zu bearbeiten </strong>
+<% end %>

@@ -23,18 +23,23 @@ class RelationshipsController < ApplicationController
 
   # POST /relationships
   # POST /relationships.json
-  def create
+  def create    
     @user = User.find_by_username(params['username'])
     respond_to do |format|
-      if current_user.make_friendship!(@user)
-        #current_user.friends<<@user
-        #@user.friends<<current_user
-        format.html { redirect_to @relationship, notice: 'Relationship was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @relationship }
+      #check if user exists or friend already in list
+      if @user==nil or current_user.friends.find_by_id(@user.id)!=nil
+        format.html { redirect_to relationships_url, notice: 'Spieler nicht gefunden oder ist bereits in der Liste.' }
+        format.json { head :no_content }
       else
-        format.html { render action: 'new' }
-        format.json { render json: @relationship.errors, status: :unprocessable_entity }
-      end
+        #make friendship
+        if current_user.make_friendship!(@user)
+          format.html { redirect_to relationships_url, notice: 'Spieler hinzugefügt' }
+          format.json { render action: 'show', status: :created, location: @relationship }
+        else
+          format.html { render action: 'new' }
+          format.json { render json: @relationship.errors, status: :unprocessable_entity }
+        end
+      end  
     end
   end
 
@@ -55,8 +60,7 @@ class RelationshipsController < ApplicationController
   # DELETE /relationships/1
   # DELETE /relationships/1.json
   def destroy
-    #@relationship.destroy
-    @user = Relationship.find(params[:id]).friend
+    @user=@relationship.friend
     current_user.end_friendship!(@user)
     respond_to do |format|
       format.html { redirect_to relationships_url }
@@ -67,7 +71,8 @@ class RelationshipsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_relationship
-      @relationship = Relationship.find(params[:id])
+      #find relationship
+      @relationship = Relationship.find_by_friend_id(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -1,6 +1,5 @@
 class ShipBuildingQueuesController < ApplicationController
-  before_action :set_ship_building_queue, only: [:show, :edit, :update, :destroy]
-
+  before_action :set_ship_building_queue, only: [:show, :edit, :update, :destroy, :destroy_queue]
   # GET /ship_building_queues
   # GET /ship_building_queues.json
   def index
@@ -54,12 +53,22 @@ class ShipBuildingQueuesController < ApplicationController
   # DELETE /ship_building_queues/1
   # DELETE /ship_building_queues/1.json
   def destroy
+
     @ship_building_queue.destroy
     respond_to do |format|
       format.html { redirect_to ship_building_queues_url }
       format.json { head :no_content }
     end
   end
+
+  def destroy_queue
+    @ship_building_queue.remove_queue
+    respond_to do |format|
+      format.html { redirect_to starport_url  }
+      format.json { head :no_content }
+    end
+  end
+    
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -71,4 +80,6 @@ class ShipBuildingQueuesController < ApplicationController
     def ship_building_queue_params
       params.require(:ship_building_queue).permit(:planet_id, :end_time, :ship_id)
     end
+
+
 end

@@ -1,12 +1,15 @@
 Mmog::Application.routes.draw do
 
 
+  resources :colonisationreports
+
+  resources :travelreports
+
   resources :ship_building_queues
 
   resources :receiving_reports
 
   resources :relationships
-
   
   resources :techstages
 
@@ -19,8 +22,6 @@ Mmog::Application.routes.draw do
   resources :shipcounts
 
   resources :battlereports
-
-  get 'json/fetch_unread_msgs' => 'messages#fetch_unread_msgs'
 
   resources :messages, :except => [:edit, :update]
 
@@ -40,9 +41,9 @@ Mmog::Application.routes.draw do
 
   root 'welcome#index'
 
-  resources :alliances, :except => [:new]
+  resources :alliances, :except => [:update, :new]
 
-  resources :ranks, :except => :show
+  resources :ranks, :except => [:show, :index]
   
   resources :buildings
 
@@ -55,24 +56,28 @@ Mmog::Application.routes.draw do
   get "starport" => "starport#index"
   get "starport/:id" => "starport#show"
   post "starport/build" => "starport#build"
+  get "ship_building_queues/destroy_queue/:id" => "ship_building_queues#destroy_queue"
+
 
   post 'alliances/:id/edit/change_default_rank' => 'alliances#change_default_rank'
 
+  get 'json/fetch_unread_msgs' => 'messages#fetch_unread_msgs'
+
   post 'alliances/:id/edit/user_add_action' => 'alliances#user_add_action'
 
-  post 'alliances/:id/edit/change_user_rank' => 'alliances#change_user_rank'
+  put 'alliances/:id/edit/change_user_rank' => 'alliances#change_user_rank'
 
   post 'alliances/:id/edit/remove_user' => 'alliances#remove_user'
 
-  post 'alliances/:id/edit/change_description' => 'alliances#change_description'
+  put 'alliances/:id/edit/change_description' => 'alliances#change_description'
 
   post 'alliances/:id/edit/send_mail' => 'alliances#send_mail'
-
-
 
   post 'technologies/upgrade' => 'technologies#upgrade'
 
   post 'technologies/show_index' => 'technologies#show_index'
+
+  post 'technologies/abort' => 'technologies#abort'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

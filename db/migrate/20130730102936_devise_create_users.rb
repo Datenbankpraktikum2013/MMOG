@@ -34,7 +34,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       # t.string :authentication_token
 
       t.string  :username,          :null => false
-      t.integer :money,             :default => 100
+      t.integer :money,             :default => 0
       t.integer :score,             :default => 0
       t.integer :alliance_id
       t.integer :rank_id
