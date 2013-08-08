@@ -11,13 +11,17 @@
   <%research_id = UserSetting.find(current_user).researching%>
   <% if research_id != 0 %>
   <tr>
-
-    <div class='progress progress-striped active' >
-      <span style="font-weight: bold"><%= "Erforsche Technologie: " + array[0] + " Stufe " + array[1]%></span>
-        <div class='bar' id='auto-updating-progressbar' ></div>
-    </div>
-    <div align="center"><span style="font-weight:bold; color:green"><%= 'Forschung beendet: ' + (array[4]+2.hour).to_s[0..-5] %></span></div><br>
-
+    <td colspan="3" border="0">
+        <div class='progress progress-striped active' >
+          <span style="font-weight: bold"><%= "Erforsche Technologie: " + array[0] + " Stufe " + array[1]%></span>
+            <div class='bar' id='auto-updating-progressbar' ></div>
+        </div>
+        <div align="center"><span style="font-weight:bold; color:green"><%= 'Forschung beendet: ' + (array[4]+2.hour).to_s[0..-5] %></span></div><br>
+    </td>
+    <td align="middle" valign="middle">
+      <%= button_to 'Abort', {:controller => "technologies", :action => "abort", :uid => current_user, :id => research_id},
+                    :method => :post, data: { confirm: 'Möchtest du die aktuelle Forschung abbrechen? Der Fortschritt geht verloren' } %>
+    </td>
   </tr>
   <% end %>
   <% TechnologyRequire.all.map(&:building_rank).uniq.each do |rank| %>

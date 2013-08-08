@@ -8,6 +8,13 @@ class Technology < ActiveRecord::Base
   has_many :technology_requires, :foreign_key => :tech_id
 
 
+  def abort_technology u
+    user =  User.find u
+    user.user_setting.update_attribute :researching, 0
+    user.update_attribute :money, (user.money + get_technology_cost(user)/2 )
+
+  end
+
   #Updated die TechnolgieStufe des Users user
   def upgrade_technology u
 
