@@ -50,7 +50,7 @@ class MessagesController < ApplicationController
         @message.recipients<<@recipient      
         format.html { redirect_to @message, notice: GameSettings.get("SUCCESSMSG_MESSAGE_CREATED") }
       else
-        format.html { render action: "index", notice: GameSettings.get("ERRMSG_MESSAGE_CREATED") }
+        format.html { redirect_to messages_path, notice: GameSettings.get("ERRMSG_MESSAGE_CREATED") }
       end
     end
   end
