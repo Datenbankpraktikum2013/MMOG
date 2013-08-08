@@ -28,8 +28,13 @@
 		<tr>
 			<td><%= q.planet.name %></td>
 			<td> <%= @ships.find(q.ship_id).name %> </td>
+      <% if (q.end_time - @time.now.to_i) <= 0 %>
+        <td>0</td>
+      <% else %>
+
 			<td><%= (q.end_time - @time.now.to_i) %></td>
 <!-- 			<td><div class="bar" style="width: <%= q.end_time - @time.now.to_i %>%;"></div></td> -->
+    <%end%>
 		</tr>
 	<% end %>
 <% end %>
