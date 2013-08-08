@@ -34,7 +34,7 @@
 		  			<li><a href="/">Start</a></li>
 		  			<% if user_signed_in? %>
 
-		  				<li><a href="<%= messages_path %>">Nachrichten <span class="badge"><%= current_user.unread_messages %></span> </a></li>
+		  				<li><a href="<%= messages_path %>">Nachrichten <span id="msgupdate" class="badge"><%= current_user.unread_messages %></span> </a></li>
                         <li><a href="<%= technologies_path %>">Meine Technologien</a></li>
 		  				<li><a href="<%= alliances_path %>">Meine Allianz</a></li>
 		  				<li><a href="<%= reports_path %>">Berichte <span class="badge"><%= Report.unread_reports(current_user.id) %></span> </a></li>
@@ -82,6 +82,6 @@
 			});
 		};
 
-        setInterval(refresh, 20000);
+        setInterval(refresh, 5000);
 	</script>
 </html>

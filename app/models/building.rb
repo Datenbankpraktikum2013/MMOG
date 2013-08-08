@@ -3,7 +3,7 @@ class Building < ActiveRecord::Base
   # belongs_to :buildingtype
   belongs_to :planet
   belongs_to :buildingtype
-
+  @cache_verifies_upgrade
 
 
   def get_level()
@@ -56,21 +56,24 @@ class Building < ActiveRecord::Base
   end
 
   def verifies_upgrade_requirements?()
-    builds = self.planet.buildings_to_hash
-    btype = self.buildingtype
-    btypenext = Buildingtype.where(name: btype.name, level: btype.level + 1)
-    return false if btypenext.nil? || btypenext.empty?
-    btype = btypenext.first()
-    required = btype.requirements
-    return true if required.nil? || required.empty?
-    allow = true
+    if @cache_verifies_upgrade.nil? then
+      builds = self.planet.buildings_to_hash
+      btype = self.buildingtype
+      btypenext = Buildingtype.where(name: btype.name, level: btype.level + 1)
+      return false if btypenext.nil? || btypenext.empty?
+      btype = btypenext.first()
+      required = btype.requirements
+      return true if required.nil? || required.empty?
+      allow = true
 
-    required.each do |req|
-      if req.level > builds[req.name.to_sym] then
-        allow = false
+      required.each do |req|
+        if req.level > builds[req.name.to_sym] then
+          allow = false
+        end
       end
+      @cache_verifies_upgrade = allow
     end
-    return allow
+    return @cache_verifies_upgrade
 
   end
 
