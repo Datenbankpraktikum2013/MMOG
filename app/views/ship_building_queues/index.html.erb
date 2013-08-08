@@ -1,0 +1,31 @@
+<h1>Listing ship_building_queues</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Planet</th>
+      <th>End time</th>
+      <th>Ship</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @ship_building_queues.each do |ship_building_queue| %>
+      <tr>
+        <td><%= ship_building_queue.planet_id %></td>
+        <td><%= ship_building_queue.end_time %></td>
+        <td><%= ship_building_queue.ship_id %></td>
+        <td><%= link_to 'Show', ship_building_queue %></td>
+        <td><%= link_to 'Edit', edit_ship_building_queue_path(ship_building_queue) %></td>
+        <td><%= link_to 'Destroy', ship_building_queue, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Ship building queue', new_ship_building_queue_path %>

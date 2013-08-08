@@ -9,10 +9,12 @@ class StarportController < ApplicationController
   	@planets=Planet.where(user: current_user)
   	@fleet=Fleet
   	@shipshelper=ShipsHelper
+    @queue=ShipBuildingQueue.where(planet_id: @planets)
+    @time=Time
   end
 
   def show
-  	if Planet.find_by_id(params["id"]).user == current_user 
+  	if Planet.find_by_id(params["id"]).user == current_user
 	  	@ships=Ship.all
 	  	@planet=Planet.find_by_id(params["id"])
 	  	@fleet=Fleet
@@ -30,7 +32,7 @@ class StarportController < ApplicationController
 
   	params["ship"].each do |p|
   		p[1].to_i.times do
-  			Fleet.add_ship_to_planet(Ship.find(p[0]), Planet.find(params["planet"].first))
+  			ShipBuildingQueue.insert(Ship.find(p[0]), Planet.find(params["planet"].first))
 			end
   		#puts "Ship ID:#{p[0]} amount: #{p[1]} planet #{params["planet"].first}"
   	end

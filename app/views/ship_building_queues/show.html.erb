@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Planet:</strong>
+  <%= @ship_building_queue.planet_id %>
+</p>
+
+<p>
+  <strong>End time:</strong>
+  <%= @ship_building_queue.end_time %>
+</p>
+
+<p>
+  <strong>Ship:</strong>
+  <%= @ship_building_queue.ship_id %>
+</p>
+
+<%= link_to 'Edit', edit_ship_building_queue_path(@ship_building_queue) %> |
+<%= link_to 'Back', ship_building_queues_path %>

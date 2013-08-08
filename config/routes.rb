@@ -1,10 +1,13 @@
 Mmog::Application.routes.draw do
 
+
+  resources :ship_building_queues
+
+  resources :receiving_reports
+
   resources :relationships
 
-  get "starport" => "starport#index"
-  get "starport/:id" => "starport#show"
-  post "starport/build" => "starport#build"
+  
   resources :techstages
 
   resources :spyreports
@@ -16,6 +19,8 @@ Mmog::Application.routes.draw do
   resources :shipcounts
 
   resources :battlereports
+
+  get 'json/fetch_unread_msgs' => 'messages#fetch_unread_msgs'
 
   resources :messages, :except => [:edit, :update]
 
@@ -47,6 +52,10 @@ Mmog::Application.routes.draw do
 
   resources :planets
 
+  get "starport" => "starport#index"
+  get "starport/:id" => "starport#show"
+  post "starport/build" => "starport#build"
+
   post 'alliances/:id/edit/change_default_rank' => 'alliances#change_default_rank'
 
   post 'alliances/:id/edit/user_add_action' => 'alliances#user_add_action'
@@ -58,6 +67,8 @@ Mmog::Application.routes.draw do
   post 'alliances/:id/edit/change_description' => 'alliances#change_description'
 
   post 'alliances/:id/edit/send_mail' => 'alliances#send_mail'
+
+
 
   post 'technologies/upgrade' => 'technologies#upgrade'
 

@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Report:</strong>
+  <%= @receiving_report.report_id %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @receiving_report.user_id %>
+</p>
+
+<p>
+  <strong>Read:</strong>
+  <%= @receiving_report.read %>
+</p>
+
+<%= link_to 'Edit', edit_receiving_report_path(@receiving_report) %> |
+<%= link_to 'Back', receiving_reports_path %>
