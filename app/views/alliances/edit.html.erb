@@ -1,10 +1,5 @@
 <h1> <%= @alliance.name %> bearbeiten: </h1>
-
-<% if current_user.alliance==@alliance %>
-	<%= render 'showUsers' %>
-	<%= render 'showRanks' if current_user.rank.can_edit_ranks %> 
-	<%= render 'changeDescription' if current_user.rank.can_change_description %>
-	<%= render 'showMassMail' if current_user.rank.can_massmail %>
-<% else %>
-	<%= render 'notPermitted' if current_user.alliance!=@alliance %>
-<% end %>
+<%= render 'showUsers' %>
+<%= render 'showRanks' if @alliance.permission?(current_user,"edit_ranks") %> 
+<%= render 'changeDescription' if @alliance.permission?(current_user,"edit_ranks") %>
+<%= render 'showMassMail' if @alliance.permission?(current_user,"massmail") %>

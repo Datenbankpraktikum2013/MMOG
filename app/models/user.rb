@@ -284,4 +284,11 @@ class User < ActiveRecord::Base
       end
   end
 
+  ###########STATIC##############
+  def self.system_notify_all(subject,message)
+    User.all.each do |user|
+      user.messages.create(:subject=>'[Systemweit]'+subject,:body=>message)
+    end
+  end
+
 end
