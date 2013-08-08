@@ -44,7 +44,7 @@
 		  		</div>
 			</div>
 		  	<div class="span2">
-			  		<div class="well span2">
+			  		<div class="well">
 					<% if user_signed_in? %>
 						Willkommen zurück, <%= current_user.username %>!
 						<%= link_to "Ausloggen", destroy_user_session_path, method: :delete %>
@@ -70,7 +70,7 @@
 	    };
 		
 		function refresh(){
-			$.getJSON('json/fetch_unread_msgs', function(data) {
+			$.getJSON('/json/fetch_unread_msgs.json', function(data) {
 				var items = [];
 				$.each(data, function(key, val) {
 					items.push(val);

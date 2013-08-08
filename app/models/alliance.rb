@@ -38,6 +38,7 @@ class Alliance < ActiveRecord::Base
 	#add user to alliance and set default rank
 	public
 	def add_user(user)
+		return false if user==nil
 		if user.alliance==nil
 			self.users<<user
 			@def=self.ranks.where(:standard=>true).first
@@ -105,4 +106,69 @@ class Alliance < ActiveRecord::Base
 		end
 		return true
 	end
+
+  	public
+  		#check for userpermission on specific action
+	  	def permission?(user,action)
+		    #neither user nor user.rank can be nil for this
+		    return false if user==nil or user.rank==nil
+		    #user needs to be in the same alliance
+		    return false unless same_alliance?(user)
+		    if action=="edit_ranks"
+		    	return can_edit_ranks?(user)
+		    elsif action=="change_description"
+		    	return can_change_description?(user)
+		    elsif action=="massmail"
+		    	return can_massmail?(user)
+		    elsif action=="invite"
+		    	return can_invite?(user)
+		    elsif action=="kick"
+		    	return can_kick?(user)
+		    elsif action=="show_edit"
+		    	return can_see_edit?(user)
+		    end
+		    return false
+	  	end
+
+	private
+		def can_see_edit?(user)
+			return false if same_alliance?(user)==false
+			return (can_edit_ranks?(user) or can_change_description?(user) or can_massmail?(user) or can_invite?(user) or can_kick?(user))
+		end
+
+  	private
+	    def same_alliance?(user)
+	      	return false if user==nil or user.rank==nil
+	      	return (user.alliance==self)
+	    end
+
+	private
+	    def can_edit_ranks?(user)
+	      	return false if user==nil or user.rank==nil
+	      	return user.rank.can_edit_ranks
+	    end
+
+	private
+		def can_change_description?(user)
+			return false if user==nil or user.rank==nil
+			return user.rank.can_change_description
+		end
+
+	private
+		def can_massmail?(user)
+			return false if user==nil or user.rank==nil
+			return user.rank.can_massmail
+		end
+
+	private
+		def can_invite?(user)
+			return false if user==nil or user.rank==nil
+			return user.rank.can_invite
+		end
+
+	private
+		def can_kick?(user)
+			return false if user==nil or user.rank==nil
+			return user.rank.can_kick
+		end
 end

@@ -16,9 +16,20 @@ GameSettings.set "PLANET_MAX_SIZE", "100000"
 GameSettings.set "WORLD_DISTANCE_FACTOR", "60"
 GameSettings.set "WORLD_LENGTH", "5"
 GameSettings.set "WORLD_VIEW_LENGTH", "5"
+GameSettings.set "SUCCESSMSG_ALLIANCE_MASSMAILSENT", "Rundmail wurde erfolgreich versendet."
+GameSettings.set "ERRMSG_ALLIANCE_MASSMAILSENT", "Rundmail konnte nicht versendet werden."
+GameSettings.set "SUCCESSMSG_ALLIANCE_CHANGEDDEFAULTRANK", "Standardrang wurde erfolgreich geändert."
+GameSettings.set "ERRMSG_ALLIANCE_CHANGEDDEFAULTRANK", "Standardrang konnte nicht geändert werden."
+GameSettings.set "SUCCESSMSG_ALLIANCE_CHANGEDDESCRIPTION", "Beschreibung wurde erfolgreich geändert."
+GameSettings.set "ERRMSG_ALLIANCE_CHANGEDDESCRIPTION", "Beschreibung konnte nicht geändert werden."
+GameSettings.set "SUCCESSMSG_ALLIANCE_CHANGEDUSERRANK","Mitglied erfolgreich bearbeitet."
+GameSettings.set "ERRMSG_ALLIANCE_CHANGEDUSERRANK", "Mitglied konnte nicht bearbeitet werden."
+GameSettings.set "ERRMSG_ALLIANCE_SHOWEDIT", "Du hast keine Berechtigung, diese Allianz zu editieren."
+GameSettings.set "ERRMSG_ALLIANCE_USERALLIANCENOTNIL", "Hey, du hast bereits eine Allianz!"
+GameSettings.set "SUCCESSMSG_ALLIANCE_USERADDED","Mitglied erfolgreich hinzugefügt"
+GameSettings.set "ERRMSG_ALLIANCE_USERADDED", "Mitglied konnte nicht hinzugefügt werden."
 
-
-#Default-Werte von Planeten und Gebäude
+#Default-Werte von Planeten und Gebäudeer
 
 GalaxiesHelper.generateAt(0,0)
 Buildingtype.init()

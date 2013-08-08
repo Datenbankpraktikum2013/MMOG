@@ -20,8 +20,6 @@ Mmog::Application.routes.draw do
 
   resources :battlereports
 
-  get 'json/fetch_unread_msgs' => 'messages#fetch_unread_msgs'
-
   resources :messages, :except => [:edit, :update]
 
   resources :shipfleets
@@ -40,7 +38,7 @@ Mmog::Application.routes.draw do
 
   root 'welcome#index'
 
-  resources :alliances, :except => [:new]
+  resources :alliances, :except => [:update, :new]
 
   resources :ranks, :except => [:show, :index]
   
@@ -58,13 +56,15 @@ Mmog::Application.routes.draw do
 
   post 'alliances/:id/edit/change_default_rank' => 'alliances#change_default_rank'
 
+  get 'json/fetch_unread_msgs' => 'messages#fetch_unread_msgs'
+
   post 'alliances/:id/edit/user_add_action' => 'alliances#user_add_action'
 
-  post 'alliances/:id/edit/change_user_rank' => 'alliances#change_user_rank'
+  put 'alliances/:id/edit/change_user_rank' => 'alliances#change_user_rank'
 
   post 'alliances/:id/edit/remove_user' => 'alliances#remove_user'
 
-  post 'alliances/:id/edit/change_description' => 'alliances#change_description'
+  put 'alliances/:id/edit/change_description' => 'alliances#change_description'
 
   post 'alliances/:id/edit/send_mail' => 'alliances#send_mail'
 
