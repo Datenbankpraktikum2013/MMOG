@@ -4,7 +4,7 @@ class ReportsController < ApplicationController
   # GET /reports
   # GET /reports.json
   def index
-    @reports = Report.all
+    @reports = Report.all.joins(:receiving_reports).select('reports.*, receiving_reports.read AS read').where(receiving_reports: {user_id: current_user}).order('receiving_reports.read', :fightdate)
   end
 
   # GET /reports/1
@@ -54,7 +54,7 @@ class ReportsController < ApplicationController
   # DELETE /reports/1
   # DELETE /reports/1.json
   def destroy
-    @report.destroy
+    @report.destroy_receiver(current_user.id)
     respond_to do |format|
       format.html { redirect_to reports_url }
       format.json { head :no_content }

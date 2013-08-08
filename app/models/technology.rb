@@ -70,6 +70,7 @@ class Technology < ActiveRecord::Base
 
     #Setze User-Forschung auf 0 -> Ende
     user.user_setting.update_attribute :researching, 0
+    user.system_notify( 'Forschung', title, ' Technologie: '+title+' Stufe '+new_rank.to_s+' erfolgreich erforscht.')
   end
 
   #Prüft nacheinander alle Vorraussetzungen der Technology für einen user
@@ -106,10 +107,10 @@ class Technology < ActiveRecord::Base
    record = user_technologies.where(:user => user).first
 
     if !record.blank? then
-      return  ((1.3**record.rank) * duration) / user.user_setting.increased_research
+      return  (((1.3**record.rank) * duration) / user.user_setting.increased_research).round(1)
 
     else
-      return duration / user.user_setting.increased_research
+      return (duration / user.user_setting.increased_research).round(1)
    end
   end
 
@@ -208,9 +209,9 @@ class Technology < ActiveRecord::Base
 
     if !record.blank? then
 
-      return (1.5**record.rank) * cost
+      return ((1.5**record.rank) * cost).round(0)
     else
-      return cost
+      return cost.round(0)
     end
   end
 
@@ -252,6 +253,7 @@ class Technology < ActiveRecord::Base
 
 
   end
+
 
 
 

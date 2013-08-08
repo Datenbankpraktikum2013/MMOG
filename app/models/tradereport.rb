@@ -1,26 +1,32 @@
 class Tradereport < ActiveRecord::Base
 	has_one :report, as: :reportable
 
-	def finish_tradereport(fleet, planet)
-		r = Report.new
-		self.report = r
+	# modes: 0 = Gegner
+	# 		 1 = unbewohnter Planet
+	#        2 = Allianzmitglied
+	#        3 = eigener Planet
+	def finish_tradereport(fleet, planet, mode)
+		@r = Report.new
+		self.report = @r
 
-		r.defender << planet.user
-		r.defender_planet = planet
+		self.mode = mode
 
-		r.attacker = fleet.user
-		r.attacker_planet = fleet.start_planet
+		@r.defender = planet.user
+		@r.defender_planet = planet
 
-		r.receivers << planet.user
-		r.receivers << fleet.user
+		@r.attacker = fleet.user
+		@r.attacker_planet = fleet.start_planet
 
-		r.fightdate = Time.at(fleet.arrival_time)
+		@r.receivers << planet.user if !planet.user.nil?
+		@r.receivers << fleet.user
+
+		@r.fightdate = Time.at(fleet.arrival_time)
 
 		self.ore = fleet.ore
 		self.crystal = fleet.crystal
 		self.space_cash = fleet.credit
 
 		self.save
-		r.save
+		@r.save
 	end
 end

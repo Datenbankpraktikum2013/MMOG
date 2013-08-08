@@ -1,12 +1,15 @@
 Mmog::Application.routes.draw do
 
 
+  resources :colonisationreports
+
+  resources :travelreports
+
   resources :ship_building_queues
 
   resources :receiving_reports
 
   resources :relationships
-
   
   resources :techstages
 
@@ -53,6 +56,8 @@ Mmog::Application.routes.draw do
   get "starport" => "starport#index"
   get "starport/:id" => "starport#show"
   post "starport/build" => "starport#build"
+  get "ship_building_queues/destroy_queue/:id" => "ship_building_queues#destroy_queue"
+
 
   post 'alliances/:id/edit/change_default_rank' => 'alliances#change_default_rank'
 
