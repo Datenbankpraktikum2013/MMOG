@@ -3,21 +3,11 @@ class RanksController < ApplicationController
   before_filter :authenticate_user!
   # GET /ranks/new
   def new
-    if current_user.alliance!=nil and current_user.rank.can_edit_ranks==false
-      respond_to do |format|
-        format.html { redirect_to alliance_url(@rank.alliance), notice: 'Hey, du kannst keine Ränge erstellen!'}
-      end
-    end
     @rank = Rank.new
   end
 
   # GET /ranks/1/edit
   def edit
-    if current_user.alliance!=nil and current_user.rank.can_edit_ranks==false
-      respond_to do |format|
-        format.html { redirect_to alliance_url(@rank.alliance), notice: 'Hey, du kannst keine Ränge bearbeiten!'}
-      end
-    end
   end
 
   # POST /ranks

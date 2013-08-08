@@ -2,7 +2,7 @@ class Galaxy < ActiveRecord::Base
 
   has_many :sunsystems
 
-  @@gal_factor = (GameSettings.get("WORLD_DISTANCE_FACTOR").to_i) **2
+  @@gal_factor = (GameSettings.get("WORLD_DISTANCE_FACTOR").to_i) * 10
 
   def self.calcX(x, y)
     if x.integer? && y.integer? then
