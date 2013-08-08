@@ -29,23 +29,24 @@ class ShipBuildingQueue < ActiveRecord::Base
 	end
 
 	def self.update_time(t,p)
-		queue=self.where(planet: p)
+		queue=self.where("planet_id=? AND end_time>?", p,t)
+		q3=queue.where("end_time<?", t).maximum("end_time")
+		if q3.nil? 
+			q3=Time.now.to_i
+		end
 		queue.each do |q|
-			if q.end_time > t
+			
 				q2=self.new
 				q2.ship_id=q.ship_id
 				q2.planet_id=q.planet_id
-				q3=queue.where("end_time<?", t).maximum("end_time")
-				if q3.nil? 
-					q3=Time.now.to_i
-				end
+
 				q2.end_time=(Time.now.to_i + (q.end_time-t))+(q3 - Time.now.to_i)
 				q2.save
 				Resque.remove_delayed(AddShip, q.ship_id, q.planet_id, q.id )
 				Fleet.add_ship_in(q2.end_time, q2.ship, q2.planet, q2.id)
 				q.destroy
 				
-			end
+			
 
 		end
 
