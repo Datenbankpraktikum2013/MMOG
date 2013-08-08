@@ -23,6 +23,7 @@ class Fleet < ActiveRecord::Base
     self.ressource_capacity = 0
     self.ore = 0
     self.crystal = 0
+    ############################################################################################
     # self.user = planet.user
     # ACHTUNG, NUR ZU TESTZWECKEN
     self.user = User.find(1)
@@ -148,7 +149,7 @@ class Fleet < ActiveRecord::Base
 ######### MISSION STUFF #########
 #################################
 
-=begin
+#=begin
 # BASED
 # own > own (no fuel)
 
@@ -223,7 +224,8 @@ class Fleet < ActiveRecord::Base
       when 2 then # Colonization
         energy *= 2
         # subtract energy from planet if enough, else Error
-        if home.take(:Energy, energy) - energy == 0
+        if home.energy >= energy
+          home.take(:Energy, energy)
           fleet.load_ressources(ore, crystal, credit, fleet.origin_planet)
           colonize_planet_in(fleet.arrival_time, destination)
         else
@@ -232,14 +234,16 @@ class Fleet < ActiveRecord::Base
       when 3 then # Attack
         energy *= 2
         # subtract energy from planet if enough, else Error
-        if home.take(:Energy, energy) - energy == 0
+        if home.energy >= energy
+          home.take(:Energy, energy)
           attack_planet_in(fleet.arrival_time, destination)
         else
           raise RuntimeError, "Not enough energy to move the fleet"
         end
       when 4 then # Travel
         # subtract energy from planet if enough, else Error
-        if home.take(:Energy, energy) - energy == 0
+        if home.energy >= energy
+          home.take(:Energy, energy)
           travel_planet_in(fleet.arrival_time, destination)
         else
           raise RuntimeError, "Not enough energy to move the fleet"
@@ -247,7 +251,8 @@ class Fleet < ActiveRecord::Base
       when 5 then # Spy
         energy *= 2
         # subtract energy from planet if enough, else Error
-        if home.take(:Energy, energy) - energy == 0
+        if home.energy >= energy
+          home.take(:Energy, energy)
           spy_planet_in(fleet.arrival_time, destination)
         else
           raise RuntimeError, "Not enough energy to move the fleet"
@@ -255,7 +260,8 @@ class Fleet < ActiveRecord::Base
       when 6 then # Transport
         energy *= 2
         # subtract energy from planet if enough, else Error
-        if home.take(:Energy, energy) - energy == 0
+        if home.energy >= energy
+          home.take(:Energy, energy)
           fleet.load_ressources(ore, crystal, credit, fleet.origin_planet)
           transport_to_planet_in(fleet.arrival_time, destination)
         else
@@ -505,7 +511,7 @@ class Fleet < ActiveRecord::Base
     elsif other_user == self.user # own planet
       # => travel_report.do_me muss hier bleiben, da self destroyed wird
       home_fleet = Fleet.get_home_fleet(planet)
-      home_fleet.mergefleet(self)
+      home_fleet.merge_fleet(self)
     elsif other_user.alliance == self.user.alliance # alliance planet
       # => travel_report.do_me muss hier bleiben, da self destroyed wird
       self.start_planet = self.target_planet
@@ -576,11 +582,21 @@ class Fleet < ActiveRecord::Base
     self.departure_time = Time.now.to_i
     self.arrival_time = time + self.departure_time
 
-    # requeueueue --> mergefleet nach self.arrival time
+    # requeueueue --> merge_fleet nach self.arrival time
   end
 #=end
 
+  # is called, whenever a mission should break up
+  # the job from the queue will be cancelled and the fleet is sent back home
+  # it raises an expeption whenever the fleet is on no mission
+=begin
+
+  def breakup_mission
+
+  end
 =end
+#=end
+
 #################################
 ######### MANIPULATION ##########
 #################################
@@ -599,14 +615,15 @@ class Fleet < ActiveRecord::Base
     end
     if (ore + crystal + credit) > self.get_free_capacity
       part = self.get_free_capacity / 3
-      self.ore += planet.take(:Ore, part)
-      self.crystal += planet.take(:Crystal, part)
-      self.credit += planet.take(:Money, part)      
+      self.ore += part - planet.take(:Ore, part)
+      self.crystal += part - planet.take(:Crystal, part)
+      self.credit += part - planet.take(:Money, part)
     else
-      self.ore += planet.take(:Ore, ore)
-      self.crystal += planet.take(:Crystal, crystal)
-      self.credit += planet.take(:Money, credit)
+      self.ore += ore - planet.take(:Ore, ore)
+      self.crystal += crystal - planet.take(:Crystal, crystal)
+      self.credit += credit - planet.take(:Money, credit)
     end
+    self.save
   end
 #=end
 
@@ -627,7 +644,7 @@ class Fleet < ActiveRecord::Base
 #=end
 
 
-=begin
+#=begin
   # returns a fleet, that was created from self, with the amounts of ships that are in the argument hash
   # if there are ressources in the original fleet, those will only be transferred into the new fleet,
   # if the original fleet has enough space after splitting
@@ -635,6 +652,8 @@ class Fleet < ActiveRecord::Base
     unless enough_ships?(ship_hash)
       raise RuntimeError, "Not enough ships for a split"
     end
+
+    old_capacity = self.get_capacity
     
     # get newest technologies
     self.update_values
@@ -643,29 +662,41 @@ class Fleet < ActiveRecord::Base
     new_fleet.save
     new_fleet.add_ships(ship_hash)
     self.destroy_ships(ship_hash)
-    # calculate amount of ressources in self
-    old_ress = self.get_amount_of_ressources
-    unless self.get_capacity >= old_ress
-
-    new_ress = new_fleet.get_amount_of_ressources
+    # if now the fleet contains to much ressources it will split the ressources and load it in the new fleet
+    if self.get_capacity < self.get_amount_of_ressources
+      #calculate percentage of new fleet
+      factor = new_fleet.get_capacity.to_f / old_capacity.to_f
+      # split ressources
+      new_fleet.ore = (self.ore * factor).to_i
+      new_fleet.crystal = (self.crystal * factor).to_i
+      new_fleet.credit = (self.credit * factor).to_i
+      self.ore = (self.ore * (1-factor)).to_i
+      self.crystal = (self.crystal * (1-factor)).to_i
+      self.credit = (self.credit * (1-factor)).to_i
+    end
     return new_fleet
   end
-=end
+#=end
 
-=begin
+#=begin
   # merges another fleet with self
   # PRUEFEN OB DIE FLOTTEN AM SELBEN ORT SIND?????
   def merge_fleet(fleet)  
     unless fleet.is_a?(Fleet)
       raise RuntimeError, "The Input is not valid (invalid amount or wrong objects), ships cannot be added"
     end
-    # RESSOURCEN
+
+    # add ressources to self
+    self.ore += fleet.ore
+    self.credit += fleet.credit
+    self.crystal += fleet.crystal
+
     ship_hash = fleet.get_ships
     self.add_ships(ship_hash)
     fleet.destroy
     self.update_values
   end
-=end
+#=end
 
 
   # Adds Ship to Fleet in t seconds
@@ -707,7 +738,7 @@ class Fleet < ActiveRecord::Base
   # adds ships dependant on a hash like {ship_id:amount}
   # after that the fleetattributes are updated
   def add_ships(ship_hash)
-    unless hash_is_valid?(ship_hash)
+    unless Fleet.hash_is_valid?(ship_hash)
       raise RuntimeError, "The Input is not valid (invalid amount or wrong objects), ships cannot be added"
     end
     # this hash contains the ships that the fleet not yet possesses.
@@ -776,6 +807,8 @@ class Fleet < ActiveRecord::Base
       ressource_capacity += ship.ressource_capacity * amount
     end
 
+    self.ressource_capacity = ressource_capacity
+
      # multiply with research factors
     self.offense = offense * user.user_setting.increased_power
     self.defense = defense * user.user_setting.increased_defense
@@ -811,7 +844,7 @@ class Fleet < ActiveRecord::Base
     # checks if the keys are ships and the amounts are >= 0
     # returns true, if everything ok, and false in other cases
     # similar to enough_ships, without numberchecking
-    def hash_is_valid? (ship_hash)
+    def self.hash_is_valid? (ship_hash)
       ship_hash.each do |key, value|
         return false unless key.is_a?(Ship)
         return false if value < 0
