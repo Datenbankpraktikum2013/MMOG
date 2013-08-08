@@ -34,9 +34,17 @@ GameSettings.set "SUCCESSMSG_ALLIANCE_CREATED", "Allianz erfolgreich erstellt."
 GameSettings.set "SUCCESSMSG_ALLIANCE_USERREMOVED","Mitglied wurde erfolgreich aus der Allianz entfernt"
 GameSettings.set "ERRMSG_ALLIANCE_USERREMOVED", "Mitglied konnte nicht entfernt werden."
 GameSettings.set "ERRMSG_ALLIANCE_CREATED", "Allianz konnte nicht erstellt werden!"
-GameSettings.set "ERRMSG_MESSAGE_SHOWMESSAGE", "Nachricht kann nicht angezeigt werden"
+GameSettings.set "ERRMSG_MESSAGE_SHOWMESSAGE", "Nachricht kann nicht angezeigt werden."
 GameSettings.set "SUCCESSMSG_MESSAGE_CREATED", "Nachricht wurde erfolgreich zugestellt."
+GameSettings.set "ERRMSG_RANK_EDIT", "Du kannst diesen Rang nicht bearbeiten"
+GameSettings.set "SUCCESSMSG_RANK_CREATED", "Rang wurde erfoglreich erstellt."
+GameSettings.set "ERRMSG_RANK_CREATED", "Konnte nicht erstellt werden."
 GameSettings.set "ERRMSG_MESSAGE_CREATED", "Nachricht konnte nicht zugestellt werden."
+GameSettings.set "ERRMSG_RANK_NEW", "Dir ist es nicht erlaubt, neue Ränge zu erstellen."
+GameSettings.set "SUCCESSMSG_RANK_UPDATE", "Rang wurde erfolgreich geändert."
+GameSettings.set "ERRMSG_RANK_UPDATE", "Rang konnte nicht geändert werden."
+GameSettings.set "SUCCESSMSG_RANK_DESTROY", "Rang wurde erfolgreich gelöscht."
+GameSettings.set "ERRMSG_RANK_DESTROY", "Rang konnte nicht gelöscht werden."
 GameSettings.set "JAVASCRIPT_REFRESH_UNREAD_MESSAGES_INTERVAL", 10000 #msec
 
 GalaxiesHelper.generateAt(0,0)
