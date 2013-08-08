@@ -76,16 +76,6 @@ class AlliancesController < ApplicationController
     @founder=@alliance.ranks.where(:is_founder=>true)[0].users[0]
   end
 
-  # GET /alliances/new
-  def new
-    if current_user.alliance!=nil and current_user.rank!=nil
-      respond_to do |format|
-        format.html {redirect_to @alliance,notice: GameSettings.get("ERRMSG_ALLIANCE_USERALLIANCENOTNIL")}
-      end
-    end
-    @alliance=Alliance.new
-  end
-
   # GET /alliances/1/edit
   def edit
     unless @alliance.permission?(current_user,"show_edit")
@@ -113,11 +103,11 @@ class AlliancesController < ApplicationController
   def remove_user
     @user=@alliance.users.find_by_id(params['uid'])
     respond_to do |format|
-      if @alliance.remove_user(@user)
-        format.html { redirect_to @alliance, notice: @user.username+" wurde aus der Allianz entfernt" }
+      if @alliance.permission?(current_user,"kick") and @alliance.remove_user(@user)
+        format.html { redirect_to @alliance, notice: GameSettings.get("SUCCESSMSG_ALLIANCE_USERREMOVED") }
         format.json { render action: 'show', status: :created, location: @alliance }
       else
-        format.html { redirect_to @alliance, notice: @user.username+" konnte nicht aus der Allianz entfernt werden" }
+        format.html { redirect_to @alliance, notice: GameSettings.get("ERRMSG_ALLIANCE_USERREMOVED") }
         format.json { render json: @alliance.errors, status: :unprocessable_entity }
       end
     end
@@ -127,11 +117,11 @@ class AlliancesController < ApplicationController
   # POST /alliances.json
   def create
     #only do if user has no alliance.
-    if current_user.alliance_id==nil
+    if current_user.alliance==nil and current_user.rank==nil
       @alliance = Alliance.new(alliance_params)
       respond_to do |format|
         if @alliance.save and @alliance.set_founder(current_user) #save both
-            format.html { redirect_to @alliance, notice: 'Alliance was successfully created.' }
+            format.html { redirect_to @alliance, notice: GameSettings.set("SUCCESSMSG_ALLIANCE_CREATED") }
             format.json { render action: 'show', status: :created, location: @alliance }
         else
           format.html { render action: 'new' }
@@ -145,11 +135,11 @@ class AlliancesController < ApplicationController
   # DELETE /alliances/1.json
   def destroy
     #only if current user is founder
-    if @alliance.user==current_user
+    if current_user.alliance==@alliance and @alliance.permission?(current_user,"destroy")
       #cancel all alliance members
       @alliance.users.each do |user|
-        user.alliance=nil
-        user.save
+        @alliance.users.delete(user)
+        user.rank.users.delete(user)
       end
       @alliance.destroy
     end

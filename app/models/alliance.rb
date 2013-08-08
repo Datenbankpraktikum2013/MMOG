@@ -63,7 +63,7 @@ class Alliance < ActiveRecord::Base
 	public
 	def change_default_rank(rank)
 		@old=self.ranks.where(:standard=>true).first
-		if rank == nil or rank==@old
+		if rank == nil or rank==@old or rank.is_founder
 			return false
 		end
 		@old.standard=false
@@ -76,7 +76,7 @@ class Alliance < ActiveRecord::Base
 	#changes user rank
 	public
 	def change_user_rank(user,rank)
-		if rank == nil
+		if rank == nil or user.alliance==nil or rank.is_founder
 			return false
 		end
 		rank.users<<user
@@ -126,6 +126,8 @@ class Alliance < ActiveRecord::Base
 		    	return can_kick?(user)
 		    elsif action=="show_edit"
 		    	return can_see_edit?(user)
+		    elsif action=="destroy"
+		    	return user.is_founder
 		    end
 		    return false
 	  	end
