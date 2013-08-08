@@ -24,7 +24,7 @@ class Fleet < ActiveRecord::Base
     self.ore = 0
     self.crystal = 0
     ############################################################################################
-     self.user = planet.user
+    self.user = planet.user
     # ACHTUNG, NUR ZU TESTZWECKEN
     # self.user = User.find(1)
     # ACHTUNG, NUR ZU TESTZWECKEN
@@ -146,6 +146,19 @@ class Fleet < ActiveRecord::Base
     end
   end
 
+
+# Returns a Hash of {Ship => Amount} pairs
+  def get_ships_names()
+    ship_hash = {}
+    if self.ships.nil?
+      ship_hash
+    else
+      self.ships.each do |s|
+        ship_hash[s.name] = Shipfleet.where(fleet_id: self, ship_id: s).first.amount
+      end
+      ship_hash
+    end
+  end
 #################################
 ######### MISSION STUFF #########
 #################################
@@ -173,10 +186,7 @@ class Fleet < ActiveRecord::Base
 # own > alliance ??????? you can see it anyway?????? (2x fuel, returns automatically to origin)
 # own > enemy (2x fuel, returns automatically to origin)
 
-  # MOVE SOLL IMMER MIT EINER GESPLITTETEN FLEET AUFGERUFEN WERDEN...ALSO WENN EINE MISSION AUSGEWÄHLT WIRD, SOLL ERST MAL
-  # EINE FLEET GESPLITTET WERDEN UND DANN DIESE BEWEGT WERDEN
   # BERECHNUNGEN UEBERDENKEN
-  # missionstyp 1 AUSSCHLIEßEN
   # PLANETEN SETZEN
   # FEHLERBEHANDLUNG
   # GENERELLER ABLAUF:
@@ -298,9 +308,16 @@ class Fleet < ActiveRecord::Base
 # => Attack
 ####
 
-#=begin  
+#=begin
   def attack_planet_in(time, planet)
-    Resque.enqueue_at(time, Attack, self.id, planet.id)
+    unless planet.is_a?(Planet)
+      raise RuntimeError, "Input is invalid -> only Planets are allowed"
+    end
+    if time < 0
+      raise RuntimeError, "Input is invalid -> only positive timevalues are allowed"
+    end
+
+    Resque.enqueue_at(time, AttackPlanet, self.id, planet.id)
   end
 #=end
 
@@ -308,21 +325,30 @@ class Fleet < ActiveRecord::Base
 
   
   def attack(planet)
+    @battle_report = Battlereport.new
+    
     other_user = planet.user
     if other_user.nil? # unknown planet
-      # => battle_report.do_me
+      @battle_report.init_battlereport({}, self, 3)
+      @battle_report.finish_battlereport({}, self, false)
       self.return_to_origin(planet)
     elsif other_user == self.user # own planet
-      # => battle_report.do_me
+      @battle_report.init_battlereport({}, self, 5)
+      @battle_report.finish_battlereport({}, self, false)
       self.return_to_origin(planet)
     elsif other_user.alliance == self.user.alliance # alliance planet
-      # => battle_report.do_me
+      @battle_report.init_battlereport({}, self, 4)
+      @battle_report.finish_battlereport({}, self, false)
       self.return_to_origin(planet)
     else # enemy
-      # FIGHT
-      # => battle_report.do_me
-      #if survived:
-      #  self.return_to_origin(planet)
+      enemy_fleets = Fleet.where(start_planet: planet, target_planet: planet)
+      @battle_report.init_battlereport(enemy_fleets, self, 0)######################unklar ob bleibt!!!!!!
+      self.fight(planet)
+
+      unless self.destroyed? #####################komisch
+        puts "klappt das hier??? bin ich persisted????"
+        self.return_to_origin(planet)
+      end
     end
   end
 #=end
@@ -337,6 +363,8 @@ class Fleet < ActiveRecord::Base
     #puts "defender defense: #{defender_defense} attacker offense: #{self.offense} factor: #{fight_factor}"
     #if lost...
     if fight_factor<0
+      @battle_report.finish_battlereport(defender_fleets, self, true)
+      puts "Attacker FAIL"
       defender_new_defense=fight_factor.abs*rand(0.8 .. 1.2)
       new_offense=0
 
@@ -358,6 +386,8 @@ class Fleet < ActiveRecord::Base
       self.destroy
 
     elsif fight_factor>0
+      @battle_report.finish_battlereport(defender_fleets, self, false)
+      puts "Defender FAIL"
       attacker_new_offense=fight_factor.abs*rand(0.8 .. 1.2)
       new_offense=0
       tmp_offense=self.offense
@@ -369,9 +399,12 @@ class Fleet < ActiveRecord::Base
         tmp_offense=self.offense
       end
       defender_fleets.each do |f|
+        puts "TEST"
         f.destroy
       end
     else
+      @battle_report.finish_battlereport(defender_fleets, self, true)
+      puts "both FAIL"
       defender_fleets.each do |f|
         f.destroy
       end
@@ -393,12 +426,9 @@ class Fleet < ActiveRecord::Base
     if time < 0
       raise RuntimeError, "Input is invalid -> only positive timevalues are allowed"
     end
-    #nur für ausgabe
-    diff =  time - Time.now.to_i
 
     own_spy_factor = self.user.user_setting.increased_spypower
-    puts "Planet will be spyed in #{diff} seconds"
-    puts "fleetid: #{self.id}, planetid: #{planet.id}, ownspyfactor: #{own_spy_factor}"
+
     Resque.enqueue_at(time, SpyPlanet, self.id, planet.id, own_spy_factor)
   end
 
@@ -411,24 +441,22 @@ class Fleet < ActiveRecord::Base
       raise RuntimeError, "Input is invalid -> only Planets are allowed"
     end
 
+    factor = 0.0
     other_user = planet.user
     if other_user.nil? # unknown
-      factor = 0
       type = 1
       self.return_to_origin(planet)
     elsif other_user == self.user # own planet
-      factor = 0
       type = 3
       self.return_to_origin(planet)
     elsif other_user.alliance == self.user.alliance # alliance planet
-      factor = 0
       type = 2
       self.return_to_origin(planet)
     else  # enemy
       factor = planet.user.user_setting.increased_spypower
       # the higher the spy factor, the more probable it is, that the drone survives
       r = rand 0.0..0.8
-      if own_spy_factor - r < 1
+      if own_spy_factor - r < 0.8
         type = 4
       else
         type = 0
@@ -566,7 +594,7 @@ class Fleet < ActiveRecord::Base
       raise RuntimeError, "Input is invalid -> only positive timevalues are allowed"
     end
     
-    Resque.enqueue_at(time, Transport, self.id, planet.id)
+    Resque.enqueue_at(time, TransportToPlanet, self.id, planet.id)
 
   end
 #=end
