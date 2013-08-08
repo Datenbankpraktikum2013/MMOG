@@ -42,7 +42,7 @@ Mmog::Application.routes.draw do
 
   resources :alliances, :except => [:new]
 
-  resources :ranks, :except => :show
+  resources :ranks, :except => [:show, :index]
   
   resources :buildings
 
