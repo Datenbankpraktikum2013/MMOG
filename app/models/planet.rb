@@ -10,6 +10,8 @@ class Planet < ActiveRecord::Base
   @start_maxore
   @start_maxcrystal
   @start_maxenergy
+  @cache_buildings_hash
+  @upgradable_buildings
   after_initialize :init
 
   #
@@ -34,7 +36,6 @@ class Planet < ActiveRecord::Base
     if self.name.nil?
       #self.under_construction = false
 
-
       if self.size.nil?
         self.size = Random.rand(@@MAX_SIZE-@@MIN_SIZE) + @@MIN_SIZE
       end
@@ -48,9 +49,7 @@ class Planet < ActiveRecord::Base
       self.maxpopulation = self.size/2 if self.maxpopulation.nil?
 
       #Creates random Planet name
-      
-        self.name = PlanetsHelper.namegen
-      
+      self.name = PlanetsHelper.namegen
 
       #Creates specialties for Planet
       unless self.special.nil? || self.special == 0
@@ -85,11 +84,11 @@ class Planet < ActiveRecord::Base
            self.maxenergy = 400
            self.maxcrystal = 5
            @spec[5] = 1.3
-        #Scienceplanet
-        elsif self.special == 7
-           @spec[7] = 1.3
+        #Scienceplanet      entfernt... fehlerhaft noch aktiv gewesen
+        #elsif self.special == 7
+        #   @spec[7] = 1.3
         #Energieplanet   
-        else self.special == 8
+        else self.special == 7 #8
           self.energy = 100
            @spec[2] = 1.3
         end   
@@ -112,7 +111,6 @@ class Planet < ActiveRecord::Base
         @start_maxenergy = maxenergy
     end
   end
-
 
   def calc_spec
       @start_maxore = 100
@@ -176,10 +174,6 @@ class Planet < ActiveRecord::Base
     self.mention()
   end
 
-  def spec
-    puts @spec
-  end
-
   #@param type Name der Produktionsstaette ("Eisenmine", "Haus", ...)
   def get_production(type)
     # TODO Calculate production
@@ -217,11 +211,6 @@ class Planet < ActiveRecord::Base
       c = @spec[4] * prod
       return c
     end
-  end
-
-  def get_building_factor_of(type)
-    # TODO Calculate the factor of buildingspeed
-    return 1
   end
 
   #Method which increases and updates all the resources a player has every ...Minute
@@ -314,7 +303,7 @@ class Planet < ActiveRecord::Base
     end
     upgrade_me = self.buildings.where(buildingtype_id: id_list).first
 
-    return false if !upgrade_me.nil? && !upgrade_me.verifies_upgrade_requirements?
+    return false if !upgrade_me.nil? && !upgrade_me.verifies_upgrade_requirements? || upgrade_me.nil? && !self.verifies_new_building?(type)
 
     if upgrade_me.nil?
       build_time = Buildingtype.where(name: type.to_s, level:1).first.build_time
@@ -322,18 +311,18 @@ class Planet < ActiveRecord::Base
     else  
       upgrade_me = upgrade_me.buildingtype_id
       my_future_me = Buildingtype.find_by_id(upgrade_me)
-      build_time = Buildingtype.where(name:type, level:(my_future_me.level)+1).first.build_time
       build_me = Buildingtype.where(name:type ,level:(my_future_me.level)+1).first
+      build_time = build_me.build_time
     end
-    puts "Erz auf Planet: #{self.ore} Kosten fuer Gebaeude: #{build_me.build_cost_ore}"
-    if  (0 > self.ore - build_me.build_cost_ore || 0 > self.crystal - build_me.build_cost_crystal ||  0 > self.population - build_me.build_cost_population || 0 > User.find(self.user_id).money - build_me.build_cost_money)
+
+    if  (0 > self.ore - build_me.build_cost_ore || 0 > self.crystal - build_me.build_cost_crystal ||  0 > self.population - build_me.build_cost_population || 0 > self.user.money - build_me.build_cost_money)
       return false
     end   
     self.ore -= build_me.build_cost_ore
     self.crystal -= build_me.build_cost_crystal
     self.population -= build_me.build_cost_population
-    User.find(self.user_id).money -= build_me.build_cost_money
-    User.find(self.user_id).save
+    self.user.money -= build_me.build_cost_money
+    self.user.save
 
     id_array = []
     id_array << self.id
@@ -342,7 +331,7 @@ class Planet < ActiveRecord::Base
     
     self.save
 
-    Resque.enqueue_in(build_time.second,BuildBuildings, id_array)
+    Resque.enqueue_in(build_time.second, BuildBuildings, id_array)
 
   end
 
@@ -362,39 +351,40 @@ class Planet < ActiveRecord::Base
     end
     
   end
+
   def depot_size_increase(prod_size)
      self.maxore = @start_maxore * prod_size * @spec[5]
      self.maxcrystal = @start_maxcrystal * prod_size * @spec[5]
      self.maxenergy = @start_maxenergy * prod_size * @spec[5]
     self.save
   end
+
   def build_building(buildingtype_id)
-    #destroy_me = self.buildings.where(name: Buildingtype.where(id: id).first.name).first.id
-    #destroy_me.destroy unless destroy_me.nil?
-    #reborn_me = Building.create(buildingtype_id: id, planet: seld.id)
+    self.reset_building_cache
     self.under_construction = false
     self.save
-
     
     return false if buildingtype_id.nil? || !buildingtype_id.integer?
     build_me = Buildingtype.where(id: buildingtype_id).first
     return false if build_me.nil?
     builds = self.buildings
-    buildings.each do |b|
-      if b.buildingtype.name == build_me.name && b.buildingtype.level + 1 == build_me.level
+    builds.each do |b|
+      btype = b.buildingtype
+      if btype.name == build_me.name && btype.level + 1 == build_me.level
         b.buildingtype = build_me
-        if build_me.name== "Depot"
-          depot_size_increase(b.production)
+
+        if btype.name== "Depot"
+          depot_size_increase(btype.production)
         end  
         b.save
         return true
       end
     end
     if build_me.level == 1 then
-      b = Building.create(buildingtype_id: buildingtype_id, planet: self)
-        if build_me.name == "Depot"
-          depot_size_increase(build_me.production)
-        end  
+      Building.create(buildingtype_id: buildingtype_id, planet: self)
+      if build_me.name == "Depot"
+        depot_size_increase(build_me.production)
+      end
       return true
     end
     return false
@@ -433,12 +423,37 @@ class Planet < ActiveRecord::Base
   end
 
   def buildings_to_hash
-    out = {:Oremine => 0, :ResearchLab => 0, :City => 0, :Powerplant =>  0, :Crystalmine => 0, :Headquarter => 0, :Starport => 0, :Depot => 0}
-    self.buildings.each do |b|
-      btype = b.buildingtype
-      out[btype.name.to_sym] = btype.level
+    if @cache_buildings_hash.nil? || @cache_buildings_hash.empty? then
+      @cache_buildings_hash = {:Oremine => 0, :ResearchLab => 0, :City => 0, :Powerplant =>  0, :Crystalmine => 0, :Headquarter => 0, :Starport => 0, :Depot => 0}
+      self.buildings.each do |b|
+        btype = b.buildingtype
+        @cache_buildings_hash[btype.name.to_sym] = btype.level
+      end
     end
-    return out
+    return @cache_buildings_hash
+  end
+
+  def reset_building_cache
+    @cache_buildings_hash = {}
+    @upgradable_buildings = nil
+  end
+
+
+  def upgradable_buildings_to_hash
+    if @upgradable_buildings.nil? || @upgradable_buildings.empty? then
+      @upgradable_buildings = []
+      hashed_b = self.buildings_to_hash
+      hashed_b.each do |h|
+        if h[1] == 0 then
+          @upgradable_buildings << h[0] if self.verifies_new_building?(h[0])
+        end
+      end
+      bs = self.buildings
+      bs.find_each do |b|
+        @upgradable_buildings << b.buildingtype.name.to_sym if b.verifies_upgrade_requirements?
+      end
+    end
+    return @upgradable_buildings
   end
 
   def give(type, number)
@@ -554,8 +569,26 @@ class Planet < ActiveRecord::Base
     return back
   end
 
-  def ressources_to_hash
+  def verifies_new_building?(type)
+    hashed_b = self.buildings_to_hash
+    return false if !hashed_b.include?(type) || hashed_b[type] > 0
+    btypenext = Buildingtype.where(name: type.to_s, level: 1)
+    return false if btypenext.nil? || btypenext.empty?
+    btype = btypenext.first()
+    required = btype.requirements
+    return true if required.nil? || required.empty?
+    allow = true
 
+    required.each do |req|
+      if req.level > hashed_b[req.name.to_sym] then
+        allow = false
+      end
+    end
+    return allow
+  end
+
+  def ressources_to_hash
+    return {:Ore => self.ore, :Crystal => self.crystal, :Energy=> self.energy, :Money => self.user.money, :Population => self.population}
   end
 
   def seen_by(user)

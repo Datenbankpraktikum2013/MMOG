@@ -11,12 +11,12 @@
 # Abfragen: GameSettings.get "key"
 
 GameSettings.set "INITIAL_BUDGET", "1000"
-GameSettings.set "PLANET_MIN_SIZE", "10000"
-GameSettings.set "PLANET_MAX_SIZE", "100000"
-GameSettings.set "WORLD_DISTANCE_FACTOR", "60"
-GameSettings.set "WORLD_LENGTH", "5"
-GameSettings.set "WORLD_VIEW_LENGTH", "5"
-
+GameSettings.set "PLANET_MIN_SIZE", 10000
+GameSettings.set "PLANET_MAX_SIZE", 100000
+GameSettings.set "WORLD_DISTANCE_FACTOR", 60
+GameSettings.set "WORLD_LENGTH", 5
+GameSettings.set "WORLD_VIEW_LENGTH", 5
+GameSettings.set "ERROR_MESSAGE_NOT_ALLOWED", "Du hast nicht genug Rechte dafür."
 
 #Default-Werte von Planeten und Gebäude
 
