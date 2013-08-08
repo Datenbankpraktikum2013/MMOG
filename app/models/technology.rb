@@ -12,6 +12,7 @@ class Technology < ActiveRecord::Base
     user =  User.find u
     user.user_setting.update_attribute :researching, 0
     user.update_attribute :money, (user.money + get_technology_cost(user)/2 )
+    Resque.dequeue(ResearchTechnology, user.id, id)
 
   end
 

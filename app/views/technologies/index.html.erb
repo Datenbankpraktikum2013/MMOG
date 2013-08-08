@@ -64,7 +64,7 @@
     gone = <%=Time.now.to_i - array[2].to_i %>;
     end  = <%=(array[3].to_i) +2 %>;
     function update_progressbar(){
-        if (gone == (end)) {
+        if (gone >= (end)) {
             location.reload();
         }
         gone += 0.25;
