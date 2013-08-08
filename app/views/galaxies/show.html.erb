@@ -1,39 +1,26 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>X:</strong>
-  <%= @galaxy.x %>
-</p>
+<div class="sunsystemordner">
 
-<p>
-  <strong>Name:</strong>
-  <%= @galaxy.name %>
-</p>
+  <div class="galaxyinf">
 
+    Name der Galaxie: <%= @galaxy.name %>
+    <%= link_to '↶', galaxies_path %>
 
+  </div>
 
+  <% @galaxy.sunsystems.each do |s| %>
 
-<p>
-<strong>Liste der Sonnensysteme in dieser Galaxie</strong>
-<% @galaxy.sunsystems.each do |s| %>
+      <a class="sunsyspos sunsyspos<%= s.y.to_s %>" href="<%= sunsystem_path(s)%>"> <div>
 
-    <p>
-    <%= "Name des Sonnensystems: " + s.name.to_s%>
-    </p>
-    <p>
-    <%= "Y-Koordinate:" + s.y.to_s %>
-    </p>
+        <% if !s.y.nil? then %>
+            <%= image_tag('/images/icons/eisen32px.png')%>
+        <% end %>
 
-    <p style="margin-bottom: 50px">
-    <%= link_to 'Sunsystem', sunsystem_path(s) %>
-    </p>
-    </p>
-<% end %>
-</p>
+      </div></a>
+
+  <% end %>
 
 
-<p>
-<%= link_to 'Edit', edit_galaxy_path(@galaxy) %> |
-<%= link_to 'Back', galaxies_path %>
-</p>
+</div>
 

@@ -6,7 +6,7 @@ class Spyreport < ActiveRecord::Base
 	has_and_belongs_to_many :buildingtypes
 	has_one :report, as: :reportable
 
-	# types: 0 = Gegner
+	# modes: 0 = Gegner
 	# 		 1 = unbewohnter Planet
 	#        2 = Allianzmitglied
 	#        3 = eigener Planet
@@ -24,7 +24,7 @@ class Spyreport < ActiveRecord::Base
 		@r.attacker = fleet.user
 		@r.attacker_planet = fleet.start_planet
 
-		@r.receivers << planet.user
+		@r.receivers << planet.user if mode == 4
 		@r.receivers << fleet.user
 
 		@r.fightdate = Time.at(fleet.arrival_time)

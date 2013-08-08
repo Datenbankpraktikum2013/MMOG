@@ -12,8 +12,8 @@ class Report < ActiveRecord::Base
 #	scope :unread, -> { where(read: false) }
 
 
-	def delete_receiver(user)
-		con = self.receiving_reports.where(user: user).first
+	def destroy_receiver(user_id)
+		con = self.receiving_reports.where(user_id: user_id).first
 
 		unless con.nil?
 			con.destroy
@@ -21,5 +21,9 @@ class Report < ActiveRecord::Base
 				self.destroy
 			end
 		end
+	end
+
+	def self.unread_reports(user_id)
+		Report.all.joins(:receiving_reports).where(receiving_reports: {user_id: user_id, read: false}).count
 	end
 end

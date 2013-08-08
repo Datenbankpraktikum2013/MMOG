@@ -1,29 +1,25 @@
-<%= javascript_include_tag :defaults %>
-<%= csrf_meta_tag %>
-
-
-
 <br><h1 align="middle">Update Technologies</h1><br><br><br>
 
 <table border="1" align="center" valign="middle">
   <tbody>
   <% array = current_user.get_researching_tech %>
   <%research_id = UserSetting.find(current_user).researching%>
+
   <% if research_id != 0 %>
-  <tr>
-    <td colspan="3" border="0">
-        <div class='progress progress-striped active' >
-          <span style="font-weight: bold"><%= "Erforsche Technologie: " + array[0] + " Stufe " + array[1]%></span>
-            <div class='bar' id='auto-updating-progressbar' ></div>
-        </div>
-        <div align="center"><span style="font-weight:bold; color:green"><%= 'Forschung beendet: ' + (array[4]+2.hour).to_s[0..-5] %></span></div><br>
-    </td>
-    <td align="middle" valign="middle">
-      <%= button_to 'Abort', {:controller => "technologies", :action => "abort", :uid => current_user, :id => research_id},
-                    :method => :post, data: { confirm: 'Möchtest du die aktuelle Forschung abbrechen? Der Fortschritt geht verloren' } %>
-    </td>
-  </tr>
+    <div class='progress progress-striped active' >
+      <span style="font-weight: bold"><%= "Erforsche Technologie: " + array[0] + " Stufe " + array[1]%></span>
+        <div class='bar' id='auto-updating-progressbar' ></div>
+    </div>
+    <div align="center"><span style="font-weight:bold; color:green"><%= 'Forschung beendet: ' + (array[4]+2.hour).to_s[0..-5] %></span></div>
+    <div align="right">
+     <%= button_to 'Abbrechen',
+                   {:controller=>"technologies", :action=>"abort", :uid=>current_user, :id=>research_id},
+                   :onclick => "return confirm('Möchtest du die aktuelle Forschung abbrechen? Der Fortschritt geht verloren')",:method=>:post
+     %>
+    </div>
+    <br>
   <% end %>
+
   <% TechnologyRequire.all.map(&:building_rank).uniq.each do |rank| %>
     <tr><th colspan="4"><%= "Forschungszentrum Stufe: "+ rank.to_s %></th></tr>
       <% TechnologyRequire.where(:building_rank => rank).map(&:tech_id).uniq.each do |technology| %>
@@ -47,11 +43,11 @@
             <%elsif  technology.cost_required?(current_user) == false %>
             <td><p class="missing_money"><%='Nicht genug Geld' %></p></td>
             <%elsif research_id != 0%>
-            <td><p class="forscht"><%= 'Forscht.' %></p></td>
+            <td><p class="forscht"><%= 'Forscht.'%></p></td>
             <%else%>
             <td align="middle"  valign="middle" width="100"><%= button_to 'Upgrade',
-                {:controller => "technologies", :action => "upgrade",    :uid=> current_user, :id=> technology} ,
-                :method=>:post, data: { confirm: 'Möchtest du die Technologie "' + technology.title + '" aufwerten?' }
+                {:controller => "technologies", :action => "upgrade",    :uid => current_user, :id => technology} ,
+                :method => :post, data: { confirm: 'Möchtest du die Technologie "' + technology.title + '" aufwerten?' }
             %></td>
              <%end%>
           </tr>
@@ -61,6 +57,7 @@
 </table>
 
 <script>
+
     gone = <%=Time.now.to_i - array[2].to_i %>;
     end  = <%=(array[3].to_i) +2 %>;
     function update_progressbar(){

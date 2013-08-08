@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+  
+  #callback on create
+  after_create :set_initial_money
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable, :recoverable
