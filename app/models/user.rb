@@ -1,7 +1,4 @@
 class User < ActiveRecord::Base
-  #callback on create
-  after_save :set_initial_money, on: :create
-
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable, :recoverable
@@ -52,9 +49,9 @@ class User < ActiveRecord::Base
   end
 
   #end friendship
-  def end_friendship!(other_user)   
-    relationship.find_by_user_id(other_user.id).destroy
-    relationship.find_by_friend_id(other_user.id).destroy
+  def end_friendship!(other_user)
+    Relationship.find_by_friend_id(other_user.id).destroy
+    Relationship.find_by_friend_id(self.id).destroy
   end
   
   #init usersettings when user is created
@@ -257,13 +254,5 @@ class User < ActiveRecord::Base
   def system_notify(prefix,subject,message)
     self.messages.create(:subject=>'['+prefix+']'+subject,:body=>message)
   end
-
-  private
-    def set_initial_money(initial=GameSettings.get("INITIAL_BUDGET"))
-      if self.money==0
-        self.money=initial
-        self.save
-      end
-    end
 
 end

@@ -6,7 +6,6 @@ Mmog::Application.routes.draw do
   resources :receiving_reports
 
   resources :relationships
-
   
   resources :techstages
 
