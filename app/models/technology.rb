@@ -106,10 +106,10 @@ class Technology < ActiveRecord::Base
    record = user_technologies.where(:user => user).first
 
     if !record.blank? then
-      return  record.rank * duration
+      return  ((1.3**record.rank) * duration) / user.user_setting.increased_research
 
     else
-      return duration
+      return duration / user.user_setting.increased_research
    end
   end
 
@@ -207,8 +207,8 @@ class Technology < ActiveRecord::Base
     record = user_technologies.where(:user_id => user).first
 
     if !record.blank? then
-      return  record.rank * cost
 
+      return (1.5**record.rank) * cost
     else
       return cost
     end
