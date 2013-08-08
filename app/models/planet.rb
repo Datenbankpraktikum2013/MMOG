@@ -243,7 +243,7 @@ class Planet < ActiveRecord::Base
       #
       # updates population
       #
-      city_population = self.get_production(:City)
+      city_population = self.get_production(:City).to_i
       if city_population.integer? then
         if (self.population + city_population) < self.maxpopulation then
           self.population += city_population
@@ -255,7 +255,7 @@ class Planet < ActiveRecord::Base
       #
       # updates crystal
       #
-      crystal_production = self.get_production(:Crystalmine)
+      crystal_production = self.get_production(:Crystalmine).to_i
       if crystal_production.integer? then
         if (self.crystal + crystal_production) < self.maxcrystal then
           self.crystal += crystal_production
@@ -268,7 +268,7 @@ class Planet < ActiveRecord::Base
       #
       # updates money 
       #
-      income = self.get_production(:Headquarter)
+      income = self.get_production(:Headquarter).to_i
       owner = self.user
       owner.money += income
       owner.save
@@ -291,7 +291,7 @@ class Planet < ActiveRecord::Base
       #
       # Energy costs and production
       #
-      power_production = self.get_production(:Powerplant)
+      power_production = self.get_production(:Powerplant).to_i
       if (self.energy + power_production) < self.maxenergy
         self.energy += power_production
       else
@@ -325,7 +325,7 @@ class Planet < ActiveRecord::Base
       build_time = Buildingtype.where(name:type, level:(my_future_me.level)+1).first.build_time
       build_me = Buildingtype.where(name:type ,level:(my_future_me.level)+1).first
     end
-
+    puts "Erz auf Planet: #{self.ore} Kosten fuer Gebaeude: #{build_me.build_cost_ore}"
     if  (0 > self.ore - build_me.build_cost_ore || 0 > self.crystal - build_me.build_cost_crystal ||  0 > self.population - build_me.build_cost_population || 0 > User.find(self.user_id).money - build_me.build_cost_money)
       return false
     end   
