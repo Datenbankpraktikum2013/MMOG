@@ -82,6 +82,6 @@
 			});
 		};
 
-        setInterval(refresh, 5000);
+        setInterval(refresh, <%= GameSettings.get "JAVASCRIPT_REFRESH_UNREAD_MESSAGES_INTERVAL" %>);
 	</script>
 </html>

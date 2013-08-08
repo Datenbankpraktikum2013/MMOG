@@ -124,7 +124,7 @@ class AlliancesController < ApplicationController
             format.html { redirect_to @alliance, notice: GameSettings.set("SUCCESSMSG_ALLIANCE_CREATED") }
             format.json { render action: 'show', status: :created, location: @alliance }
         else
-          format.html { render action: 'new' }
+          format.html { redirect_to @alliance, notice: GameSettings.get("ERRMSG_ALLIANCE_CREATED") }
           format.json { render json: @alliance.errors, status: :unprocessable_entity }
         end
       end

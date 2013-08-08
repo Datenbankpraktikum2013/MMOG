@@ -33,6 +33,11 @@ GameSettings.set "ERRMSG_ALLIANCE_USERADDED", "Mitglied konnte nicht hinzugefüg
 GameSettings.set "SUCCESSMSG_ALLIANCE_CREATED", "Allianz erfolgreich erstellt."
 GameSettings.set "SUCCESSMSG_ALLIANCE_USERREMOVED","Mitglied wurde erfolgreich aus der Allianz entfernt"
 GameSettings.set "ERRMSG_ALLIANCE_USERREMOVED", "Mitglied konnte nicht entfernt werden."
+GameSettings.set "ERRMSG_ALLIANCE_CREATED", "Allianz konnte nicht erstellt werden!"
+GameSettings.set "ERRMSG_MESSAGE_SHOWMESSAGE", "Nachricht kann nicht angezeigt werden"
+GameSettings.set "SUCCESSMSG_MESSAGE_CREATED", "Nachricht wurde erfolgreich zugestellt."
+GameSettings.set "ERRMSG_MESSAGE_CREATED", "Nachricht konnte nicht zugestellt werden."
+GameSettings.set "JAVASCRIPT_REFRESH_UNREAD_MESSAGES_INTERVAL", 10000 #msec
 
 GalaxiesHelper.generateAt(0,0)
 Buildingtype.init()
