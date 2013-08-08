@@ -13,29 +13,66 @@
 
   <div class="field">
     <%= f.label :name %><br>
-    <%= f.text_field :name %>
+    <%= f.text_field :name, :maxlength => 20 %>
   </div>
-  <div class="field">
-    <%= f.label "Kicken" %><br>
-    <%= f.check_box :can_kick %>
-  </div>
-  <div class="field">
-    <%= f.label "Rundmail" %><br>
-    <%= f.check_box :can_massmail %>
-  </div>
-  <div class="field">
-    <%= f.label "Beschreibung ändern" %><br>
-    <%= f.check_box :can_change_description %>
-  </div>
-  <div class="field">
-    <%= f.label "Ränge editieren" %><br>
-    <%= f.check_box :can_edit_ranks %>
-  </div>
-  <div class="field">
-    <%= f.label "Einladen" %><br>
-    <%= f.check_box :can_invite %>
-  </div>
+
+  <table class="table table-striped table-bordered table-condensed">
+    <th>Attribut</th>
+    <th>Erlaubnis</th>
+    <tbody>
+      <tr>
+        <div class="field">
+          <td>
+            <%= f.label "Kicken" %>
+          </td>
+          <td>
+            <%= f.check_box :can_kick %>
+          </td>
+        </div>
+      </tr>
+      <tr>
+        <div class="field">
+          <td>
+            <%= f.label "Rundmail" %>
+          </td>
+          <td>
+            <%= f.check_box :can_massmail %>
+          </td>
+        </div>
+      </tr>
+      <tr>
+        <div class="field">
+          <td>
+            <%= f.label "Beschreibung ändern" %>
+          </td>
+          <td>
+            <%= f.check_box :can_change_description %>
+          </td>
+        </div>
+      </tr>
+      <tr>
+        <div class="field">
+          <td>
+            <%= f.label "Ränge editieren" %>
+          </td>
+          <td>
+            <%= f.check_box :can_edit_ranks %>
+          </td>
+        </div>
+      </tr>
+      <tr>
+        <div class="field">
+          <td>
+            <%= f.label "Einladen" %>
+          </td>
+          <td>
+            <%= f.check_box :can_invite %>
+          </td>
+        </div>
+      </td>
+    </tbody>
+  <table class="table table-striped table-bordered table-condensed">
   <div class="actions">
-    <%= f.submit %>
-  </div> 
+    <%= f.submit 'Bearbeiten', :class => 'btn' %>
+  </div>
 <% end %>
