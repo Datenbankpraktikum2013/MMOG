@@ -6,10 +6,23 @@
 
 <% unless @shipshelper.get_available_ships(@planet).empty? %>
   
-
+    <tr>
+	    <td>Name</td>
+	    <td>Construction time</td>
+	    <td>Ores</td>
+	    <td>Crystals</td>
+	    <td>Credits</td>
+	    
+	    <td></td>
+    </tr>
     <tr>
     <% @shipshelper.get_available_ships(@planet).each do |s| %>
 	    <td><%= s.name %></td>
+	    <td><%= s.construction_time %></td>
+	    <td><%= s.ore_cost %></td>
+	    <td><%= s.crystal_cost %></td>
+	    <td><%= s.credit_cost %></td>
+	    
 	    <td><%= text_field(:ship, s.id ,:size => "4") %></td>
     </tr>
     <% end %>

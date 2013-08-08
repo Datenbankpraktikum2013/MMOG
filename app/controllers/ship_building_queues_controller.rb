@@ -1,4 +1,5 @@
 class ShipBuildingQueuesController < ApplicationController
+  before_filter :authenticate_user!
   before_action :set_ship_building_queue, only: [:show, :edit, :update, :destroy, :destroy_queue]
   # GET /ship_building_queues
   # GET /ship_building_queues.json
@@ -53,11 +54,17 @@ class ShipBuildingQueuesController < ApplicationController
   # DELETE /ship_building_queues/1
   # DELETE /ship_building_queues/1.json
   def destroy
-
-    @ship_building_queue.destroy
-    respond_to do |format|
-      format.html { redirect_to ship_building_queues_url }
-      format.json { head :no_content }
+    if @ship_building_queue.planet.user == current_user
+      @ship_building_queue.destroy
+      respond_to do |format|
+        format.html { redirect_to ship_building_queues_url }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to ship_building_queues_url }
+        format.json { head :no_content }
+      end
     end
   end
 
