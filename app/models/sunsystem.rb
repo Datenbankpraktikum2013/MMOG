@@ -37,6 +37,7 @@ class Sunsystem < ActiveRecord::Base
   end
 
   def seen_by(user)
+    self.mention()
     self.users << user if !user.nil? && !self.is_visible_by?(user)
   end
 

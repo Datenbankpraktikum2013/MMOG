@@ -6,6 +6,8 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+ActiveRecord::Base.transaction do
+
 # Konstanten und Standardwerte bitte als Strings in den GameSettings eintragen
 # Eintragen: GameSettings.set "key", "value"
 # Abfragen: GameSettings.get "key"
@@ -95,17 +97,21 @@ User.create(:email => 'demo4@demo.com',:password => 'password',:username=> 'demo
 
 # Testing values
 
-Planet.find(1).claim(User.find(1))
-Fleet.new(Planet.find(1))
-p=Planet.find(1)
-p.maxore = 100000
-p.maxenergy = 100000
-p.maxcrystal = 100000
-p.maxpopulation = 100000
-p.save
-Fleet.find(1).add_ships({Ship.find(1)=> 50, Ship.find(2)=> 50, Ship.find(3)=> 50, Ship.find(4)=> 50, Ship.find(5)=> 50,Ship.find(6)=> 50,Ship.find(7)=> 50,Ship.find(8)=> 50,Ship.find(9)=> 50,Ship.find(10)=> 50})
-Planet.find(1).give(:Ore, 10000)
-Planet.find(1).give(:Crystal, 10000)
-Planet.find(1).give(:Money, 10000)
-Planet.find(1).give(:Population, 10000)
-Planet.find(1).give(:Energy, 10000)
+
+# Planet.find(1).claim(User.find(1))
+# Fleet.new(Planet.find(1))
+# p=Planet.find(1)
+# p.maxore = 100000
+# p.maxenergy = 100000
+# p.maxcrystal = 100000
+# p.maxpopulation = 100000
+# p.save
+# Fleet.find(1).add_ships({Ship.find(1)=> 50, Ship.find(2)=> 50, Ship.find(3)=> 50, Ship.find(4)=> 50, Ship.find(5)=> 50,Ship.find(6)=> 50,Ship.find(7)=> 50,Ship.find(8)=> 50,Ship.find(9)=> 50,Ship.find(10)=> 50})
+# Planet.find(1).give(:Ore, 10000)
+# Planet.find(1).give(:Crystal, 10000)
+# Planet.find(1).give(:Money, 10000)
+# Planet.find(1).give(:Population, 10000)
+# Planet.find(1).give(:Energy, 10000)
+
+  Planet.first.seen_by(User.first)
+  Planet.first.seen_by(User.find(2))
