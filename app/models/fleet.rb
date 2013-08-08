@@ -24,9 +24,9 @@ class Fleet < ActiveRecord::Base
     self.ore = 0
     self.crystal = 0
     ############################################################################################
-    # self.user = planet.user
+     self.user = planet.user
     # ACHTUNG, NUR ZU TESTZWECKEN
-    self.user = User.find(1)
+    # self.user = User.find(1)
     # ACHTUNG, NUR ZU TESTZWECKEN
     self.storage_factor = self.user.user_setting.increased_capacity
     self.velocity_factor = self.user.user_setting.increased_movement
@@ -465,7 +465,7 @@ class Fleet < ActiveRecord::Base
     ship = Ship.find(10)
     self.load_ressources(ship.ore_cost, ship.crystal_cost, ship.credit_cost, self.origin_planet)
     
-    Resque.enqueue_at(time, Colonize, self.id, planet.id)
+    Resque.enqueue_at(time, ColonizePlanet, self.id, planet.id)
   end
 #=end
 
@@ -522,7 +522,7 @@ class Fleet < ActiveRecord::Base
       raise RuntimeError, "Input is invalid -> only positive timevalues are allowed"
     end
     
-    Resque.enqueue_at(time, Travel, self.id, planet.id)
+    Resque.enqueue_at(time, TravelToPlanet, self.id, planet.id)
 
   end
 #=end
