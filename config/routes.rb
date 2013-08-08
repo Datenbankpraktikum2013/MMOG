@@ -42,7 +42,7 @@ Mmog::Application.routes.draw do
 
   resources :alliances, :except => [:new]
 
-  resources :ranks, :except => :show
+  resources :ranks, :except => [:show, :index]
   
   resources :buildings
 
@@ -67,8 +67,6 @@ Mmog::Application.routes.draw do
   post 'alliances/:id/edit/change_description' => 'alliances#change_description'
 
   post 'alliances/:id/edit/send_mail' => 'alliances#send_mail'
-
-
 
   post 'technologies/upgrade' => 'technologies#upgrade'
 

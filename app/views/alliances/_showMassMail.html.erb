@@ -3,7 +3,7 @@
 <%= form_tag(edit_alliance_path+'/send_mail')%>
 	<p>
 		<%= label_tag 'Betreff' %>
-		<%= text_field_tag 'subject' %>
+		<%= text_field_tag 'subject', nil, :maxlength => 35 %>
 	</p>
 	<p>
 		<%=label_tag 'Nachricht' %>

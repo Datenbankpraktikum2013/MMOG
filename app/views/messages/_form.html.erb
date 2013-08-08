@@ -3,7 +3,7 @@
       <%= text_field_tag('recipient',@recipient) %>
     </p>
     <p><strong><%= label_tag ('Betreff') %></strong></p>
-      <%= text_field_tag('subject',nil ,class: 'readmsgarea') %>
+      <%= text_field_tag('subject',nil ,class: 'readmsgarea', :maxlength=>35) %>
     </p>
     <p><strong><%= label_tag ('Text') %></strong></p>
       <%= text_area_tag('body',nil ,class: 'readmsgarea') %>
