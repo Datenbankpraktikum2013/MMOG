@@ -222,7 +222,7 @@ class Fleet < ActiveRecord::Base
     unless self.origin_planet == self.start_planet && self.origin_planet == self.target_planet
       raise RuntimeError, "Cannot move fleet that is not situated at home -> You can only send it back to origin"
     end
-
+    #!!!!!!!!!!! transaction do ...end
     # split_fleet also updates the values
     fleet = self.split_fleet(ship_hash)
     distance = fleet.origin_planet.getDistance(destination)
@@ -355,7 +355,6 @@ class Fleet < ActiveRecord::Base
       enemy_fleets = Fleet.where(start_planet: planet, target_planet: planet)
       @battle_report.init_battlereport(enemy_fleets, self, 0)
       self.fight(planet)
-
       unless self.destroyed?
         self.return_to_origin(planet)
       end
@@ -712,7 +711,7 @@ class Fleet < ActiveRecord::Base
       self.crystal += crystal - planet.take(:Crystal, crystal)
       self.credit += credit - planet.take(:Money, credit)
     end
-    puts "loaded #{self.ore} ore, #{self.crystal} crystal and #{self.credit} credit on fleet #{fleet_id}"
+    puts "loaded #{self.ore} ore, #{self.crystal} crystal and #{self.credit} credit on fleet #{self.id}"
     self.save
   end
 #=end
@@ -730,7 +729,7 @@ class Fleet < ActiveRecord::Base
     self.crystal = planet.give(:Crystal, self.crystal)
     self.credit = planet.give(:Money, self.credit)
     self.save
-    puts "loaded #{self.ore} ore, #{self.crystal} crystal and #{self.credit} credit back on fleet #{fleet_id}"
+    puts "loaded #{self.ore} ore, #{self.crystal} crystal and #{self.credit} credit back on fleet #{self.id}"
   end
 
 #=end
