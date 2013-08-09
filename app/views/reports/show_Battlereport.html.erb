@@ -1,0 +1,31 @@
+<h1>Battlereport</h1>
+
+<h3>Schiffe Verteidiger Vorher:</h3>
+<% @report.reportable.shipcounts.where(shipowner_time_type: 0).order(:user_id).each do |shipcount| %>
+  <p>
+    <%= shipcount.ship.name + ': ' + shipcount.amount.to_s + ' von ' + shipcount.user.username %>
+  </p>
+<% end %>
+
+<h3>Schiffe Attacker Vorher:</h3>
+<% @report.reportable.shipcounts.where(shipowner_time_type: 1).order(:user_id).each do |shipcount| %>
+  <p>
+    <%= shipcount.ship.name + ': ' + shipcount.amount.to_s + ' von ' + shipcount.user.username %>
+  </p>
+<% end %>
+
+<h3>Schiffe Defender Nachher:</h3>
+<% @report.reportable.shipcounts.where(shipowner_time_type: 2).order(:user_id).each do |shipcount| %>
+  <p>
+    <%= shipcount.ship.name + ': ' + shipcount.amount.to_s + ' von ' + shipcount.user.username %>
+  </p>
+<% end %>
+
+<h3>Schiffe Attacker Nachher:</h3>
+<% @report.reportable.shipcounts.where(shipowner_time_type: 3).order(:user_id).each do |shipcount| %>
+  <p>
+    <%= shipcount.ship.name + ': ' + shipcount.amount.to_s + ' von ' + shipcount.user.username %>
+  </p>
+<% end %>
+
+<%= link_to 'Zurück', :back %>
