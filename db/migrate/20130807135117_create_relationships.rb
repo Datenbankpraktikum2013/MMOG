@@ -3,9 +3,7 @@ class CreateRelationships < ActiveRecord::Migration
     create_table :relationships do |t|
     	t.belongs_to :user, class_name: 'User'
   		t.belongs_to :friend, class_name: 'User'
-  		t.binary       :status, default: 0  	#0=pending
-  												#1=accepted
-  												#2=declined	
+  		t.string       :status, default: "pending"
     end
   end
 end

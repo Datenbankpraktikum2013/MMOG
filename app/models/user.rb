@@ -58,19 +58,23 @@ class User < ActiveRecord::Base
   #create friendship
   def make_friendship!(other_user)
     relationship.create!(friend_id: other_user.id)
-    other_user.relationship.create!(friend_id: self.id)
+    #other_user.relationship.create!(friend_id: self.id)
     return true
   end
 
   #end friendship
-  def end_friendship!(other_user)
+  def end_friendship!(other_user)    
     Relationship.where(user: other_user, friend: self).first.destroy
-    Relationship.where(user: self, friend: other_user).first.destroy
+    Relationship.where(user: self, friend: other_user).first.destroy    
   end
 
   #accept invitation
   def accept_friendship(relationship)
     #not implemented      
+  end
+
+  def decline_friendship(relationship)
+    
   end
 
   #change the pending status of the invitation
@@ -266,9 +270,7 @@ class User < ActiveRecord::Base
         end
         a_users = a.users
         a_users.each do |a_user|
-           a_user.sunsystems.each do |s|
-             @cache_visible_sunsystems << s
-           end
+        @cache_visible_sunsystems.concat a_user.sunsystems
         end
       end
     end
@@ -279,9 +281,7 @@ class User < ActiveRecord::Base
     if !(GameSettings.get("caching?")) || @cache_visible_planets.nil? || @cache_visible_planets.empty? then
       @cache_visible_planets = []
       for s in visible_sunsystems
-        s.planets.each do |p|
-          @cache_visible_planets << p
-        end
+        @cache_visible_planets.concat s.planets
       end
     end
     return @cache_visible_planets
