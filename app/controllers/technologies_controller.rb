@@ -86,6 +86,13 @@ class TechnologiesController < ApplicationController
     end
   end
 
+  def page_refresh
+    object = {:researching => current_user.user_setting.researching}
+    respond_to do |format|
+      format.json { render json: object }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_technology
