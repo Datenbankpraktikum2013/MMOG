@@ -12,39 +12,26 @@
   Bevölkerung: <%= @report.reportable.population %> Energie: <%= @report.reportable.energy %>
   Erz: <%= @report.reportable.ore %> Space Cash: <%= @report.reportable.space_cash %>
   Crystal: <%= @report.reportable.crystal %>
+</p>
+<h3>Technologien:</h3>
+<% @report.reportable.techstages.each do |tech| %>
+  <p>
+    <%= tech.technology.name + ': ' + tech.level %>
+  </p>
+<% end %>
 
-  <% @report.techstages.each do |tech| %>
-    <p>tech.</p>
-  <% end %>
-</p>
-<p>
-  <strong>Reportable:</strong>
-  <%= @report.reportable %>
-</p>
+<h3>Gebäude:</h3>
+<% @report.reportable.buildingtypes.each do |buildingtype| %>
+  <p>
+    <%= buildingtype.name + ': ' + buildingtype.level %>
+  </p>
+<% end %>
 
-<p>
-  <strong>Defender planet:</strong>
-  <%= @report.defender_planet %>
-</p>
-
-<p>
-  <strong>Attacker planet:</strong>
-  <%= @report.attacker_planet %>
-</p>
-
-<p>
-  <strong>Fightdate:</strong>
-  <%= @report.fightdate %>
-</p>
-
-<p>
-  <strong>Defender:</strong>
-  <%= @report.defender %>
-</p>
-
-<p>
-  <strong>Attacker:</strong>
-  <%= @report.attacker %>
-</p>
+<h3>Schiffe:</h3>
+<% @report.reportable.shipcounts.each do |shipcount| %>
+  <p>
+    <%= shipcount.ship.name + ': ' + shipcount.amount %>
+  </p>
+<% end %>
 
 <%= link_to 'Zurück', :back %>
