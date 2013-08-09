@@ -110,11 +110,14 @@ class Fleet < ActiveRecord::Base
   # returns the time in seconds that is needed to fly a distance with certain velocity
   def get_needed_time(velocity, distance)
       if velocity == 0 
-        0
+        v = 0
       else
         # EVTL HIER ZEIT PAKETE EINFÜHREN (VON 1 - 100, USW)
-        (distance/velocity) * 5
+        v = (distance/velocity) * 5
       end
+
+      #case v
+
   end
 
   # ANSTATT SHIP FLOTTE MACHEN!!!!!!!!!!!!!!!!
@@ -123,13 +126,17 @@ class Fleet < ActiveRecord::Base
         0
       else 
         (time/(ship.consumption))
-      end 
+      end
   end
  
 
   # returns the amount of a shiptype in one fleet
   # check if s is ship
   def get_amount_of_ship(ship)
+    unless ship.is_a?(Ship)
+      raise RuntimeError, "Input is invalid -> Ship needed"
+    end
+
     sf = Shipfleet.where(fleet_id: self, ship_id: ship).first
     if sf.nil?
       0
@@ -152,7 +159,7 @@ class Fleet < ActiveRecord::Base
   end
 
 
-# Returns a Hash of {Ship => Amount} pairs
+# Returns a Hash of {ShipName => Amount} pairs
   def get_ships_names()
     ship_hash = {}
     if self.ships.nil?
@@ -616,6 +623,7 @@ class Fleet < ActiveRecord::Base
     trade_report = Tradereport.new
     
     other_user = planet.user
+
     if other_user.nil? # unknown planet
       trade_report.finish_tradereport(self, planet, 1)
       self.return_to_origin(planet)
@@ -685,7 +693,6 @@ class Fleet < ActiveRecord::Base
   # loads ressources in a fleet after checking if there is enough space for it
   # if there is not enough space for them, it divides the 
   # additionally those ressources are subtracted from the planet, where the fleet is stationated
-  # check wether the planet is self.origin??????????????????????
   def load_ressources(ore, crystal, credit, planet)
     if ore < 0 || crystal < 0 || credit < 0
       raise RuntimeError, "You cannot load negative amounts of ressources in your fleet"
@@ -693,19 +700,19 @@ class Fleet < ActiveRecord::Base
     unless planet.is_a?(Planet)
       raise RuntimeError, "Invalid Input -> Only Planets"
     end
+    
     if (ore + crystal + credit) > self.get_free_capacity
+      puts "Too much to load, have to split ressources"
       part = self.get_free_capacity / 3
       self.ore += part - planet.take(:Ore, part)
       self.crystal += part - planet.take(:Crystal, part)
       self.credit += part - planet.take(:Money, part)
-      puts "Too much to load, have to split ressources"
     else
-      puts "enough ressources, believe me"
       self.ore += ore - planet.take(:Ore, ore)
       self.crystal += crystal - planet.take(:Crystal, crystal)
       self.credit += credit - planet.take(:Money, credit)
     end
-    puts "loaded #{self.ore} ore, #{self.crystal} crystal and #{self.credit} credit"
+    puts "loaded #{self.ore} ore, #{self.crystal} crystal and #{self.credit} credit on fleet #{fleet_id}"
     self.save
   end
 #=end
@@ -719,16 +726,11 @@ class Fleet < ActiveRecord::Base
       raise RuntimeError, "Invalid Input -> Only Planets"
     end
 
-
-    ore_back = planet.give(:Ore, self.ore)
-    crystal_back = planet.give(:Crystal, self.crystal)
-    credit_back = planet.give(:Money, self.credit)
-
-    self.ore = self.ore - ore_back
-    self.crystal = self.crystal - crystal_back
-    self.credit = self.credit - credit_back
-
-    puts "loaded back on fleet #{self.ore} ore, #{self.crystal} crystal and #{self.credit} credit"
+    self.ore = planet.give(:Ore, self.ore)
+    self.crystal = planet.give(:Crystal, self.crystal)
+    self.credit = planet.give(:Money, self.credit)
+    self.save
+    puts "loaded #{self.ore} ore, #{self.crystal} crystal and #{self.credit} credit back on fleet #{fleet_id}"
   end
 
 #=end
@@ -770,7 +772,6 @@ class Fleet < ActiveRecord::Base
 
 #=begin
   # merges another fleet with self
-  # PRUEFEN OB DIE FLOTTEN AM SELBEN ORT SIND?????
   def merge_fleet(fleet)  
     unless fleet.is_a?(Fleet)
       raise RuntimeError, "The Input is not valid (invalid amount or wrong objects), ships cannot be added"
