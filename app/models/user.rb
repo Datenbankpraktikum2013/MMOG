@@ -16,8 +16,9 @@ class User < ActiveRecord::Base
   belongs_to :rank
   has_many :user_technologies
   has_many :technologies, :through => :user_technologies
-  
+
   has_many :fleets
+  has_one :home_planet, :class_name => "Planet"
   has_many :planets
 
   has_many :receiving_reports
