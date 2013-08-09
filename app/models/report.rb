@@ -26,4 +26,10 @@ class Report < ActiveRecord::Base
 	def self.unread_reports(user_id)
 		Report.all.joins(:receiving_reports).where(receiving_reports: {user_id: user_id, read: false}).count
 	end
+
+	def add_receiver(user)
+		unless self.receivers.include? user
+			self.receivers << user
+		end
+	end
 end

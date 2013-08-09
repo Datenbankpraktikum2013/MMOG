@@ -1,15 +1,20 @@
 <div class="galaxyfield" style="position: relative;">
-  <% @galaxies.each do |g| %>
-      <% pos = g.getCoords
-         pos[0] = (pos[0] + 2 + @pos[0]) % 5
-         pos[1] = (pos[1] + 2 + @pos[1]) % 5
+  <% w_len = GameSettings.get("WORLD_LENGTH")
+     wv_len = GameSettings.get("WORLD_VIEW_LENGTH")
+     len = (wv_len - 1).to_i / 2
+
+     @galaxies.each do |g| %>
+      <%
+         pos = g.getCoords
+
+         pos[0] = (pos[0] + len - @pos[0]) % wv_len
+         pos[1] = (pos[1] + len - @pos[1]) % wv_len
          filename = GalaxiesHelper.getImageFilename(g.x, 80)
          out = filename[16] + filename[18, 4] %>
-      <%= puts current_user %>
       <% if (g.is_visible_by?(current_user)) then %>
           <a href="<%= galaxy_path(g) %>"><div class="galaxy visiblegalaxy <%= out %>" style="position: absolute; top: <%= 80*pos[1] %>px; left: <%= 80*pos[0] %>px;" onmouseover="javascript:showGalaxyInfo(<%= g.x %>)"></div></a>
       <% else %>
-          <div class="galaxy <%= out %>" style="position: absolute; top: <%= 80*pos[1] %>px; left: <%= 80*pos[0] %>px;"></div>
+          <a href="<%= messages_path %>" title="Erkunden"><div onmouseover="javascript:showGalaxyInfo(<%= g.x %>)" class="galaxy <%= out %>" style="position: absolute; top: <%= 80*pos[1] %>px; left: <%= 80*pos[0] %>px;"></div></a>
       <% end %>
   <% end %>
 
@@ -18,10 +23,17 @@
 <div class="galaxy_info" >
   <% @galaxies.each do |g| %>
     <div id="galaxy_info_<%= g.x %>" class="galaxy_info_field">
+      <% if g.is_visible_by?(current_user) then %>
       <%= g.name %><br />
       Position: <%= pos = g.getCoords
         pos[0] %>, <%= pos[1] %><br />
       Sonnensysteme: <%= g.sunsystems.count %>
+          <% else %>
+      Unbekannte Galaxie<br />
+      Position: <%= pos = g.getCoords
+                        pos[0] %>, <%= pos[1] %><br />
+      Zahl der Sonnensystem unbekannt.
+      <% end %>
     </div>
   <% end %>
 </div>

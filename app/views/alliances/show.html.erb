@@ -32,4 +32,4 @@
 	</table>
 </p>
 
-<%= link_to 'Bearbeiten', edit_alliance_path(@alliance), class: 'label label-info',:style=>'color:#FFFFFF;' %>
+<%= button_to 'Bearbeiten', edit_alliance_path(@alliance), class: 'btn', :method => :get if @alliance.permission?(current_user,"show_edit")%>

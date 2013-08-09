@@ -5,22 +5,22 @@
   <div class="ressources">
 
     <div class="ressource_item_anzeige" title="Bevölkerung">
-      <%= image_tag('/images/icons/menschen32px.png', :alt => "rss feed") %>
+      <%= image_tag('/images/icons/menschen32px.png') %>
       <%= @planet.population %> / <%= @planet.maxpopulation %>
     </div>
 
     <div class="ressource_item_anzeige" title="Energie">
-      <%= image_tag('/images/icons/energy32px.png', :alt => "rss feed") %>
+      <%= image_tag('/images/icons/energy32px.png') %>
       <%= @planet.energy %> / <%= @planet.maxenergy %>
     </div>
 
     <div class="ressource_item_anzeige" title="Eisen">
-      <%= image_tag('/images/icons/eisen32px.png', :alt => "rss feed") %>
+      <%= image_tag('/images/icons/eisen32px.png') %>
       <%= @planet.ore %> / <%= @planet.maxore %>
     </div>
 
     <div class="ressource_item_anzeige" title="Kristalle">
-      <%= image_tag('/images/icons/kristall_blau32px.png', :alt => "rss feed") %>
+      <%= image_tag('/images/icons/kristall_blau32px.png') %>
       <%= @planet.crystal %> / <%= @planet.maxcrystal  %>
     </div>
   </div>
@@ -78,7 +78,15 @@
 
   </div>
 
-</div>
 
-<%= link_to 'Edit', edit_planet_path(@planet) %>
-<%= link_to 'Back', planets_path %>
+
+  <div class="buildingsanzeige">
+    <% b = @planet.buildings_to_hash%>
+    <%  b.each do |h| %>
+        <div class="buildingpos buildingpos<%=h[0]%>" title="Name: <%= h[0]%>, Level:<%= h[1]%>" >
+          <%= image_tag('/images/icons/eisen32px.png')%>
+        </div>
+    <%end%>
+    </div>
+
+</div>

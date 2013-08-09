@@ -3,7 +3,7 @@
 <table>
   <thead>
     <tr>
-      <th>Befreundet mit:</th>
+      <th>Kontakte:</th>
       <th></th>
       <th></th>
     </tr>
@@ -11,9 +11,18 @@
 
   <tbody>
     <% current_user.friends.each do |friend| %>
+      <% @relation = Relationship.where(user: current_user, friend: friend).first %>
       <tr>
         <td><%= friend.username %></td>
-        <td><%= link_to 'entfernen', {:controller => "relationships", :action => "destroy",:id=> friend.id} , :method=>:delete, data: {confirm: 'Bist du dir sicher, dass du '+friend.username+" aus der Freundesliste entfernen willst?" }, class: 'label label-important', :style => 'color:#FFFFFF;' %> </td>
+        <!--if status is pending...-->
+        <% if @relation.status=="pending" %>
+          <td><i>Anfrage steht noch aus</i></td>
+        <!-- if status is accepted -->
+        <%elsif @relation.status=="accepted"%>          
+          <td><%= link_to 'entfernen', {:controller => "relationships", :action => "destroy",:id=> relation.id} , :method=>:delete, data: {confirm: 'Bist du dir sicher, dass du '+friend.username+" aus der Freundesliste entfernen willst?" }, class: 'label label-important', :style => 'color:#FFFFFF;' %> </td>
+        <%end%>
+        <!-- messages can be written anyways -->
+        <td><%= link_to 'Nachricht schreiben', new_message_path+'/?recipient='+friend.username , class: 'label label-success', :style=>'color:#FFFFFF;'%> </td>
       </tr>
     <% end %>
   </tbody>
@@ -22,3 +31,18 @@
 <br>
 
 <%= link_to 'Freunde hinzufügen', new_relationship_path %>
+
+<h3>Kontaktanfragen</h3>
+<table>
+
+  <tbody>
+    <% Relationship.where(friend: current_user, status: "pending").each do |invitation| %>
+      <% @asking_user = invitation.user %>
+      <tr>
+        <td><%= @asking_user.username %></td>
+        <!-- decline the invitation -->
+        <td><%= link_to 'ablehnen', {:controller => "relationships", :action => "destroy",:id=> invitation.id} , :method=>:delete, data: {confirm: 'Möchtest du '+@asking_user.username+" nicht in deiner Kontaktliste haben?" }, class: 'label label-important', :style => 'color:#FFFFFF;' %> </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

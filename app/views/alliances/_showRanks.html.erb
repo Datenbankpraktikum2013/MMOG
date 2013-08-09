@@ -21,13 +21,11 @@
 	        	  <td><%= rank.can_change_description ? "Ja" : "Nein" %></td> 	  
 	        	  <td><%= rank.can_edit_ranks ? "Ja" : "Nein" %></td>
 	        	  <td>
-		        	  <% unless rank.is_founder or rank.standard %>  
-			          	<%= link_to 'Editieren', edit_rank_path(rank), class: "label label-info",:style => 'color:#FFFFFF;' if current_user.rank.can_edit_ranks %>
-			          <% end %>
+			          	<%= link_to 'Editieren', edit_rank_path(rank), class: "label label-info",:style => 'color:#FFFFFF;'%>
 		          </td>
 		          <td>
 		          	<% unless rank.is_founder or rank.standard %>  
-		          		<%= link_to 'Löschen', rank, method: :delete, data: { confirm: 'Möchtest du diesen Rang wirklich löschen?' }, class: "label label-important" %>
+		          		<%= link_to 'Löschen', rank, method: :delete, data: { confirm: 'Möchtest du diesen Rang wirklich löschen?' }, class: "label label-important", :style => 'color:#FFFFFF' %>
 		          	<% end %>
 		          </td>
 	  	    </tr>

@@ -1,0 +1,37 @@
+
+<h1>Spionagebericht</h1>
+<p id="notice"><%= notice %></p>
+<p>
+  Du hast am <strong><%= @report.fightdate.strftime('%d.%m.%y') %> um 
+  <%= @report.fightdate.strftime('%H:%M') %> Uhr</strong>  einen Spionagebericht 
+  vom Planeten <b><%= @report.defender_planet.name %></b> erhalten
+</p>
+<h3>Planet:</h3>
+<p>Besitzer: <%= @report.defender.username %></p>
+<p>
+  Bevölkerung: <%= @report.reportable.population %> Energie: <%= @report.reportable.energy %>
+  Erz: <%= @report.reportable.ore %> Space Cash: <%= @report.reportable.space_cash %>
+  Crystal: <%= @report.reportable.crystal %>
+</p>
+<h3>Technologien:</h3>
+<% @report.reportable.techstages.each do |tech| %>
+  <p>
+    <%= tech.technology.name + ': ' + tech.level %>
+  </p>
+<% end %>
+
+<h3>Gebäude:</h3>
+<% @report.reportable.buildingtypes.each do |buildingtype| %>
+  <p>
+    <%= buildingtype.name + ': ' + buildingtype.level %>
+  </p>
+<% end %>
+
+<h3>Schiffe:</h3>
+<% @report.reportable.shipcounts.each do |shipcount| %>
+  <p>
+    <%= shipcount.ship.name + ': ' + shipcount.amount %>
+  </p>
+<% end %>
+
+<%= link_to 'Zurück', :back %>
