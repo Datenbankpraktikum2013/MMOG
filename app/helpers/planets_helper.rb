@@ -16,7 +16,7 @@ module PlanetsHelper
   end
 
   def self.claim_startplanet_for(user)
-    return false if user.is_a?User || user.nil?
+    return false if !user.is_a?User || user.nil? || user.planets.count > 0
     p = search_startplanet
     if !p.is_a?Planet || p.nil? || !p.user.nil?
       p.claim(user)
