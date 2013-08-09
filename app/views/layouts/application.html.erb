@@ -93,6 +93,8 @@
 			});
 		};
 
-        setInterval(refresh, 5000);
+        if( <%= !current_user.nil? %>){
+            setInterval(refresh, 5000);
+        };
 	</script>
 </html>
