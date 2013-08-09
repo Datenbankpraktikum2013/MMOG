@@ -373,8 +373,7 @@ class Fleet < ActiveRecord::Base
     #puts "defender defense: #{defender_defense} attacker offense: #{self.offense} factor: #{fight_factor}"
     #if lost...
     if fight_factor<0
-      @battle_report.finish_battlereport(defender_fleets, self, true)
-      puts "Attacker FAIL"
+      puts "Attacker FAIL. Calculating loss of Ships..."
       defender_new_defense=fight_factor.abs*rand(0.8 .. 1.2)
       new_offense=0
 
@@ -392,12 +391,17 @@ class Fleet < ActiveRecord::Base
         tmp_defense=defender_fleets.sum("defense")
 
       end
+      defender_fleets.each do |f|
+        f.save
+      end
+      puts "Generating Battlereport..."
+
+      @battle_report.finish_battlereport(defender_fleets, self, true)
 
       self.destroy
 
     elsif fight_factor>0
-      @battle_report.finish_battlereport(defender_fleets, self, false)
-      puts "Defender FAIL"
+      puts "Defender FAIL. Calculating loss of Ships..."
       attacker_new_offense=fight_factor.abs*rand(0.8 .. 1.2)
       new_offense=0
       tmp_offense=self.offense
@@ -408,18 +412,24 @@ class Fleet < ActiveRecord::Base
         self.destroy_ship(self.ships[del_ship_index])
         tmp_offense=self.offense
       end
+
       defender_fleets.each do |f|
-        puts "TEST"
         f.destroy
       end
+      self.save
+      puts "Generating Battlereport..."
+
+      @battle_report.finish_battlereport({}, self, false)
     else
-      @battle_report.finish_battlereport(defender_fleets, self, true)
+      @battle_report.finish_battlereport({}, {}, true)
       puts "both FAIL"
       defender_fleets.each do |f|
         f.destroy
       end
       self.destroy
     end
+
+
   end
 #=end
 
