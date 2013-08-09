@@ -19,8 +19,14 @@
 		 			<li class="active">
 		 				<a href="#">
 			 				<% if controller_name == 'welcome'%>
-			 					Start
-			 				<% elsif controller_name == 'messages' %>
+			 					Startseite
+                            <% elsif controller_name == 'planets' %>
+                                Planet <%= @planet.id %>
+                            <% elsif controller_name == 'sunsystems' %>
+                                Sonnensystem <%= @sunsystem.id if !@sunsystem.nil? %>
+                            <% elsif controller_name == 'galaxies' %>
+                                <%= if @galaxy.nil? then "Weltkarte" else "Galaxie "+@galaxy.id.to_s end %>
+                            <% elsif controller_name == 'messages' %>
 			 					Nachrichten
 			 				<% elsif controller_name == 'relationships' %>
 			 					Kontaktliste	
@@ -28,7 +34,7 @@
 			 					Allianzen
                             <% elsif controller_name == 'technologies' %>
                                 Technlogien
-                    	    <% elsif controller_name == 'reports' %>
+                            <% elsif controller_name == 'reports' %>
                                 Berichte
 			 				<%end %>
 		 				</a>
@@ -36,6 +42,8 @@
 		  			<li><a href="/">Start</a></li>
 		  			<% if user_signed_in? %>
 
+                        <li><a href="<%= galaxies_path %>">Weltkarte</a></li>
+                        <li><a href="<%= planet_path(current_user.home_planet) %>">Mein Hauptplanet</a></li>
 		  				<li><a href="<%= messages_path %>">Nachrichten <span id="msgupdate" class="badge"><%= current_user.unread_messages %></span> </a></li>
 		  				<li><a href="<%= relationships_path %>">Meine Kontaktliste</a></li>
                         <li><a href="<%= technologies_path %>">Meine Technologien</a></li>
@@ -85,6 +93,6 @@
 			});
 		};
 
-        setInterval(refresh, <%= GameSettings.get "JAVASCRIPT_REFRESH_UNREAD_MESSAGES_INTERVAL" %>);
+        setInterval(refresh, 5000);
 	</script>
 </html>
