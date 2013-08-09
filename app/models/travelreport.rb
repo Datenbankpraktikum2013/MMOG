@@ -19,8 +19,8 @@ class Travelreport < ActiveRecord::Base
 		@r.attacker = fleet.user
 		@r.attacker_planet = fleet.start_planet
 
-		@r.receivers << planet.user  unless planet.user.nil?
-		@r.receivers << fleet.user
+		@r.add_receiver(planet.user)  unless planet.user.nil?
+		@r.add_receiver(fleet.user)
 
 		@r.fightdate = Time.at(fleet.arrival_time)
 
