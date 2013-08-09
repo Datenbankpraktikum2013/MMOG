@@ -158,6 +158,7 @@ class Planet < ActiveRecord::Base
 
   def claim(user)
     if self.user.nil? then #&& self.user.planets.count == 0
+      self.seen_by(user)
       self.user = user;
       self.create_building_job(:Oremine)
       self.under_construction = false
@@ -172,7 +173,6 @@ class Planet < ActiveRecord::Base
       self.user = user;
     end
     self.save
-    self.mention()
   end
 
   #@param type Name der Produktionsstaette ("Eisenmine", "Haus", ...)
@@ -423,7 +423,7 @@ class Planet < ActiveRecord::Base
   end
 
   def buildings_to_hash
-    if @cache_buildings_hash.nil? || @cache_buildings_hash.empty? then
+    if !(GameSettings.get("caching?")) || @cache_buildings_hash.nil? || @cache_buildings_hash.empty? then
       @cache_buildings_hash = {:Oremine => 0, :ResearchLab => 0, :City => 0, :Powerplant =>  0, :Crystalmine => 0, :Headquarter => 0, :Starport => 0, :Depot => 0}
       builds = self.buildings
       builds.each do |b|
@@ -442,7 +442,7 @@ class Planet < ActiveRecord::Base
 
 
   def upgradable_buildings_to_hash
-    if @upgradable_buildings.nil? || @upgradable_buildings.empty? then
+    if !(GameSettings.get("caching?")) || @upgradable_buildings.nil? || @upgradable_buildings.empty? then
       @upgradable_buildings = []
       hashed_b = self.buildings_to_hash
       hashed_b.each do |h|
@@ -459,30 +459,31 @@ class Planet < ActiveRecord::Base
   end
 
   def give(type, number)
+    return 0 if number <= 0
     back = 0
     if type == :Ore then
-      old = self.ore
-      if old + number >= self.maxore then
+      old = self.ore.to_i
+      if old + number.to_i >= self.maxore.to_i then
         self.ore = self.maxore
-        back = self.maxore - old
+        back = number + old - self.maxore
       else
-        self.ore = old + number
+        self.ore = old + number.to_i
       end
 
     elsif  type == :Crystal then
       old = self.crystal
       if old + number >= self.maxcrystal then
         self.crystal = self.maxcrystal
-        back = self.maxcrystal - old
+        back = number + old - self.maxcrystal
       else
-        self.ore = old + number
+        self.crystal = old + number
       end
 
     elsif type == :Population then
       old = self.population
       if old + number >= self.maxpopulation then
         self.population = self.maxpopulation
-        back = self.maxpopulation - old
+        back = number + old - self.maxpopulation
       else
         self.population = old + number
       end
@@ -491,7 +492,7 @@ class Planet < ActiveRecord::Base
       old = self.energy
       if old + number >= self.maxenergy then
         self.energy = self.maxenergy
-        back = self.maxenergy - old
+        back = number + old - self.maxenergy
       else
         self.energy = old + number
       end
@@ -512,6 +513,7 @@ class Planet < ActiveRecord::Base
   end
 
   def take(type, number)
+    return 0 if number <= 0
     back = 0
     if type == :Ore then
       old = self.ore
@@ -590,7 +592,7 @@ class Planet < ActiveRecord::Base
   end
 
   def get_buildings
-    if @cache_buildings.nil? || @cache_buildings.empty? then
+    if !(GameSettings.get("caching?")) || @cache_buildings.nil? || @cache_buildings.empty? then
       @cache_buildings = []
       self.buildings.each do |b|
         @cache_buildings << b

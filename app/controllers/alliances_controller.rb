@@ -121,7 +121,7 @@ class AlliancesController < ApplicationController
       @alliance = Alliance.new(alliance_params)
       respond_to do |format|
         if @alliance.save and @alliance.set_founder(current_user) #save both
-            format.html { redirect_to @alliance, notice: GameSettings.set("SUCCESSMSG_ALLIANCE_CREATED") }
+            format.html { redirect_to @alliance, notice: GameSettings.get("SUCCESSMSG_ALLIANCE_CREATED") }
             format.json { render action: 'show', status: :created, location: @alliance }
         else
           format.html { redirect_to @alliance, notice: GameSettings.get("ERRMSG_ALLIANCE_CREATED") }

@@ -12,6 +12,7 @@ ActiveRecord::Base.transaction do
 # Eintragen: GameSettings.set "key", "value"
 # Abfragen: GameSettings.get "key"
 
+GameSettings.set "caching?", true
 GameSettings.set "INITIAL_BUDGET", 1000
 GameSettings.set "PLANET_MIN_SIZE", 10000
 GameSettings.set "PLANET_MAX_SIZE", 100000
@@ -180,7 +181,7 @@ Planet.find(1).give(:Money, 10000)
 Planet.find(1).give(:Population, 10000)
 Planet.find(1).give(:Energy, 10000)
 
-  # Planet.first.seen_by(User.first)
-  # Planet.first.seen_by(User.find(2))
+   Planet.first.seen_by(User.first)
+   Planet.first.seen_by(User.find(2))
 
 end
