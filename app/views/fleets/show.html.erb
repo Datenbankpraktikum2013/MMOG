@@ -69,11 +69,6 @@
   <strong>Target planet:</strong>
   <%= @fleet.target_planet %>
 </p>
-<% @shiptypes.each do |shiptype| %>
-  <p>
-    <strong><%= shiptype.name %></strong>
-    <%= @fleet.get_amount_of_ship(shiptype.id) %>
-  </p>
-<% end %>
+
 <%= link_to 'Edit', edit_fleet_path(@fleet) %> |
 <%= link_to 'Back', fleets_path %>

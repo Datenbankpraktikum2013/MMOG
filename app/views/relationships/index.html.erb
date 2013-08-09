@@ -3,7 +3,7 @@
 <table>
   <thead>
     <tr>
-      <th>Befreundet mit:</th>
+      <th>Kontakte:</th>
       <th></th>
       <th></th>
     </tr>
@@ -11,9 +11,18 @@
 
   <tbody>
     <% current_user.friends.each do |friend| %>
+      <% @status = Relationship.where(user: friend, friend: current_user).first.status %>
       <tr>
         <td><%= friend.username %></td>
-        <td><%= link_to 'entfernen', {:controller => "relationships", :action => "destroy",:id=> friend.id} , :method=>:delete, data: {confirm: 'Bist du dir sicher, dass du '+friend.username+" aus der Freundesliste entfernen willst?" }, class: 'label label-important', :style => 'color:#FFFFFF;' %> </td>
+        <!--if status is pending...-->
+        <% if @status=="0" %>
+          <td><i>Anfrage steht noch aus</i></td>
+        <!-- if status is accepted -->
+        <%elsif @status=="1"%>          
+          <td><%= link_to 'entfernen', {:controller => "relationships", :action => "destroy",:id=> friend.id} , :method=>:delete, data: {confirm: 'Bist du dir sicher, dass du '+friend.username+" aus der Freundesliste entfernen willst?" }, class: 'label label-important', :style => 'color:#FFFFFF;' %> </td>
+        <%end%>
+        <!-- messages can be written anyways -->
+        <td><%= link_to 'Nachricht schreiben', new_message_path+'/?recipient='+friend.username , class: 'label label-success', :style=>'color:#FFFFFF;'%> </td>
       </tr>
     <% end %>
   </tbody>
@@ -22,3 +31,5 @@
 <br>
 
 <%= link_to 'Freunde hinzufügen', new_relationship_path %>
+
+<h3>Kontaktanfragen</h3>

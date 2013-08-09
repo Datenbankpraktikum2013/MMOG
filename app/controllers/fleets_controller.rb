@@ -4,8 +4,19 @@ class FleetsController < ApplicationController
   # GET /fleets
   # GET /fleets.json
   def index
-    @fleets = Fleet.all
-    @shiptypes=Ship.all
+    @fleets = Fleet.where(user: current_user)
+    
+    @approaching_fleets = Array.new
+    planets = current_user.planets
+    planets.each do |planet|
+      Fleet.where(target_planet: planet).each do |fleet|
+        if fleet.mission.id == 5 || fleet.mission.id == 1 || fleet.mission.id == 2
+          
+        else
+          @approaching_fleets.push(fleet)
+        end
+      end
+    end
   end
 
   # GET /fleets/1
