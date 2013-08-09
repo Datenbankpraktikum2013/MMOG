@@ -400,13 +400,16 @@ class Fleet < ActiveRecord::Base
       attacker_new_offense=fight_factor.abs*rand(0.8 .. 1.2)
       new_offense=0
       tmp_offense=self.offense
-
+      del_hash=Hash.new(Ship)
       while tmp_offense>attacker_new_offense do
+
         tmp_ship_index=(self.ships.size) -1
         del_ship_index=rand(0 .. (tmp_ship_index) )
-        self.destroy_ship(self.ships[del_ship_index])
-        tmp_offense=self.offense
+        del_hash[self.ships[del_ship_index]]+=1
+        #self.destroy_ship(self.ships[del_ship_index])
+        tmp_offense-=self.ships[del_ship_index].offense
       end
+      self.destroy_ships(del_hash)
       defender_fleets.each do |f|
         puts "TEST"
         f.destroy
