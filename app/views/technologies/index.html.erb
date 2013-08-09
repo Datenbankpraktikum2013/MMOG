@@ -1,5 +1,5 @@
 <br><h1 align="middle">Update Technologies</h1><br><br><br>
-
+           <h1 id='blablubb'>blalbubb</h1>
 <table border="1" align="center" valign="middle">
   <tbody>
   <% array = current_user.get_researching_tech %>
@@ -57,20 +57,45 @@
 </table>
 
 <script>
+    researching = <%= research_id %>;
+    if(researching != 0){
+        gone = <%=Time.now.to_i - array[2].to_i %>;
+        end  = <%=(array[3].to_i) %>;
 
-    gone = <%=Time.now.to_i - array[2].to_i %>;
-    end  = <%=(array[3].to_i) +2 %>;
-    function update_progressbar(){
-        if (gone == end) {
-            location.reload();
-        }
-        gone += 0.25;
-        p = (gone/end)*100;
-        d = document.getElementById('auto-updating-progressbar');
-        d.style.width = (p+"%");
-    };
-    if(end != 2) {
+        function update_progressbar(){
+            if (gone >= end) {
+                fetch_finished();
+            }
+            gone += 0.25;
+            p = (gone/end)*100;
+            d = document.getElementById('auto-updating-progressbar');
+            d.style.width = (p+"%");
+
+
+        };
+
         setInterval(update_progressbar, 250);
+
+
+    function fetch_finished(){
+        //document.getElementById("blablubb").innerHTML = data[0];
+        $.getJSON('/json/page_refresh.json', function(data) {
+            var items = [];
+            $.each(data, function(key, val) {
+                items.push(val);
+            });
+
+            if (data[0] == 0){
+                location.reload();
+            }
+        });
+
+
+        setInterval(fetch_finished, 500);
+
     };
+
+    };
+
 
 </script>

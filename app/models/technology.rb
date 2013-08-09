@@ -71,6 +71,7 @@ class Technology < ActiveRecord::Base
     #Setze User-Forschung auf 0 -> Ende
     user.user_setting.update_attribute :researching, 0
     user.system_notify( 'Forschung', title, ' Technologie: '+title+' Stufe '+new_rank.to_s+' erfolgreich erforscht.')
+    #TechnologiesController.page_refresh
   end
 
   #Prüft nacheinander alle Vorraussetzungen der Technology für einen user
