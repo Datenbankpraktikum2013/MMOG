@@ -224,7 +224,7 @@ class User < ActiveRecord::Base
   end
 
   def visible_galaxies
-    if @cache_visible_galaxies.nil? || @cache_visible_galaxies.empty?
+    if !(GameSettings.get("caching?")) || @cache_visible_galaxies.nil? || @cache_visible_galaxies.empty?
       @cache_visible_galaxies = []
       suns = visible_sunsystems
       for s in suns
@@ -235,7 +235,7 @@ class User < ActiveRecord::Base
   end
 
   def visible_sunsystems
-    if @cache_visible_sunsystems.nil? || @cache_visible_sunsystems.empty? then
+    if !(GameSettings.get("caching?")) || @cache_visible_sunsystems.nil? || @cache_visible_sunsystems.empty? then
       @cache_visible_sunsystems = []
       a = self.alliance
       ps = self.planets
@@ -246,7 +246,6 @@ class User < ActiveRecord::Base
         end
       else
         ps.each do |p|
-          puts p.id
           @cache_visible_sunsystems << p.sunsystem
         end
         a_users = a.users
@@ -261,7 +260,7 @@ class User < ActiveRecord::Base
   end
 
   def visible_planets
-    if @cache_visible_planets.nil? || @cache_visible_planets.empty? then
+    if !(GameSettings.get("caching?")) || @cache_visible_planets.nil? || @cache_visible_planets.empty? then
       @cache_visible_planets = []
       for s in visible_sunsystems
         s.planets.each do |p|
