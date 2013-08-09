@@ -51,19 +51,23 @@ class User < ActiveRecord::Base
   def make_friendship!(other_user)
 
     relationship.create!(friend_id: other_user.id)
-    other_user.relationship.create!(friend_id: self.id)
+    #other_user.relationship.create!(friend_id: self.id)
     return true
   end
 
   #end friendship
-  def end_friendship!(other_user)
+  def end_friendship!(other_user)    
     Relationship.where(user: other_user, friend: self).first.destroy
-    Relationship.where(user: self, friend: other_user).first.destroy
+    Relationship.where(user: self, friend: other_user).first.destroy    
   end
 
   #accept invitation
   def accept_friendship(relationship)
     #not implemented      
+  end
+
+  def decline_friendship(relationship)
+    
   end
 
   #change the pending status of the invitation
