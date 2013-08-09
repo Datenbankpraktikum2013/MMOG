@@ -5,9 +5,7 @@
       <change type="DELETED" beforePath="$PROJECT_DIR$/app/controllers/home_planet_controller.rb" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/db/.nfs000000000197d53a00000070" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/db/.nfs000000000197d8d700000068" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/galaxies_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/galaxies_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/galaxies/index.html.erb" afterPath="$PROJECT_DIR$/app/views/galaxies/index.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/helpers/planets_helper.rb" afterPath="$PROJECT_DIR$/app/helpers/planets_helper.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/layouts/application.html.erb" afterPath="$PROJECT_DIR$/app/views/layouts/application.html.erb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="MMOG.iws" />
@@ -27,7 +25,7 @@
     <file path="/planets_helper.rb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1376054207350" ignored="false" />
     <file path="/galaxies.js.coffee" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1375708471206" ignored="false" />
     <file path="/Gemfile" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1375705022735" ignored="false" />
-    <file path="/application.html.erb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1376045744323" ignored="false" />
+    <file path="/application.html.erb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1376054363858" ignored="false" />
     <file path="/buildingtype.rb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1375870130755" ignored="false" />
     <file path="/seeds.rb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1376033145218" ignored="false" />
     <file path="/user.rb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1376041355297" ignored="false" />
@@ -65,10 +63,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="application.html.erb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="application.html.erb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="49" selection-start="1084" selection-end="1084" vertical-scroll-proportion="-15.625">
+            <state line="23" column="73" selection-start="715" selection-end="715" vertical-scroll-proportion="0.39081886">
               <folding />
             </state>
           </provider>
@@ -95,10 +93,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="planets_helper.rb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="planets_helper.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/helpers/planets_helper.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="65" selection-start="508" selection-end="508" vertical-scroll-proportion="0.33047736">
+            <state line="18" column="65" selection-start="508" selection-end="508" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -139,10 +137,10 @@
         <option value="$PROJECT_DIR$/app/models/user.rb" />
         <option value="$PROJECT_DIR$/config/routes.rb" />
         <option value="$PROJECT_DIR$/app/controllers/home_planet_controller.rb" />
-        <option value="$PROJECT_DIR$/app/views/layouts/application.html.erb" />
         <option value="$PROJECT_DIR$/app/controllers/galaxies_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/galaxies/index.html.erb" />
         <option value="$PROJECT_DIR$/app/helpers/planets_helper.rb" />
+        <option value="$PROJECT_DIR$/app/views/layouts/application.html.erb" />
       </list>
     </option>
   </component>
@@ -366,15 +364,7 @@
             <option name="mySupportsDeletion" value="false" />
             <option name="myCanBeAbsent" value="false" />
             <option name="myId" value="UPDATED" />
-            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/controllers/fleets_controller.rb</PATH>
-            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/controllers/reports_controller.rb</PATH>
-            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/models/fleet.rb</PATH>
-            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/models/report.rb</PATH>
-            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/models/spyreport.rb</PATH>
-            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/models/travelreport.rb</PATH>
-            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/fleets/index.html.erb</PATH>
-            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/fleets/show.html.erb</PATH>
-            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/reports/index.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/models/user.rb</PATH>
           </FILE-GROUP>
           <FILE-GROUP>
             <option name="myUpdateName" value="Created" />
@@ -382,11 +372,6 @@
             <option name="mySupportsDeletion" value="false" />
             <option name="myCanBeAbsent" value="false" />
             <option name="myId" value="CREATED" />
-            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/reports/show_Spyreport.html.erb</PATH>
-            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/reports/show_battlereport.html.erb</PATH>
-            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/reports/show_colonisationreport.html.erb</PATH>
-            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/reports/show_tradereport.html.erb</PATH>
-            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/reports/show_travelreport.html.erb</PATH>
           </FILE-GROUP>
           <FILE-GROUP>
             <option name="myUpdateName" value="Deleted" />
@@ -740,7 +725,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="20" y="40" width="1900" height="1160" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -751,7 +736,7 @@
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3297975" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17198068" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17198068" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -899,13 +884,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="49" selection-start="1084" selection-end="1084" vertical-scroll-proportion="-15.625">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/routes.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="82" column="51" selection-start="1879" selection-end="1879" vertical-scroll-proportion="-0.12048193">
@@ -932,7 +910,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/helpers/planets_helper.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="65" selection-start="508" selection-end="508" vertical-scroll-proportion="0.33047736">
+        <state line="18" column="65" selection-start="508" selection-end="508" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="73" selection-start="715" selection-end="715" vertical-scroll-proportion="0.39081886">
           <folding />
         </state>
       </provider>
