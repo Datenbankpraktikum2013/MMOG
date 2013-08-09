@@ -64,38 +64,35 @@
 
         function update_progressbar(){
             if (gone >= end) {
-                fetch_finished();
-            }
+              setInterval(fetch_finished,2000);
+            };
+
             gone += 0.25;
             p = (gone/end)*100;
             d = document.getElementById('auto-updating-progressbar');
             d.style.width = (p+"%");
 
-
+            if (gone <= end) {
+              window.clearInterval(update_progressbar);
+            };
         };
 
-        setInterval(update_progressbar, 250);
+        setInterval(update_progressbar, 250)
+        
 
 
     function fetch_finished(){
-        //document.getElementById("blablubb").innerHTML = data[0];
         $.getJSON('/json/page_refresh.json', function(data) {
             var items = [];
             $.each(data, function(key, val) {
                 items.push(val);
             });
-
-            if (data[0] == 0){
+            if (items[0] == 0){
                 location.reload();
             }
         });
-
-
-        setInterval(fetch_finished, 500);
-
     };
-
-    };
+  };
 
 
 </script>
