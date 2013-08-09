@@ -55,7 +55,7 @@
   </tbody>
 </table>
 
-<script>
+<script type='text/javascript'>
     researching = <%= research_id %>;
 
     var aktiv_bar;
@@ -68,7 +68,7 @@
                 items.push(val);
             });
             if (items[0] == 0){
-                window.clearInterval(aktiv_reload);
+                //window.clearInterval(aktiv_reload);
                 location.reload();
             }
         });

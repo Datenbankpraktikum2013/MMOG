@@ -291,13 +291,18 @@ class User < ActiveRecord::Base
     self.messages.create(:subject=>'['+prefix+']'+subject,:body=>message)
   end
 
+  def add_score value
+    update_attribute(:score, score + value)
+  end
+
   private
     def set_initial_money(initial=GameSettings.get("INITIAL_BUDGET"))
       if self.money==0
         self.money=initial
         self.save
       end
-  end
+    end
+
 
   ###########STATIC##############
   def self.system_notify_all(subject,message)
