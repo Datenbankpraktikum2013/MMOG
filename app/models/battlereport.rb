@@ -25,11 +25,11 @@ class Battlereport < ActiveRecord::Base
 		@r.fightdate = Time.at(atk_fleet.arrival_time)
 
 		def_fleets.each do |fleet|
-			@r.receivers << fleet.user
+			@r.add_receiver(fleet.user)
 			self.add_fleet_info(fleet, 0)
 		end
 
-		@r.receivers << atk_fleet.user
+		@r.add_receiver(atk_fleet.user)
 		self.add_fleet_info(atk_fleet, 1)
 
 	end

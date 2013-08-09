@@ -25,8 +25,12 @@
           (<%= report.attacker_planet.name %>)
         </td>
         <td><%= report.fightdate.strftime('%d.%m.%y') %> <br /> <%= report.fightdate.strftime('%H:%M Uhr') %></td>
-        <td><%= link_to 'Anzeigen', report, class: "btn btn-small" %></td>
-        <td><b><%= link_to 'X', report, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %></b></td>
+        <td><%= link_to '<i class="icon-search"> </i>'.html_safe, report, class: "btn btn-small" %></td>
+        <td><b><%= link_to '<i class="icon-trash"> </i>'.html_safe, 
+                      report, method: :delete, data: { confirm: 'Are you sure?' }, 
+                      class: "btn btn-danger" %>
+            </b>
+        </td>
      </tr>
     <% end %>
   </tbody>
