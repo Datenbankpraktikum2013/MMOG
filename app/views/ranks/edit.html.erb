@@ -1,7 +1,3 @@
-<% if current_user.alliance==@rank.alliance and current_user.rank.can_edit_ranks %>
-	<h1>Rang "<%= @rank.name %>" bearbeiten</h1>
+<h1>Rang "<%= @rank.name %>" bearbeiten</h1>
 
-	<%= render 'form' %>
-<% else %>
-	<strong> Du darfst diesen Rang nicht bearbeiten </strong>
-<% end %>
+<%= render 'form' %>

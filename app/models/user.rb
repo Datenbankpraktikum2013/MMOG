@@ -16,8 +16,9 @@ class User < ActiveRecord::Base
   belongs_to :rank
   has_many :user_technologies
   has_many :technologies, :through => :user_technologies
-  
+
   has_many :fleets
+  has_one :home_planet, :class_name => "Planet"
   has_many :planets
 
   has_many :receiving_reports
@@ -36,8 +37,6 @@ class User < ActiveRecord::Base
   has_many :friends, :through => :relationship, :source => :friend
   has_many :users, :through => :relationship, :source => :user
   has_many :reverse_relationships, foreign_key: "friend_id", class_name: "Relationship"
-  #has_many :friends, :foreign_key => 'friend_id', :class_name => 'Relationship'
-  #has_many :users, :foreign_key => 'user_id', :class_name => 'Relationship'
 
   @cache_visible_planets
   @cache_visible_sunsystems
@@ -50,6 +49,7 @@ class User < ActiveRecord::Base
 
   #create friendship
   def make_friendship!(other_user)
+
     relationship.create!(friend_id: other_user.id)
     other_user.relationship.create!(friend_id: self.id)
     return true
@@ -57,9 +57,19 @@ class User < ActiveRecord::Base
 
   #end friendship
   def end_friendship!(other_user)
-    Relationship.find_by_friend_id(other_user.id).destroy
-    Relationship.find_by_friend_id(self.id).destroy
+    Relationship.where(user: other_user, friend: self).first.destroy
+    Relationship.where(user: self, friend: other_user).first.destroy
   end
+
+  #accept invitation
+  def accept_friendship(relationship)
+    #not implemented      
+  end
+
+  #change the pending status of the invitation
+  def change_status(status)
+    #not implemented    
+  end    
   
   #init usersettings when user is created
   after_create :init_usersettings
