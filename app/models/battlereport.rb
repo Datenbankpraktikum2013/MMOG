@@ -50,13 +50,15 @@ class Battlereport < ActiveRecord::Base
 	# 		 2 = Defenderflotte, nachher
 	#        3 = Attackerflotte, nachher
 	def add_fleet_info(fleet, type)
-		fleet.shipfleets.each do |shipfleet|
-			tmp = Shipcount.new
-			tmp.amount = shipfleet.amount
-			tmp.ship = shipfleet.ship
-			tmp.shipowner_time_type = type
-			tmp.user = fleet.user
-			self.shipcounts << tmp
+		unless fleet.nil?
+			fleet.shipfleets.each do |shipfleet|
+				tmp = Shipcount.new
+				tmp.amount = shipfleet.amount
+				tmp.ship = shipfleet.ship
+				tmp.shipowner_time_type = type
+				tmp.user = fleet.user
+				self.shipcounts << tmp
+			end
 		end
 	end
 end
