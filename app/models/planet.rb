@@ -459,30 +459,31 @@ class Planet < ActiveRecord::Base
   end
 
   def give(type, number)
+    return 0 if number <= 0
     back = 0
     if type == :Ore then
-      old = self.ore
-      if old + number >= self.maxore then
+      old = self.ore.to_i
+      if old + number.to_i >= self.maxore.to_i then
         self.ore = self.maxore
-        back = self.maxore - old
+        back = number + old - self.maxore
       else
-        self.ore = old + number
+        self.ore = old + number.to_i
       end
 
     elsif  type == :Crystal then
       old = self.crystal
       if old + number >= self.maxcrystal then
         self.crystal = self.maxcrystal
-        back = self.maxcrystal - old
+        back = number + old - self.maxcrystal
       else
-        self.ore = old + number
+        self.crystal = old + number
       end
 
     elsif type == :Population then
       old = self.population
       if old + number >= self.maxpopulation then
         self.population = self.maxpopulation
-        back = self.maxpopulation - old
+        back = number + old - self.maxpopulation
       else
         self.population = old + number
       end
@@ -491,7 +492,7 @@ class Planet < ActiveRecord::Base
       old = self.energy
       if old + number >= self.maxenergy then
         self.energy = self.maxenergy
-        back = self.maxenergy - old
+        back = number + old - self.maxenergy
       else
         self.energy = old + number
       end
@@ -512,6 +513,7 @@ class Planet < ActiveRecord::Base
   end
 
   def take(type, number)
+    return 0 if number <= 0
     back = 0
     if type == :Ore then
       old = self.ore
