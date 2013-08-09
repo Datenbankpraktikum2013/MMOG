@@ -78,20 +78,25 @@ module GalaxiesHelper
     filename = filename + size.to_s + "_" + (selector % 6 + 1).to_s + ".png"
   end
 
-  def self.isVisible(nr)
-    Array.new([4,6,8,9,10,12,13,14,15,18,19,20,25,26,32]).include?(nr)
-  end
-
-  def self.isMeins(nr)
-    Array.new([8,9,13,14,19,20,25,32]).include?(nr)
-  end
-
   def self.namegen()
      prename = ["Alpha", "Beta", "Gamma", "Delta", "Epsilon", "Zeta", "Eta", "Theta", "Iota", "Kappa", "Lambda", "Orion", "Centauri", "Andromeda", "Omikron", "M 60", "M 73", "Sigma", "M 42", "Ypsilon", "NGC 95", "Rumpelstilz", "Troutt", "Omega"]
      letter = ["A","B","C","D","E","F","G","H"]
      x = Random.rand(prename.length)
     prename[x] + "-" + letter[Random.rand(letter.length)] + letter[Random.rand(letter.length)].downcase
 
+  end
+
+  def self.discover_new_planet_at(x,y)
+    return false unless x.is_a?(Integer) && y.is_a?(Integer)
+    xxx = Galaxy.calcX(x,y)
+    g = Galaxy.find(xxx)
+    return false if g.nil?
+    plts = []
+    suns = g.sunsystems
+    suns.each do |sun|
+      plts.concat sun.planets
+    end
+    return plts.shuffle![0]
   end
 
 end
