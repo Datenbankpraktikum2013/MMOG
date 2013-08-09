@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="86d27e9f-686d-4994-9465-0db65ee885bf" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/controllers/home_planet_controller.rb" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/db/.nfs000000000197d53a00000070" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/db/.nfs000000000197d8d700000068" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/layouts/application.html.erb" afterPath="$PROJECT_DIR$/app/views/layouts/application.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="MMOG.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -60,37 +61,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="application.html.erb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="application.html.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="49" selection-start="1084" selection-end="1084" vertical-scroll-proportion="0.46526054">
+            <state line="28" column="49" selection-start="1084" selection-end="1084" vertical-scroll-proportion="-15.625">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="home_planet_controller.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/controllers/home_planet_controller.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="55" selection-start="156" selection-end="156" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="galaxies_controller.rb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="galaxies_controller.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/controllers/galaxies_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="0" selection-start="118" selection-end="153" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="routes.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config/routes.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="82" column="51" selection-start="1879" selection-end="1879" vertical-scroll-proportion="0.0">
+            <state line="7" column="17" selection-start="225" selection-end="225" vertical-scroll-proportion="0.12650603">
               <folding />
             </state>
           </provider>
@@ -318,22 +301,15 @@
             <option name="mySupportsDeletion" value="false" />
             <option name="myCanBeAbsent" value="false" />
             <option name="myId" value="UPDATED" />
-            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/controllers/ranks_controller.rb</PATH>
-            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/controllers/technologies_controller.rb</PATH>
-            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/models/technology.rb</PATH>
-            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/models/user.rb</PATH>
-            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/alliances/_showRanks.html.erb</PATH>
-            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/alliances/_showUsers.html.erb</PATH>
-            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/alliances/show.html.erb</PATH>
-            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/layouts/application.html.erb</PATH>
-            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/ranks/edit.html.erb</PATH>
-            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/ranks/edit_founder.html.erb</PATH>
-            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/ranks/new.html.erb</PATH>
-            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/relationships/index.html.erb</PATH>
-            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/relationships/new.html.erb</PATH>
-            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/technologies/index.html.erb</PATH>
-            <PATH vcs="Git" revision="">$PROJECT_DIR$/config/routes.rb</PATH>
-            <PATH vcs="Git" revision="">$PROJECT_DIR$/db/migrate/20130807135117_create_relationships.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/controllers/fleets_controller.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/controllers/reports_controller.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/models/fleet.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/models/report.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/models/spyreport.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/models/travelreport.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/fleets/index.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/fleets/show.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/reports/index.html.erb</PATH>
           </FILE-GROUP>
           <FILE-GROUP>
             <option name="myUpdateName" value="Created" />
@@ -341,8 +317,11 @@
             <option name="mySupportsDeletion" value="false" />
             <option name="myCanBeAbsent" value="false" />
             <option name="myId" value="CREATED" />
-            <PATH vcs="Git" revision="">$PROJECT_DIR$/.test.txt.swp</PATH>
-            <PATH vcs="Git" revision="">$PROJECT_DIR$/db/.nfs0000000001b7470e0000048e</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/reports/show_Spyreport.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/reports/show_battlereport.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/reports/show_colonisationreport.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/reports/show_tradereport.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/reports/show_travelreport.html.erb</PATH>
           </FILE-GROUP>
           <FILE-GROUP>
             <option name="myUpdateName" value="Deleted" />
@@ -862,30 +841,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="49" selection-start="1084" selection-end="1084" vertical-scroll-proportion="-15.625">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/config/routes.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="82" column="51" selection-start="1879" selection-end="1879" vertical-scroll-proportion="0.0">
+        <state line="82" column="51" selection-start="1879" selection-end="1879" vertical-scroll-proportion="-0.12048193">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/galaxies_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="0" selection-start="118" selection-end="153" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/home_planet_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="55" selection-start="156" selection-end="156" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="49" selection-start="1084" selection-end="1084" vertical-scroll-proportion="0.46526054">
+        <state line="7" column="17" selection-start="225" selection-end="225" vertical-scroll-proportion="0.12650603">
           <folding />
         </state>
       </provider>
