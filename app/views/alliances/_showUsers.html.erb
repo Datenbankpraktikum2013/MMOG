@@ -19,7 +19,7 @@
 				<td><%=user.score%></td>
 				<td><%=user.rank.name%></td>
 				<td>
-				<% if current_user.rank.can_edit_ranks %>
+				<% if @alliance.permission?(current_user,"edit_ranks") %>
 						<% unless current_user==user or user.rank.is_founder %>
 						    <div class="btn-group">
 							    <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#" %>
@@ -29,7 +29,7 @@
 							    <ul class="dropdown-menu">
 									<% @ranks.each do |rank| %>
 									<li>
-										<%= link_to rank.name, { :action => "change_user_rank", 'uid' => user.id, 'rank' => rank.id }, :method => :post, class: 'link' %>
+										<%= link_to rank.name, { :action => "change_user_rank", 'uid' => user.id, 'rank' => rank.id }, :method => :put, class: 'link' %>
 									</li>
 									<% end %>
 							    </ul>
@@ -39,7 +39,7 @@
 						<% end %>
 				<% end %>
 				</td>
-				<% if current_user.rank.can_kick and current_user != user and user.rank.is_founder == false %>
+				<% if @alliance.permission?(current_user,"kick") and current_user != user and user.rank.is_founder == false %>
 					<td>
 						<%= link_to 'Kicken', {:controller => "alliances", :action => "remove_user",:uid=> user.id} , :method=>:post, data: { confirm: 'Bist du dir sicher, dass du '+user.username+" aus der Allianz entfernen willst?" }, class: 'label label-important', :style => 'color:#FFFFFF;' %>
 					</td>
@@ -51,7 +51,7 @@
 			</tr>
 		<% end %>
 	</table>
-	<% if current_user.rank.can_invite %>
+	<% if @alliance.permission?(current_user,"invite") %>
 		<%= form_tag(edit_alliance_path+'/user_add_action')%>
 		<p><strong><%= label_tag ('Mitglied hinzufügen') %></strong>
 			<%= text_field_tag('username') %>

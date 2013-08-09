@@ -10,6 +10,8 @@ class SpyreportsController < ApplicationController
   # GET /spyreports/1
   # GET /spyreports/1.json
   def show
+    ReceivingReport.where(user_id: current_user.id, 
+                          report_id: @spyreport.report.id).first.update_attribute :read, true
   end
 
   # GET /spyreports/new

@@ -3,19 +3,26 @@ class RanksController < ApplicationController
   before_filter :authenticate_user!
   # GET /ranks/new
   def new
-    if current_user.alliance!=nil and current_user.rank.can_edit_ranks==false
+    if current_user.alliance==nil and current_user.alliance_permission?(current_user,"edit_ranks")==false
       respond_to do |format|
-        format.html { redirect_to alliance_url(@rank.alliance), notice: 'Hey, du kannst keine Ränge erstellen!'}
+        format.html { redirect_to edit_alliance_url(@rank.alliance), notice: GameSettings.get("ERRMSG_RANK_NEW")}
       end
+    else
+      @rank = Rank.new
     end
-    @rank = Rank.new
   end
 
   # GET /ranks/1/edit
   def edit
-    if current_user.alliance!=nil and current_user.rank.can_edit_ranks==false
+    if current_user.alliance==nil and current_user.alliance.permission?(current_user,"edit_ranks")==false
       respond_to do |format|
-        format.html { redirect_to alliance_url(@rank.alliance), notice: 'Hey, du kannst keine Ränge bearbeiten!'}
+        format.html { redirect_to edit_alliance_url(@rank.alliance), notice: GameSettings.get("ERRMSG_RANK_EDIT") }
+      end
+    else
+      if @rank.is_founder 
+        respond_to do |format|
+          format.html { render action: 'edit_founder'}
+        end
       end
     end
   end
@@ -23,17 +30,13 @@ class RanksController < ApplicationController
   # POST /ranks
   # POST /ranks.json
   def create
-    if current_user.alliance!=nil and current_user.rank.can_edit_ranks
-      @rank = Rank.new(rank_params)
-      respond_to do |format|
-        @rank.alliance=current_user.alliance
-        if @rank.save
-          format.html { redirect_to edit_alliance_url(@rank.alliance), notice: 'Rang wurde erstellt.' }
-          format.json { render action: 'show', status: :created, location: @rank }
-        else
-          format.html { render action: 'new' }
-          format.json { render json: @rank.errors, status: :unprocessable_entity }
-        end
+    @rank = Rank.new(rank_params)
+    respond_to do |format|
+      @rank.alliance=current_user.alliance
+      if current_user.alliance!=nil and current_user.alliance.permission?(current_user,"edit_ranks") and @rank.save
+        format.html { redirect_to edit_alliance_url(@rank.alliance), notice: GameSettings.get("SUCCESSMSG_RANK_CREATED") }
+      else
+        format.html { redirect_to rank.alliance, notice: GameSettings.get("ERRMSG_RANK_CREATED") }
       end
     end
   end
@@ -41,15 +44,13 @@ class RanksController < ApplicationController
   # PATCH/PUT /ranks/1
   # PATCH/PUT /ranks/1.json
   def update
-    if current_user.alliance==@rank.alliance and current_user.rank.can_edit_ranks and @rank.is_founder == false
-      respond_to do |format|
-        if @rank.update(rank_params)
-          format.html { redirect_to @rank, notice: 'Rang wurde erfolgreich bearbeitet.' }
-          format.json { head :no_content }
-        else
-          format.html { render action: 'edit' }
-          format.json { render json: @rank.errors, status: :unprocessable_entity }
-        end
+    respond_to do |format|
+      p=rank_params
+      p=params['name'] if @rank.is_founder
+      if current_user.alliance==@rank.alliance and current_user.alliance.permission?(current_user,"edit_ranks") and @rank.update(p)
+        format.html { redirect_to @rank, notice: GameSettings.get("SUCCESSMSG_RANK_UPDATE") }
+      else
+        format.html { redirect_to alliances_path, notice: GameSettings.get("ERRMSG_RANK_UPDATE") }
       end
     end
   end
@@ -57,20 +58,21 @@ class RanksController < ApplicationController
   # DELETE /ranks/1
   # DELETE /ranks/1.json
   def destroy
-    if current_user.alliance==@alliance and current_user.rank.can_edit_ranks
-      unless @rank.standard or @rank.is_founder
-        #find default rank
-        @alliance=@rank.alliance
-        @default=@alliance.ranks.where(:standard=>true).first
-        @rank.users.each do |u|
-          @default.users<<u
+    if current_user.alliance==@rank.alliance and @rank.alliance.permission?(current_user,"edit_ranks")
+      respond_to do |format|
+        unless @rank.standard or @rank.is_founder
+          #find default rank
+          @alliance=@rank.alliance
+          @default=@alliance.ranks.where(:standard=>true).first
+          @rank.users.each do |u|
+            @default.users<<u
+          end
+          @rank.destroy
+          format.html { redirect_to alliances_path, notice: GameSettings.get("SUCCESSMSG_RANK_DESTROY") }
+        else
+          format.html { redirect_to alliances_path, notice: GameSettings.get("ERRMSG_RANK_DESTROY") }
         end
-        @rank.destroy
       end
-    end
-    respond_to do |format|
-      format.html { redirect_to @alliance }
-      format.json { head :no_content }
     end
   end
 

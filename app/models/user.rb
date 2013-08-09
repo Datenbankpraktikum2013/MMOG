@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
+  
   #callback on create
   after_create :set_initial_money
-
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable, :recoverable
@@ -39,6 +39,10 @@ class User < ActiveRecord::Base
   #has_many :friends, :foreign_key => 'friend_id', :class_name => 'Relationship'
   #has_many :users, :foreign_key => 'user_id', :class_name => 'Relationship'
 
+  @cache_visible_planets
+  @cache_visible_sunsystems
+  @cache_visible_galaxies
+
   #check friendship
   def friends?(other_user)
     relationships.find_by_friend_id(other_user.id)
@@ -52,9 +56,9 @@ class User < ActiveRecord::Base
   end
 
   #end friendship
-  def end_friendship!(other_user)   
-    relationship.find_by_user_id(other_user.id).destroy
-    relationship.find_by_friend_id(other_user.id).destroy
+  def end_friendship!(other_user)
+    Relationship.find_by_friend_id(other_user.id).destroy
+    Relationship.find_by_friend_id(self.id).destroy
   end
   
   #init usersettings when user is created
@@ -220,38 +224,52 @@ class User < ActiveRecord::Base
   end
 
   def visible_galaxies
-    out = []
-    suns = visible_sunsystems
-    for s in suns
-      out << s.galaxy
+    if @cache_visible_galaxies.nil? || @cache_visible_galaxies.empty?
+      @cache_visible_galaxies = []
+      suns = visible_sunsystems
+      for s in suns
+        @cache_visible_galaxies << s.galaxy
+      end
     end
-    return out
+    return @cache_visible_galaxies
   end
 
   def visible_sunsystems
-    out = []
-    a = self.alliance
-    if a.nil? then
-      out = self.sunsystems
-    else
-      a_users = a.users
-      a_users.each do |a_user|
-         a_user.sunsystems.each do |s|
-           out << s
-         end
+    if @cache_visible_sunsystems.nil? || @cache_visible_sunsystems.empty? then
+      @cache_visible_sunsystems = []
+      a = self.alliance
+      ps = self.planets
+      if a.nil? then
+        @cache_visible_sunsystems = self.sunsystems
+        ps.each do |p|
+          @cache_visible_sunsystems << p.sunsystem
+        end
+      else
+        ps.each do |p|
+          puts p.id
+          @cache_visible_sunsystems << p.sunsystem
+        end
+        a_users = a.users
+        a_users.each do |a_user|
+           a_user.sunsystems.each do |s|
+             @cache_visible_sunsystems << s
+           end
+        end
       end
     end
-    return out
+    return @cache_visible_sunsystems
   end
 
   def visible_planets
-    out = []
-    for s in visible_sunsystems
-      s.planets.each do |p|
-        out << p
+    if @cache_visible_planets.nil? || @cache_visible_planets.empty? then
+      @cache_visible_planets = []
+      for s in visible_sunsystems
+        s.planets.each do |p|
+          @cache_visible_planets << p
+        end
       end
     end
-    return out
+    return @cache_visible_planets
   end
 
   def system_notify(prefix,subject,message)
@@ -264,6 +282,13 @@ class User < ActiveRecord::Base
         self.money=initial
         self.save
       end
+  end
+
+  ###########STATIC##############
+  def self.system_notify_all(subject,message)
+    User.all.each do |user|
+      user.messages.create(:subject=>'[Systemweit]'+subject,:body=>message)
     end
+  end
 
 end

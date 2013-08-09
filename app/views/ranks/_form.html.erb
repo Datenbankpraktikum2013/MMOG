@@ -21,58 +21,49 @@
     <th>Erlaubnis</th>
     <tbody>
       <tr>
-        <div class="field">
           <td>
             <%= f.label "Kicken" %>
           </td>
           <td>
             <%= f.check_box :can_kick %>
           </td>
-        </div>
+
       </tr>
       <tr>
-        <div class="field">
           <td>
             <%= f.label "Rundmail" %>
           </td>
           <td>
             <%= f.check_box :can_massmail %>
           </td>
-        </div>
       </tr>
       <tr>
-        <div class="field">
           <td>
             <%= f.label "Beschreibung ändern" %>
           </td>
           <td>
             <%= f.check_box :can_change_description %>
           </td>
-        </div>
       </tr>
       <tr>
-        <div class="field">
           <td>
             <%= f.label "Ränge editieren" %>
           </td>
           <td>
             <%= f.check_box :can_edit_ranks %>
           </td>
-        </div>
       </tr>
       <tr>
-        <div class="field">
           <td>
             <%= f.label "Einladen" %>
           </td>
           <td>
             <%= f.check_box :can_invite %>
           </td>
-        </div>
       </td>
     </tbody>
-  <table class="table table-striped table-bordered table-condensed">
+  </table>
   <div class="actions">
-    <%= f.submit 'Bearbeiten', :class => 'btn' %>
+    <%= f.submit 'Akzeptieren', :class => 'btn' %>
   </div>
 <% end %>

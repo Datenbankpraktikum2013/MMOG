@@ -1,6 +1,7 @@
 
-<p id="notice"><%= notice %></p>
+
 <h1>Available Starports</h1>
+<p id="notice"><%= notice %></p>
 <table class="table table-striped table-bordered">
   <% @planets.each do |p|%>
   <% unless @shipshelper.get_available_ships(p).empty? %>
@@ -23,6 +24,7 @@
 		<td>Planet</td>
 		<td>Ship</td>
 		<td>Time (seconds)</td>
+    <td></td>
 	</tr>
 	<% @queue.each do |q| %>
 		<tr>
@@ -35,6 +37,7 @@
 			<td><%= (q.end_time - @time.now.to_i) %></td>
 <!-- 			<td><div class="bar" style="width: <%= q.end_time - @time.now.to_i %>%;"></div></td> -->
     <%end%>
+    <td><%= link_to "Destroy" , controller: "ship_building_queues", action: "destroy_queue", id:  q.id%></td>
 		</tr>
 	<% end %>
 <% end %>

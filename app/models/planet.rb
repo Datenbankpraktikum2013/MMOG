@@ -10,6 +10,7 @@ class Planet < ActiveRecord::Base
   @start_maxore
   @start_maxcrystal
   @start_maxenergy
+  @cache_buildings
   @cache_buildings_hash
   @upgradable_buildings
   after_initialize :init
@@ -176,7 +177,6 @@ class Planet < ActiveRecord::Base
 
   #@param type Name der Produktionsstaette ("Eisenmine", "Haus", ...)
   def get_production(type)
-    # TODO Calculate production
     btype = Buildingtype.where(name: type.to_s)
     production_building = self.buildings.where(buildingtype_id: btype).first
     return 0 if production_building.nil? 
@@ -314,7 +314,7 @@ class Planet < ActiveRecord::Base
       build_me = Buildingtype.where(name:type ,level:(my_future_me.level)+1).first
       build_time = build_me.build_time
     end
-    puts "Erz auf Planet: #{self.ore} Kosten fuer Gebaeude: #{build_me.build_cost_ore}"
+
     if  (0 > self.ore - build_me.build_cost_ore || 0 > self.crystal - build_me.build_cost_crystal ||  0 > self.population - build_me.build_cost_population || 0 > self.user.money - build_me.build_cost_money)
       return false
     end   
@@ -372,6 +372,7 @@ class Planet < ActiveRecord::Base
       btype = b.buildingtype
       if btype.name == build_me.name && btype.level + 1 == build_me.level
         b.buildingtype = build_me
+
         if btype.name== "Depot"
           depot_size_increase(btype.production)
         end  
@@ -424,7 +425,8 @@ class Planet < ActiveRecord::Base
   def buildings_to_hash
     if @cache_buildings_hash.nil? || @cache_buildings_hash.empty? then
       @cache_buildings_hash = {:Oremine => 0, :ResearchLab => 0, :City => 0, :Powerplant =>  0, :Crystalmine => 0, :Headquarter => 0, :Starport => 0, :Depot => 0}
-      self.buildings.each do |b|
+      builds = self.buildings
+      builds.each do |b|
         btype = b.buildingtype
         @cache_buildings_hash[btype.name.to_sym] = btype.level
       end
@@ -433,6 +435,7 @@ class Planet < ActiveRecord::Base
   end
 
   def reset_building_cache
+    @cache_buildings = {}
     @cache_buildings_hash = {}
     @upgradable_buildings = nil
   end
@@ -586,12 +589,34 @@ class Planet < ActiveRecord::Base
     return allow
   end
 
+  def get_buildings
+    if @cache_buildings.nil? || @cache_buildings.empty? then
+      @cache_buildings = []
+      self.buildings.each do |b|
+        @cache_buildings << b
+      end
+    end
+    return @cache_buildings
+  end
+
+  def get_building(type)
+    builds = self.get_buildings
+    out = nil
+    builds.each do |b|
+      if b.buildingtype.name == type.to_s then
+        out = b
+      end
+    end
+    return out
+  end
+
   def ressources_to_hash
     return {:Ore => self.ore, :Crystal => self.crystal, :Energy=> self.energy, :Money => self.user.money, :Population => self.population}
   end
 
   def seen_by(user)
-    s = self.sunsytem
+    self.mention()
+    s = self.sunsystem
     s.users << user if !user.nil? && !s.is_visible_by?(user)
   end
 

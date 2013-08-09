@@ -1,19 +1,33 @@
 #require "/app/models/fleet
 
-class MoveFleet
+class Colonize
 	@queue = "move_fleets"
-	def self.perform(fleet_id,planet_id)
-		f=Fleet.find(fleet_id)
-		p=Planet.find(planet_id)
-		# f=Fleet.find(fleet_id)
-		# puts f
-		# p=Planet.find(planet_id)
-		# puts p
-		# f.target_planet=p
-		# f.save
-		f.start_planet=p
-		f.save
+	def self.perform(fleet_id, planet_id)
+		puts "#{Time.now} === Colonize Planet #{planet_id} by Fleet #{fleet_id}"
+		Fleet.find(fleet_id).colonize(planet)
+	end
+end
 
-		puts "#{Time.now} === Moved Fleet #{f.id} to Planet #{p.id}"
+class Transport
+	@queue = "move_fleets"
+	def self.perform(fleet_id, planet_id)
+		puts "#{Time.now} === Transport to Planet #{planet_id} by Fleet #{fleet_id}"
+		Fleet.find(fleet_id).transport(planet)
+	end
+end
+
+class Travel
+	@queue = "move_fleets"
+	def self.perform(fleet_id, planet_id)
+		puts "#{Time.now} === Travel to Planet #{planet_id} by Fleet #{fleet_id}"
+		Fleet.find(fleet_id).travel(planet)
+	end
+end
+
+class Attack
+	@queue = "move_fleets"
+	def self.perform(fleet_id, planet_id)
+		puts "#{Time.now} === Attack Planet #{planet_id} by Fleet #{fleet_id}"
+		Fleet.find(fleet_id).attack(planet)
 	end
 end

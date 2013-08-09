@@ -1,15 +1,29 @@
 <p id="notice"><%= notice %></p>
 <%= form_tag("build", method: "post") do %>
-<h1>Available Ships on Planet</h1>
-<table>
+<h3><%= "Available Ships on planet #{@planet.name}" %></h3>
+<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="example">
+
 
 <% unless @shipshelper.get_available_ships(@planet).empty? %>
   
-    <td><h2><%= @planet.name %></h2></td>
+    <tr>
+	    <td>Name</td>
+	    <td>Construction time</td>
+	    <td>Ores</td>
+	    <td>Crystals</td>
+	    <td>Credits</td>
+	    
+	    <td></td>
+    </tr>
     <tr>
     <% @shipshelper.get_available_ships(@planet).each do |s| %>
 	    <td><%= s.name %></td>
-	    <td><%= text_field(:ship, s.id) %></td>
+	    <td><%= s.construction_time %></td>
+	    <td><%= s.ore_cost %></td>
+	    <td><%= s.crystal_cost %></td>
+	    <td><%= s.credit_cost %></td>
+	    
+	    <td><%= text_field(:ship, s.id ,:size => "4") %></td>
     </tr>
     <% end %>
 

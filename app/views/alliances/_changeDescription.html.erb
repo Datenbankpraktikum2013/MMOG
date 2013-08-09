@@ -1,5 +1,5 @@
 <div class="well"><strong>Beschreibung</strong></div>
-<%= form_tag(edit_alliance_path+'/change_description')%>
+<%= form_tag(edit_alliance_path+'/change_description', method: "put")%>
 	<p>
 		<%= text_area_tag :description, @alliance.description, class: 'readmsgarea' %>
 		<br>

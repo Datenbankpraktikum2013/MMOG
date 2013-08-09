@@ -11,8 +11,14 @@ class MessagesController < ApplicationController
   # GET /messages/1
   # GET /messages/1.json
   def show
-    if current_user!=@message.sender and @message.recipients.exists?(current_user)
-      tag_msg_as_seen(@message)
+    if @message.is_readable?(current_user)
+      if current_user!=@message.sender
+        @message.tag_msg_as_seen!(current_user)
+      end
+    else
+      respond_to do |format|
+          format.html { redirect_to messages_path, notice: GameSettings.get("ERRMSG_MESSAGE_SHOWMESSAGE") }
+      end
     end
   end
 
@@ -42,11 +48,9 @@ class MessagesController < ApplicationController
       @message.sender=current_user
       if @recipient!=nil and current_user!=@recipient and @message.save 
         @message.recipients<<@recipient      
-        format.html { redirect_to @message, notice: 'Nachricht erfolgreich gesendet' }
-        format.json { render action: 'show', status: :created, location: @message }
+        format.html { redirect_to @message, notice: GameSettings.get("SUCCESSMSG_MESSAGE_CREATED") }
       else
-        format.html { render action: 'new' }
-        format.json { render json: @message.errors, status: :unprocessable_entity }
+        format.html { redirect_to messages_path, notice: GameSettings.get("ERRMSG_MESSAGE_CREATED") }
       end
     end
   end
@@ -58,7 +62,7 @@ class MessagesController < ApplicationController
       @entry=MessagesUser.all.where(:user_id=>current_user,:message_id=>@message).first
       @entry.recipient_deleted=true
       @entry.save
-      tag_msg_as_seen(@message)
+      @message.tag_msg_as_seen!(current_user)
     elsif current_user==@message.sender
       @message.sender_deleted=true
       @message.save
@@ -78,14 +82,5 @@ class MessagesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def message_params
       params.require(:message).permit(:text, :sender_id, :subject) if params[:message]
-    end
-
-  private
-    def tag_msg_as_seen(msg)
-      if(@message.sender!=current_user)
-        @entry=MessagesUser.all.where(:user_id=>current_user,:message_id=>@message).first
-        @entry.read=true
-        @entry.save
-      end
     end
 end
