@@ -37,6 +37,8 @@
 						<% else %>
 							<div class="label label-info">Nicht möglich</div>
 						<% end %>
+				<% else %>
+					<div class="label label-info">Nicht möglich</div>
 				<% end %>
 				</td>
 				<% if @alliance.permission?(current_user,"kick") and current_user != user and user.rank.is_founder == false %>

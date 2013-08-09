@@ -24,8 +24,10 @@ class Spyreport < ActiveRecord::Base
 		@r.attacker = fleet.user
 		@r.attacker_planet = fleet.start_planet
 
-		@r.receivers << planet.user if mode == 4
-		@r.receivers << fleet.user
+		if mode == 4
+			@r.add_receiver(planet.user)
+		end
+		@r.add_receiver(fleet.user)
 
 		@r.fightdate = Time.at(fleet.arrival_time)
 		if mode < 2
@@ -89,6 +91,7 @@ class Spyreport < ActiveRecord::Base
 		s = Spyreport.new
 		p = Planet.find(1)
 		f = Fleet.find(1)
+		f.arrival_time = Time.now.to_i
 		s.finish_spyreport(p, f, 1, 2, 0)
 	end
 

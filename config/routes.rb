@@ -79,6 +79,8 @@ Mmog::Application.routes.draw do
 
   post 'technologies/abort' => 'technologies#abort'
 
+  get 'json/page_refresh' => 'technologies#page_refresh'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

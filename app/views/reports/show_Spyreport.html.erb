@@ -1,0 +1,50 @@
+
+<h1>Spionagebericht</h1>
+<p id="notice"><%= notice %></p>
+<p>
+  Du hast am <strong><%= @report.fightdate.strftime('%d.%m.%y') %> um 
+  <%= @report.fightdate.strftime('%H:%M') %> Uhr</strong>  einen Spionagebericht 
+  vom Planeten <b><%= @report.defender_planet.name %></b> erhalten
+</p>
+<h3>Planet:</h3>
+<p>Besitzer: <%= @report.defender.username %></p>
+<p>
+  Bevölkerung: <%= @report.reportable.population %> Energie: <%= @report.reportable.energy %>
+  Erz: <%= @report.reportable.ore %> Space Cash: <%= @report.reportable.space_cash %>
+  Crystal: <%= @report.reportable.crystal %>
+
+  <% @report.techstages.each do |tech| %>
+    <p>tech.</p>
+  <% end %>
+</p>
+<p>
+  <strong>Reportable:</strong>
+  <%= @report.reportable %>
+</p>
+
+<p>
+  <strong>Defender planet:</strong>
+  <%= @report.defender_planet %>
+</p>
+
+<p>
+  <strong>Attacker planet:</strong>
+  <%= @report.attacker_planet %>
+</p>
+
+<p>
+  <strong>Fightdate:</strong>
+  <%= @report.fightdate %>
+</p>
+
+<p>
+  <strong>Defender:</strong>
+  <%= @report.defender %>
+</p>
+
+<p>
+  <strong>Attacker:</strong>
+  <%= @report.attacker %>
+</p>
+
+<%= link_to 'Zurück', :back %>
