@@ -2,6 +2,11 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+
+.planetbox{
+     position: relative;
+}
+
 .ressources{
   color: #E0E0FF;
   text-shadow: 1px 1px 1px #000;
@@ -16,8 +21,68 @@
 
 }
 
+.buildingsanzeige{
+
+  color: #fff;
+  width:490px;
+  height: 490px;
+  margin: auto auto;
+  padding: 4px;
+  position: relative;
+
+}
+
 .planetinfos{
   float: right;
   min-width: 200px;
-
 }
+
+.buildingpos{
+  background-color: transparent;
+  text-decoration: none;
+  display: inline;
+  position: absolute;
+}
+
+.buildingposOremine{
+   top: 120px;
+   left: 50px;
+
+
+ }
+
+.buildingposResearchLab{
+  top: 120px;
+  left:150px;
+}
+
+.buildingposCrystalmine{
+  top: 120px;
+  left:250px;
+}
+
+.buildingposDepot{
+  top: 120px;
+  left:350px;
+}
+
+.buildingposStarport{
+  top: 320px;
+  left: 50px;
+}
+
+.buildingposCity{
+  top: 320px;
+  left:150px;
+}
+
+.buildingposPowerplant{
+  top: 320px;
+  left:250px;
+}
+
+.buildingposHeadquarter{
+  top: 320px;
+  left:350px;
+}
+

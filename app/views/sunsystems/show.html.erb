@@ -5,18 +5,16 @@
   <div class="sunsysinf">
 
     <strong>Name des Sonnensystems: <%= @sunsystem.name %></strong>
-    <strong><%= link_to '↶', galaxy_path(@sunsystem.galaxy) %></strong>
+    <FONT SIZE = 7><strong><%= link_to '↶', galaxy_path(@sunsystem.galaxy) %></strong></FONT>
 
   </div>
 
   <% @sunsystem.planets.each do |p| %>
 
       <a class="planetspos planetspos<%= p.z.to_s %>" href="<%= planet_path(p)%>" > <div>
+        <% a = p.special.to_s%>
+        <%= image_tag('/images/planets/Planet'+a+'.png') %>
 
-        <% if !p.z.nil? then %>
-            <%= image_tag('/images/icons/eisen32px.png')%>
-
-        <% end %>
 
       </div></a>
 
