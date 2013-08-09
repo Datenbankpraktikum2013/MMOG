@@ -51,7 +51,7 @@ class Battlereport < ActiveRecord::Base
 	#        3 = Attackerflotte, nachher
 	def add_fleet_info(fleet, type)
 		unless fleet.nil?
-			fleet.shipfleets.each do |shipfleet|
+			Shipfleet.where(fleet_id: fleet.id).each do |shipfleet|
 				tmp = Shipcount.new
 				tmp.amount = shipfleet.amount
 				tmp.ship = shipfleet.ship
@@ -59,6 +59,9 @@ class Battlereport < ActiveRecord::Base
 				tmp.user = fleet.user
 				self.shipcounts << tmp
 			end
+			# fleet.shipfleets.each do |shipfleet|
+
+			# end
 		end
 	end
 end
