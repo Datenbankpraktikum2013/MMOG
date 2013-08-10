@@ -1,6 +1,5 @@
 Mmog::Application.routes.draw do
 
-
   resources :colonisationreports
 
   resources :travelreports
@@ -53,6 +52,8 @@ Mmog::Application.routes.draw do
 
   resources :planets
 
+  post "requests" => "requests#create"
+  post "requests/reaction"=>"requests#reaction"
   get "starport" => "starport#index"
   get "starport/:id" => "starport#show"
   post "starport/build" => "starport#build"
@@ -62,8 +63,6 @@ Mmog::Application.routes.draw do
   post 'alliances/:id/edit/change_default_rank' => 'alliances#change_default_rank'
 
   get 'json/fetch_unread_msgs' => 'messages#fetch_unread_msgs'
-
-  post 'alliances/:id/edit/user_add_action' => 'alliances#user_add_action'
 
   put 'alliances/:id/edit/change_user_rank' => 'alliances#change_user_rank'
 

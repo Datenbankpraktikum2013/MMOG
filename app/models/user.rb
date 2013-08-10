@@ -28,6 +28,9 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :sunsystems
   belongs_to :rank
 
+  has_many :outgoing_requests, :class_name => 'Request', :foreign_key => 'sender_id'
+  has_many :incoming_requests, :class_name => 'Request', :foreign_key => 'recipient_id'
+
   has_many :shipcounts
   belongs_to :alliance
   #receiving messages

@@ -85,21 +85,6 @@ class AlliancesController < ApplicationController
     end
   end
 
-  # POST /alliances/1/edit/user_add_action
-  def user_add_action
-    @users=User.all
-    @concrete_user=@users.where('username == ?',params['username']).first
-    respond_to do |format|
-      if @alliance.permission?(current_user,"invite") and @alliance.add_user(@concrete_user)
-          format.html { redirect_to @alliance, notice: GameSettings.get("SUCCESSMSG_ALLIANCE_USERADDED") }
-          format.json { render action: 'edit', status: :created, location: @alliance }
-      else
-        format.html { redirect_to @alliance, notice: GameSettings.get("SUCCESSMSG_ALLIANCE_USERADDED") }
-        format.json { render json: @alliance.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
   def remove_user
     @user=@alliance.users.find_by_id(params['uid'])
     respond_to do |format|
