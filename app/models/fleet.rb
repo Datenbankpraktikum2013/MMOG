@@ -372,10 +372,23 @@ class Fleet < ActiveRecord::Base
     #puts "defender defense: #{defender_defense} attacker offense: #{self.offense} factor: #{fight_factor}"
     #if lost...
     if fight_factor<0
-      @battle_report.finish_battlereport(defender_fleets, self, true)
-      puts "Attacker FAIL"
+      puts "Attacker FAIL. Calculating loss of Ships..."
       defender_new_defense=fight_factor.abs*rand(0.8 .. 1.2)
       new_offense=0
+      shipamount=Hash.new(Fleet)
+      defender_fleets.each do |f|
+        shipamount[f]=f.get_ships
+        
+      end
+
+      delf=Hash.new(Fleet)
+      defender_fleets.each do |f|
+        delf[f]=Hash.new(Ship)
+        f.ships.each do |s|
+          delf[f][s]=0
+        end
+      end
+
 
 
       tmp_defense=defender_defense
@@ -387,41 +400,67 @@ class Fleet < ActiveRecord::Base
         #puts "shiptyp anzahl: #{tmp_ship_index}"
         del_ship_index=rand(0 .. (tmp_ship_index) )
         #puts "shiptyp del: #{del_ship_index}"
-        defender_fleets[tmp_random_fleet].destroy_ship(defender_fleets[tmp_random_fleet].ships[del_ship_index])
-        tmp_defense=defender_fleets.sum("defense")
-
+        unless shipamount[defender_fleets[tmp_random_fleet]][defender_fleets[tmp_random_fleet].ships[del_ship_index]] - delf[defender_fleets[tmp_random_fleet]][defender_fleets[tmp_random_fleet].ships[del_ship_index]] <=0
+          delf[defender_fleets[tmp_random_fleet]][defender_fleets[tmp_random_fleet].ships[del_ship_index]]+=1
+          #defender_fleets[tmp_random_fleet].destroy_ship(defender_fleets[tmp_random_fleet].ships[del_ship_index])
+          tmp_defense-=defender_fleets[tmp_random_fleet].ships[del_ship_index].defense
+        end
       end
+      defender_fleets.each do |f|
+        puts delf[f].size
+        f.destroy_ships(delf[f])
+      end
+      puts "Generating Battlereport..."
+
+      @battle_report.finish_battlereport(defender_fleets, nil, true)
 
       self.destroy
 
     elsif fight_factor>0
-      @battle_report.finish_battlereport(defender_fleets, self, false)
-      puts "Defender FAIL"
+      puts "Defender FAIL. Calculating loss of Ships..."
       attacker_new_offense=fight_factor.abs*rand(0.8 .. 1.2)
       new_offense=0
       tmp_offense=self.offense
       del_hash=Hash.new(Ship)
+      self.ships.each do |s|
+        del_hash[s]=0
+      end
+      #help_hash=Hash.new(Ship)
+      a=0
+      shipamount=self.get_ships
       while tmp_offense>attacker_new_offense do
-
+        a+=1
+        #puts "working #{a}: #{tmp_offense} / #{attacker_new_offense}..."
         tmp_ship_index=(self.ships.size) -1
         del_ship_index=rand(0 .. (tmp_ship_index) )
-        del_hash[self.ships[del_ship_index]]+=1
+        #puts "#{shipamount[self.ships[del_ship_index]]} - #{del_hash[self.ships[del_ship_index]]}  = #{shipamount[self.ships[del_ship_index]]-del_hash[self.ships[del_ship_index]]}"
+        unless  shipamount[self.ships[del_ship_index]] - del_hash[self.ships[del_ship_index]] <= 0
+          del_hash[self.ships[del_ship_index]]+=1
+          tmp_offense-=self.ships[del_ship_index].offense
+        end
         #self.destroy_ship(self.ships[del_ship_index])
-        tmp_offense-=self.ships[del_ship_index].offense
+        
       end
+      #puts "size: #{del_hash.size}"
       self.destroy_ships(del_hash)
+      #puts "=========================="
       defender_fleets.each do |f|
-        puts "TEST"
         f.destroy
       end
+      self.save
+      puts "Generating Battlereport..."
+      #puts "xxxxxxxxxxxxxxxx #{self.get_amount_of_ship(Ship.find(3))}"
+      @battle_report.finish_battlereport({}, self, false)
     else
-      @battle_report.finish_battlereport(defender_fleets, self, true)
+      @battle_report.finish_battlereport({}, nil, true)
       puts "both FAIL"
       defender_fleets.each do |f|
         f.destroy
       end
       self.destroy
     end
+
+
   end
 #=end
 
@@ -872,6 +911,10 @@ class Fleet < ActiveRecord::Base
   # after that the fleetattributes are updated
   def destroy_ships(ship_hash)
     unless enough_ships?(ship_hash)
+        ship_hash.each do |key, value|
+          puts "ship #{key} : #{value}"
+        end
+      
       raise RuntimeError, "The Input is not valid (invalid amount or wrong objects), ships cannot be destroyed"
     end
 
