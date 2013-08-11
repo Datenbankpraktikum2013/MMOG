@@ -21,7 +21,7 @@
 			 				<% if controller_name == 'welcome'%>
 			 					Startseite
                             <% elsif controller_name == 'planets' %>
-                                Planet <%= @planet.id %>
+                                Planet <%= @planet.id unless @planet.nil? %>
                             <% elsif controller_name == 'sunsystems' %>
                                 Sonnensystem <%= @sunsystem.id if !@sunsystem.nil? %>
                             <% elsif controller_name == 'galaxies' %>
@@ -93,6 +93,8 @@
 			});
 		};
 
-        setInterval(refresh, 5000);
+        if( <%= !current_user.nil? %>){
+            setInterval(refresh, 5000);
+        };
 	</script>
 </html>

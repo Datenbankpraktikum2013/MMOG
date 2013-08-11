@@ -25,11 +25,11 @@ class Battlereport < ActiveRecord::Base
 		@r.fightdate = Time.at(atk_fleet.arrival_time)
 
 		def_fleets.each do |fleet|
-			@r.receivers << fleet.user
+			@r.add_receiver(fleet.user)
 			self.add_fleet_info(fleet, 0)
 		end
 
-		@r.receivers << atk_fleet.user
+		@r.add_receiver(atk_fleet.user)
 		self.add_fleet_info(atk_fleet, 1)
 
 	end
@@ -50,13 +50,18 @@ class Battlereport < ActiveRecord::Base
 	# 		 2 = Defenderflotte, nachher
 	#        3 = Attackerflotte, nachher
 	def add_fleet_info(fleet, type)
-		fleet.shipfleets.each do |shipfleet|
-			tmp = Shipcount.new
-			tmp.amount = shipfleet.amount
-			tmp.ship = shipfleet.ship
-			tmp.shipowner_time_type = type
-			tmp.user = fleet.user
-			self.shipcounts << tmp
+		unless fleet.nil?
+			Shipfleet.where(fleet_id: fleet.id).each do |shipfleet|
+				tmp = Shipcount.new
+				tmp.amount = shipfleet.amount
+				tmp.ship = shipfleet.ship
+				tmp.shipowner_time_type = type
+				tmp.user = fleet.user
+				self.shipcounts << tmp
+			end
+			# fleet.shipfleets.each do |shipfleet|
+
+			# end
 		end
 	end
 end

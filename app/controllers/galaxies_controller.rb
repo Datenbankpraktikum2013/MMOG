@@ -5,20 +5,21 @@ class GalaxiesController < ApplicationController
   # GET /galaxies
   # GET /galaxies.json
   def index
-    $game_settings = Hash.new()
-    $game_settings[:world_length] = 5
-    $game_settings[:world_view_length] = 5
+    w_len = GameSettings.get "WORLD_LENGTH"
+    wv_len = GameSettings.get "WORLD_VIEW_LENGTH"
     @pos = [0, 0]
-    unless params[:pox_x].nil? || params[:pox_y].nil?
-      @pos[0] = params[:x]
-      @pos[1] = params[:y]
+    unless params["x"].nil? || params["y"].nil?
+      @pos[0] = params["x"].to_i
+      @pos[1] = params["y"].to_i
     end
 
+    len = (wv_len - 1).to_i / 2
     @near = Array.new()
-    for y in @pos[1]..@pos[1]+4
-      for x in @pos[0]..@pos[0]+4
-        #g = Galaxy.where(x: Galaxy.calcX(x,y)).first
-        g = Galaxy.calcX(x,y)
+    for y in (@pos[1]-len)..(@pos[1]+len)
+      y2 = y % w_len
+      for x in (@pos[0]-len)..(@pos[0]+len)
+        x2 = x % w_len
+        g = Galaxy.calcX(x2,y2)
         unless g.nil? || g < 0 then
           @near.append(g)
         end
