@@ -393,30 +393,43 @@ class Fleet < ActiveRecord::Base
         shipamount[f]=f.get_ships
         
       end
+      allships=Hash.new(Fleet)
 
       delf=Hash.new(Fleet)
       defender_fleets.each do |f|
+        allships[f]=Array.new
+        shipamount=f.get_ships
+        shipamount.each do |key,value|
+            value.times do 
+              allships[f].push key
+            end
+          end
         delf[f]=Hash.new(Ship)
         f.ships.each do |s|
           delf[f][s]=0
         end
+        allships[f].shuffle!
       end
 
+      
 
 
       tmp_defense=defender_defense
+
       while tmp_defense>defender_new_defense do
         #puts "new defense #{defender_new_defense} / #{tmp_defense}"
         tmp_random_fleet=rand(0 .. ((defender_fleets.size) -1) )
         #puts "fleet nr: #{tmp_random_fleet}"
-        tmp_ship_index=(defender_fleets[tmp_random_fleet].ships.size) -1
+        #tmp_ship_index=(defender_fleets[tmp_random_fleet].ships.size) -1
         #puts "shiptyp anzahl: #{tmp_ship_index}"
-        del_ship_index=rand(0 .. (tmp_ship_index) )
+        del_ship_index=rand(0 .. (allships[defender_fleets[tmp_random_fleet]].size) -1 )
         #puts "shiptyp del: #{del_ship_index}"
-        unless shipamount[defender_fleets[tmp_random_fleet]][defender_fleets[tmp_random_fleet].ships[del_ship_index]] - delf[defender_fleets[tmp_random_fleet]][defender_fleets[tmp_random_fleet].ships[del_ship_index]] <=0
-          delf[defender_fleets[tmp_random_fleet]][defender_fleets[tmp_random_fleet].ships[del_ship_index]]+=1
+        puts "xxx: #{shipamount[allships[defender_fleets[tmp_random_fleet]][del_ship_index]]} - #{delf[defender_fleets[tmp_random_fleet]][allships[defender_fleets[tmp_random_fleet]][del_ship_index]] }"
+        unless shipamount[allships[defender_fleets[tmp_random_fleet]][del_ship_index]] - delf[defender_fleets[tmp_random_fleet]][allships[defender_fleets[tmp_random_fleet]][del_ship_index]] <=0
+          delf[defender_fleets[tmp_random_fleet]][allships[defender_fleets[tmp_random_fleet]][del_ship_index]]+=1
           #defender_fleets[tmp_random_fleet].destroy_ship(defender_fleets[tmp_random_fleet].ships[del_ship_index])
-          tmp_defense-=defender_fleets[tmp_random_fleet].ships[del_ship_index].defense
+          tmp_defense-=allships[defender_fleets[tmp_random_fleet]][del_ship_index].defense
+          allships[defender_fleets[tmp_random_fleet]].delete_at(del_ship_index)
         end
       end
       defender_fleets.each do |f|
@@ -440,16 +453,25 @@ class Fleet < ActiveRecord::Base
       end
       #help_hash=Hash.new(Ship)
       a=0
+      allships=Array.new
       shipamount=self.get_ships
+      shipamount.each do |key,value|
+        value.times do 
+          allships.push key
+        end
+      end
+      allships.shuffle!
       while tmp_offense>attacker_new_offense do
         a+=1
         #puts "working #{a}: #{tmp_offense} / #{attacker_new_offense}..."
-        tmp_ship_index=(self.ships.size) -1
-        del_ship_index=rand(0 .. (tmp_ship_index) )
+        #tmp_ship_index=(self.ships.size) -1
+        #del_ship_index=rand(0 .. (tmp_ship_index) )
+        del_ship_index=rand( ( 0..((allships.size) -1)))
         #puts "#{shipamount[self.ships[del_ship_index]]} - #{del_hash[self.ships[del_ship_index]]}  = #{shipamount[self.ships[del_ship_index]]-del_hash[self.ships[del_ship_index]]}"
-        unless  shipamount[self.ships[del_ship_index]] - del_hash[self.ships[del_ship_index]] <= 0
-          del_hash[self.ships[del_ship_index]]+=1
-          tmp_offense-=self.ships[del_ship_index].offense
+        unless  shipamount[allships[del_ship_index]] - del_hash[allships[del_ship_index]] <= 0
+          del_hash[allships[del_ship_index]]+=1
+          tmp_offense-=allships[del_ship_index].offense
+          allships.delete_at(del_ship_index)
         end
         #self.destroy_ship(self.ships[del_ship_index])
         
