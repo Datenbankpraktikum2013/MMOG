@@ -4,12 +4,61 @@ class MissionsController < ApplicationController
   # GET /missions
   # GET /missions.json
   def index
-    @missions = Mission.all
+    @planets = current_user.visible_planets.uniq!
+    @galaxies = current_user.visible_galaxies.uniq!
+    @sunsystems = current_user.visible_sunsystems.uniq!
+
+    @susy_names_hash = Hash.new
+    @sunsystems.each do |sunsystem|
+      @susy_names_hash[sunsystem.id] = sunsystem.name
+    end
+    
+    @planets_names_hash = Hash.new
+    @planets.each do |planet|
+      @planets_names_hash[planet.id] = planet.name
+    end
+      
+    @susy_hash = Hash.new
+    @planets.each do |planet|
+      if @susy_hash.has_key?(planet.sunsystem.id)
+        @susy_hash[planet.sunsystem.id].push(planet.id)
+      else
+        @susy_hash[planet.sunsystem.id] = [planet.id]
+      end
+    end
+
+    @gala_hash = Hash.new
+    @sunsystems.each do |sunsystem|
+      if @gala_hash.has_key?(sunsystem.galaxy.id)
+        @gala_hash[sunsystem.galaxy.id].push(sunsystem.id)
+      else
+        @gala_hash[sunsystem.galaxy.id] = [sunsystem.id]
+      end
+    end
+
+    @fleets = Fleet.where("start_planet=target_planet AND user_id = ?", current_user.id)
+    @ships = Ship.get_property_hash
   end
 
   # GET /missions/1
   # GET /missions/1.json
   def show
+  end
+
+  # GET /json/distance
+  # FEHLERBEHANDLUNG
+  def get_distance()
+    planet1 = Planet.find(params[:planet1])
+    planet2 = Planet.find(params[:planet2])
+    distance = planet1.getDistance(planet2).to_json
+    render :json => distance
+  end
+
+  # GET /json/fleetships
+  # FEHLERBEHANDLUNG
+  def get_ships()
+    fleet = Fleet.find(params[:fleet_id])
+    render :json => fleet.get_ships_ids.to_json
   end
 
   # GET /missions/new

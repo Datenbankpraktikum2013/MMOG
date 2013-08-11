@@ -70,5 +70,14 @@
   <%= @fleet.target_planet %>
 </p>
 
+<p>
+  <strong>Ships:</strong>
+  <ul>
+  <% @ship_hash.each do |ship, amount| %>
+    <li><%= ship.name %>: <%= amount %></li>
+  <% end %>  
+  </ul>
+</p>
+
 <%= link_to 'Edit', edit_fleet_path(@fleet) %> |
 <%= link_to 'Back', fleets_path %>

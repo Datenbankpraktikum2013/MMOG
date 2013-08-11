@@ -27,7 +27,7 @@ Mmog::Application.routes.draw do
 
   resources :shipfleets
 
-  resources :fleets
+  resources :fleets #EXCEPT muss hier noch rein!
 
   resources :missions
 
@@ -58,7 +58,6 @@ Mmog::Application.routes.draw do
   post "starport/build" => "starport#build"
   get "ship_building_queues/destroy_queue/:id" => "ship_building_queues#destroy_queue"
 
-
   post 'alliances/:id/edit/change_default_rank' => 'alliances#change_default_rank'
 
   get 'json/fetch_unread_msgs' => 'messages#fetch_unread_msgs'
@@ -80,6 +79,9 @@ Mmog::Application.routes.draw do
   post 'technologies/abort' => 'technologies#abort'
 
   get 'json/page_refresh' => 'technologies#page_refresh'
+
+  get '/json/distance' => 'missions#get_distance'
+  get '/json/fleetships' => 'missions#get_ships'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

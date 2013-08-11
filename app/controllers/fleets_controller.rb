@@ -22,12 +22,13 @@ class FleetsController < ApplicationController
   # GET /fleets/1
   # GET /fleets/1.json
   def show
-    @shiptypes=Ship.all
+    puts @fleet.id
+    @ship_hash = @fleet.get_ships
   end
 
   # GET /fleets/new
   def new
-    @fleet = Fleet.new
+    #@fleet = Fleet.new
   end
 
   # GET /fleets/1/edit
@@ -72,6 +73,18 @@ class FleetsController < ApplicationController
       format.html { redirect_to fleets_url }
       format.json { head :no_content }
     end
+  end
+
+  # GET /fleets/mission
+  # GET /fleets/mission.json ????????????? 
+  def show_mission
+
+  end
+
+  # POST /fleets/mission
+  # POST /fleets/mission.json ????????????? 
+  def confirm_mission
+    
   end
 
   private

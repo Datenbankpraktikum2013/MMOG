@@ -159,7 +159,7 @@ class Fleet < ActiveRecord::Base
   end
 
 
-# Returns a Hash of {ShipName => Amount} pairs
+  # Returns a Hash of {ShipName => Amount} pairs
   def get_ships_names()
     ship_hash = {}
     if self.ships.nil?
@@ -167,6 +167,19 @@ class Fleet < ActiveRecord::Base
     else
       self.ships.each do |s|
         ship_hash[s.name] = Shipfleet.where(fleet_id: self, ship_id: s).first.amount
+      end
+      ship_hash
+    end
+  end
+
+  # Returns a Hash of {ShipName => Amount} pairs
+  def get_ships_ids()
+    ship_hash = {}
+    if self.ships.nil?
+      ship_hash
+    else
+      self.ships.each do |s|
+        ship_hash[s.id] = Shipfleet.where(fleet_id: self, ship_id: s).first.amount
       end
       ship_hash
     end

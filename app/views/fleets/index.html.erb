@@ -34,7 +34,7 @@
     <tr>
       <th>User</th>
       <th>Mission</th>
-      <th>Current Target</th>
+      <th>Target</th>
       <th>approaches in</th>
     </tr>
   </thead>
@@ -43,7 +43,7 @@
     <% @approaching_fleets.each do |fleet| %>
       <% if fleet.mission.id == 3 %>
         <% mission = "Attack" %>
-        <tr class="alert-danger">
+        <tr class="error">
       <% elsif fleet.mission.id == 6 %>
         <% mission = "Transport" %>
         <tr class="warning">
@@ -53,7 +53,7 @@
       <% end %>
         <td><%= fleet.user.username %></td>
         <td><%= mission %></td>
-        <td><%= fleet.target_planet.id %></td>
+        <td><%= fleet.target_planet.name %> (<%= fleet.target_planet.id %>)</td>
         <td><%= Time.at fleet.arrival_time %></td>
       </tr>
     <% end %>
