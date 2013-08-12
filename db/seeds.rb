@@ -17,8 +17,8 @@ GameSettings.set "INITIAL_BUDGET", 1000
 GameSettings.set "PLANET_MIN_SIZE", 10000
 GameSettings.set "PLANET_MAX_SIZE", 100000
 GameSettings.set "WORLD_DISTANCE_FACTOR", 60
-GameSettings.set "WORLD_LENGTH", 5
-GameSettings.set "WORLD_VIEW_LENGTH", 5
+GameSettings.set "WORLD_LENGTH", 12
+GameSettings.set "WORLD_VIEW_LENGTH", 7
 GameSettings.set "SUCCESSMSG_ALLIANCE_MASSMAILSENT", "Rundmail wurde erfolgreich versendet."
 GameSettings.set "ERRMSG_ALLIANCE_MASSMAILSENT", "Rundmail konnte nicht versendet werden."
 GameSettings.set "SUCCESSMSG_ALLIANCE_CHANGEDDEFAULTRANK", "Standardrang wurde erfolgreich geändert."
