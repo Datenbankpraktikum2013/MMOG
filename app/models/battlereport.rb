@@ -40,6 +40,12 @@ class Battlereport < ActiveRecord::Base
 		end
 		self.add_fleet_info(atk_fleet, 3)
 
+		self.stolen_ore = atk_fleet.ore
+		self.stolen_crystal = atk_fleet.crystal
+		self.stolen_space_cash = atk_fleet.credit
+
+		puts "Ore: #{atk_fleet.ore}, Cash: #{atk_fleet.credit}, Crystal: #{atk_fleet.crystal}"
+
 		defended ? self.winner = @r.defender : self.winner = @r.attacker
 		self.save
 		@r.save

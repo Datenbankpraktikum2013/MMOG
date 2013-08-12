@@ -27,8 +27,7 @@ class RequestsController < ApplicationController
     if answer=='no'
       request.destroy
     elsif answer=='yes'
-      request.sender.alliance.add_user(current_user)
-      request.destroy
+      request.launch_action!()
     end
   end
 
