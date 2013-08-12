@@ -1,7 +1,8 @@
-<%= form_tag(relationships_path)%>
+<%= form_tag(requests_path)%>
     <p><strong><%= label_tag ('Wen möchtest du hinzufügen?') %></strong></p>
     <p> <p><%=label_tag ('Username') %></p>
-      <%= text_field_tag('username') %>
+      <%= text_field_tag('recipient') %>
+      <%= hidden_field_tag('useraction','friendship_invite') %>
     </p>
-    <p><%= submit_tag 'Hinzufügen' %></p>
+    <p><%= submit_tag 'Einladen' %></p>
 </form>
