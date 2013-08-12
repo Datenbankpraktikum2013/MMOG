@@ -19,12 +19,12 @@
 </table>
 <% unless @queue.empty? %>
 <h3>Ships to build:</h3>
-<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="example">
+<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="shipdata">
 	<tr>
-		<td>Planet</td>
-		<td>Ship</td>
-		<td>Time (seconds)</td>
-    <td></td>
+		<th>Planet</th>
+		<th>Ship</th>
+		<th>Time (seconds)</th>
+    <th></th>
 	</tr>
 	<% @queue.each do |q| %>
 		<tr>
@@ -44,6 +44,7 @@
 </table>
 
 <script>
+
 </script>
 
 
