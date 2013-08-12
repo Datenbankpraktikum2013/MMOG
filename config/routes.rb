@@ -8,7 +8,7 @@ Mmog::Application.routes.draw do
 
   resources :receiving_reports
 
-  resources :relationships
+  resources :relationships, :except => [:edit,:update,:show,:create]
   
   resources :techstages
 

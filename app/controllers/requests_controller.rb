@@ -10,12 +10,11 @@ class RequestsController < ApplicationController
     @request.recipient=@usr
     @request.sender=current_user
     respond_to do |format|
-      if @request.save
+      if @usr!=nil and @request.save
         @request.decide_notify()
-        format.html { redirect_to messages_path, notice: 'Request was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @request }
+        format.html { redirect_to root_path, notice: GameSettings.get("SUCCESSMSG_REQUESTCREATE") }
       else
-
+        format.html { redirect_to root_path, notice: GameSettings.get("ERRMSG_REQUESTCREATE") }
       end
     end
   end
@@ -24,10 +23,18 @@ class RequestsController < ApplicationController
     answer=params['answer']
     token=params['for']
     request=Request.all.where(:requestvalue=>token).first
-    if answer=='no'
-      request.destroy
-    elsif answer=='yes'
-      request.launch_action!()
+    respond_to do |format|
+      if request!=nil and request.recipient==current_user
+        if answer=='no'
+          request.destroy
+          format.html { redirect_to root_path, notice: GameSettings.get("DECLINEMSG_REQUESTREACTION") }
+        elsif answer=='yes'
+          request.launch_action!
+          format.html { redirect_to root_path, notice: GameSettings.get("ACCEPTMSG_REQUESTREACTION") }
+        end
+      else
+        format.html { redirect_to root_path, notice: GameSettings.get("ERRMSG_REQUESTREACTION") }
+      end
     end
   end
 
