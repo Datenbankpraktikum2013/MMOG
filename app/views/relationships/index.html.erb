@@ -3,20 +3,24 @@
 <table>
   <thead>
     <tr>
-      <th>Kontakte:</th>
+      <th>Spielername</th>
       <th></th>
       <th></th>
     </tr>
   </thead>
 
   <tbody>
-    <% current_user.friends.each do |friend| %>
-      <% @relation = Relationship.where(user: current_user, friend: friend).first %>
-      <tr>
-        <td><%= friend.username %></td>         
-        <td><%= link_to 'entfernen', {:controller => "relationships", :action => "destroy",:id=> @relation.id} , :method=>:delete, data: {confirm: 'Bist du dir sicher, dass du '+friend.username+" aus der Freundesliste entfernen willst?" }, class: 'label label-important', :style => 'color:#FFFFFF;' %> </td>
-        <td><%= link_to 'Nachricht schreiben', new_message_path+'/?recipient='+friend.username , class: 'label label-success', :style=>'color:#FFFFFF;'%> </td>
-      </tr>
+    <% if current_user.friends.first==nil %>
+      <i>Du hast keine Kontakte hinzugefügt</i>
+    <% else %>
+      <% current_user.friends.each do |friend| %>
+        <% @relation = Relationship.where(user: current_user, friend: friend).first %>
+        <tr>
+          <td><%= friend.username %></td>         
+          <td><%= link_to 'entfernen', {:controller => "relationships", :action => "destroy",:id=> @relation.id} , :method=>:delete, data: {confirm: 'Bist du dir sicher, dass du '+friend.username+" aus der Freundesliste entfernen willst?" }, class: 'label label-important', :style => 'color:#FFFFFF;' %> </td>
+          <td><%= link_to 'Nachricht schreiben', new_message_path+'/?recipient='+friend.username , class: 'label label-success', :style=>'color:#FFFFFF;'%> </td>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>

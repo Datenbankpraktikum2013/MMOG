@@ -48,6 +48,10 @@ class User < ActiveRecord::Base
   @cache_visible_sunsystems
   @cache_visible_galaxies
 
+  def online?
+    updated_at > 1.minutes.ago
+  end
+
   #claim startplanet
   def claim_starplanet
     PlanetsHelper.claim_startplanet_for(self)
