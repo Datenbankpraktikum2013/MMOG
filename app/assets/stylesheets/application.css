@@ -45,4 +45,5 @@
 
 .inline, .inline div{
     display: inline;
+    margin: 10px;
 }
