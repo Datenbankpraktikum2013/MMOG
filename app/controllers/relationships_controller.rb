@@ -60,7 +60,7 @@ class RelationshipsController < ApplicationController
   # DELETE /relationships/1
   # DELETE /relationships/1.json
   def destroy
-    @user=@relationship.friend
+    @user=@relationship.user
     current_user.end_friendship!(@user)
     respond_to do |format|
       format.html { redirect_to relationships_url }
@@ -72,7 +72,7 @@ class RelationshipsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_relationship
       #find relationship
-      @relationship = Relationship.find_by_friend_id(params[:id])
+      @relationship = Relationship.find_by_id(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

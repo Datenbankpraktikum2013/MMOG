@@ -96,10 +96,10 @@ Ship.find(10).buildingtypes << Buildingtype.where(name: "Starport", level: 3).fi
 #Building 
 Building.create({:planet_id => 1, :buildingtype_id => 1})
 Building.create({:planet_id => 1, :buildingtype_id => 2})
-Building.create({:planet_id => 1, :buildingtype_id => 36})
+Building.create({:planet_id => 1, :buildingtype_id => 54})
 Building.create({:planet_id => 2, :buildingtype_id => 1})
 Building.create({:planet_id => 2, :buildingtype_id => 2})
-Building.create({:planet_id => 2, :buildingtype_id => 36})
+Building.create({:planet_id => 2, :buildingtype_id => 51})
 
 #Default-Werte von Spieler, Allianzen und Nachrichten
 #Alliance.create({:name => 'test_alliance3', :description => 'testtesttest', :user_id => User.first})
@@ -142,7 +142,7 @@ p.maxenergy = 100000
 p.maxcrystal = 100000
 p.maxpopulation = 100000
 p.save
-Fleet.find(2).add_ships({Ship.find(1)=> 50, Ship.find(2)=> 50, Ship.find(3)=> 50, Ship.find(4)=> 50, Ship.find(5)=> 50,Ship.find(6)=> 50,Ship.find(7)=> 50,Ship.find(8)=> 50,Ship.find(9)=> 50,Ship.find(10)=> 50})
+Fleet.find(2).add_ships({Ship.find(1)=> 500, Ship.find(2)=> 500, Ship.find(3)=> 500, Ship.find(4)=> 500, Ship.find(5)=> 500,Ship.find(6)=> 500,Ship.find(7)=> 500,Ship.find(8)=> 500,Ship.find(9)=> 500,Ship.find(10)=> 500})
 Planet.find(1).give(:Ore, 10000)
 Planet.find(1).give(:Crystal, 10000)
 Planet.find(1).give(:Money, 10000)

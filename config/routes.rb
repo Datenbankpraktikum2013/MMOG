@@ -1,6 +1,5 @@
 Mmog::Application.routes.draw do
 
-
   resources :colonisationreports
 
   resources :travelreports
@@ -27,7 +26,7 @@ Mmog::Application.routes.draw do
 
   resources :shipfleets
 
-  resources :fleets
+  resources :fleets #EXCEPT muss hier noch rein!
 
   resources :missions
 
@@ -53,17 +52,16 @@ Mmog::Application.routes.draw do
 
   resources :planets
 
+  post "requests" => "requests#create"
+  post "requests/reaction"=>"requests#reaction"
   get "starport" => "starport#index"
   get "starport/:id" => "starport#show"
   post "starport/build" => "starport#build"
   get "ship_building_queues/destroy_queue/:id" => "ship_building_queues#destroy_queue"
 
-
   post 'alliances/:id/edit/change_default_rank' => 'alliances#change_default_rank'
 
   get 'json/fetch_unread_msgs' => 'messages#fetch_unread_msgs'
-
-  post 'alliances/:id/edit/user_add_action' => 'alliances#user_add_action'
 
   put 'alliances/:id/edit/change_user_rank' => 'alliances#change_user_rank'
 
@@ -78,6 +76,14 @@ Mmog::Application.routes.draw do
   post 'technologies/show_index' => 'technologies#show_index'
 
   post 'technologies/abort' => 'technologies#abort'
+
+  get 'json/page_refresh' => 'technologies#page_refresh'
+
+  get '/json/distance' => 'missions#get_distance'
+  get '/json/fleetships' => 'missions#get_ships'
+  get '/json/check' => 'missions#check_mission'
+
+  get '/confirm/send' => 'missions#send_fleet'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

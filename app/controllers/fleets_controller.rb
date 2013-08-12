@@ -4,19 +4,31 @@ class FleetsController < ApplicationController
   # GET /fleets
   # GET /fleets.json
   def index
-    @fleets = Fleet.all
-    @shiptypes=Ship.all
+    @fleets = Fleet.where(user: current_user)
+    
+    @approaching_fleets = Array.new
+    planets = current_user.planets
+    planets.each do |planet|
+      Fleet.where(target_planet: planet).each do |fleet|
+        if fleet.mission.id == 5 || fleet.mission.id == 1 || fleet.mission.id == 2
+          
+        else
+          @approaching_fleets.push(fleet)
+        end
+      end
+    end
   end
 
   # GET /fleets/1
   # GET /fleets/1.json
   def show
-    @shiptypes=Ship.all
+    puts @fleet.id
+    @ship_hash = @fleet.get_ships
   end
 
   # GET /fleets/new
   def new
-    @fleet = Fleet.new
+    #@fleet = Fleet.new
   end
 
   # GET /fleets/1/edit
@@ -61,6 +73,18 @@ class FleetsController < ApplicationController
       format.html { redirect_to fleets_url }
       format.json { head :no_content }
     end
+  end
+
+  # GET /fleets/mission
+  # GET /fleets/mission.json ????????????? 
+  def show_mission
+
+  end
+
+  # POST /fleets/mission
+  # POST /fleets/mission.json ????????????? 
+  def confirm_mission
+    
   end
 
   private

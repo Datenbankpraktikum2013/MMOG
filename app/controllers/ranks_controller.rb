@@ -3,9 +3,9 @@ class RanksController < ApplicationController
   before_filter :authenticate_user!
   # GET /ranks/new
   def new
-    if current_user.alliance==nil and current_user.alliance_permission?(current_user,"edit_ranks")==false
+    if current_user.alliance==nil or current_user.alliance.permission?(current_user,"edit_ranks")==false
       respond_to do |format|
-        format.html { redirect_to edit_alliance_url(@rank.alliance), notice: GameSettings.get("ERRMSG_RANK_NEW")}
+        format.html { redirect_to current_user.alliance, notice: GameSettings.get("ERRMSG_RANK_NEW")}
       end
     else
       @rank = Rank.new
@@ -46,9 +46,9 @@ class RanksController < ApplicationController
   def update
     respond_to do |format|
       p=rank_params
-      p=params['name'] if @rank.is_founder
+      p={ :name => params['rank']['name']} if @rank.is_founder
       if current_user.alliance==@rank.alliance and current_user.alliance.permission?(current_user,"edit_ranks") and @rank.update(p)
-        format.html { redirect_to @rank, notice: GameSettings.get("SUCCESSMSG_RANK_UPDATE") }
+        format.html { redirect_to alliances_path, notice: GameSettings.get("SUCCESSMSG_RANK_UPDATE") }
       else
         format.html { redirect_to alliances_path, notice: GameSettings.get("ERRMSG_RANK_UPDATE") }
       end

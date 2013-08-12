@@ -5,7 +5,13 @@
 </p>	
 <p>
   <strong>Nachricht:</strong>
-  <%= text_area_tag 'body', @message.body, class: 'readmsgarea', disabled: true %>
+    <div class='well'>
+      <% if @message.sender==nil %>
+        <%=@message.body.html_safe%>
+      <% else %>
+        <%=@message.body%>
+      <% end %>
+    </div>
 </p>
 
 <p>

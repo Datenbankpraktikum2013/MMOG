@@ -1,11 +1,15 @@
 // Place all the styles related to the Reports controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-.read > td {
+.center > td, .center > th {
 	text-align: center;
+	vertical-align: middle;
 }
 
 .unread > td {
-	text-align: center;
 	font-weight: bold;
 }
+
+//#show_report {
+//	display: none;
+//}

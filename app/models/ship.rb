@@ -18,4 +18,13 @@ class Ship < ActiveRecord::Base
 		building_hash
 	end
 
+	def self.get_property_hash
+		hash = Hash.new
+		ships = Ship.all
+		ships.each do |ship|
+			hash[ship.id] = ship
+		end
+		hash
+	end
+
 end

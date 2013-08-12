@@ -627,4 +627,13 @@ class Planet < ActiveRecord::Base
     return user.visible_planets.include?(self)
   end
 
+  def is_home_planet?
+    return false if self.user.nil?
+    return self.user.home_planet == self
+  end
+
+  def set_home_planet
+    user.home_planet = self if !self.user.nil?
+  end
+
 end

@@ -1,27 +1,530 @@
-<h1>Listing missions</h1>
+<style type="text/css">
+      .jumbotron { 
+        text-align: center;
+      }
+      .jumbotron h1 {
+        font-size: 72px;
+        line-height: 1;
+      }
+      .part{
+        padding: 20px;
+      }
+</style>
 
-<table>
-  <thead>
-    <tr>
-      <th>Info text</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
 
-  <tbody>
-    <% @missions.each do |mission| %>
-      <tr>
-        <td><%= mission.info_text %></td>
-        <td><%= link_to 'Show', mission %></td>
-        <td><%= link_to 'Edit', edit_mission_path(mission) %></td>
-        <td><%= link_to 'Destroy', mission, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="jumbotron">
+  <h1>Missions</h1>
+  
+  <div class="alert alert-error" id="error" style="display:none">
+    <h4>Fehler:</h4>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <ol>
 
-<br>
+    </ol>
+  </div>
 
-<%= link_to 'New Mission', new_mission_path %>
+  <div class="part">
+    <button id="travel" type="button" class="btn btn-default">Travel</button>
+    <button id="colonization" type="button" class="btn btn-primary">Colonization</button>
+    <button id="transport" type="button" class="btn btn-success">Transport</button>
+    <button id="spy" type="button" class="btn btn-warning">Spy</button>
+    <button id="attack" type="button" class="btn btn-danger">Attack</button>
+  </div>
+
+  <div id="own-ships" style="display:none">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Stationiert</th>
+          <th>Schiffe</th>
+          <th>Auswahl</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @fleets.each do |fleet| %>
+          <tr>
+            <br>
+            <td><%= fleet.start_planet.name %></td>
+            <td class="ship-info" fleet="<%=fleet.id%>">
+            <div>
+              <button type="button" class="btn btn-link">Schiffe</button>
+            </div>
+            <div class="info-<%= fleet.id %>" style="display:none">
+              <table class"table">
+                <thead>
+                  <tr>
+                    <th>Schiffsname</th>
+                    <th>Angriff</th>
+                    <th>Verteidigung</th>
+                    <th>Geschwindigkeit</th>
+                    <th>Anzahl</th>
+                  </tr>
+                </thead>
+              <% fleet.get_ships.each do |ship, amount| %>
+                <tr>
+                  <td><%= ship.name %></td>
+                  <td><%= ship.offense %></td>
+                  <td><%= ship.defense %></td>
+                  <td><%= ship.velocity %></td>
+                  <td><%= amount %></td>
+                </tr>
+                <% end%>
+              </table>
+            </div>
+            </td>
+            <td><button planet="<%=fleet.start_planet.id%>" class="fleet-choice" fleet="<%=fleet.id%>" type="button" class="btn btn-default">OK</button></td>
+          </tr>
+          <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="destination" class="row-fluid" style="display:none">
+    <div id="galaxy" class="span4">
+      <select id="g-select" name="galaxy-select" class="span8">
+        <option selected="selected" value="">---</option>
+        <% @galaxies.each do |galaxy| %>
+          <option value="<%= galaxy.id %>"><%= galaxy.name %></option>
+        <% end %>
+      </select>
+    </div>
+    <div id="sunsystem" class="span4">
+      <select id="s-select" name="sunsystem-select" class="span8">
+        <option selected="selected" value="">---</option>
+      </select>
+    </div>
+    
+    <div id="planet" class="span4">
+      <select id="p-select" name="planet-select" class="span8">
+        <option selected="selected" value="">---</option>
+      </select>
+    </div>
+  </div>
+
+  <div id="choice" style="display:none">
+    <div id="ship-choice">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Anzahl</th>
+            <th>Auswahl</th>
+            <th>Angriff</th>
+            <th>Verteidigung</th>
+          </tr>
+        </thead>
+        <tbody id="ship-choice-table">
+        </tbody>  
+      </table>
+    </div>
+
+    <div id="ress-choice" style="display:none">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Auswahl</th>
+          </tr>
+        </thead>
+        <tbody id="ress-choice-table">
+          <tr>
+            <td>Erz</td>
+            <td>
+              <input class="span1 ress-amount" ress="ore" type="number" name="amount-ore" placeholder="0">
+            </td>
+          </tr>
+          <tr>
+            <td>Kristall</td>
+            <td>
+              <input class="span1 ress-amount" ress="crystal" type="number" name="amount-crystal" placeholder="0">
+            </td>
+          </tr>
+          <tr>
+            <td>Space-Cash</td>
+            <td>
+              <input class="span1 ress-amount" ress="credit" type="number" name="amount-credit" placeholder="0">
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Gesamt</strong></td>
+            <td id="sum-ress">0</td>
+          </tr>
+          
+        </tbody>  
+      </table>
+    </div>
+    <button id="check" type="button" class="btn btn-danger">Prüfen</button>
+  </div>
+  
+  
+  
+  <form id="send" method="get" action="/confirm/send">
+    <!-- // hier werden mithilfe vom dom die einzelnen inputs eingehängt, bzw ausgehängt um am ende abgeschickt zu werden -->
+    <div id="send-button" style="display:none">
+      <button id="doit" type="submit" class="btn btn-info">Abschicken</button>
+    </div>
+  </form>
+
+  <script type="text/javascript">
+
+    $(document).ready(function() {
+      
+      var travel_clicked = true;
+      var colo_clicked = true;
+      var transport_clicked = true;
+      var spy_clicked = true;
+      var attack_clicked = true;
+      //ALS AJAX AUSLAGERN!!!!!!!!!!!!!
+      var susy = $.parseJSON('<%=raw @susy_hash.to_json %>');
+      var gala = $.parseJSON('<%=raw @gala_hash.to_json %>');
+      var susy_names = $.parseJSON('<%=raw @susy_names_hash.to_json %>');
+      var planets_names = $.parseJSON('<%=raw @planets_names_hash.to_json %>');
+      var ships = $.parseJSON('<%=raw @ships.to_json %>');
+      //ALS AJAX AUSLAGERN!!!!!!!!!!!!!
+      var distance = 0;
+      var planet1 = 0;
+      var planet2 = 0
+
+      function displayOwnFleets(){
+        $("#own-ships").slideToggle("slow")
+      }
+
+      // delegated event
+      $(document).on("focusout", ".ship-amount", function(){
+        $("#send-button").slideUp("fast");
+        ship_id = $(this).attr("ship");
+        amount = parseInt($(this).val());
+        amount_input = parseInt($(this).parent().prev().html());
+        if (amount < amount_input && amount > 0){
+          $("#offense-"+ship_id).html(ships[ship_id]["offense"] * amount);
+          $("#defense-"+ship_id).html(ships[ship_id]["defense"] * amount);
+          
+          sum = 0;
+          //WARUM GEHT DAS NICHT???????????????
+          $(".ship-amount").each(function(){
+            if (parseInt($(this).val())){
+              sum += parseInt($(this).val());
+            }
+          });
+          $("#sum-amount").html(sum);
+
+          sum = 0;
+          $("td[id^='offense']").each(function(){
+            sum += parseInt($(this).html());
+          });
+          $("#sum-offense").html(sum);
+          
+          sum = 0;
+          $("td[id^='defense']").each(function(){
+            sum += parseInt($(this).html());
+          });
+          $("#sum-defense").html(sum);
+        }
+        else{
+          $(this).val(0);
+        };
+      });
+
+      $(".ress-amount").on("focusout", function(){
+        amount = parseInt($(this).val());
+        if (!(amount >= 0)){
+          $(this).val(0);
+        }
+        else{
+          sum = 0;
+          $(".ress-amount").each(function(){
+            if (parseInt($(this).val())){
+              sum += parseInt($(this).val());
+            }
+          })
+          $("#sum-ress").html(sum);
+        };
+      });
+
+      $("#travel").on("click",function () {
+        $("#send").append('<input type="hidden" name="mission" value="4">');
+        $("#ress-choice").slideUp("fast");
+        if (travel_clicked){
+          $("#colonization").fadeTo("fast", 0.1);
+          $("#colonization").attr("disabled", "disabled");
+          $("#transport").fadeTo("fast", 0.1);
+          $("#transport").attr("disabled", "disabled");
+          $("#spy").fadeTo("fast", 0.1);
+          $("#spy").attr("disabled", "disabled");
+          $("#attack").fadeTo("fast", 0.1);
+          $("#attack").attr("disabled", "disabled");
+        }
+        else {
+          $("#send").find('input[name="mission"]').remove();
+          $("#colonization").fadeTo("fast", 1);
+          $("#colonization").removeAttr("disabled");
+          $("#transport").fadeTo("fast", 1);
+          $("#transport").removeAttr("disabled");
+          $("#spy").fadeTo("fast", 1);
+          $("#spy").removeAttr("disabled");
+          $("#attack").fadeTo("fast", 1);
+          $("#attack").removeAttr("disabled");
+          $("#destination").slideUp("fast");
+          $("#choice").slideUp("fast");
+          $("#send-button").slideUp("fast");
+        }
+        travel_clicked = !travel_clicked;
+        displayOwnFleets();
+      });
+
+      $("#colonization").on("click", function(){
+        $("#send").append('<input type="hidden" name="mission" value="2">');
+        $("#ress-choice").slideDown("fast");
+          
+        if (colo_clicked){
+          $("#travel").fadeTo("fast", 0.1);
+          $("#travel").attr("disabled", "disabled");
+          $("#transport").fadeTo("fast", 0.1);
+          $("#transport").attr("disabled", "disabled");
+          $("#spy").fadeTo("fast", 0.1);
+          $("#spy").attr("disabled", "disabled");
+          $("#attack").fadeTo("fast", 0.1);
+          $("#attack").attr("disabled", "disabled");
+        }
+        else{
+          $("#send").find('input[name="mission"]').remove();
+          $("#travel").fadeTo("fast", 1);
+          $("#travel").removeAttr("disabled", "disabled");
+          $("#transport").fadeTo("fast", 1);
+          $("#transport").removeAttr("disabled", "disabled");
+          $("#spy").fadeTo("fast", 1);
+          $("#spy").removeAttr("disabled", "disabled");
+          $("#attack").fadeTo("fast", 1);
+          $("#attack").removeAttr("disabled", "disabled");
+          $("#destination").slideUp("fast");
+          $("#choice").slideUp("fast");
+          $("#send-button").slideUp("fast");
+        }
+        colo_clicked = !colo_clicked;
+        displayOwnFleets();
+      });
+      
+
+      $("#transport").on("click", function(){
+        $("#send").append('<input type="hidden" name="mission" value="6">');
+        $("#ress-choice").slideDown("fast");
+        if (transport_clicked){
+          $("#travel").fadeTo("fast", 0.1);
+          $("#travel").attr("disabled", "disabled");
+          $("#colonization").fadeTo("fast", 0.1);
+          $("#colonization").attr("disabled", "disabled");
+          $("#spy").fadeTo("fast", 0.1);
+          $("#spy").attr("disabled", "disabled");
+          $("#attack").fadeTo("fast", 0.1);
+          $("#attack").attr("disabled", "disabled");
+        }
+        else{
+          $("#send").find('input[name="mission"]').remove();
+          $("#travel").fadeTo("fast", 1);
+          $("#travel").removeAttr("disabled", "disabled");
+          $("#colonization").fadeTo("fast", 1);
+          $("#colonization").removeAttr("disabled", "disabled");
+          $("#spy").fadeTo("fast", 1);
+          $("#spy").removeAttr("disabled", "disabled");
+          $("#attack").fadeTo("fast", 1);
+          $("#attack").removeAttr("disabled", "disabled");
+          $("#destination").slideUp("fast");
+          $("#choice").slideUp("fast");
+          $("#send-button").slideUp("fast");
+        }
+        transport_clicked = !transport_clicked;
+        displayOwnFleets();
+      });
+      
+
+      $("#spy").on("click", function(){
+        $("#send").append('<input type="hidden" name="mission" value="5">');
+        $("#ress-choice").slideUp("fast");
+        if (spy_clicked){
+          $("#travel").fadeTo("fast", 0.1);
+          $("#travel").attr("disabled", "disabled");
+          $("#transport").fadeTo("fast", 0.1);
+          $("#transport").attr("disabled", "disabled");
+          $("#colonization").fadeTo("fast", 0.1);
+          $("#colonization").attr("disabled", "disabled");
+          $("#attack").fadeTo("fast", 0.1);
+          $("#attack").attr("disabled", "disabled");
+        }
+        else{
+          $("#send").find('input[name="mission"]').remove();
+          $("#travel").fadeTo("fast", 1);
+          $("#travel").removeAttr("disabled", "disabled");
+          $("#transport").fadeTo("fast", 1);
+          $("#transport").removeAttr("disabled", "disabled");
+          $("#colonization").fadeTo("fast", 1);
+          $("#colonization").removeAttr("disabled", "disabled");
+          $("#attack").fadeTo("fast", 1);
+          $("#attack").removeAttr("disabled", "disabled");
+          $("#destination").slideUp("fast");
+          $("#choice").slideUp("fast");
+          $("#send-button").slideUp("fast");
+        }
+        spy_clicked = !spy_clicked;
+        displayOwnFleets();
+      });
+
+      
+      $("#attack").on("click", function(){
+        $("#send").append('<input type="hidden" name="mission" value="3">');
+        $("#ress-choice").slideUp("fast");
+        if (attack_clicked){
+          $("#travel").fadeTo("fast", 0.1);
+          $("#travel").attr("disabled", "disabled");
+          $("#transport").fadeTo("fast", 0.1);
+          $("#transport").attr("disabled", "disabled");
+          $("#spy").fadeTo("fast", 0.1);
+          $("#spy").attr("disabled", "disabled");
+          $("#colonization").fadeTo("fast", 0.1);
+          $("#colonization").attr("disabled", "disabled");
+        }
+        else{
+          $("#send").find('input[name="mission"]').remove();
+          $("#travel").fadeTo("fast", 1);
+          $("#travel").removeAttr("disabled", "disabled");
+          $("#transport").fadeTo("fast", 1);
+          $("#transport").removeAttr("disabled", "disabled");
+          $("#spy").fadeTo("fast", 1);
+          $("#spy").removeAttr("disabled", "disabled");
+          $("#colonization").fadeTo("fast", 1);
+          $("#colonization").removeAttr("disabled", "disabled");
+          $("#destination").slideUp("fast");
+          $("#choice").slideUp("fast");
+          $("#send-button").slideUp("fast");
+        }
+        attack_clicked = !attack_clicked;
+        displayOwnFleets();
+      });
+
+      $("#g-select").change(function(){
+        $("#s-select > option, #p-select > option").remove();
+        $("#s-select").append('<option value="">---</option>');
+        $("#p-select").append('<option value="">---</option>');
+        gala_id = $("#g-select option:selected").attr("value");
+        sunsystems = gala[gala_id];
+        for (i in sunsystems){
+          $("#s-select").append('<option value="'+sunsystems[i]+'">'+susy_names[sunsystems[i]]+'</option>');
+        }
+
+        if (gala_id == ""){
+          $("#choice").slideUp("slow");
+          $("#send-button").slideUp("fast");
+        }
+      });
+
+
+      $("#s-select").change(function(){
+        $("#p-select > option").remove();
+        $("#p-select").append('<option value="">---</option>');
+        susy_id = $("#s-select option:selected").attr("value");
+        planets = susy[susy_id];
+        for (i in planets){
+          $("#p-select").append('<option value="'+planets[i]+'">'+planets_names[planets[i]]+'</option>');
+        }
+
+        if (susy_id == ""){
+          $("#choice").slideUp("slow");
+          $("#send-button").slideUp("fast");
+        }
+      });
+
+      $("#p-select").change(function(){
+        planet_id = $("#p-select option:selected").attr("value");
+        $.getJSON("/json/distance?planet1="+planet1+"&planet2="+planet_id, function(data){
+          distance = data["distance"];
+        });
+
+        if (planet_id != ""){
+          $("#choice").slideDown("fast");
+        }
+        else{
+          $("#choice").slideUp("fast");
+          $("#send-button").slideUp("fast");
+        }
+        $("#send").find('input[name="planet"]').remove();
+        $("#send").append('<input type="hidden" name="planet" value="'+planet_id+'">');
+      });
+
+      $(".ship-info").on("click", function(){
+        id = $(this).attr("fleet");
+        $(".info-"+id).animate({ height: 'toggle', opacity: 'toggle' }, 'slow');
+      });
+
+      $(".fleet-choice").on("click", function(){
+        planet1 = $(this).attr("planet");
+        fleet_id = $(this).attr("fleet");
+        $("#destination").slideDown("slow");
+        $("#ship-choice-table").children().remove();
+
+        $.getJSON("/json/fleetships?fleet_id="+fleet_id, function(data){
+          
+          for (key in data){
+            $("#ship-choice-table").append(
+               '<tr> \n <td>'+ships[key]["name"]+'</td>\n<td>'+data[key]+'</td>\n <td><input class="span1 ship-amount" ship='+key+' type="number" name="quantity-'+key+'" min="0" max="'+data[key]+'" placeholder="0"></td> \n <td id="offense-'+key+'">0</td> \n <td id="defense-'+key+'">0</td> \n </tr>'
+            );
+          }
+
+          $("#ship-choice-table").append(
+            '<tr>\n<td></td>\n<td><strong>Gesamt</strong></td>\n<td id="sum-amount">0</td>\n<td id="sum-offense">0</td>\n<td id="sum-defense">0</td>\n</tr>'
+          );
+        });
+        $("#send").find('input[name="fleet"]').remove();
+        $("#send").append('<input type="hidden" name="fleet" value="'+fleet_id+'">');
+        
+      });
+
+      $("#check").on("click", function(){
+        //hier muessen die ships ausgelesen werden und gespeicherrt also:
+        $("#send").find('input[name^="ship-"]').remove();
+        $(".ship-amount").each(function(){
+          if (parseInt($(this).val())){
+            amount = $(this).val();
+            ship_id = $(this).attr("ship");
+            $("#send").append('<input type="hidden" name="ship-'+ship_id+'" value="'+amount+'">');
+          }
+        });
+        $("#send").find('input[name^="ress-"]').remove();
+        $(".ress-amount").each(function(){
+          if (parseInt($(this).val())){
+            amount = $(this).val();
+            ress = $(this).attr("ress");
+            $("#send").append('<input type="hidden" name="ress-'+ress+'" value="'+amount+'">');
+          }
+        });
+        
+        //bauen der URL
+        url = "/json/check?";
+        $("#send").children().each(function(){
+          url += $(this).attr("name") + "=" + $(this).attr("value") + "&";
+        });
+
+        //hier wird ein prüf json angefordert:
+        $.getJSON(url, function(data){
+          if (data.ok == 1){
+            $("#error").slideUp("fast");
+            //dieser button muss überall weggemacht werden !!!!!!!!!!
+            $("#send-button").slideDown("slow");
+          }
+          else {
+            $("#error li").remove();
+            for (error in data["error"]){
+              $("#error ol").append("<li>"+data["error"][error]+"</li>")
+            }
+            $("#error").slideDown("fast");
+            $("#send-button").slideUp("fast");
+          }
+
+
+        });
+
+      });
+
+      
+    });
+  </script>
+
+</div>

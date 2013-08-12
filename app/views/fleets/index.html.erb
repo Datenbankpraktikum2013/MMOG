@@ -1,63 +1,64 @@
-<h1>Listing fleets</h1>
-
-<table>
+<h1>Your Fleets</h1>
+<table class="table table-striped">
   <thead>
     <tr>
-      <th>Credit</th>
-      <th>Ressource capacity</th>
-      <th>Ore</th>
-      <th>Crystal</th>
-      <th>Storage factor</th>
-      <th>Velocity factor</th>
-      <th>Offense</th>
-      <th>Defense</th>
-      <th>User</th>
+      <th>Fleet ID</th>
       <th>Mission</th>
-      <th>Departure time</th>
-      <th>Arrival time</th>
-      <th>Start planet</th>
-      <th>Target planet</th>
-      <% @shiptypes.each do |shiptype| %>
-      <th><%= shiptype.name %></td>
-      <% end %>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th>Current Location</th>
+      <th>Current Target</th>
     </tr>
   </thead>
 
   <tbody>
     <% @fleets.each do |fleet| %>
       <tr>
-        <td><%= fleet.credit %></td>
-        <td><%= fleet.ressource_capacity %></td>
-        <td><%= fleet.ore %></td>
-        <td><%= fleet.crystal %></td>
-        <td><%= fleet.storage_factor %></td>
-        <td><%= fleet.velocity_factor %></td>
-        <td><%= fleet.offense %></td>
-        <td><%= fleet.defense %></td>
-        <td><%= fleet.user.username %></td>
-        <td><%= fleet.mission.info_text %></td>
-        <td><%= fleet.departure_time %></td>
-        <td><%= fleet.arrival_time %></td>
-        <td><%= fleet.start_planet.name %></td>
-        <% if fleet.target_planet.name == fleet.start_planet.name %>
-        <td></td>
+        <td><%= fleet.id %></td>
+        <td><%= fleet.mission.id %></td>
+        <% if fleet.mission.id == 1 %>
+          <td><%= fleet.origin_planet.id %></td>
+          <td> -based- </td>
         <% else %>
-        <td><%= fleet.target_planet.name %></td>
+          <td> -on a flight- </td>
+          <td><% fleet.target_planet.id %></td>
         <% end %>
-        <% @shiptypes.each do |shiptype| %>
-          <th><%= fleet.get_amount_of_ship( shiptype.id ) %></td>
-        <% end %>
-        <td><%= link_to 'Show', fleet %></td>
-        <td><%= link_to 'Edit', edit_fleet_path(fleet) %></td>
-        <td><%= link_to 'Destroy', fleet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
+<% unless @approaching_fleets.empty? %>
 
-<%= link_to 'New Fleet', new_fleet_path %>
+<h1>Approaching Fleets</h1>
+<table class="table">
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Mission</th>
+      <th>Target</th>
+      <th>approaches in</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @approaching_fleets.each do |fleet| %>
+      <% if fleet.mission.id == 3 %>
+        <% mission = "Attack" %>
+        <tr class="error">
+      <% elsif fleet.mission.id == 6 %>
+        <% mission = "Transport" %>
+        <tr class="warning">
+      <% elsif fleet.mission.id == 4 %>
+        <% mission = "Travel" %>
+        <tr class="success">
+      <% end %>
+        <td><%= fleet.user.username %></td>
+        <td><%= mission %></td>
+        <td><%= fleet.target_planet.name %> (<%= fleet.target_planet.id %>)</td>
+        <td><%= Time.at fleet.arrival_time %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% else %>
+  <h1>No approaching fleets</h1>
+<% end %>

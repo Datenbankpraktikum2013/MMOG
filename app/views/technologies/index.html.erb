@@ -1,5 +1,4 @@
 <br><h1 align="middle">Update Technologies</h1><br><br><br>
-
 <table border="1" align="center" valign="middle">
   <tbody>
   <% array = current_user.get_researching_tech %>
@@ -56,21 +55,51 @@
   </tbody>
 </table>
 
-<script>
+<script type='text/javascript'>
+    researching = <%= research_id %>;
 
-    gone = <%=Time.now.to_i - array[2].to_i %>;
-    end  = <%=(array[3].to_i) +2 %>;
-    function update_progressbar(){
-        if (gone == end) {
-            location.reload();
-        }
-        gone += 0.25;
-        p = (gone/end)*100;
-        d = document.getElementById('auto-updating-progressbar');
-        d.style.width = (p+"%");
+    var aktiv_bar;
+    var aktiv_reload;
+
+    function fetch_finished(){
+        $.getJSON('/json/page_refresh.json', function(data) {
+            var items = [];
+            $.each(data, function(key, val) {
+                items.push(val);
+            });
+            if (items[0] == 0){
+                //window.clearInterval(aktiv_reload);
+                location.reload();
+            }
+        });
     };
-    if(end != 2) {
-        setInterval(update_progressbar, 250);
-    };
+
+    if(researching != 0){
+        var gone = <%=Time.now.to_i - array[2].to_i %>;
+        var end  = <%=(array[3].to_i) %>;
+
+        function update_progressbar(){
+            if (gone >= end) {
+                window.clearInterval(aktiv_bar);
+                aktiv_reload = setInterval(fetch_finished,1000);
+            };
+
+            gone += 0.25;
+            var p = (gone/end)*100;
+            var d = document.getElementById('auto-updating-progressbar');
+            d.style.width = (p+"%");
+
+            if (gone <= end) {
+              window.clearInterval(update_progressbar);
+            };
+        };
+
+        aktiv_bar = window.setInterval(update_progressbar, 250);
+        
+
+
+
+  };
+
 
 </script>

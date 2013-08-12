@@ -37,6 +37,8 @@
 						<% else %>
 							<div class="label label-info">Nicht möglich</div>
 						<% end %>
+				<% else %>
+					<div class="label label-info">Nicht möglich</div>
 				<% end %>
 				</td>
 				<% if @alliance.permission?(current_user,"kick") and current_user != user and user.rank.is_founder == false %>
@@ -52,12 +54,13 @@
 		<% end %>
 	</table>
 	<% if @alliance.permission?(current_user,"invite") %>
-		<%= form_tag(edit_alliance_path+'/user_add_action')%>
+		<%= form_tag(requests_path)%>
 		<p><strong><%= label_tag ('Mitglied hinzufügen') %></strong>
-			<%= text_field_tag('username') %>
+			<%= text_field_tag('recipient') %>
+			<%= hidden_field_tag('useraction','alliance_invite') %>
 		</p>
 		<p>
-			<%= submit_tag 'Hinzufügen', class: 'btn' %>
+			<%= submit_tag 'Einladen', class: 'btn' %>
 		</p>
 		</form>
 	<% end %>

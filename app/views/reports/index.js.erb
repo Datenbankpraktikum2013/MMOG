@@ -1,0 +1,4 @@
+$('#show_report').slideUp("slow", function() {
+	$('#reports').html("<%= j render(file: "reports/index.html.erb") %>").slideDown("slow");
+});
+$('#unreadreports').text('<%= Report.unread_reports(current_user.id) %>');
