@@ -7,7 +7,10 @@ class ApplicationController < ActionController::Base
 
   private
   def user_activity
-  	current_user.try :touch
+    if current_user!=nil
+    	current_user.last_activity=Time.now
+      current_user.save
+    end
   end
 
   protected
