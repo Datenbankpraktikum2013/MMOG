@@ -9,7 +9,6 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= require dataTables/jquery.dataTables
  *= require_tree .
  */
 
@@ -53,3 +52,8 @@ ul.nav-highlight li:hover a {
   
  table.table thead .sorting_asc_disabled { background: url('/assets/sort_asc_disabled.png') no-repeat center right; } 
  table.table thead .sorting_desc_disabled { background: url('/assets/sort_desc_disabled.png') no-repeat center right; } 
+
+
+.inline, .inline div{
+    display: inline;
+}
