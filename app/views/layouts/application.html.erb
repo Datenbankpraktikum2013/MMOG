@@ -12,7 +12,7 @@
 		</style>
 	</head>
 	<body>
-    <br>
+
     <div class="container">
       <div class="row">
         <div class="span12" align="center">
@@ -23,7 +23,7 @@
 	<div class="container">
 		<div class="row">
 		 	<div class="span2">
-              <ul class="nav nav-pills nav-stacked">
+		 		<ul class="nav nav-pills nav-stacked nav-highlight">
 		 			<li class="active">
 		 				<a href="#">
 			 				<% if controller_name == 'welcome'%>
@@ -41,10 +41,8 @@
                             <% elsif controller_name == 'technologies' %>
                                 Technlogien
                     	    <% elsif controller_name == 'reports' %>
-                                Berichte
-                          <% elsif controller_name == 'impressum' %>
-                              Berichte
-                        <%end %>
+                                Berichte	
+                            <%end %>
 		 				</a>
 		 			</li>
 		  			<li><a href="/">Start</a></li>
@@ -61,13 +59,7 @@
 		  			<% end %>
 				</ul>
 		  	</div>
-
-          <div class="span8">
-            <% if user_signed_in? %>
-                <div class="well">
-                  Hier soll noch eine Übersicht über allgemeine Spielerressourcen hin.
-                </div>
-            <%end%>
+		  	<div class="span8">
 		  		<div class="well">
 		  			<p id="notice"><%= notice %></p>
 		  			<%= yield() %>
@@ -89,22 +81,25 @@
 					<% end %>
 				</div>
 				<div class="well">					
-					<% if user_signed_in? %>
-						<a href="<%= relationships_path %>">Kontakte</a><br>
-						<% @friends=current_user.friends %>						
-							<% unless @friends==nil %>
-							<% @friends.each do |friend| %>
-								<%= friend.username %>
-								<% if friend.online? %>
-									(<font color="green">online</font>)
-								<% else %>
-									(<font color="red">offline</font>)
-								<% end %>
-								<%= link_to 'MSG', new_message_path+'/?recipient='+friend.username , class: 'label label-info', :style=>'color:#FFFFFF;'%>
-								<br>
-							<% end %>
-						<% end %>				
-					<% end %>
+					<table class="table table-condensed">
+						<% if user_signed_in? %>
+							<a href="<%= relationships_path %>"><font color ="blue">Kontakte</font></a><br>
+							<% @friends=current_user.friends %>						
+								<% unless @friends==nil %>								
+								<% @friends.each do |friend| %>
+								<tr>
+									<td><%= friend.username %><br></td>
+									<% if friend.online? %>
+										<td><font color="green">online</font></td>
+									<% else %>
+										<td><font color="red">offline</font></td>
+									<% end %>
+									<td><%= link_to 'MSG', new_message_path+'/?recipient='+friend.username , class: 'label label-info', :style=>'color:#FFFFFF;'%></td>
+									</tr>
+								<% end %>								
+							<% end %>											
+						<% end %>
+					</table>
 				</div>	
 			</div>		
 		</div>			
@@ -113,7 +108,7 @@
           <ul>
             <li>Bug melden</li>
             <li>FAQ</li>
-            <li>Imperssum</li>
+            <li>Impressum</li>
           </ul>
         </div>
 	</div>
