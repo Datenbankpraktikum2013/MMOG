@@ -522,6 +522,7 @@ class Planet < ActiveRecord::Base
         back = old
       else
         self.ore = old - number
+        back = number
       end
 
     elsif type == :Crystal then
@@ -531,6 +532,7 @@ class Planet < ActiveRecord::Base
         back = old
       else
         self.crystal = old - number
+        back = number
       end
 
     elsif type == :Population then
@@ -540,6 +542,7 @@ class Planet < ActiveRecord::Base
         back = old
       else
         self.population = old - number
+        back = number
       end
 
     elsif type == :Energy then
@@ -549,16 +552,18 @@ class Planet < ActiveRecord::Base
         back = old
       else
         self.energy = old - number
+        back = number
       end
 
     elsif type == :Money then
       u = self.user
       if u.nil? then
-        back = number
+        back = 0
       else
         old = u.money
         if u.money >= number then
           u.money = old - number
+          back = number
         else
           u.money = 0
           back = old
@@ -567,7 +572,7 @@ class Planet < ActiveRecord::Base
       end
 
     else
-      back = number
+      back = 0
     end
     self.save
     return back

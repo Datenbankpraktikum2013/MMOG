@@ -1,0 +1,5 @@
+$('#report_<%= @report.id %>').removeClass('unread');
+$('#reports').slideUp("slow", function() {
+	$('#show_report').html('<%= j render(file: "reports/show_#{@report.reportable_type}.html.erb") %>').slideDown("slow");
+});
+$('#unreadreports').text('<%= Report.unread_reports(current_user.id) %>');

@@ -384,7 +384,6 @@ class Fleet < ActiveRecord::Base
         allships[f].shuffle!
       end
 
-      
 
 
       tmp_defense=defender_defense
@@ -397,7 +396,7 @@ class Fleet < ActiveRecord::Base
         #puts "shiptyp anzahl: #{tmp_ship_index}"
         del_ship_index=rand(0 .. (allships[defender_fleets[tmp_random_fleet]].size) -1 )
         #puts "shiptyp del: #{del_ship_index}"
-        puts "xxx: #{shipamount[allships[defender_fleets[tmp_random_fleet]][del_ship_index]]} - #{delf[defender_fleets[tmp_random_fleet]][allships[defender_fleets[tmp_random_fleet]][del_ship_index]] }"
+        #puts "xxx: #{shipamount[allships[defender_fleets[tmp_random_fleet]][del_ship_index]]} - #{delf[defender_fleets[tmp_random_fleet]][allships[defender_fleets[tmp_random_fleet]][del_ship_index]] }"
         unless shipamount[allships[defender_fleets[tmp_random_fleet]][del_ship_index]] - delf[defender_fleets[tmp_random_fleet]][allships[defender_fleets[tmp_random_fleet]][del_ship_index]] <=0
           delf[defender_fleets[tmp_random_fleet]][allships[defender_fleets[tmp_random_fleet]][del_ship_index]]+=1
           #defender_fleets[tmp_random_fleet].destroy_ship(defender_fleets[tmp_random_fleet].ships[del_ship_index])
@@ -456,6 +455,77 @@ class Fleet < ActiveRecord::Base
         f.destroy
       end
       self.save
+
+      #!!!!!!!!!!!!!!! Planet.take() not working
+
+      puts "Steeling ressources..."
+      if ((self.offense/2)>=fight_factor )
+        steelrate=rand(0.7 .. 1)
+      else 
+        steelrate=rand (0..1)
+      end
+
+      o=planet.ore
+      c=planet.crystal
+      m=User.find(planet.user_id).money
+
+      wanted_crystal=((ressource_capacity/3)*rand(0.8 .. 2)).round
+      wanted_ore=(ressource_capacity - wanted_crystal)*rand(0.8 .. 1.2).round
+      wanted_money=ressource_capacity-(wanted_crystal+wanted_ore).round
+
+
+      while ((wanted_crystal + wanted_ore + wanted_money) > ressource_capacity)
+        wanted_money-=3
+        wanted_crystal-=1
+        wanted_money-=3
+      end
+      puts "trying to get: crystal: #{wanted_crystal}, ore: #{wanted_ore}, money: #{wanted_money}"
+
+      got_crystal=planet.take(:Crystal, wanted_crystal)
+      if got_crystal==0
+        # got_crystal=0
+        puts "no crystal"
+        wanted_money+=((wanted_crystal - got_crystal )/2).round
+        wanted_ore+=((wanted_crystal - got_crystal )/2).round
+      # elsif (got_crystal==0) 
+      #   got_crystal=wanted_crystal
+      #   puts "got wanted Crystal"
+      else 
+        puts "got crystal #{got_crystal}"
+        wanted_money+=((wanted_crystal - got_crystal )/2).round
+        wanted_ore+=((wanted_crystal - got_crystal )/2).round
+      end
+
+      got_ore=planet.take(:Ore, wanted_ore)
+      if got_ore==0
+
+        # got_ore=0
+        wanted_money+=((wanted_ore - got_ore ))
+        puts "no ore (#{planet.ore})"
+      # elsif (got_ore==0) 
+      #   got_ore=wanted_ore
+      #   puts "got wanted ore"
+      else 
+        puts "got ore #{got_ore}"
+        wanted_money+=((wanted_ore - got_ore ))
+        
+      end
+
+      got_money=planet.take(:Money, wanted_money)
+      # if wanted_money==0
+      #   got_money=0
+      # elsif (got_money==0) 
+      #   got_money=wanted_money
+       
+      # end
+
+      self.ore=got_ore
+      self.credit=got_money
+      self.crystal=got_crystal
+      puts "Stole: Ore: #{self.ore}, Crystal: #{self.crystal}, Money: #{self.credit}"
+      self.save
+      
+      
       puts "Generating Battlereport..."
       #puts "xxxxxxxxxxxxxxxx #{self.get_amount_of_ship(Ship.find(3))}"
       @battle_report.finish_battlereport({}, self, false)

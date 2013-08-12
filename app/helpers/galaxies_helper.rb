@@ -1,9 +1,5 @@
 module GalaxiesHelper
 
-  SPECIALISATION_COUNT = 5
-  MIN_SIZE = 123456789
-  MAX_SIZE = 987654321
-
   # Generate a full Galaxy at x, y, if not yet existing
   # TODO Ausschreiben der Funktion, so nicht moeglich...
   def self.generateAt(x, y)
