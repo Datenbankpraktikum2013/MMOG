@@ -38,6 +38,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.integer :score,             :default => 0
       t.integer :alliance_id
       t.integer :rank_id
+      t.timestamp :last_activity
 
       t.timestamps
     end

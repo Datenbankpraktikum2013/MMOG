@@ -96,10 +96,12 @@
 							<% @friends.each do |friend| %>
 								<%= friend.username %>
 								<% if friend.online? %>
-									(<font color="green">online</font>)<br>
+									(<font color="green">online</font>)
 								<% else %>
-									(<font color="red">friend.updated_at</font>)<br>
+									(<font color="red">offline</font>)
 								<% end %>
+								<%= link_to 'MSG', new_message_path+'/?recipient='+friend.username , class: 'label label-info', :style=>'color:#FFFFFF;'%>
+								<br>
 							<% end %>
 						<% end %>				
 					<% end %>

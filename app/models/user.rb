@@ -49,7 +49,7 @@ class User < ActiveRecord::Base
   @cache_visible_galaxies
 
   def online?
-    updated_at > 1.minutes.ago
+    last_activity > 5.seconds.ago
   end
 
   #claim startplanet
