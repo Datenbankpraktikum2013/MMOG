@@ -5,3 +5,9 @@
 # setInterval(function() {
 # 	alert("DING DONG");
 # }, 5000);
+
+# setInterval(function() {
+# 	$.get('/reports', function(data) {
+# 		$('#reports').html(data);
+#	});
+# }, 5000);
