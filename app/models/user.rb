@@ -2,9 +2,9 @@ class User < ActiveRecord::Base
   
   #callback on create
   after_create :set_initial_money
+  after_create :set_initial_activity
   after_create :claim_starplanet
-  after_create :init_usersettings
-  before_create :set_last_activity_to_now
+  after_create :init_usersettings  
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
@@ -53,10 +53,11 @@ class User < ActiveRecord::Base
     self.last_activity>5.seconds.ago
   end
   
-  def set_last_activity_to_now
+  def set_initial_activity()
     self.last_activity=Time.now
     self.save
   end
+
   #claim startplanet
   def claim_starplanet
     PlanetsHelper.claim_startplanet_for(self)

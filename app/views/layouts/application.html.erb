@@ -41,7 +41,9 @@
                             <% elsif controller_name == 'technologies' %>
                                 Technlogien
                     	    <% elsif controller_name == 'reports' %>
-                                Berichte	
+                                Berichte
+                            <% elsif controller_name == 'relationships' %>	
+                            	Freundesliste
                             <%end %>
 		 				</a>
 		 			</li>
@@ -55,6 +57,7 @@
                         <li><a href="<%= technologies_path %>">Technologiebaum</a></li>
                         <li><a href="<%= fleets_path %>">Deine Flotten</a></li>
                         <li><a href="<%= missions_path %>">Missionen</a></li>
+                        <li><a href="<%= relationships_path %>">Freundesliste</a></li>
 		  				<li><a href="<%= alliances_path %>"><%= if current_user.alliance.nil? then "Allianz gründen" else ("Allianz `"+ current_user.alliance.name + "`") end %></a></li>
 		  			<% end %>
 				</ul>

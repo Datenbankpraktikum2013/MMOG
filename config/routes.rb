@@ -8,7 +8,7 @@ Mmog::Application.routes.draw do
   
   resources :techstages #kommt spaeter noch raus
 
-  resources :reports
+  resources :reports, only: [:show, :index, :destroy]
 
   resources :shipcounts #kommt spaeter noch raus
 
