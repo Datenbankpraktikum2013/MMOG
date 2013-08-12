@@ -176,6 +176,14 @@
   float: top;
 }
 
+#galaxy_find_one input[type=text] {
+  display: inline;
+  width: 20px;
+}
+
+#galaxy_find_one label {
+  display: inline;
+}
 .pfeil{
   font-size: 20px;
   top: 20px;

@@ -2,30 +2,37 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="86d27e9f-686d-4994-9465-0db65ee885bf" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/layouts/application.html.erb" afterPath="$PROJECT_DIR$/app/views/layouts/application.html.erb" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/controllers/home_planet_controller.rb" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/db/.nfs000000000197d53a00000070" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/db/.nfs000000000197d8d700000068" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/db/.nfs000000000197daa60000007e" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/db/.nfs000000000197dabf00000075" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/stylesheets/galaxies.css.scss" afterPath="$PROJECT_DIR$/app/assets/stylesheets/galaxies.css.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/galaxy.rb" afterPath="$PROJECT_DIR$/app/models/galaxy.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/galaxies/index.html.erb" afterPath="$PROJECT_DIR$/app/views/galaxies/index.html.erb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="MMOG.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1376295909200" ignored="false" />
+    <file path="/Dummy.txt" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1376286635304" ignored="false" />
     <file path="/user_technology.rb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1375427147366" ignored="false" />
     <file path="/technology_require.rb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1375428372874" ignored="false" />
     <file path="/technology.rb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1375428318552" ignored="false" />
     <file path="/20130802073348_add_maxrank_to_technology.rb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1375428923885" ignored="false" />
-    <file path="/planet.rb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1375964292830" ignored="false" />
-    <file path="/sunsystem.rb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1375887247390" ignored="false" />
-    <file path="/galaxy.rb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1375887267779" ignored="false" />
-    <file path="/galaxies_helper.rb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1375870030278" ignored="false" />
-    <file path="/index.html.erb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1375883208248" ignored="false" />
+    <file path="/planet.rb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1376293835393" ignored="false" />
+    <file path="/sunsystem.rb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1375972567939" ignored="false" />
+    <file path="/galaxy.rb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1376313804847" ignored="false" />
+    <file path="/galaxies_helper.rb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1376056755184" ignored="false" />
+    <file path="/index.html.erb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1376312726010" ignored="false" />
     <file path="/building.rb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1375958252909" ignored="false" />
-    <file path="/galaxies.css.scss" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1375770833955" ignored="false" />
-    <file path="/planets_helper.rb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1375781330589" ignored="false" />
+    <file path="/galaxies.css.scss" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1376302219390" ignored="false" />
+    <file path="/planets_helper.rb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1376294080429" ignored="false" />
     <file path="/galaxies.js.coffee" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1375708471206" ignored="false" />
     <file path="/Gemfile" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1375705022735" ignored="false" />
-    <file path="/application.html.erb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1376302874923" ignored="false" />
+    <file path="/application.html.erb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1376288488419" ignored="false" />
     <file path="/buildingtype.rb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1375870130755" ignored="false" />
-    <file path="/seeds.rb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1375964676787" ignored="false" />
-    <file path="/user.rb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1375881555448" ignored="false" />
+    <file path="/seeds.rb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1376033145218" ignored="false" />
+    <file path="/user.rb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1376056881864" ignored="false" />
     <file path="/spyreport.rb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1375799543829" ignored="false" />
     <file path="/20130807072949_add_underconstruction_to_planets.rb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1375860626672" ignored="false" />
     <file path="/20130807073109_add_build_costs_to_buildingtypes.rb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1375860884161" ignored="false" />
@@ -34,8 +41,17 @@
     <file path="/20130807113525_create_sunsystems_users.rb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1375875392553" ignored="false" />
     <file path="/20130807113931_delete_buildingtype_relations.rb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1375875588144" ignored="false" />
     <file path="/galaxies.js" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1375876425794" ignored="false" />
-    <file path="/game_settings.rb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1375964433253" ignored="false" />
+    <file path="/game_settings.rb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1376032724716" ignored="false" />
     <file path="/20130807135629_create_game_settings.rb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1375885890581" ignored="false" />
+    <file path="/alliances_controller.rb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1376027793938" ignored="false" />
+    <file path="/20130809092934_add_heimatplanet_to_user.rb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1376041760198" ignored="false" />
+    <file path="/home_planet_controller.rb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1376043968731" ignored="false" />
+    <file path="/routes.rb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1376313200986" ignored="false" />
+    <file path="/galaxies_controller.rb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1376052040857" ignored="false" />
+    <file path="/application.css" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1376288838427" ignored="false" />
+    <file path="/show.html.erb" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1376299351375" ignored="false" />
+    <file path="/planets.css.scss" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1376299392151" ignored="false" />
+    <file path="/planets.js" changelist="86d27e9f-686d-4994-9465-0db65ee885bf" time="1376297471450" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,37 +71,43 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="_form.html.erb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/planets/_form.html.erb">
+      <file leaf-file-name="application.html.erb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="34" selection-start="333" selection-end="333" vertical-scroll-proportion="-6.25">
-              <folding />
+            <state line="49" column="36" selection-start="1867" selection-end="1867" vertical-scroll-proportion="-2.4166667">
+              <folding>
+                <marker date="1376319306000" expanded="true" signature="5013:5215" placeholder="do ... end" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="index.html.erb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/planets/index.html.erb">
+        <entry file="file://$PROJECT_DIR$/app/views/galaxies/index.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="23" selection-start="418" selection-end="418" vertical-scroll-proportion="-2.4583333">
+            <state line="20" column="75" selection-start="868" selection-end="868" vertical-scroll-proportion="-12.5">
+              <folding>
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#a#1;n#div#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="galaxy.rb" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/models/galaxy.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="88" column="48" selection-start="2168" selection-end="2168" vertical-scroll-proportion="0.7108434">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="planets.css.scss" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/planets.css.scss">
+      <file leaf-file-name="galaxies.css.scss" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/galaxies.css.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="11" selection-start="221" selection-end="231" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="application.html.erb" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.erb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="44" selection-start="490" selection-end="490" vertical-scroll-proportion="0.46043167">
+            <state line="176" column="1" selection-start="3108" selection-end="3108" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -103,7 +125,7 @@
     <option name="ENVIRONMENT" value="development" />
   </component>
   <component name="Git.Settings">
-    <option name="UPDATE_TYPE" value="REBASE" />
+    <option name="UPDATE_TYPE" value="MERGE" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitLogSettings">
@@ -114,30 +136,30 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/models/buildingtype.rb" />
-        <option value="$PROJECT_DIR$/db/migrate/20130807112608_add_default_for_planet_under_construction.rb" />
-        <option value="$PROJECT_DIR$/db/migrate/20130807113525_create_sunsystems_users.rb" />
-        <option value="$PROJECT_DIR$/db/migrate/20130807113931_delete_buildingtype_relations.rb" />
-        <option value="$PROJECT_DIR$/app/assets/javascripts/galaxies.js" />
+        <option value="$PROJECT_DIR$/app/controllers/home_planet_controller.rb" />
+        <option value="$PROJECT_DIR$/app/controllers/galaxies_controller.rb" />
         <option value="$PROJECT_DIR$/app/models/user.rb" />
-        <option value="$PROJECT_DIR$/app/views/galaxies/index.html.erb" />
-        <option value="$PROJECT_DIR$/db/migrate/20130807135629_create_game_settings.rb" />
-        <option value="$PROJECT_DIR$/app/models/sunsystem.rb" />
-        <option value="$PROJECT_DIR$/app/models/galaxy.rb" />
-        <option value="$PROJECT_DIR$/app/models/buildingtype_require.rb" />
-        <option value="$PROJECT_DIR$/app/models/building.rb" />
-        <option value="$PROJECT_DIR$/app/models/planet.rb" />
-        <option value="$PROJECT_DIR$/app/models/game_settings.rb" />
         <option value="$PROJECT_DIR$/db/seeds.rb" />
+        <option value="$PROJECT_DIR$/app/helpers/galaxies_helper.rb" />
+        <option value="$PROJECT_DIR$/app/assets/stylesheets/application.css" />
+        <option value="$PROJECT_DIR$/app/models/planet.rb" />
+        <option value="$PROJECT_DIR$/app/helpers/planets_helper.rb" />
         <option value="$PROJECT_DIR$/app/views/layouts/application.html.erb" />
+        <option value="$PROJECT_DIR$/app/assets/javascripts/planets.js" />
+        <option value="$PROJECT_DIR$/app/views/planets/show.html.erb" />
+        <option value="$PROJECT_DIR$/app/assets/stylesheets/planets.css.scss" />
+        <option value="$PROJECT_DIR$/app/assets/stylesheets/galaxies.css.scss" />
+        <option value="$PROJECT_DIR$/app/views/galaxies/index.html.erb" />
+        <option value="$PROJECT_DIR$/config/routes.rb" />
+        <option value="$PROJECT_DIR$/app/models/galaxy.rb" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-2" />
-    <option name="y" value="-3" />
-    <option name="width" value="1604" />
-    <option name="height" value="872" />
+    <option name="x" value="20" />
+    <option name="y" value="40" />
+    <option name="width" value="1900" />
+    <option name="height" value="1160" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -165,10 +187,7 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope">
-        <subPane subId="Project Files" />
-        <subPane subId="All" />
-      </pane>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -251,11 +270,105 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="db" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MMOG" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MMOG" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="config" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MMOG" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MMOG" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="app" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="welcome" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MMOG" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MMOG" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MMOG" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MMOG" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="technologies" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MMOG" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MMOG" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="planets" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -292,6 +405,82 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="galaxies" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MMOG" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MMOG" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="models" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MMOG" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MMOG" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MMOG" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MMOG" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="helpers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MMOG" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MMOG" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controllers" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -334,6 +523,28 @@
               <option name="myItemId" value="assets" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="javascripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MMOG" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MMOG" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
@@ -341,14 +552,9 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="recentsLimit" value="5" />
-    <property name="options.lastSelected" value="ruby.project.structure" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="RailsGeneratorsPopup.hiddenIncluded" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
-    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RestoreUpdateTree">
     <UpdateInfo date="Moments ago" ActionInfo="_Update">
@@ -365,7 +571,65 @@
             <option name="mySupportsDeletion" value="false" />
             <option name="myCanBeAbsent" value="false" />
             <option name="myId" value="UPDATED" />
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/.idea/workspace.xml</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/Gemfile</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/Gemfile.lock</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/assets/javascripts/application.js</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/assets/javascripts/reports.js.coffee</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/assets/stylesheets/application.css</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/assets/stylesheets/galaxies.css.scss</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/assets/stylesheets/planets.css.scss</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/assets/stylesheets/sunsystems.css.scss</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/controllers/alliances_controller.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/controllers/application_controller.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/controllers/fleets_controller.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/controllers/messages_controller.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/controllers/missions_controller.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/controllers/relationships_controller.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/controllers/reports_controller.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/controllers/requests_controller.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/controllers/starport_controller.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/helpers/technologies_helper.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/models/alliance.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/models/fleet.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/models/relationship.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/models/technology.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/models/user.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/alliances/edit.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/alliances/show.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/buildings/show.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/buildingtypes/show.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/fleets/index.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/fleets/show.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/galaxies/show.html.erb</PATH>
             <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/layouts/application.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/messages/index.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/messages/show.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/missions/index.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/missions/show.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/planets/show.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/ranks/show.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/receiving_reports/show.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/relationships/index.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/reports/index.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/reports/show.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/reports/show_Colonisationreport.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/reports/show_Spyreport.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/reports/show_Tradereport.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/reports/show_Travelreport.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/ship_building_queues/show.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/shipcounts/show.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/shipfleets/show.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/ships/show.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/starport/index.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/starport/show.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/sunsystems/show.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/technologies/index.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/techstages/show.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/config/routes.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/db/migrate/20130730102936_devise_create_users.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/db/seeds.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/images/buildings/Powerplant/Powerplant4.xcf</PATH>
           </FILE-GROUP>
           <FILE-GROUP>
             <option name="myUpdateName" value="Created" />
@@ -373,6 +637,58 @@
             <option name="mySupportsDeletion" value="false" />
             <option name="myCanBeAbsent" value="false" />
             <option name="myId" value="CREATED" />
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/assets/images/Sorting icons.psd</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/assets/images/back_disabled.png</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/assets/images/back_enabled.png</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/assets/images/back_enabled_hover.png</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/assets/images/favicon.ico</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/assets/images/forward_disabled.png</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/assets/images/forward_enabled.png</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/assets/images/forward_enabled_hover.png</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/assets/images/sort_asc.png</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/assets/images/sort_asc_disabled.png</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/assets/images/sort_both.png</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/assets/images/sort_desc.png</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/assets/images/sort_desc_disabled.png</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/controllers/impressum_controller.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/alliances/_showDeleteAlliance.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/starport/index.js.coffee</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/images/backgrounds/balu.png</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/images/buildings/Headquarter/Headquarter.xcf</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/images/buildings/Headquarter/Headquarter1.png</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/images/buildings/Headquarter/Headquarter2.png</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/images/buildings/Headquarter/Headquarter2.xcf</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/images/buildings/Headquarter/Headquarter3.png</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/images/buildings/Headquarter/Headquarter3.xcf</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/images/buildings/Headquarter/Headquarter4.png</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/images/buildings/Headquarter/Headquarter4.xcf</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/images/buildings/Headquarter/Headquarter5.png</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/images/buildings/Headquarter/Headquarter5.xcf</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/images/buildings/Oremine/Oremine0.png</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/images/buildings/Oremine/Oremine1.png</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/images/buildings/Oremine/Oremine10.png</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/images/buildings/Oremine/Oremine2.png</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/images/buildings/Oremine/Oremine3.png</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/images/buildings/Oremine/Oremine4.png</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/images/buildings/Oremine/Oremine5.png</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/images/buildings/Oremine/Oremine6.png</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/images/buildings/Oremine/Oremine7.png</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/images/buildings/Oremine/Oremine8.png</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/images/buildings/Oremine/Oremine9.png</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/images/buildings/Powerplant/Powerplant1.png</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/images/buildings/Powerplant/Powerplant2.png</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/images/buildings/Powerplant/Powerplant3.png</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/images/buildings/Powerplant/Powerplant4.png</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/images/buildings/Powerplant/Powerplant5.png</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/images/buildings/Powerplant/Powerplant5.xcf</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/images/icons/spacecash.png</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/images/planets/Planet0.png</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/images/planets/Planet1.png</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/images/planets/Planet2.png</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/images/planets/Planet3.png</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/images/planets/Planet4.png</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/images/planets/Planet6.png</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/images/planets/anzeigeplanet.png</PATH>
           </FILE-GROUP>
           <FILE-GROUP>
             <option name="myUpdateName" value="Deleted" />
@@ -380,6 +696,61 @@
             <option name="mySupportsDeletion" value="false" />
             <option name="myCanBeAbsent" value="true" />
             <option name="myId" value="REMOVED_FROM_REPOSITORY" />
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/assets/javascripts/battlereports.js.coffee</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/assets/javascripts/colonisationreports.js.coffee</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/assets/javascripts/spyreports.js.coffee</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/assets/javascripts/tradereports.js.coffee</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/assets/javascripts/travelreports.js.coffee</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/assets/stylesheets/battlereports.css.scss</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/assets/stylesheets/colonisationreports.css.scss</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/assets/stylesheets/spyreports.css.scss</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/assets/stylesheets/tradereports.css.scss</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/assets/stylesheets/travelreports.css.scss</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/controllers/battlereports_controller.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/controllers/colonisationreports_controller.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/controllers/spyreports_controller.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/controllers/tradereports_controller.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/controllers/travelreports_controller.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/helpers/battlereports_helper.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/helpers/colonisationreports_helper.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/helpers/spyreports_helper.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/helpers/tradereports_helper.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/helpers/travelreports_helper.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/battlereports/_form.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/battlereports/edit.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/battlereports/index.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/battlereports/index.json.jbuilder</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/battlereports/new.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/battlereports/show.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/battlereports/show.json.jbuilder</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/colonisationreports/_form.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/colonisationreports/edit.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/colonisationreports/index.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/colonisationreports/index.json.jbuilder</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/colonisationreports/new.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/colonisationreports/show.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/colonisationreports/show.json.jbuilder</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/spyreports/_form.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/spyreports/edit.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/spyreports/index.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/spyreports/index.json.jbuilder</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/spyreports/new.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/spyreports/show.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/spyreports/show.json.jbuilder</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/tradereports/_form.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/tradereports/edit.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/tradereports/index.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/tradereports/index.json.jbuilder</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/tradereports/new.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/tradereports/show.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/tradereports/show.json.jbuilder</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/travelreports/_form.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/travelreports/edit.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/travelreports/index.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/travelreports/index.json.jbuilder</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/travelreports/new.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/travelreports/show.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/travelreports/show.json.jbuilder</PATH>
           </FILE-GROUP>
           <FILE-GROUP>
             <option name="myUpdateName" value="Restored" />
@@ -589,13 +960,6 @@
       <RTEST_RUN_CONFIG_SETTINGS_ID NAME="RUNNER_OPTIONS" VALUE="" />
       <method />
     </configuration>
-    <configuration default="true" type="JavascriptDebugSession" factoryName="Remote" singleton="true">
-      <JSRemoteDebuggerConfigurationSettings>
-        <option name="engineId" />
-        <option name="fileUrl" />
-      </JSRemoteDebuggerConfigurationSettings>
-      <method />
-    </configuration>
     <configuration default="false" name="test" type="RakeRunConfigurationType" factoryName="Rake">
       <module name="MMOG" />
       <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RUBY_ARGS" VALUE="-e $stdout.sync=true;$stderr.sync=true;load($0=ARGV.shift)" />
@@ -731,44 +1095,24 @@
     </task>
     <servers />
   </component>
-  <component name="TodoView" selected-index="0">
-    <todo-panel id="selected-file">
-      <are-packages-shown value="false" />
-      <are-modules-shown value="false" />
-      <flatten-packages value="false" />
-      <is-autoscroll-to-source value="false" />
-    </todo-panel>
-    <todo-panel id="all">
-      <are-packages-shown value="false" />
-      <are-modules-shown value="false" />
-      <flatten-packages value="false" />
-      <is-autoscroll-to-source value="false" />
-    </todo-panel>
-    <todo-panel id="default-changelist">
-      <are-packages-shown value="false" />
-      <are-modules-shown value="false" />
-      <flatten-packages value="false" />
-      <is-autoscroll-to-source value="false" />
-    </todo-panel>
-  </component>
   <component name="ToolWindowManager">
-    <frame x="-2" y="-3" width="1604" height="872" extended-state="6" />
-    <editor active="true" />
+    <frame x="20" y="40" width="1900" height="1160" extended-state="0" />
+    <editor active="false" />
     <layout>
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32797858" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32931727" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294686" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24903475" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28249678" sideWeight="0.82998663" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27351353" sideWeight="0.8280193" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27863577" sideWeight="0.4270415" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3287037" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3297975" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17001338" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17198068" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294686" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -835,120 +1179,124 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/application.css">
+    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/planets.css.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="30" selection-start="522" selection-end="522" vertical-scroll-proportion="0.27855712">
+        <state line="93" column="1" selection-start="1169" selection-end="1169" vertical-scroll-proportion="0.85148513">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/welcome.css.scss">
+    <entry file="file://$PROJECT_DIR$/app/views/planets/show.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="96" column="15" selection-start="2383" selection-end="2383" vertical-scroll-proportion="0.80867344">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/_template/seitenaufteilung.html.erb">
+    <entry file="file://$PROJECT_DIR$/app/models/planet.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.29473683">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/missions/_form.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/researches.js.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="621" column="5" selection-start="16286" selection-end="16286" vertical-scroll-proportion="0.46756425">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/javascripts/planets.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="8" column="16" selection-start="369" selection-end="369" vertical-scroll-proportion="0.14457831">
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/application.js">
+    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/galaxies.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="8" column="18" selection-start="339" selection-end="339" vertical-scroll-proportion="0.14457831">
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!doc" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/missions/show.html.erb">
+    <entry file="file://$PROJECT_DIR$/app/controllers/galaxies_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="35" selection-start="192" selection-end="192" vertical-scroll-proportion="0.24680074">
+        <state line="12" column="27" selection-start="428" selection-end="428" vertical-scroll-proportion="0.21686748">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/application_controller.rb">
+    <entry file="file://$PROJECT_DIR$/app/helpers/galaxies_helper.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/helpers/planets_helper.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="48" selection-start="378" selection-end="378" vertical-scroll-proportion="-0.18965517">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/planets_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="42" selection-start="244" selection-end="244" vertical-scroll-proportion="-0.8103448">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/galaxies/index.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.21402878">
-          <folding>
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/planets.css.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="11" selection-start="221" selection-end="231" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/planets/_form.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="34" selection-start="333" selection-end="333" vertical-scroll-proportion="-6.25">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/planets/index.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="23" selection-start="418" selection-end="418" vertical-scroll-proportion="-2.4583333">
+        <state line="56" column="73" selection-start="1469" selection-end="1469" vertical-scroll-proportion="1.0281518">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="44" selection-start="490" selection-end="490" vertical-scroll-proportion="0.46043167">
+        <state line="49" column="36" selection-start="1867" selection-end="1867" vertical-scroll-proportion="-2.4166667">
+          <folding>
+            <marker date="1376319306000" expanded="true" signature="5013:5215" placeholder="do ... end" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/game_settings.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="43" column="40" selection-start="1339" selection-end="1339" vertical-scroll-proportion="0.76506025">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/galaxies.css.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="176" column="1" selection-start="3108" selection-end="3108" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/seeds.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="40" selection-start="818" selection-end="818" vertical-scroll-proportion="0.36719707">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/galaxies/index.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="75" selection-start="868" selection-end="868" vertical-scroll-proportion="-12.5">
+          <folding>
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#a#1;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/galaxies/index.json.jbuilder">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/welcome/index.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/routes.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="52" column="20" selection-start="951" selection-end="951" vertical-scroll-proportion="0.37951806">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/galaxy.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="88" column="48" selection-start="2168" selection-end="2168" vertical-scroll-proportion="0.7108434">
           <folding />
         </state>
       </provider>
