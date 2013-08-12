@@ -6,6 +6,10 @@ class ReportsController < ApplicationController
   # GET /reports.json
   def index
     @reports = Report.all.joins(:receiving_reports).select('reports.*, receiving_reports.read AS read').where(receiving_reports: {user_id: current_user}).order('receiving_reports.read', fightdate: :desc)
+      respond_to do |format|
+        format.html
+        format.js
+      end
   end
 
   # GET /reports/1
@@ -13,7 +17,10 @@ class ReportsController < ApplicationController
   def show
     if @report.receiver_ids.include? current_user.id
       ReceivingReport.where(user_id: current_user.id, report_id: @report.id).first.update_attribute :read, true
-      render "show_#{@report.reportable_type}"
+      respond_to do |format|
+        format.html { render "show_#{@report.reportable_type}" }
+        format.js
+      end
     else
       redirect_to reports_path, notice: "Der angeforderte Bericht existiert nicht."
     end
@@ -65,6 +72,7 @@ class ReportsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to reports_url }
       format.json { head :no_content }
+      format.js
     end
   end
 
