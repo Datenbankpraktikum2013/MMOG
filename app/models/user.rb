@@ -72,8 +72,15 @@ class User < ActiveRecord::Base
 
   #end friendship from both sides
   def end_friendship!(other_user)    
-    Relationship.where(user: other_user, friend: self).first.destroy
-    Relationship.where(user: self, friend: other_user).first.destroy    
+    relother=Relationship.where(user: other_user, friend: self).first
+    relself=Relationship.where(user: self, friend: other_user).first
+    if (relother==nil or relself==nil)
+      return false
+    else
+      relother.destroy
+      relself.destroy
+      return true
+    end
   end
 
   #accept invitation

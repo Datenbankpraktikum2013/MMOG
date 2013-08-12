@@ -13,7 +13,7 @@
 
 
 <div class="jumbotron">
-  <h1>Missions</h1>
+  <h1>Missionen</h1>
   
   <div class="alert alert-error" id="error" style="display:none">
     <h4>Fehler:</h4>
@@ -24,14 +24,17 @@
   </div>
 
   <div class="part">
+    <h3>Missionstyp</h3>
     <button id="travel" type="button" class="btn btn-default">Travel</button>
     <button id="colonization" type="button" class="btn btn-primary">Colonization</button>
     <button id="transport" type="button" class="btn btn-success">Transport</button>
     <button id="spy" type="button" class="btn btn-warning">Spy</button>
     <button id="attack" type="button" class="btn btn-danger">Attack</button>
   </div>
-
+  <script src="/twitter-bootstrap/twitter-bootstrap-v2/js/bootstrap-tooltip.js"></script>
+  <script src="/twitter-bootstrap/twitter-bootstrap-v2/js/bootstrap-popover.js"></script>
   <div id="own-ships" style="display:none">
+    <h3>Wähle deine Flotte</h3>
     <table class="table table-striped">
       <thead>
         <tr>
@@ -45,9 +48,9 @@
           <tr>
             <br>
             <td><%= fleet.start_planet.name %></td>
-            <td class="ship-info" fleet="<%=fleet.id%>">
+            <td fleet="<%=fleet.id%>">
             <div>
-              <button type="button" class="btn btn-link">Schiffe</button>
+              <a type="button" fleet="<%=fleet.id%>" class="btn btn-link ship-info" data-content="And here's some amazing content. It's very engaging. right?" title="" data-toggle="popover" data-original-title="A Title">Schiffe</a>
             </div>
             <div class="info-<%= fleet.id %>" style="display:none">
               <table class"table">
@@ -78,30 +81,35 @@
       </tbody>
     </table>
   </div>
-
-  <div id="destination" class="row-fluid" style="display:none">
-    <div id="galaxy" class="span4">
-      <select id="g-select" name="galaxy-select" class="span8">
-        <option selected="selected" value="">---</option>
-        <% @galaxies.each do |galaxy| %>
-          <option value="<%= galaxy.id %>"><%= galaxy.name %></option>
-        <% end %>
-      </select>
-    </div>
-    <div id="sunsystem" class="span4">
-      <select id="s-select" name="sunsystem-select" class="span8">
-        <option selected="selected" value="">---</option>
-      </select>
-    </div>
+  <div id="destination" style="display:none">
+    <h3>Wähle das Ziel</h3>
     
-    <div id="planet" class="span4">
-      <select id="p-select" name="planet-select" class="span8">
-        <option selected="selected" value="">---</option>
-      </select>
+    <div class="row-fluid">
+      
+      <div id="galaxy" class="span4">
+        <select id="g-select" name="galaxy-select" class="span8">
+          <option selected="selected" value="">---</option>
+          <% @galaxies.each do |galaxy| %>
+            <option value="<%= galaxy.id %>"><%= galaxy.x %> &sdot; <%= galaxy.name %></option>
+          <% end %>
+        </select>
+      </div>
+      <div id="sunsystem" class="span4">
+        <select id="s-select" name="sunsystem-select" class="span8">
+          <option selected="selected" value="">---</option>
+        </select>
+      </div>
+      
+      <div id="planet" class="span4">
+        <select id="p-select" name="planet-select" class="span8">
+          <option selected="selected" value="">---</option>
+        </select>
+      </div>
     </div>
   </div>
 
   <div id="choice" style="display:none">
+    <h3>Wähle deine Schiffe</h3>
     <div id="ship-choice">
       <table class="table table-striped">
         <thead>
@@ -119,6 +127,7 @@
     </div>
 
     <div id="ress-choice" style="display:none">
+      <h3>Wähle Ressourcen zum Beladen</h3>
       <table class="table table-striped">
         <thead>
           <tr>
@@ -160,7 +169,7 @@
   
   <form id="send" method="get" action="/confirm/send">
     <!-- // hier werden mithilfe vom dom die einzelnen inputs eingehängt, bzw ausgehängt um am ende abgeschickt zu werden -->
-    <div id="send-button" style="display:none">
+    <div id="send-button" style="display:none; margin:10px">
       <button id="doit" type="submit" class="btn btn-info">Abschicken</button>
     </div>
   </form>
@@ -449,6 +458,10 @@
         $("#send").append('<input type="hidden" name="planet" value="'+planet_id+'">');
       });
 
+      // $('.ship-info').on("mouseover", function(){
+      //   id = $(this).attr("fleet");
+      //   $(".ship-info[fleet="+id+"]").tooltip('toggle');
+      // });
       $(".ship-info").on("click", function(){
         id = $(this).attr("fleet");
         $(".info-"+id).animate({ height: 'toggle', opacity: 'toggle' }, 'slow');

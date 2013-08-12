@@ -1,11 +1,12 @@
-<h1>Your Fleets</h1>
+<h1>Deine Flotten</h1>
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>Fleet ID</th>
+      <th>FlottenID</th>
       <th>Mission</th>
-      <th>Current Location</th>
-      <th>Current Target</th>
+      <th>Schiffe</th>
+      <th>Derzeitiger Aufenthalt</th>
+      <th>Derzeitiges Ziel</th>
     </tr>
   </thead>
 
@@ -15,13 +16,47 @@
         <td><%= fleet.id %></td>
         <td><%= fleet.mission.id %></td>
         <% if fleet.mission.id == 1 %>
-          <td><%= fleet.origin_planet.id %></td>
+          <td><a type="button" fleet="<%=fleet.id%>" class="btn btn-link ship-info">Schiffe</a></td>
+          <td><%= fleet.origin_planet.name %></td> <!-- hier noch KOORDINATEN -->
           <td> -based- </td>
         <% else %>
+          <td><a type="button" fleet="<%=fleet.id%>" class="btn btn-link ship-info">Schiffe</a></td>
           <td> -on a flight- </td>
-          <td><% fleet.target_planet.id %></td>
+          <td><% fleet.target_planet.name %></td> <!-- hier noch KOORDINATEN -->
         <% end %>
       </tr>
+      <% unless fleet.get_ships.empty? %>
+      <tr>
+        <td colspan="5">
+          <div class="info-<%= fleet.id %>" style="display:none">
+              <table class"table table-condensed">
+                <thead>
+                  <tr>
+                    <th>Schiffsname</th>
+                    <th>Angriff</th>
+                    <th>Verteidigung</th>
+                    <th>Geschwindigkeit</th>
+                    <th>Ladekapazität</th>
+                    <th>Anzahl</th>
+                  </tr>
+                </thead>
+                <tbody>
+              <% fleet.get_ships.each do |ship, amount| %>
+                <tr>
+                  <td><%= ship.name %></td>
+                  <td><%= ship.offense %></td>
+                  <td><%= ship.defense %></td>
+                  <td><%= ship.velocity %></td>
+                  <td><%= ship.ressource_capacity %></td>
+                  <td><%= amount %></td>
+                </tr>
+                <% end%>
+                </tbody>
+              </table>
+            </div>
+        </td>
+      </tr>
+      <% end%>
     <% end %>
   </tbody>
 </table>
@@ -60,5 +95,13 @@
   </tbody>
 </table>
 <% else %>
-  <h1>No approaching fleets</h1>
+  <h1>Keine ankommenden Schiffe</h1>
 <% end %>
+
+<script type="text/javascript">
+  $(".ship-info").on("click", function(){
+    id = $(this).attr("fleet");
+    $(".info-"+id).animate({ height: 'toggle', opacity: 'toggle' }, 'slow');
+  });
+
+</script>
