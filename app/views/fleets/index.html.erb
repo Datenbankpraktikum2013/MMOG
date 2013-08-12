@@ -1,106 +1,199 @@
-<h1>Deine Flotten</h1>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>FlottenID</th>
-      <th>Mission</th>
-      <th>Schiffe</th>
-      <th>Derzeitiger Aufenthalt</th>
-      <th>Derzeitiges Ziel</th>
-    </tr>
-  </thead>
+<% unless @based_fleets.empty? %>
+  <h1>Deine stationierten Flotten</h1>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>FlottenID</th>
+        <th>Planet</th>
+        <th>Schiffe</th>
+        <th>Erz</th>
+        <th>Kirstall</th>
+      </tr>
+    </thead>
 
-  <tbody>
-    <% @fleets.each do |fleet| %>
-      <tr>
-        <td><%= fleet.id %></td>
-        <td><%= fleet.mission.id %></td>
-        <% if fleet.mission.id == 1 %>
-          <td><a type="button" fleet="<%=fleet.id%>" class="btn btn-link ship-info">Schiffe</a></td>
+    <tbody>
+      <% @based_fleets.each do |fleet| %>
+        <tr>
+          <td><%= fleet.id %></td>
           <td><%= fleet.origin_planet.name %></td> <!-- hier noch KOORDINATEN -->
-          <td> -based- </td>
-        <% else %>
-          <td><a type="button" fleet="<%=fleet.id%>" class="btn btn-link ship-info">Schiffe</a></td>
-          <td> -on a flight- </td>
-          <td><% fleet.target_planet.name %></td> <!-- hier noch KOORDINATEN -->
-        <% end %>
-      </tr>
-      <% unless fleet.get_ships.empty? %>
+          <td><a type="button" fleet="<%=fleet.id%>" class="btn btn-link ship-info">Schiffe <i class="icon-chevron-down"></i></a></td>
+          <td><%= fleet.ore %></td>
+          <td><%= fleet.crystal %></td>
+        </tr>
+        <% unless fleet.get_ships.empty? %>
+          <tr>
+            <td colspan="6">
+              <div class="info-<%= fleet.id %>" style="display:none">
+                <table class"table table-condensed">
+                  <thead>
+                    <tr>
+                      <th>Schiffsname</th>
+                      <th>Angriff</th>
+                      <th>Verteidigung</th>
+                      <th>Geschwindigkeit</th>
+                      <th>Ladekapazität</th>
+                      <th>Anzahl</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% fleet.get_ships.each do |ship, amount| %>
+                      <tr>
+                        <td><%= ship.name %></td>
+                        <td><%= ship.offense %></td>
+                        <td><%= ship.defense %></td>
+                        <td><%= ship.velocity %></td>
+                        <td><%= ship.ressource_capacity %></td>
+                        <td><%= amount %></td>
+                      </tr>
+                    <% end%>
+                  </tbody>
+                </table>
+              </div>
+            </td>
+          </tr>
+        <% end%>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <h3>Keine Stationierten Flotten</h3>
+<% end %>
+
+<hr>
+
+<% unless @flying_fleets.empty? %>
+  <h1>Deine Flotten auf Mission</h1>
+  <table class="table table-striped">
+    <thead>
       <tr>
-        <td colspan="5">
-          <div class="info-<%= fleet.id %>" style="display:none">
-              <table class"table table-condensed">
-                <thead>
-                  <tr>
-                    <th>Schiffsname</th>
-                    <th>Angriff</th>
-                    <th>Verteidigung</th>
-                    <th>Geschwindigkeit</th>
-                    <th>Ladekapazität</th>
-                    <th>Anzahl</th>
-                  </tr>
-                </thead>
-                <tbody>
-              <% fleet.get_ships.each do |ship, amount| %>
-                <tr>
-                  <td><%= ship.name %></td>
-                  <td><%= ship.offense %></td>
-                  <td><%= ship.defense %></td>
-                  <td><%= ship.velocity %></td>
-                  <td><%= ship.ressource_capacity %></td>
-                  <td><%= amount %></td>
-                </tr>
-                <% end%>
-                </tbody>
-              </table>
-            </div>
-        </td>
+        <th>FlottenID</th>
+        <th>Heimatplanet</th>
+        <th>Mission</th>
+        <th>Schiffe</th>
+        <th>Ankunftszeit</th>
+        <th>Ziel</th>
+        <th>Erz</th>
+        <th>Kirstall</th>
+        <th>Aktionen</th>
       </tr>
-      <% end%>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+
+    <tbody>
+      <% @flying_fleets.each do |fleet| %>
+        <tr>
+          <td><%= fleet.id %></td>
+          <td><%= fleet.origin_planet.name %></td>
+          <% if fleet.mission.id == 2 %>
+            <td>Kolonialisieren</td>
+          <% elsif fleet.mission.id == 3 %>
+            <td>Angriff</td>
+          <% elsif fleet.mission.id == 4 %>
+            <td>Reise</td>
+          <% elsif fleet.mission.id == 5 %>
+            <td>Spionage</td>
+          <% else %>
+            <td>Transport</td>
+          <% end %>
+          <td><a type="button" fleet="<%=fleet.id%>" class="btn btn-link ship-info">Schiffe <i class="icon-chevron-down"></i></a></td>
+          <td><%= Time.at fleet.arrival_time %></td>
+          <td><%= fleet.target_planet.name %></td> <!-- hier noch KOORDINATEN -->
+          <td><%= fleet.ore %></td>
+          <td><%= fleet.crystal %></td>
+          <td> 
+            <button planet="<%=fleet.start_planet.id%>" id="fleet-breakup" fleet="<%=fleet.id%>" type="button" class="btn btn-default">
+              <i class="icon-remove"></i>
+            </button> 
+            <button planet="<%=fleet.start_planet.id%>" id="fleet-unload" fleet="<%=fleet.id%>" type="button" class="btn btn-default">
+              <i class="icon-arrow-right"></i>
+            </button>
+          </td>
+        </tr>
+        <% unless fleet.get_ships.empty? %>
+        <tr>
+          <td colspan="8">
+            <div class="info-<%= fleet.id %>" style="display:none">
+                <table class"table table-condensed">
+                  <thead>
+                    <tr>
+                      <th>Schiffsname</th>
+                      <th>Angriff</th>
+                      <th>Verteidigung</th>
+                      <th>Geschwindigkeit</th>
+                      <th>Ladekapazität</th>
+                      <th>Anzahl</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                <% fleet.get_ships.each do |ship, amount| %>
+                  <tr>
+                    <td><%= ship.name %></td>
+                    <td><%= ship.offense %></td>
+                    <td><%= ship.defense %></td>
+                    <td><%= ship.velocity %></td>
+                    <td><%= ship.ressource_capacity %></td>
+                    <td><%= amount %></td>
+                  </tr>
+                  <% end%>
+                  </tbody>
+                </table>
+              </div>
+          </td>
+        </tr>
+        <% end%>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <h3>Keine Flotten auf Mission</h3>
+<% end %>
+
+<hr>
 
 <% unless @approaching_fleets.empty? %>
-
-<h1>Approaching Fleets</h1>
-<table class="table">
-  <thead>
-    <tr>
-      <th>User</th>
-      <th>Mission</th>
-      <th>Target</th>
-      <th>approaches in</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @approaching_fleets.each do |fleet| %>
-      <% if fleet.mission.id == 3 %>
-        <% mission = "Attack" %>
-        <tr class="error">
-      <% elsif fleet.mission.id == 6 %>
-        <% mission = "Transport" %>
-        <tr class="warning">
-      <% elsif fleet.mission.id == 4 %>
-        <% mission = "Travel" %>
-        <tr class="success">
-      <% end %>
-        <td><%= fleet.user.username %></td>
-        <td><%= mission %></td>
-        <td><%= fleet.target_planet.name %> (<%= fleet.target_planet.id %>)</td>
-        <td><%= Time.at fleet.arrival_time %></td>
+  <h1>Approaching Fleets</h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>User</th>
+        <th>Mission</th>
+        <th>Target</th>
+        <th>approaches in</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+
+    <tbody>
+      <% @approaching_fleets.each do |fleet| %>
+        <% if fleet.mission.id == 3 %>
+          <% mission = "Attack" %>
+          <tr class="error">
+        <% elsif fleet.mission.id == 6 %>
+          <% mission = "Transport" %>
+          <tr class="warning">
+        <% elsif fleet.mission.id == 4 %>
+          <% mission = "Travel" %>
+          <tr class="success">
+        <% end %>
+          <td><%= fleet.user.username %></td>
+          <td><%= mission %></td>
+          <td><%= fleet.target_planet.name %> (<%= fleet.target_planet.id %>)</td>
+          <td><%= Time.at fleet.arrival_time %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 <% else %>
-  <h1>Keine ankommenden Schiffe</h1>
+  <h3>Keine Schiffe auf dem Weg zu dir</h3>
 <% end %>
 
 <script type="text/javascript">
   $(".ship-info").on("click", function(){
     id = $(this).attr("fleet");
+    if ($(".info-"+id).css("display") == "none"){
+      $('a[fleet='+id+']').html('Schiffe <i class="icon-chevron-up"></i>');
+    }
+    else {
+      $('a[fleet='+id+']').html('Schiffe <i class="icon-chevron-down"></i>');
+    }
     $(".info-"+id).animate({ height: 'toggle', opacity: 'toggle' }, 'slow');
   });
 
