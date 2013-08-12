@@ -24,7 +24,8 @@
       <% TechnologyRequire.where(:building_rank => rank).map(&:tech_id).uniq.each do |technology| %>
         <% technology = Technology.find(technology) %>
           <tr>
-            <td align="middle"  valign="middle"><img src="<%=TechnologiesHelper.get_icon_name(technology).to_s%>"></td>
+            <td align="middle"  valign="middle"><img src="<%='images/icons/increased_income_icon.png' #TechnologiesHelper.get_icon_name(technology).to_s
+            %>"></td>
             <td align="middle"  valign="middle"><strong><%= 'Name: ' %></strong><%= technology.title %><br>
               <strong><%= 'Benötigte Technologien: ' %></strong><%=technology.get_requirements %><br>
               <strong><%= 'Kosten: ' %></strong><%= technology.get_technology_cost(current_user)%><br>
@@ -48,12 +49,14 @@
                 {:controller => "technologies", :action => "upgrade",    :uid => current_user, :id => technology} ,
                 :method => :post, data: { confirm: 'Möchtest du die Technologie "' + technology.title + '" aufwerten?' }
             %></td>
+
              <%end%>
           </tr>
       <% end %>
   <% end %>
   </tbody>
 </table>
+
 
 <script type='text/javascript'>
     researching = <%= research_id %>;
@@ -95,9 +98,6 @@
         };
 
         aktiv_bar = window.setInterval(update_progressbar, 250);
-        
-
-
 
   };
 

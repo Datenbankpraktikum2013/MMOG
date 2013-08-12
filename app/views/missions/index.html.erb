@@ -13,7 +13,7 @@
 
 
 <div class="jumbotron">
-  <h1>Missions</h1>
+  <h1>Missionen</h1>
   
   <div class="alert alert-error" id="error" style="display:none">
     <h4>Fehler:</h4>
@@ -24,14 +24,16 @@
   </div>
 
   <div class="part">
+    <h3>Missionstyp</h3>
     <button id="travel" type="button" class="btn btn-default">Travel</button>
     <button id="colonization" type="button" class="btn btn-primary">Colonization</button>
     <button id="transport" type="button" class="btn btn-success">Transport</button>
     <button id="spy" type="button" class="btn btn-warning">Spy</button>
     <button id="attack" type="button" class="btn btn-danger">Attack</button>
   </div>
-
+   
   <div id="own-ships" style="display:none">
+    <h3>Wähle deine Flotte</h3>
     <table class="table table-striped">
       <thead>
         <tr>
@@ -43,65 +45,76 @@
       <tbody>
         <% @fleets.each do |fleet| %>
           <tr>
-            <br>
             <td><%= fleet.start_planet.name %></td>
-            <td class="ship-info" fleet="<%=fleet.id%>">
-            <div>
-              <button type="button" class="btn btn-link">Schiffe</button>
-            </div>
-            <div class="info-<%= fleet.id %>" style="display:none">
-              <table class"table">
+            <td fleet="<%=fleet.id%>">
+              <a type="button" fleet="<%=fleet.id%>" class="btn btn-link ship-info" data-toggle="tooltip" title="Klicken für Informationen">Schiffe</a>
+            </td>
+            <td><button planet="<%=fleet.start_planet.id%>" class="fleet-choice" fleet="<%=fleet.id%>" type="button" class="btn btn-default">OK</button></td>
+          </tr>
+          
+          <tr>
+        <td colspan="5">
+          <div class="info-<%= fleet.id %>" style="display:none">
+              <table class"table table-condensed">
                 <thead>
                   <tr>
                     <th>Schiffsname</th>
                     <th>Angriff</th>
                     <th>Verteidigung</th>
                     <th>Geschwindigkeit</th>
+                    <th>Ladekapazität</th>
                     <th>Anzahl</th>
                   </tr>
                 </thead>
+                <tbody>
               <% fleet.get_ships.each do |ship, amount| %>
                 <tr>
                   <td><%= ship.name %></td>
                   <td><%= ship.offense %></td>
                   <td><%= ship.defense %></td>
                   <td><%= ship.velocity %></td>
+                  <td><%= ship.ressource_capacity %></td>
                   <td><%= amount %></td>
                 </tr>
                 <% end%>
+                </tbody>
               </table>
             </div>
-            </td>
-            <td><button planet="<%=fleet.start_planet.id%>" class="fleet-choice" fleet="<%=fleet.id%>" type="button" class="btn btn-default">OK</button></td>
-          </tr>
-          <% end %>
+        </td>
+      </tr>
+      <% end %>
       </tbody>
     </table>
   </div>
-
-  <div id="destination" class="row-fluid" style="display:none">
-    <div id="galaxy" class="span4">
-      <select id="g-select" name="galaxy-select" class="span8">
-        <option selected="selected" value="">---</option>
-        <% @galaxies.each do |galaxy| %>
-          <option value="<%= galaxy.id %>"><%= galaxy.name %></option>
-        <% end %>
-      </select>
-    </div>
-    <div id="sunsystem" class="span4">
-      <select id="s-select" name="sunsystem-select" class="span8">
-        <option selected="selected" value="">---</option>
-      </select>
-    </div>
+  <div id="destination" style="display:none">
+    <h3>Wähle das Ziel</h3>
     
-    <div id="planet" class="span4">
-      <select id="p-select" name="planet-select" class="span8">
-        <option selected="selected" value="">---</option>
-      </select>
+    <div class="row-fluid">
+      
+      <div id="galaxy" class="span4">
+        <select id="g-select" name="galaxy-select" class="span8">
+          <option selected="selected" value="">---</option>
+          <% @galaxies.each do |galaxy| %>
+            <option value="<%= galaxy.id %>"><%= galaxy.x %> &sdot; <%= galaxy.name %></option>
+          <% end %>
+        </select>
+      </div>
+      <div id="sunsystem" class="span4">
+        <select id="s-select" name="sunsystem-select" class="span8">
+          <option selected="selected" value="">---</option>
+        </select>
+      </div>
+      
+      <div id="planet" class="span4">
+        <select id="p-select" name="planet-select" class="span8">
+          <option selected="selected" value="">---</option>
+        </select>
+      </div>
     </div>
   </div>
 
   <div id="choice" style="display:none">
+    <h3>Wähle deine Schiffe</h3>
     <div id="ship-choice">
       <table class="table table-striped">
         <thead>
@@ -119,6 +132,7 @@
     </div>
 
     <div id="ress-choice" style="display:none">
+      <h3>Wähle Ressourcen zum Beladen</h3>
       <table class="table table-striped">
         <thead>
           <tr>
@@ -160,7 +174,7 @@
   
   <form id="send" method="get" action="/confirm/send">
     <!-- // hier werden mithilfe vom dom die einzelnen inputs eingehängt, bzw ausgehängt um am ende abgeschickt zu werden -->
-    <div id="send-button" style="display:none">
+    <div id="send-button" style="display:none; margin:10px">
       <button id="doit" type="submit" class="btn btn-info">Abschicken</button>
     </div>
   </form>
@@ -195,7 +209,7 @@
         ship_id = $(this).attr("ship");
         amount = parseInt($(this).val());
         amount_input = parseInt($(this).parent().prev().html());
-        if (amount < amount_input && amount > 0){
+        if (amount <= amount_input && amount > 0){
           $("#offense-"+ship_id).html(ships[ship_id]["offense"] * amount);
           $("#defense-"+ship_id).html(ships[ship_id]["defense"] * amount);
           
@@ -449,6 +463,10 @@
         $("#send").append('<input type="hidden" name="planet" value="'+planet_id+'">');
       });
 
+      $('.ship-info').on("mouseover", function(){
+        id = $(this).attr("fleet");
+        $(".ship-info[fleet="+id+"]").tooltip('toggle');
+      });
       $(".ship-info").on("click", function(){
         id = $(this).attr("fleet");
         $(".info-"+id).animate({ height: 'toggle', opacity: 'toggle' }, 'slow');

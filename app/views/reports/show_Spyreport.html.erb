@@ -1,6 +1,5 @@
 
 <h1>Spionagebericht</h1>
-<p id="notice"><%= notice %></p>
 <p>
   Du hast am <strong><%= @report.fightdate.strftime('%d.%m.%y') %> um 
   <%= @report.fightdate.strftime('%H:%M') %> Uhr</strong>  einen Spionagebericht 
@@ -16,21 +15,21 @@
 <h3>Technologien:</h3>
 <% @report.reportable.techstages.each do |tech| %>
   <p>
-    <%= tech.technology.name + ': ' + tech.level %>
+    <%= tech.technology.name + ': ' + tech.level.to_s %>
   </p>
 <% end %>
 
 <h3>Gebäude:</h3>
 <% @report.reportable.buildingtypes.each do |buildingtype| %>
   <p>
-    <%= buildingtype.name + ': ' + buildingtype.level %>
+    <%= buildingtype.name + ': ' + buildingtype.level.to_s %>
   </p>
 <% end %>
 
 <h3>Schiffe:</h3>
 <% @report.reportable.shipcounts.each do |shipcount| %>
   <p>
-    <%= shipcount.ship.name + ': ' + shipcount.amount %>
+    <%= shipcount.ship.name + ': ' + shipcount.amount.to_s %>
   </p>
 <% end %>
 

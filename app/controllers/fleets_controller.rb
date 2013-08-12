@@ -1,6 +1,6 @@
 class FleetsController < ApplicationController
   before_action :set_fleet, only: [:show, :edit, :update, :destroy]
-
+  before_filter :authenticate_user!
   # GET /fleets
   # GET /fleets.json
   def index
@@ -15,6 +15,16 @@ class FleetsController < ApplicationController
         else
           @approaching_fleets.push(fleet)
         end
+      end
+    end
+
+    @flying_fleets = Array.new
+    @based_fleets = Array.new
+    @fleets.each do |fleet|
+      if fleet.mission.id == 1
+        @based_fleets.push(fleet)
+      else
+        @flying_fleets.push(fleet)
       end
     end
   end

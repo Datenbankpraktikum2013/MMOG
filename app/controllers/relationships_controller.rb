@@ -1,15 +1,10 @@
 class RelationshipsController < ApplicationController
-  before_action :set_relationship, only: [:show, :edit, :update, :destroy]
+  before_action :set_relationship, only: [:destroy]
   before_filter :authenticate_user!
   # GET /relationships
   # GET /relationships.json
   def index
-    @relationships = Relationship.all
-  end
-
-  # GET /relationships/1
-  # GET /relationships/1.json
-  def show
+    @relationships = current_user.friends
   end
 
   # GET /relationships/new
@@ -17,54 +12,12 @@ class RelationshipsController < ApplicationController
     @relationship = Relationship.new
   end
 
-  # GET /relationships/1/edit
-  def edit
-  end
-
-  # POST /relationships
-  # POST /relationships.json
-  def create    
-    @user = User.find_by_username(params['username'])
-    respond_to do |format|
-      #check if user exists or friend already in list
-      if @user==nil or current_user.friends.find_by_id(@user.id)!=nil
-        format.html { redirect_to relationships_url, notice: 'Spieler nicht gefunden oder ist bereits in der Liste.' }
-        format.json { head :no_content }
-      else
-        #make friendship
-        if current_user.make_friendship!(@user)
-          format.html { redirect_to relationships_url, notice: 'Spieler hinzugefügt' }
-          format.json { render action: 'show', status: :created, location: @relationship }
-        else
-          format.html { render action: 'new' }
-          format.json { render json: @relationship.errors, status: :unprocessable_entity }
-        end
-      end  
-    end
-  end
-
-  # PATCH/PUT /relationships/1
-  # PATCH/PUT /relationships/1.json
-  def update
-    respond_to do |format|
-      if @relationship.update(relationship_params)
-        format.html { redirect_to @relationship, notice: 'Relationship was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @relationship.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
   # DELETE /relationships/1
   # DELETE /relationships/1.json
   def destroy
-    @user=@relationship.user
-    current_user.end_friendship!(@user)
+    current_user.end_friendship!(@relationship.friend)
     respond_to do |format|
       format.html { redirect_to relationships_url }
-      format.json { head :no_content }
     end
   end
 

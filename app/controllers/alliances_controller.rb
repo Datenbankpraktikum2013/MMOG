@@ -127,6 +127,10 @@ class AlliancesController < ApplicationController
         user.rank.users.delete(user)
         user.system_notify("Allianz","Deine Allianz wurde aufgelöst!","Tut uns leid!")
       end
+      #destroy all ranks
+      @alliance.ranks.each do |rank|
+        rank.destroy
+      end
       @alliance.destroy
     end
     #response

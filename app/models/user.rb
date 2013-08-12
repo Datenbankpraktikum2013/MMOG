@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   
   #callback on create
   after_create :set_initial_money
+  after_create :set_initial_activity
   after_create :claim_starplanet
   after_create :init_usersettings
 
@@ -48,6 +49,15 @@ class User < ActiveRecord::Base
   @cache_visible_sunsystems
   @cache_visible_galaxies
 
+  def online?
+    last_activity > 5.seconds.ago
+  end
+
+  def set_initial_activity()
+    self.last_activity=Time.now
+    self.save
+  end
+
   #claim startplanet
   def claim_starplanet
     PlanetsHelper.claim_startplanet_for(self)
@@ -68,8 +78,15 @@ class User < ActiveRecord::Base
 
   #end friendship from both sides
   def end_friendship!(other_user)    
-    Relationship.where(user: other_user, friend: self).first.destroy
-    Relationship.where(user: self, friend: other_user).first.destroy    
+    relother=Relationship.where(user: other_user, friend: self).first
+    relself=Relationship.where(user: self, friend: other_user).first
+    if (relother==nil or relself==nil)
+      return false
+    else
+      relother.destroy
+      relself.destroy
+      return true
+    end
   end
 
   #accept invitation
@@ -292,7 +309,7 @@ class User < ActiveRecord::Base
   end
 
   def system_notify(prefix,subject,message)
-    self.messages.create(:subject=>'['+prefix+']'+subject,:body=>message)
+    self.messages.create(:subject=>'['+prefix+'] '+subject,:body=>message)
   end
 
   def add_score value
@@ -311,7 +328,7 @@ class User < ActiveRecord::Base
   ###########STATIC##############
   def self.system_notify_all(subject,message)
     User.all.each do |user|
-      user.messages.create(:subject=>'[Systemweit]'+subject,:body=>message)
+      user.messages.create(:subject=>'[Systemweit] '+subject,:body=>message)
     end
   end
 

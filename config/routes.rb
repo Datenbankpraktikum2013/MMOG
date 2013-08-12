@@ -1,30 +1,20 @@
 Mmog::Application.routes.draw do
 
-  resources :colonisationreports
-
-  resources :travelreports
-
   resources :ship_building_queues
 
-  resources :receiving_reports
+  resources :receiving_reports #kommt spaeter noch raus
 
-  resources :relationships
+  resources :relationships, :except => [:edit,:update,:show,:create]
   
-  resources :techstages
+  resources :techstages #kommt spaeter noch raus
 
-  resources :spyreports
+  resources :reports, only: [:show, :index, :destroy]
 
-  resources :tradereports
-
-  resources :reports
-
-  resources :shipcounts
-
-  resources :battlereports
+  resources :shipcounts #kommt spaeter noch raus
 
   resources :messages, :except => [:edit, :update]
 
-  resources :shipfleets
+  resources :shipfleets #kommt spaeter noch raus
 
   resources :fleets #EXCEPT muss hier noch rein!
 
@@ -51,6 +41,8 @@ Mmog::Application.routes.draw do
   resources :sunsystems
 
   resources :planets
+
+  resources :impressum
 
   post "requests" => "requests#create"
   post "requests/reaction"=>"requests#reaction"

@@ -11,6 +11,9 @@ class StarportController < ApplicationController
   	@shipshelper=ShipsHelper
     @queue=ShipBuildingQueue.where(planet_id: @planets)
     @time=Time
+    
+    
+    
   end
 
   def show

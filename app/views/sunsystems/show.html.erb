@@ -1,11 +1,13 @@
-<p id="notice"><%= notice %></p>
-
 <div class="planetordner">
+
+  <a class="pfeil" href="<%= galaxy_path(@sunsystem.galaxy)%>"> <div>
+    ↶
+  </div></a>
 
   <div class="sunsysinf">
 
-    <strong>Name des Sonnensystems: <%= @sunsystem.name %></strong>
-    <FONT SIZE = 7><strong><%= link_to '↶', galaxy_path(@sunsystem.galaxy) %></strong></FONT>
+    Name des Sonnensystems: <%= @sunsystem.name %>
+
 
   </div>
 

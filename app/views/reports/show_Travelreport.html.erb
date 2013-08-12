@@ -1,0 +1,16 @@
+<h1>Reisebericht</h1>
+<p>
+  Du hast am <strong><%= @report.fightdate.strftime('%d.%m.%y') %> um 
+  <%= @report.fightdate.strftime('%H:%M') %> Uhr</strong> eine Flotte zum Planeten
+   <strong><%= @report.defender_planet.name %></strong> gebracht.
+
+<h3>Schiffe:</h3>
+<% @report.reportable.shipcounts.each do |shipcount| %>
+  <p>
+    <%= shipcount.ship.name + ': ' + shipcount.amount.to_s %>
+  </p>
+<% end %>
+
+</p>
+
+<%= link_to 'Zurück', :back, remote: true %>

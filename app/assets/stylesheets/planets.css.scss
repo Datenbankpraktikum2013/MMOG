@@ -47,13 +47,21 @@
 .buildingposOremine{
    top: 120px;
    left: 50px;
-
-
  }
 
-.buildingposResearchLab{
+.buildingposOremine img{
+  left: -180px;
+  position: relative;
+}
+
+.buildingposPowerplant{
   top: 120px;
   left:150px;
+}
+
+.buildingposPowerplant img{
+  left: -180px;
+  position: relative;
 }
 
 .buildingposCrystalmine{
@@ -76,7 +84,7 @@
   left:150px;
 }
 
-.buildingposPowerplant{
+.buildingposResearchLab{
   top: 320px;
   left:250px;
 }
@@ -86,11 +94,32 @@
   left:350px;
 }
 
-
 .buildingpos div{
+<<<<<<< HEAD
    display: bla;
+=======
+  display: none;
+>>>>>>> 977ffac45ab681b6b8199d5392f81e99a1a161f9
 }
 
 .building_info_field {
   color: #000;
 }
+<<<<<<< HEAD
+=======
+
+.pfeil{
+  font-size: 20px;
+  top: 20px;
+  float: right;
+}
+
+.pfeil:hover{
+   background-color: transparent;
+   text-decoration: none;
+}
+
+.planet_info_anzeige{
+   right: 50px;
+}
+>>>>>>> 977ffac45ab681b6b8199d5392f81e99a1a161f9

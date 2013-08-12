@@ -1,27 +1,44 @@
-<p id="notice"><%= notice %></p>
-
-
 <div class="planetbox">
   <div class="ressources">
 
     <div class="ressource_item_anzeige" title="Bevölkerung">
       <%= image_tag('/images/icons/menschen32px.png') %>
-      <%= @planet.population %> / <%= @planet.maxpopulation %>
+
+      <% if @planet.maxpopulation > 9999 %>
+          <%= @planet.population / 1000%> <%= "k" %> / <%= @planet.maxpopulation / 1000%> <%= "k" %>
+      <%else %>
+          <%= @planet.population%> / <%= @planet.maxpopulation%>
+      <% end %>
     </div>
 
     <div class="ressource_item_anzeige" title="Energie">
       <%= image_tag('/images/icons/energy32px.png') %>
-      <%= @planet.energy %> / <%= @planet.maxenergy %>
+
+      <% if @planet.maxenergy > 9999 %>
+          <%= @planet.energy/ 1000%> <%= "k" %> / <%= @planet.maxenergy / 1000%> <%= "k" %>
+      <% else %>
+          <%= @planet.energy%> / <%= @planet.maxenergy%>
+      <% end %>
     </div>
 
     <div class="ressource_item_anzeige" title="Eisen">
       <%= image_tag('/images/icons/eisen32px.png') %>
-      <%= @planet.ore %> / <%= @planet.maxore %>
+
+      <% if @planet.maxore > 9999 %>
+          <%= @planet.ore/ 1000%> <%= "k" %> / <%= @planet.maxore / 1000%> <%= "k" %>
+      <% else %>
+          <%= @planet.ore%> / <%= @planet.maxore%>
+      <% end %>
     </div>
 
     <div class="ressource_item_anzeige" title="Kristalle">
       <%= image_tag('/images/icons/kristall_blau32px.png') %>
-      <%= @planet.crystal %> / <%= @planet.maxcrystal  %>
+
+      <% if @planet.maxcrystal > 9999 %>
+          <%= @planet.crystal/ 1000%> <%= "k" %> / <%= @planet.maxcrystal / 1000%> <%= "k" %>
+      <% else %>
+      <%= @planet.crystal%> / <%= @planet.maxcrystal %>
+          <% end %>
     </div>
   </div>
 
@@ -31,11 +48,9 @@
   <div class="planetinfos">
 
 
-    <div class="planet_info_anzeige">
-
-      <div><%= link_to '↶', sunsystem_path(@planet.sunsystem) %></div>
-
-    </div>
+    <a class="pfeil" href="<%= sunsystem_path(@planet.sunsystem)%>"> <div>
+        ↶
+    </div></a>
 
     <div class="planet_info_anzeige">
 
@@ -83,6 +98,7 @@
   <div class="buildingsanzeige">
     <% b = @planet.buildings_to_hash%>
     <%  b.each do |h| %>
+<<<<<<< HEAD
         <div class="buildingpos buildingpos<%=h[0]%>" title="Name: <%= h[0]%>, Level:<%= h[1]%>"
             onclick="javascript:showBuildingInfo('<%= h[0].to_s %>')">
             <%= image_tag('/images/icons/eisen32px.png')%>
@@ -91,6 +107,20 @@
               <p class="building_info_field">Informationen dazu: <%= h[0].to_s %><br />
                  Mehr...</p>
             </div>
+=======
+        <div class="buildingpos buildingpos<%=h[0]%>" title="Name: <%= h[0]%>, Level:<%= h[1]%>" onmouseover="javascript:showBuildingInfo('<%= h[0].to_s %>')">
+          <% lvl=h[1] %>
+          <% if h[0].to_s == "Oremine" then lvl = h[1] / 2 end %>
+          <%= image_tag("/images/buildings/" +h[0].to_s+ "/" + h[0].to_s+lvl.to_s+".png")%>
+          <div id="building_info_<%= h[0].to_s %>">
+            <form action="" method="get">
+              <input type="hidden" name="bid" value="<%= 42 %>" />
+              <input type="submit" name="upgrade" value="Upgraden" />
+            </form>
+            <p class="building_info_field">Informationen dazu: <%= h[0].to_s %><br />
+                Mehr...</p>
+          </div>
+>>>>>>> 977ffac45ab681b6b8199d5392f81e99a1a161f9
         </div>
     <%end%>
     </div>
