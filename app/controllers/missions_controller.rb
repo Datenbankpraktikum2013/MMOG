@@ -1,6 +1,6 @@
 class MissionsController < ApplicationController
   # before_action :set_mission, only: [:show, :edit, :update, :destroy]
-
+  before_filter :authenticate_user!
   # GET /missions
   # GET /missions.json
   def index
@@ -10,12 +10,12 @@ class MissionsController < ApplicationController
 
     @susy_names_hash = Hash.new
     @sunsystems.each do |sunsystem|
-      @susy_names_hash[sunsystem.id] = sunsystem.name
+      @susy_names_hash[sunsystem.id] = sunsystem.y.to_s + " &sdot; " + sunsystem.name
     end
     
     @planets_names_hash = Hash.new
     @planets.each do |planet|
-      @planets_names_hash[planet.id] = planet.name
+      @planets_names_hash[planet.id] = planet.z.to_s + " &sdot; " + planet.name
     end
       
     @susy_hash = Hash.new
