@@ -303,7 +303,7 @@ class User < ActiveRecord::Base
   end
 
   def system_notify(prefix,subject,message)
-    self.messages.create(:subject=>'['+prefix+']'+subject,:body=>message)
+    self.messages.create(:subject=>'['+prefix+'] '+subject,:body=>message)
   end
 
   def add_score value
@@ -322,7 +322,7 @@ class User < ActiveRecord::Base
   ###########STATIC##############
   def self.system_notify_all(subject,message)
     User.all.each do |user|
-      user.messages.create(:subject=>'[Systemweit]'+subject,:body=>message)
+      user.messages.create(:subject=>'[Systemweit] '+subject,:body=>message)
     end
   end
 

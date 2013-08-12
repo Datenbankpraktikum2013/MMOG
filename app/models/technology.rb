@@ -7,6 +7,10 @@ class Technology < ActiveRecord::Base
 
   has_many :technology_requires, :foreign_key => :tech_id
 
+  @@cached_technology_cost = {}
+  @@cached_tech_require = {}
+  @@cached_technology_requirements = []
+  @@cached_research_duration = {}
 
   def abort_technology u
     user =  User.find u
@@ -25,12 +29,15 @@ class Technology < ActiveRecord::Base
     #Überprüfe, ob User alle Vorraussetzungen zum Upgraden erfüllt
     if technology_require? user
 
+
       #Forscht der User grade?
       if user.user_setting.researching != 0 then
         puts "Research in progress!"
 
       else
         duration = get_research_duration user
+
+
 
         #transaction do
           #Speichere aktuelle Forschung + Forschungsende
@@ -39,7 +46,8 @@ class Technology < ActiveRecord::Base
 
           #ziehe Geld ab
           user.update_attribute :money, (user.money - get_technology_cost(user) )
-
+          key = self.id.to_s+user.username.to_s
+          @@cached_technology_cost.delete(key)
           ####
           Resque.enqueue_in(duration.second, ResearchTechnology, user.id, id )
           #update_uservalues user
@@ -70,6 +78,7 @@ class Technology < ActiveRecord::Base
 
     #Setze User-Forschung auf 0 -> Ende
     user.user_setting.update_attribute :researching, 0
+    clear_cache(user)
     user.system_notify( 'Forschung', title, ' Technologie: '+title+' Stufe '+new_rank.to_s+' erfolgreich erforscht.')
     #TechnologiesController.page_refresh
   end
@@ -105,14 +114,20 @@ class Technology < ActiveRecord::Base
   #
   def get_research_duration(user)
 
-   record = user_technologies.where(:user => user).first
+    key = id.to_s + user.username.to_s
+    if !@@cached_research_duration.has_key?( key )
 
-    if !record.blank? then
-      return  (((1.3**record.rank) * duration) / user.user_setting.increased_research).round(1)
+      record = user_technologies.where(:user => user).first
 
-    else
-      return (duration / user.user_setting.increased_research).round(1)
-   end
+      if !record.blank? then
+        @@cached_research_duration[key] =  (((1.3**record.rank) * duration) / user.user_setting.increased_research).round(1)
+
+      else
+        @@cached_research_duration[key] = (duration / user.user_setting.increased_research).round(1)
+      end
+    end
+
+    @@cached_research_duration[key]
   end
 
   def building_rank_require?(user)
@@ -156,37 +171,42 @@ class Technology < ActiveRecord::Base
   end
 
   #Gibt false zurück wenn Technologien nicht erfüllt
+
   def tech_require?(user)
+    key = id.to_s + user.username.to_s
 
-    okay = true
-    technology_requires.find_each do |i|
+    if !@@cached_tech_require.has_key?( key )
 
-      if i.pre_tech_id != 0
-        #u = User.find(user)
-        rank = user.user_technologies.where(:technology_id => i.pre_tech_id).first
-        #rank = user_technologies.where(:user_id => user).first
+      @@cached_tech_require[key] = true
+      technology_requires.find_each do |i|
 
-        if rank.blank? then
+        if i.pre_tech_id != 0
+          #u = User.find(user)
+          rank = user.user_technologies.where(:technology_id => i.pre_tech_id).first
+          #rank = user_technologies.where(:user_id => user).first
 
-          puts 'Technology_id: ' + i.pre_tech_id.to_s
-          puts 'Technology_rank: has: '+ '0' + ' need: '+i.pre_tech_rank.to_s
-          puts 'Name: '   + name.to_s
-          okay=false
+          if rank.blank? then
 
-        elsif rank.rank < i.pre_tech_rank && i.pre_tech_rank != 0
+            puts 'Technology_id: ' + i.pre_tech_id.to_s
+            puts 'Technology_rank: has: '+ '0' + ' need: '+i.pre_tech_rank.to_s
+            puts 'Name: '   + name.to_s
+            @@cached_tech_require[key]=false
 
-          puts 'Fehlende Voraussetzung'
-          puts 'Technology_id: ' + i.pre_tech_id.to_s
-          puts 'Technology_rank: has:'+ rank.rank.to_s + ' need: '+i.pre_tech_rank.to_s
-          puts 'Name: '   + name.to_s
-          okay=false
+          elsif rank.rank < i.pre_tech_rank && i.pre_tech_rank != 0
 
+            puts 'Fehlende Voraussetzung'
+            puts 'Technology_id: ' + i.pre_tech_id.to_s
+            puts 'Technology_rank: has:'+ rank.rank.to_s + ' need: '+i.pre_tech_rank.to_s
+            puts 'Name: '   + name.to_s
+            @@cached_tech_require[key]=false
+
+
+          end
 
         end
-
       end
     end
-    return okay
+    @@cached_tech_require[key]
   end
 
   def cost_required?(user)
@@ -206,14 +226,22 @@ class Technology < ActiveRecord::Base
 
   def get_technology_cost(user)
 
-    record = user_technologies.where(:user_id => user).first
+    hashkey = id.to_s + user.username.to_s
 
-    if !record.blank? then
+    if !@@cached_technology_cost.has_key?(hashkey) # || @@cached_technology_cost[name].nil?)
+      #@@cached_technology_cost = Hash.new
+      record = user_technologies.where(:user_id => user).first
 
-      return ((1.5**record.rank) * cost).round(0)
-    else
-      return cost.round(0)
+      if !record.blank? then
+
+        @@cached_technology_cost[hashkey] = ((1.5**record.rank) * cost).round(0)
+      else
+        @@cached_technology_cost[hashkey] = cost.round(0)
+      end
     end
+
+    @@cached_technology_cost[hashkey]
+
   end
 
   def get_technology_rank(user)
@@ -232,31 +260,42 @@ class Technology < ActiveRecord::Base
     description
   end
 
-  def get_requirements
-    requirements = ''
 
-    technology_requires.find_each do |tech|
-      unless tech.pre_tech_id == 0
-        requirements << Technology.find(tech.pre_tech_id).title.to_s
-        if tech.pre_tech_rank != 1
-          requirements << ': ' << tech.pre_tech_rank.to_s
+  def get_requirements
+
+    if @@cached_technology_requirements[id].nil?
+      @@cached_technology_requirements[id] = ''
+
+      technology_requires.find_each do |tech|
+        unless tech.pre_tech_id == 0
+          @@cached_technology_requirements[id] << Technology.find(tech.pre_tech_id).title.to_s
+          if tech.pre_tech_rank != 1
+            @@cached_technology_requirements[id] << ': ' << tech.pre_tech_rank.to_s
+          end
+          @@cached_technology_requirements[id] << ', '
         end
-        requirements << ', '
+      end
+
+      len = @@cached_technology_requirements[id].length
+      if len != 0
+        @@cached_technology_requirements[id] = @@cached_technology_requirements[id][0..(len-3)]
+      else
+        @@cached_technology_requirements[id] = "Keine"
       end
     end
-
-    len = requirements.length
-    if len != 0
-      requirements = requirements[0..(len-3)]
-    else
-      requirements = "Keine"
-    end
-
+    @@cached_technology_requirements[id]
 
   end
 
+  def clear_cache(user)
+    key = id.to_s+user.username.to_s
+    @@cached_tech_require.delete( key )
+    @@cached_technology_cost.delete ( key )
+    @@cached_research_duration.delete( key )
+  end
 
-
-
+  def test_view_technology_cost
+    @@cached_technology_cost
+  end
 
 end

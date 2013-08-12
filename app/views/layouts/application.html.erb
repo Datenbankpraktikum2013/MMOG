@@ -12,7 +12,7 @@
 		</style>
 	</head>
 	<body>
-
+    <br>
     <div class="container">
       <div class="row">
         <div class="span12" align="center">
@@ -23,7 +23,7 @@
 	<div class="container">
 		<div class="row">
 		 	<div class="span2">
-		 		<ul class="nav nav-pills nav-stacked nav-highlight">
+              <ul class="nav nav-pills nav-stacked">
 		 			<li class="active">
 		 				<a href="#">
 			 				<% if controller_name == 'welcome'%>
@@ -41,8 +41,10 @@
                             <% elsif controller_name == 'technologies' %>
                                 Technlogien
                     	    <% elsif controller_name == 'reports' %>
-                                Berichte	
-                            <%end %>
+                                Berichte
+                          <% elsif controller_name == 'impressum' %>
+                              Berichte
+                        <%end %>
 		 				</a>
 		 			</li>
 		  			<li><a href="/">Start</a></li>
@@ -59,7 +61,13 @@
 		  			<% end %>
 				</ul>
 		  	</div>
-		  	<div class="span8">
+
+          <div class="span8">
+            <% if user_signed_in? %>
+                <div class="well">
+                  Hier soll noch eine Übersicht über allgemeine Spielerressourcen hin.
+                </div>
+            <%end%>
 		  		<div class="well">
 		  			<p id="notice"><%= notice %></p>
 		  			<%= yield() %>
@@ -105,7 +113,7 @@
           <ul>
             <li>Bug melden</li>
             <li>FAQ</li>
-            <li>Impressum</li>
+            <li>Imperssum</li>
           </ul>
         </div>
 	</div>
