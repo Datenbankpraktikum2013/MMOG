@@ -98,7 +98,7 @@
   <div class="buildingsanzeige">
     <% b = @planet.buildings_to_hash%>
     <%  b.each do |h| %>
-<<<<<<< HEAD
+
         <div class="buildingpos buildingpos<%=h[0]%>" title="Name: <%= h[0]%>, Level:<%= h[1]%>"
             onclick="javascript:showBuildingInfo('<%= h[0].to_s %>')">
             <%= image_tag('/images/icons/eisen32px.png')%>
@@ -107,20 +107,6 @@
               <p class="building_info_field">Informationen dazu: <%= h[0].to_s %><br />
                  Mehr...</p>
             </div>
-=======
-        <div class="buildingpos buildingpos<%=h[0]%>" title="Name: <%= h[0]%>, Level:<%= h[1]%>" onmouseover="javascript:showBuildingInfo('<%= h[0].to_s %>')">
-          <% lvl=h[1] %>
-          <% if h[0].to_s == "Oremine" then lvl = h[1] / 2 end %>
-          <%= image_tag("/images/buildings/" +h[0].to_s+ "/" + h[0].to_s+lvl.to_s+".png")%>
-          <div id="building_info_<%= h[0].to_s %>">
-            <form action="" method="get">
-              <input type="hidden" name="bid" value="<%= 42 %>" />
-              <input type="submit" name="upgrade" value="Upgraden" />
-            </form>
-            <p class="building_info_field">Informationen dazu: <%= h[0].to_s %><br />
-                Mehr...</p>
-          </div>
->>>>>>> 977ffac45ab681b6b8199d5392f81e99a1a161f9
         </div>
     <%end%>
     </div>
