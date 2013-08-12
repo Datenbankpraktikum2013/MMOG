@@ -6,7 +6,7 @@ module TechnologiesHelper
                       :description => ' Erhöht dein Einkommen pro Stufe um x% '})
     Technology.create({:name => 'increased_ironproduction', :factor => 1.05, :cost => 80, :maxrank => -1,:duration => 1, :title => "größere Eisenerzproduktion",
                        :description => ' Erhöht deine Eisenproduktion pro Stufe x% '})
-    Technology.create({:name => 'increased_research', :factor => 1.2, :cost => 140, :maxrank => -1,:duration => 1, :title => "kürzere Forschungsdauert",
+    Technology.create({:name => 'increased_research', :factor => 1.2, :cost => 140, :maxrank => -1,:duration => 1, :title => "kürzere Forschungsdauer",
                        :description => ' Verringert deine Forschungsdauer pro Stufe um 2x% '})
     Technology.create({:name => 'increased_energy_efficiency', :factor => 1.02, :cost => 90, :maxrank => -1,:duration => 1, :title => "bessere Energieeffizienz",
                        :description => ' Veringert deine Energiekosten pro Stufe x% '})
