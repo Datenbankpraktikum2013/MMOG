@@ -42,6 +42,8 @@ Mmog::Application.routes.draw do
 
   resources :planets
 
+  resources :impressum
+
   post "requests" => "requests#create"
   post "requests/reaction"=>"requests#reaction"
   get "starport" => "starport#index"
