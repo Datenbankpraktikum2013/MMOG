@@ -1,4 +1,8 @@
-<div class="planetbox">
+<% a = @planet.special.to_s%>
+<%test=('/images/planets/planet'+a+'bg.png').to_s %>
+
+<div class="planetbox" style='background-image:url("<%=test %>");background-repeat:no-repeat;background-size:contain;background-position:center;'>
+
   <div class="ressources">
 
     <div class="ressource_item_anzeige" title="Bevölkerung">
