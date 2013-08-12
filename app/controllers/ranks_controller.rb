@@ -36,7 +36,7 @@ class RanksController < ApplicationController
       if current_user.alliance!=nil and current_user.alliance.permission?(current_user,"edit_ranks") and @rank.save
         format.html { redirect_to edit_alliance_url(@rank.alliance), notice: GameSettings.get("SUCCESSMSG_RANK_CREATED") }
       else
-        format.html { redirect_to rank.alliance, notice: GameSettings.get("ERRMSG_RANK_CREATED") }
+        format.html { redirect_to @rank.alliance, notice: GameSettings.get("ERRMSG_RANK_CREATED") }
       end
     end
   end

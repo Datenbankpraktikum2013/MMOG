@@ -56,6 +56,8 @@
                         <li><a href="<%= reports_path %>">Berichte <span class="badge" id="unreadreports"><%= Report.unread_reports(current_user.id) %></span> </a></li>
                         <li><a href="<%= relationships_path %>">Kontaktliste</a></li>
                         <li><a href="<%= technologies_path %>">Technologiebaum</a></li>
+                        <li><a href="<%= fleets_path %>">Deine Flotten</a></li>
+                        <li><a href="<%= missions_path %>">Missionen</a></li>
 		  				<li><a href="<%= alliances_path %>"><%= if current_user.alliance.nil? then "Allianz gründen" else ("Allianz `"+ current_user.alliance.name + "`") end %></a></li>
 		  			<% end %>
 				</ul>
