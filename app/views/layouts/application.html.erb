@@ -24,7 +24,7 @@
                                 <%= @planet.name unless @planet.nil? %> (Planet)
                             <% elsif controller_name == 'sunsystems' %>
                                 <%= @sunsystem.name unless @sunsystem.nil? %> (Sonnensystem)
-                        <% elsif controller_name == 'galaxies' %>
+                            <% elsif controller_name == 'galaxies' %>
                                 <%= if @galaxy.nil? then "Weltkarte" else @galaxy.name+" (Galaxy)" end %>
                             <% elsif controller_name == 'messages' %>
 			 					Nachrichten
@@ -37,9 +37,6 @@
                     	    <% elsif controller_name == 'reports' %>
                                 Berichte	
                             <%end %>
-                            <% elsif controller_name == 'reports' %>
-                                Berichte
-			 				<%end %>
 		 				</a>
 		 			</li>
 		  			<li><a href="/">Start</a></li>
