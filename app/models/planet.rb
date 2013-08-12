@@ -332,7 +332,6 @@ class Planet < ActiveRecord::Base
     self.save
 
     Resque.enqueue_in(build_time.second, BuildBuildings, id_array)
-
   end
 
   def delete_building_job(type_id)

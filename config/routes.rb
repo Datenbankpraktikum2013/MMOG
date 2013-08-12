@@ -8,7 +8,7 @@ Mmog::Application.routes.draw do
   
   resources :techstages #kommt spaeter noch raus
 
-  resources :reports
+  resources :reports, only: [:show, :index, :destroy]
 
   resources :shipcounts #kommt spaeter noch raus
 
@@ -41,6 +41,8 @@ Mmog::Application.routes.draw do
   resources :sunsystems
 
   resources :planets
+
+  resources :impressum
 
   post "requests" => "requests#create"
   post "requests/reaction"=>"requests#reaction"
@@ -77,6 +79,8 @@ Mmog::Application.routes.draw do
   get '/json/check' => 'missions#check_mission'
 
   get '/confirm/send' => 'missions#send_fleet'
+
+  post 'planets/upgrade_building' => 'planets#upgrade_building'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

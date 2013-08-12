@@ -74,3 +74,15 @@
   float: top;
 }
 
+.pfeil{
+  font-size: 20px;
+  top: 20px;
+  float: right;
+  color: black;
+  background-color: #ffffff;
+}
+
+.pfeil:hover{
+  background-color: transparent;
+  text-decoration: none;
+}

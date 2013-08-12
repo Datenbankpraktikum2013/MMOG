@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   
   #callback on create
   after_create :set_initial_money
+  after_create :set_initial_activity
   after_create :claim_starplanet
   after_create :init_usersettings
 
@@ -50,6 +51,11 @@ class User < ActiveRecord::Base
 
   def online?
     last_activity > 5.seconds.ago
+  end
+
+  def set_initial_activity()
+    self.last_activity=Time.now
+    self.save
   end
 
   #claim startplanet
