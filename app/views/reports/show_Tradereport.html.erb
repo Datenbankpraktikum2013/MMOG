@@ -1,0 +1,15 @@
+<h1>Handelsbericht</h1>
+<p id="notice"><%= notice %></p>
+<p>
+  Du hast am <strong><%= @report.fightdate.strftime('%d.%m.%y') %> um 
+  <%= @report.fightdate.strftime('%H:%M') %> Uhr</strong> Ressourcen zum Planeten
+   <strong><%= @report.defender_planet.name %></strong> gebracht.
+
+<h3>Ressourcen:</h3>
+<p>
+	<%= 'Erz:' + @report.reportable.ore.to_s + ', Space Cash: ' + @report.reportable.space_cash.to_s +
+ 		', Crystal:' + @report.reportable.crystal.to_s %>
+</p>
+</p>
+
+<%= link_to 'Zurück', :back, remote: true %>

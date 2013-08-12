@@ -12,10 +12,18 @@
 		</style>
 	</head>
 	<body>
+    <br>
+    <div class="container">
+      <div class="row">
+        <div class="span12" align="center">
+           <img src="/images/backgrounds/balu.png" class="img-rounded" >
+        </div>
+      </div>
+    </div> <br>
 	<div class="container">
 		<div class="row">
 		 	<div class="span2">
-		 		<ul class="nav nav-pills nav-stacked nav-highlight">
+              <ul class="nav nav-pills nav-stacked">
 		 			<li class="active">
 		 				<a href="#">
 			 				<% if controller_name == 'welcome'%>
@@ -28,15 +36,15 @@
                                 <%= if @galaxy.nil? then "Weltkarte" else @galaxy.name+" (Galaxy)" end %>
                             <% elsif controller_name == 'messages' %>
 			 					Nachrichten
-			 				<% elsif controller_name == 'relationships' %>
-			 					Kontaktliste	
 			 				<% elsif controller_name == 'alliances' %>
 			 					Allianzen
                             <% elsif controller_name == 'technologies' %>
                                 Technlogien
                     	    <% elsif controller_name == 'reports' %>
-                                Berichte	
-                            <%end %>
+                                Berichte
+                          <% elsif controller_name == 'impressum' %>
+                              Berichte
+                        <%end %>
 		 				</a>
 		 			</li>
 		  			<li><a href="/">Start</a></li>
@@ -46,14 +54,22 @@
                         <li><a href="<%= planet_path(current_user.home_planet) %>">Hauptplanet</a></li>
 		  				<li><a href="<%= messages_path %>">Nachrichten <span id="msgupdate" class="badge"><%= current_user.unread_messages %></span> </a></li>
                         <li><a href="<%= reports_path %>">Berichte <span class="badge" id="unreadreports"><%= Report.unread_reports(current_user.id) %></span> </a></li>
-                        <li><a href="<%= relationships_path %>">Kontaktliste</a></li>
                         <li><a href="<%= technologies_path %>">Technologiebaum</a></li>
+                        <li><a href="<%= fleets_path %>">Deine Flotten</a></li>
+                        <li><a href="<%= missions_path %>">Missionen</a></li>
 		  				<li><a href="<%= alliances_path %>"><%= if current_user.alliance.nil? then "Allianz gründen" else ("Allianz `"+ current_user.alliance.name + "`") end %></a></li>
 		  			<% end %>
 				</ul>
 		  	</div>
-		  	<div class="span8">
+
+          <div class="span8">
+            <% if user_signed_in? %>
+                <div class="well">
+                  Hier soll noch eine Übersicht über allgemeine Spielerressourcen hin.
+                </div>
+            <%end%>
 		  		<div class="well">
+		  			<p id="notice"><%= notice %></p>
 		  			<%= yield() %>
 		  		</div>
 			</div>
@@ -72,13 +88,30 @@
 						<%end %>
 					<% end %>
 				</div>
-			</div>
-		</div>
+				<div class="well">					
+					<% if user_signed_in? %>
+						<a href="<%= relationships_path %>">Kontakte</a><br>
+						<% @friends=current_user.friends %>						
+							<% unless @friends==nil %>
+							<% @friends.each do |friend| %>
+								<%= friend.username %>
+								<% if friend.online? %>
+									(<font color="green">online</font>)<br>
+								<% else %>
+									(<font color="red">friend.updated_at</font>)<br>
+								<% end %>
+							<% end %>
+						<% end %>				
+					<% end %>
+				</div>	
+			</div>		
+		</div>			
+	</div>
         <div class="footer">
           <ul>
             <li>Bug melden</li>
             <li>FAQ</li>
-            <li>Impressum</li>
+            <li>Imperssum</li>
           </ul>
         </div>
 	</div>
@@ -89,6 +122,11 @@
 	        d = document.getElementById('msgupdate');
 	        d.innerHTML = value
 	    };
+
+	    function update_reports(value){
+	    	d = document.getElementById('unreadreports')
+	    	d.innerHTML = value
+	    };
 		
 		function refresh(){
 			$.getJSON('/json/fetch_unread_msgs.json', function(data) {
@@ -97,6 +135,7 @@
 					items.push(val);
 				});
 				update_messages(items[0]);
+				update_reports(items[1]);
 			});
 		};
 

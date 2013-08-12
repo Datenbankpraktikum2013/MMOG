@@ -46,6 +46,11 @@ GameSettings.set "SUCCESSMSG_RANK_UPDATE", "Rang wurde erfolgreich geändert."
 GameSettings.set "ERRMSG_RANK_UPDATE", "Rang konnte nicht geändert werden."
 GameSettings.set "SUCCESSMSG_RANK_DESTROY", "Rang wurde erfolgreich gelöscht."
 GameSettings.set "ERRMSG_RANK_DESTROY", "Rang konnte nicht gelöscht werden."
+GameSettings.set "ACCEPTMSG_REQUESTREACTION","Du hast diese Anfrage angenommen."
+GameSettings.set "DECLINEMSG_REQUESTREACTION","Du hast diese Anfrage abgelehnt."
+GameSettings.set "ERRMSG_REQUESTREACTION", "Du hast keine Erlaubnis für diese Aktion."
+GameSettings.set "SUCCESSMSG_REQUESTCREATE", "Deine Anfrage wurde erfolgreich abgesendet."
+GameSettings.set "ERRMSG_REQUESTCREATE", "Deine Anfrage konnte nicht gesendet werden."
 GameSettings.set "JAVASCRIPT_REFRESH_UNREAD_MESSAGES_INTERVAL", 10000 #msec
 
 GalaxiesHelper.generateAt(0,0)
