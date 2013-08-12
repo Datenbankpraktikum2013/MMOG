@@ -127,7 +127,7 @@ class Alliance < ActiveRecord::Base
 		    elsif action=="show_edit"
 		    	return can_see_edit?(user)
 		    elsif action=="destroy"
-		    	return user.is_founder
+		    	return user.rank.is_founder
 		    end
 		    return false
 	  	end
