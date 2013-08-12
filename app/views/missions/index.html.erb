@@ -31,8 +31,7 @@
     <button id="spy" type="button" class="btn btn-warning">Spy</button>
     <button id="attack" type="button" class="btn btn-danger">Attack</button>
   </div>
-  <script src="/twitter-bootstrap/twitter-bootstrap-v2/js/bootstrap-tooltip.js"></script>
-  <script src="/twitter-bootstrap/twitter-bootstrap-v2/js/bootstrap-popover.js"></script>
+   
   <div id="own-ships" style="display:none">
     <h3>Wähle deine Flotte</h3>
     <table class="table table-striped">
@@ -46,38 +45,44 @@
       <tbody>
         <% @fleets.each do |fleet| %>
           <tr>
-            <br>
             <td><%= fleet.start_planet.name %></td>
             <td fleet="<%=fleet.id%>">
-            <div>
-              <a type="button" fleet="<%=fleet.id%>" class="btn btn-link ship-info" data-content="And here's some amazing content. It's very engaging. right?" title="" data-toggle="popover" data-original-title="A Title">Schiffe</a>
-            </div>
-            <div class="info-<%= fleet.id %>" style="display:none">
-              <table class"table">
+              <a type="button" fleet="<%=fleet.id%>" class="btn btn-link ship-info" data-toggle="tooltip" title="Klicken für Informationen">Schiffe</a>
+            </td>
+            <td><button planet="<%=fleet.start_planet.id%>" class="fleet-choice" fleet="<%=fleet.id%>" type="button" class="btn btn-default">OK</button></td>
+          </tr>
+          
+          <tr>
+        <td colspan="5">
+          <div class="info-<%= fleet.id %>" style="display:none">
+              <table class"table table-condensed">
                 <thead>
                   <tr>
                     <th>Schiffsname</th>
                     <th>Angriff</th>
                     <th>Verteidigung</th>
                     <th>Geschwindigkeit</th>
+                    <th>Ladekapazität</th>
                     <th>Anzahl</th>
                   </tr>
                 </thead>
+                <tbody>
               <% fleet.get_ships.each do |ship, amount| %>
                 <tr>
                   <td><%= ship.name %></td>
                   <td><%= ship.offense %></td>
                   <td><%= ship.defense %></td>
                   <td><%= ship.velocity %></td>
+                  <td><%= ship.ressource_capacity %></td>
                   <td><%= amount %></td>
                 </tr>
                 <% end%>
+                </tbody>
               </table>
             </div>
-            </td>
-            <td><button planet="<%=fleet.start_planet.id%>" class="fleet-choice" fleet="<%=fleet.id%>" type="button" class="btn btn-default">OK</button></td>
-          </tr>
-          <% end %>
+        </td>
+      </tr>
+      <% end %>
       </tbody>
     </table>
   </div>
@@ -204,7 +209,7 @@
         ship_id = $(this).attr("ship");
         amount = parseInt($(this).val());
         amount_input = parseInt($(this).parent().prev().html());
-        if (amount < amount_input && amount > 0){
+        if (amount <= amount_input && amount > 0){
           $("#offense-"+ship_id).html(ships[ship_id]["offense"] * amount);
           $("#defense-"+ship_id).html(ships[ship_id]["defense"] * amount);
           
@@ -458,10 +463,10 @@
         $("#send").append('<input type="hidden" name="planet" value="'+planet_id+'">');
       });
 
-      // $('.ship-info').on("mouseover", function(){
-      //   id = $(this).attr("fleet");
-      //   $(".ship-info[fleet="+id+"]").tooltip('toggle');
-      // });
+      $('.ship-info').on("mouseover", function(){
+        id = $(this).attr("fleet");
+        $(".ship-info[fleet="+id+"]").tooltip('toggle');
+      });
       $(".ship-info").on("click", function(){
         id = $(this).attr("fleet");
         $(".info-"+id).animate({ height: 'toggle', opacity: 'toggle' }, 'slow');

@@ -81,20 +81,25 @@
 					<% end %>
 				</div>
 				<div class="well">					
-					<% if user_signed_in? %>
-						<a href="<%= relationships_path %>">Kontakte</a><br>
-						<% @friends=current_user.friends %>						
-							<% unless @friends==nil %>
-							<% @friends.each do |friend| %>
-								<%= friend.username %>
-								<% if friend.online? %>
-									(<font color="green">online</font>)<br>
-								<% else %>
-									(<font color="red">friend.updated_at</font>)<br>
-								<% end %>
-							<% end %>
-						<% end %>				
-					<% end %>
+					<table class="table table-condensed">
+						<% if user_signed_in? %>
+							<a href="<%= relationships_path %>"><font color ="blue">Kontakte</font></a><br>
+							<% @friends=current_user.friends %>						
+								<% unless @friends==nil %>								
+								<% @friends.each do |friend| %>
+								<tr>
+									<td><%= friend.username %><br></td>
+									<% if friend.online? %>
+										<td><font color="green">online</font></td>
+									<% else %>
+										<td><font color="red">offline</font></td>
+									<% end %>
+									<td><%= link_to 'MSG', new_message_path+'/?recipient='+friend.username , class: 'label label-info', :style=>'color:#FFFFFF;'%></td>
+									</tr>
+								<% end %>								
+							<% end %>											
+						<% end %>
+					</table>
 				</div>	
 			</div>		
 		</div>			
