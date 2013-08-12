@@ -1,6 +1,6 @@
 class FleetsController < ApplicationController
   before_action :set_fleet, only: [:show, :edit, :update, :destroy]
-
+  before_filter :authenticate_user!
   # GET /fleets
   # GET /fleets.json
   def index
