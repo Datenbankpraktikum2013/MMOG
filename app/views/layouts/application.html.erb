@@ -54,6 +54,7 @@
 		  	</div>
 		  	<div class="span8">
 		  		<div class="well">
+		  			<p id="notice"><%= notice %></p>
 		  			<%= yield() %>
 		  		</div>
 			</div>
@@ -89,6 +90,11 @@
 	        d = document.getElementById('msgupdate');
 	        d.innerHTML = value
 	    };
+
+	    function update_reports(value){
+	    	d = document.getElementById('unreadreports')
+	    	d.innerHTML = value
+	    };
 		
 		function refresh(){
 			$.getJSON('/json/fetch_unread_msgs.json', function(data) {
@@ -97,6 +103,7 @@
 					items.push(val);
 				});
 				update_messages(items[0]);
+				update_reports(items[1]);
 			});
 		};
 

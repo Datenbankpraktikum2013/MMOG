@@ -29,7 +29,7 @@ class MessagesController < ApplicationController
   end
 
   def fetch_unread_msgs
-    object = {:response => current_user.unread_messages}
+    object = {:msgs => current_user.unread_messages,:reports => Report.unread_reports(current_user)}
     respond_to do |format|
       format.json { render json: object }
     end

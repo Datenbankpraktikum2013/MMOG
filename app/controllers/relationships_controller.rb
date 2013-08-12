@@ -18,7 +18,6 @@ class RelationshipsController < ApplicationController
     current_user.end_friendship!(@relationship.friend)
     respond_to do |format|
       format.html { redirect_to relationships_url }
-      format.json { head :no_content }
     end
   end
 
