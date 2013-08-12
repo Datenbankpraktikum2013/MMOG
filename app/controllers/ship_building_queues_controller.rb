@@ -69,10 +69,19 @@ class ShipBuildingQueuesController < ApplicationController
   end
 
   def destroy_queue
-    @ship_building_queue.remove_queue
-    respond_to do |format|
-      format.html { redirect_to starport_url  }
-      format.json { head :no_content }
+    if(current_user.id==@ship_building_queue.planet.user_id)
+      @ship_building_queue.remove_queue
+      respond_to do |format|
+        format.html { redirect_to starport_url  }
+        format.json { head :no_content }
+
+      end
+    else
+        respond_to do |format|
+        format.html { redirect_to starport_url  }
+        format.json { head :no_content }
+
+      end
     end
   end
     
