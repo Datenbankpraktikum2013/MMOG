@@ -23,7 +23,7 @@
 	<div class="container">
 		<div class="row">
 		 	<div class="span2">
-		 		<ul class="nav nav-pills nav-stacked nav-highlight">
+		 		<ul class="nav nav-pills nav-stacked">
 		 			<li class="active">
 		 				<a href="#">
 			 				<% if controller_name == 'welcome'%>
@@ -59,8 +59,26 @@
 		  			<% end %>
 				</ul>
 		  	</div>
-		  	<div class="span8">
-		  		<div class="well">
+
+          <div class="span8">
+            <% if user_signed_in? %>
+                <div class="well">
+                  <div class="inline">
+
+                    <div title="Geld">
+                      <%= image_tag('/images/icons/spacecash.png') %>
+                      <%= current_user.money%>
+                    </div>
+
+                    <div title="Planeten">
+                      <%= image_tag('/images/planets/anzeigeplanet.png') %>
+                      <%= current_user.planets.count%>
+                    </div>
+                    Hier soll noch eine Übersicht über allgemeine Spielerressourcen hin.
+                  </div>
+                </div>
+            <%end%>
+            <div class="well">
 		  			<p id="notice"><%= notice %></p>
 		  			<%= yield() %>
 		  		</div>
@@ -108,7 +126,7 @@
           <ul>
             <li>Bug melden</li>
             <li>FAQ</li>
-            <li>Impressum</li>
+            <li><a href="/impressum">Impressum</a></li>
           </ul>
         </div>
 	</div>
