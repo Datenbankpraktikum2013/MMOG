@@ -17,6 +17,16 @@ class FleetsController < ApplicationController
         end
       end
     end
+
+    @flying_fleets = Array.new
+    @based_fleets = Array.new
+    @fleets.each do |fleet|
+      if fleet.mission.id == 1
+        @based_fleets.push(fleet)
+      else
+        @flying_fleets.push(fleet)
+      end
+    end
   end
 
   # GET /fleets/1

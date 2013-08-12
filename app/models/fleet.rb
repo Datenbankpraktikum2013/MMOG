@@ -810,15 +810,14 @@ class Fleet < ActiveRecord::Base
     if (ore + crystal + credit) > self.get_free_capacity
       puts "Too much to load, have to split ressources"
       part = self.get_free_capacity / 3
-      self.ore += part - planet.take(:Ore, part)
-      self.crystal += part - planet.take(:Crystal, part)
-      self.credit += part - planet.take(:Money, part)
+      self.ore += planet.take(:Ore, part)
+      self.crystal += planet.take(:Crystal, part)
+      self.credit += planet.take(:Money, part)
     else
-      self.ore += ore - planet.take(:Ore, ore)
-      self.crystal += crystal - planet.take(:Crystal, crystal)
-      self.credit += credit - planet.take(:Money, credit)
+      self.ore += planet.take(:Ore, ore)
+      self.crystal += planet.take(:Crystal, crystal)
+      self.credit += planet.take(:Money, credit)
     end
-    puts "loaded #{self.ore} ore, #{self.crystal} crystal and #{self.credit} credit on fleet #{self.id}"
     self.save
   end
 
