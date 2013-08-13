@@ -77,10 +77,14 @@ Mmog::Application.routes.draw do
   get '/json/distance' => 'missions#get_distance'
   get '/json/fleetships' => 'missions#get_ships'
   get '/json/check' => 'missions#check_mission'
+  get '/json/breakup' => 'fleets#breakup'
+  get '/json/unload' => 'fleets#unload'
 
   get '/confirm/send' => 'missions#send_fleet'
 
   post 'planets/upgrade_building' => 'planets#upgrade_building'
+
+  get 'alliances_overview' => 'alliances#overview'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

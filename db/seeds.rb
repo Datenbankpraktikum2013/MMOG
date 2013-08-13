@@ -102,6 +102,7 @@ Ship.find(10).buildingtypes << Buildingtype.where(name: "Starport", level: 3).fi
 Building.create({:planet_id => 1, :buildingtype_id => 1})
 Building.create({:planet_id => 1, :buildingtype_id => 2})
 Building.create({:planet_id => 1, :buildingtype_id => 54})
+Building.create({:planet_id => 1, :buildingtype_id => 30})
 Building.create({:planet_id => 2, :buildingtype_id => 1})
 Building.create({:planet_id => 2, :buildingtype_id => 2})
 Building.create({:planet_id => 2, :buildingtype_id => 51})
@@ -119,8 +120,8 @@ User.create(:email => 'demo3@demo.com',:password => 'password',:username=> 'demo
 User.create(:email => 'demo4@demo.com',:password => 'password',:username=> 'demo4',:money => 12000,:score => 0)
 
 alliance = Alliance.create(:name => "Test", :description => "Auch")
-alliance.users << User.find(1)
-alliance.set_founder(User.find(1))
+alliance.add_user(User.first)
+alliance.set_founder(User.first)
 alliance.add_user(User.find(2))
 
 # Testing values
@@ -191,5 +192,4 @@ Planet.find(1).give(:Energy, 10000)
 
    Planet.first.seen_by(User.first)
    Planet.first.seen_by(User.find(2))
-
 end

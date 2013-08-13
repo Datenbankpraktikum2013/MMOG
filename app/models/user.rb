@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   after_create :set_initial_money
   after_create :set_initial_activity
   after_create :claim_starplanet
-  after_create :init_usersettings
+  after_create :init_usersettings  
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
@@ -50,9 +50,9 @@ class User < ActiveRecord::Base
   @cache_visible_galaxies
 
   def online?
-    last_activity > 5.seconds.ago
+    self.last_activity>5.seconds.ago
   end
-
+  
   def set_initial_activity()
     self.last_activity=Time.now
     self.save
@@ -83,6 +83,7 @@ class User < ActiveRecord::Base
     if (relother==nil or relself==nil)
       return false
     else
+      #if both relations exist: destroy them
       relother.destroy
       relself.destroy
       return true
@@ -90,13 +91,11 @@ class User < ActiveRecord::Base
   end
 
   #accept invitation
-  def accept_friendship(relationship)
-    #not implemented      
-  end
+  #def accept_friendship(relationship)      
+  #end
 
-  def decline_friendship(relationship)
-    
-  end
+  #def decline_friendship(relationship)    
+  #end
 
   #change the pending status of the invitation
   def change_status(status)
@@ -313,6 +312,9 @@ class User < ActiveRecord::Base
   end
 
   def add_score value
+    unless alliance.nil?
+      alliance.add_score(value)
+    end
     update_attribute(:score, score + value)
   end
 

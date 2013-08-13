@@ -105,7 +105,7 @@ class AlliancesController < ApplicationController
     if current_user.alliance==nil and current_user.rank==nil
       @alliance = Alliance.new(alliance_params)
       respond_to do |format|
-        if @alliance.save and @alliance.set_founder(current_user) #save both
+        if @alliance.save and @alliance.add_user(current_user) and @alliance.set_founder(current_user) #save both
             format.html { redirect_to @alliance, notice: GameSettings.get("SUCCESSMSG_ALLIANCE_CREATED") }
             format.json { render action: 'show', status: :created, location: @alliance }
         else
@@ -138,6 +138,10 @@ class AlliancesController < ApplicationController
       format.html { redirect_to alliances_url }
       format.json { head :no_content }
     end
+  end
+
+  def overview
+    @alliances=Alliance.all
   end
 
   private

@@ -3,6 +3,7 @@ class Battlereport < ActiveRecord::Base
 	has_many :ships, :through => :shipcounts
 	belongs_to :winner, class_name: "User", foreign_key: "winner_id"
 	has_one :report, as: :reportable
+	has_and_belongs_to_many :buildingtypes
 
 	# modes: 0 = Gegner
 	#		 1 = Gegner, gebaeude zerstoert
@@ -31,7 +32,6 @@ class Battlereport < ActiveRecord::Base
 
 		@r.add_receiver(atk_fleet.user)
 		self.add_fleet_info(atk_fleet, 1)
-
 	end
 
 	def finish_battlereport(def_fleets, atk_fleet, defended=false)
@@ -68,6 +68,14 @@ class Battlereport < ActiveRecord::Base
 			# fleet.shipfleets.each do |shipfleet|
 
 			# end
+		end
+	end
+
+	def add_destroyed_buildings(buildings)
+		unless buildings.nil?
+			buildings.each do |buildingtype|
+				self.buildingtypes << buildingtype
+			end
 		end
 	end
 end
