@@ -35,7 +35,7 @@ class Alliance < ActiveRecord::Base
 
 	public
 	def add_score(value)
-	    update_attribute(:score, score + value)
+	    self.update_attribute(:score, score + value)
 	end		
 
 	#add user to alliance and set default rank

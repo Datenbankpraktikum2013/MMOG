@@ -4,6 +4,10 @@ class MissionsController < ApplicationController
   # GET /missions
   # GET /missions.json
   def index
+    get_value_helper
+  end
+
+  def get_value_helper
     @planets = current_user.visible_planets.uniq!
     @galaxies = current_user.visible_galaxies.uniq!
     @sunsystems = current_user.visible_sunsystems.uniq!
@@ -40,6 +44,18 @@ class MissionsController < ApplicationController
     @ships = Ship.get_property_hash
   end
 
+  def get_info
+    get_value_helper
+    hash = Hash.new
+    hash[:susy_hash] = @susy_hash
+    hash[:gala_hash] = @gala_hash
+    hash[:susy_names_hash] = @susy_names_hash
+    hash[:planets_names_hash] = @planets_names_hash
+    hash[:ships] = @ships
+
+    render :json => hash.to_json
+  end
+
   # GET /missions/1
   # GET /missions/1.json
   def show
@@ -47,13 +63,12 @@ class MissionsController < ApplicationController
   end
 
   # GET /json/distance
-  # NÖTIG????????????????????????
   # FEHLERBEHANDLUNG
   def get_distance()
     planet1 = Planet.find(params[:planet1])
     planet2 = Planet.find(params[:planet2])
-    distance = planet1.getDistance(planet2).to_json
-    render :json => distance
+    distance = planet1.getDistance(planet2)
+    render :json => {:distance => distance}
   end
 
   # GET /json/fleetships
@@ -63,7 +78,6 @@ class MissionsController < ApplicationController
     render :json => fleet.get_ships_ids.to_json
   end
 
-  # ESCAPEN????????????????????????????????????
   def check_mission()
     fehler = Array.new
     

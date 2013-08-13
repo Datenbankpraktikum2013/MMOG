@@ -52,6 +52,8 @@ GameSettings.set "ERRMSG_REQUESTREACTION", "Du hast keine Erlaubnis für diese A
 GameSettings.set "SUCCESSMSG_REQUESTCREATE", "Deine Anfrage wurde erfolgreich abgesendet."
 GameSettings.set "ERRMSG_REQUESTCREATE", "Deine Anfrage konnte nicht gesendet werden."
 GameSettings.set "JAVASCRIPT_REFRESH_UNREAD_MESSAGES_INTERVAL", 10000 #msec
+GameSettings.set "SUCCESSMSG_ALLIANCE_LEAVE", "Du bist nun nicht mehr Mitglied dieser Allianz."
+GameSettings.set "ERRMSG_ALLIANCE_LEAVE", "Du kannst diese Allianz nicht verlassen."
 
 GalaxiesHelper.generateAt(0,0)
 Buildingtype.init()
