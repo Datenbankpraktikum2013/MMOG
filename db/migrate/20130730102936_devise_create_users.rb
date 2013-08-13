@@ -36,8 +36,8 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string  :username,          :null => false
       t.integer :money,             :default => 0
       t.integer :score,             :default => 0
-      t.integer :alliance_id
-      t.integer :rank_id
+      t.integer :alliance_id,       :default => nil
+      t.integer :rank_id,           :default => nil
       t.timestamp :last_activity
 
       t.timestamps
