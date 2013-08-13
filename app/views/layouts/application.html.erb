@@ -44,6 +44,8 @@
                                 Berichte
                             <% elsif controller_name == 'relationships' %>	
                             	Freundesliste
+                            <% elsif controller_name == 'starport' %>	
+                            	Schiffswerfte
                             <%end %>
 		 				</a>
 		 			</li>
@@ -55,6 +57,7 @@
 		  				<li><a href="<%= messages_path %>">Nachrichten <span id="msgupdate" class="badge"><%= current_user.unread_messages %></span> </a></li>
                         <li><a href="<%= reports_path %>">Berichte <span class="badge" id="unreadreports"><%= Report.unread_reports(current_user.id) %></span> </a></li>
                         <li><a href="<%= technologies_path %>">Technologiebaum</a></li>
+                        <li><a href="<%= starport_path %>">Schiffswerften</a></li>
                         <li><a href="<%= fleets_path %>">Deine Flotten</a></li>
                         <li><a href="<%= missions_path %>">Missionen</a></li>
                         <li><a href="<%= relationships_path %>">Freundesliste</a></li>
@@ -78,7 +81,7 @@
                       <%= current_user.planets.count%>
                     </div>
                     <font color="red">Hier soll noch eine Übersicht über allgemeine Spielerressourcen hin.</font>
-                  </div>
+				</div>
                 </div>
             <%end%>
             <div class="well">

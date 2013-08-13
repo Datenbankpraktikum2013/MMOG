@@ -12,7 +12,7 @@ class StarportController < ApplicationController
     @queue=ShipBuildingQueue.where(planet_id: @planets)
     @time=Time
     
-    
+     
     
   end
 
@@ -32,18 +32,43 @@ class StarportController < ApplicationController
   def build
   	build_planet=Planet.find(params["planet"].first)
 		build_fleet=Fleet.where(mission: 1, origin_planet: build_planet)
+    
+    ship_array=Hash.new(Ship)
 
-  	params["ship"].each do |p|
-  		p[1].to_i.times do
-  			ShipBuildingQueue.insert(Ship.find(p[0]), Planet.find(params["planet"].first))
-			end
-  		#puts "Ship ID:#{p[0]} amount: #{p[1]} planet #{params["planet"].first}"
-  	end
 
+    params["ship"].each do |p|
+      unless p[1].empty?
+           ship_array[Ship.find(p[0])]=p[1]
+         end
+      #puts "Ship ID:#{p[0]} amount: #{p[1]} planet #{params["planet"].first}"
+    end
+    result=ShipBuildingQueue.insert(ship_array, Planet.find(params["planet"].first))
+
+
+  	# params["ship"].each do |p|
+  	# 	p[1].to_i.times do
+  	# 		ShipBuildingQueue.insert(Ship.find(p[0]), Planet.find(params["planet"].first))
+			# end
+  	# 	#puts "Ship ID:#{p[0]} amount: #{p[1]} planet #{params["planet"].first}"
+  	# end
+    # puts ":::::::::::::::::::::::::::::::::::::::::::::::::::"
+    # puts ":::::::::::::::::::::::::::::::::::::::::::::::::::"
+    # puts ":::::::::::::::::::::::::::::::::::::::::::::::::::"
+    # puts ":::::::::::::::::::::::::::::::::::::::::::::::::::"
+    # puts "result #{result}"
+    # puts ":::::::::::::::::::::::::::::::::::::::::::::::::::"
+    # puts ":::::::::::::::::::::::::::::::::::::::::::::::::::"
+    # puts ":::::::::::::::::::::::::::::::::::::::::::::::::::"
   	respond_to do |format|
-	  	format.html { redirect_to controller: "starport", notice: 'Bauauftrag abgeschickt' }
-	    format.json { render action: 'show', status: :created, location: @starport }
-  end
+      unless(result)
+        flash[:error] = "Error: You don't have enough ressources"
+       format.html { redirect_to  :controller => "starport", :action => "show", :id => build_planet}
+       format.json { render action: 'show', status: :created, location: @starport }
+      else
+  	  	format.html { redirect_to controller: "starport", notice: 'Bauauftrag abgeschickt' }
+  	    format.json { render action: 'show', status: :created, location: @starport }
+      end
+    end
   end
 
 end
