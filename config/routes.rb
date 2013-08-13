@@ -84,6 +84,7 @@ Mmog::Application.routes.draw do
   get '/confirm/send' => 'missions#send_fleet'
 
   post 'planets/upgrade_building' => 'planets#upgrade_building'
+  post 'planets/abort_upgrade' => 'planets#abort_upgrade'
 
   get 'alliances_overview' => 'alliances#overview'
 

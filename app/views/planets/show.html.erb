@@ -1,7 +1,7 @@
 <% a = @planet.special.to_s%>
 <%test=('/images/planets/planet'+a+'bg.png').to_s %>
 
-<div class="planetbox" style='background-image:url("<%=test %>");background-repeat:no-repeat;background-size:contain;background-position:center;'>
+<div class="planetbox" style='background-image:url("<%=test %>");background-repeat:no-repeat;background-size:<%= (@planet.size / 200).to_i%>px <%= (@planet.size / 200).to_i%>px ;background-position:center;'>
 
   <div class="ressources">
 
@@ -146,7 +146,7 @@
                <%= bt.build_cost_money %> Spacecash,
                <%= bt.build_cost_population %> Einwohner,
                <%= bt.build_cost_crystal %> Kristall<br/>
-       Bauzeit:<%= bt.build_time/60 %>:<%=bt.build_time%60 %> Bauzeit<br/>
+       Bauzeit:<%= bt.build_time/60 %>:<%=bt.build_time%60 %> Minuten<br/>
        Produktion: <%= bt.production%>
       </p>
 
@@ -166,6 +166,9 @@
     <div class="progress progress-striped active">
       <span style="font-weight: bold"><%= "Baue Gebäude "  %><%=b.name%> der Stufe <%=b.level%></span>
       <div id='auto-updating-progressbar' class="bar"></div>
+    </div>
+    <div>
+    <%= button_to 'Abbrechen', {:controller=>"planets", :action=>"abort_upgrade", :pid=>@planet.id, :bid=>@planet.under_construction}, :onclick => "return confirm('Möchtest du den Gebäudebau wirklich abbrechen?')",:method=>:post, class: "btn btn-danger" %>
     </div>
   </div>
   
