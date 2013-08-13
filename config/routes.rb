@@ -86,6 +86,8 @@ Mmog::Application.routes.draw do
 
   get 'alliances_overview' => 'alliances#overview'
 
+  get 'useroverview' => 'useroverview'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
