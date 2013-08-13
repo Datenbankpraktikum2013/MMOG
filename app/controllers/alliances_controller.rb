@@ -1,5 +1,5 @@
 class AlliancesController < ApplicationController
-  before_action :set_alliance, only: [:show, :edit, :update, :destroy, :useradd, :user_add_action, :change_user_rank, :remove_user, :change_description, :send_mail]
+  before_action :set_alliance, only: [:leave,:show, :edit, :update, :destroy, :useradd, :user_add_action, :change_user_rank, :remove_user, :change_description, :send_mail]
   before_filter :authenticate_user!
 
   # GET /alliances
@@ -94,6 +94,16 @@ class AlliancesController < ApplicationController
       else
         format.html { redirect_to @alliance, notice: GameSettings.get("ERRMSG_ALLIANCE_USERREMOVED") }
         format.json { render json: @alliance.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def leave
+    respond_to do |format|
+      if @alliance.permission?(current_user,"destroy")==false and @alliance.remove_user(current_user)
+        format.html { redirect_to alliances_path, notice: GameSettings.get("SUCCESSMSG_ALLIANCE_LEAVE") }
+      else
+        format.html { redirect_to alliances_path, notice: GameSettings.get("ERRMSG_ALLIANCE_LEAVE") }
       end
     end
   end

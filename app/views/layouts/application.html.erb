@@ -46,6 +46,8 @@
                             	Freundesliste
                             <% elsif controller_name == 'starport' %>	
                             	Schiffswerfte
+                            <% elsif controller_name == 'useroverview' %>
+                            	Spielerübersicht	
                             <%end %>
 		 				</a>
 		 			</li>
@@ -62,6 +64,7 @@
                         <li><a href="<%= missions_path %>">Missionen</a></li>
                         <li><a href="<%= relationships_path %>">Freundesliste</a></li>
                         <li><a href="/alliances_overview">Allianzenüberblick</a></li>
+                        <li><a href="/useroverview">Spielerübersicht</a></li>
 		  				<li><a href="<%= alliances_path %>"><%= if current_user.alliance.nil? then "Allianz gründen" else ("Allianz `"+ current_user.alliance.name + "`") end %></a></li>
 		  			<% end %>
 				</ul>
@@ -91,7 +94,9 @@
                 </div>
             <%end%>
             <div class="well">
-		  			<p id="notice"><%= notice %></p>
+            		<% if notice!=nil %>
+		  				<p class="alert alert-info"><%= notice %></p>
+		  			<% end %>
 		  			<%= yield() %>
 		  		</div>
 			</div>
