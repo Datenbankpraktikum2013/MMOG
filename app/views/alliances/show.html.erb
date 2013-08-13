@@ -31,9 +31,9 @@
 				<td><%=user.score%></td>
 				<td><%=user.rank.name%></td>
 				<td><% if user.online? %>
-						<font color="green">online</font>
+						<span class="status_online">online</span>
 					<% else %>
-						<font color="red">offline</font>
+						<span class="status_offline">offline</span>
 					<% end %>
 				</td>
 			</tr>
