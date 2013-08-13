@@ -102,6 +102,7 @@ Ship.find(10).buildingtypes << Buildingtype.where(name: "Starport", level: 3).fi
 Building.create({:planet_id => 1, :buildingtype_id => 1})
 Building.create({:planet_id => 1, :buildingtype_id => 2})
 Building.create({:planet_id => 1, :buildingtype_id => 54})
+Building.create({:planet_id => 1, :buildingtype_id => 30})
 Building.create({:planet_id => 2, :buildingtype_id => 1})
 Building.create({:planet_id => 2, :buildingtype_id => 2})
 Building.create({:planet_id => 2, :buildingtype_id => 51})
@@ -191,5 +192,4 @@ Planet.find(1).give(:Energy, 10000)
 
    Planet.first.seen_by(User.first)
    Planet.first.seen_by(User.find(2))
-
 end

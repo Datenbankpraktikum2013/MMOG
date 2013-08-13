@@ -81,6 +81,12 @@
                       <%= image_tag('/images/planets/anzeigeplanet.png') %>
                       <%= current_user.planets.count%>
                     </div>
+
+                    <div title="Highscore">
+                      <%= image_tag('/images/icons/star32px.png') %>
+                      <%= current_user.score%>
+                    </div>
+
                   </div>
                 </div>
             <%end%>
