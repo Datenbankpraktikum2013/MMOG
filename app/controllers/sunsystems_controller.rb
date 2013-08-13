@@ -10,6 +10,12 @@ class SunsystemsController < ApplicationController
   # GET /sunsystems/1
   # GET /sunsystems/1.json
   def show
+    unless @sunsystem.is_visible_by?(current_user) then
+      respond_to do |format|
+        format.html { redirect_to galaxies_url }
+        format.json { head :no_content }
+      end
+    end
   end
 
   # GET /sunsystems/new

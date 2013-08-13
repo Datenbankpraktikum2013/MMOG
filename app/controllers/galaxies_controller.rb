@@ -32,6 +32,12 @@ class GalaxiesController < ApplicationController
   # GET /galaxies/1
   # GET /galaxies/1.json
   def show
+    unless @galaxy.is_visible_by?(current_user) then
+      respond_to do |format|
+        format.html { redirect_to galaxies_url }
+        format.json { head :no_content }
+      end
+    end
   end
 
   # GET /galaxies/new
