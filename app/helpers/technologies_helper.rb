@@ -17,23 +17,23 @@ module TechnologiesHelper
     Technology.create({:name => 'increased_spypower', :factor => 1.05, :cost => 110, :maxrank => -1,:duration => 1, :title => "bessere Erkundungserfolge",
                        :description => ' Erhöht die Spionagewerte deiner Sonden pro Stufe x% '})
     Technology.create({:name => 'increased_capacity', :factor => 1.25, :cost => 90, :maxrank => 3,:duration => 1, :title => "größere Kapazität",
-                      :description => ' Erhöht die Ladekapazität deiner Schiffe pro Stufe x% (Maxrank:3)'})
+                      :description => ' Erhöht die Ladekapazität deiner Schiffe pro Stufe x% (Maxrank:3)', :score => 20})
     Technology.create({:name => 'increased_movement', :factor => 1.05, :cost => 120, :maxrank => -1,:duration => 1, :title => "schnellere Schiffe",
                        :description => ' Erhöht die Geschwindigkeit deiner Schiffe pro Stufe x%'})
     Technology.create({:name => 'large_cargo_ship', :factor => 0, :cost => 140, :maxrank => 1,:duration => 1, :title => "großes Transportschiff",
-                       :description => ' Erforsche ein großes Transportschiff um Rohstoffe zu transportieren'})
+                       :description => ' Erforsche ein großes Transportschiff um Rohstoffe zu transportieren', :score => 50})
     Technology.create({:name => 'large_defense_platform', :factor => 0, :cost => 200, :maxrank => 1,:duration => 1, :title => "große Verteidigungsplattform",
-                       :description => ' Erforsche eine große Verteidigunsplattform um deinen Planeten zu sichern'})
+                       :description => ' Erforsche eine große Verteidigunsplattform um deinen Planeten zu sichern', :score => 50})
     Technology.create({:name => 'big_house', :factor => 0, :cost => 100, :maxrank => 3,:duration => 1, :title => "größere Häuser",
-                       :description => ' Erhöht den Platz in deinen Gebäuden pro Stufe (Maxrank:3)'})
+                       :description => ' Erhöht den Platz in deinen Gebäuden pro Stufe (Maxrank:3)', :score => 20})
     Technology.create({:name => 'destroyer', :factor => 0, :cost => 100, :maxrank => 1,:duration => 1, :title => "Zerstörer",
-                       :description => ' Erfosche einen Zerstörer um Raubzüge zu starten'})
+                       :description => ' Erfosche einen Zerstörer um Raubzüge zu starten', :score => 50})
     Technology.create({:name => 'cruiser', :factor => 0, :cost => 250, :maxrank => 1, :duration => 1, :title => "Kreuzer",
-                      :description => ' Erforsche einen mächtigen Kreuzer um fremde Planeten zu erobern'})
+                      :description => ' Erforsche einen mächtigen Kreuzer um fremde Planeten zu erobern', :score => 75})
     Technology.create({:name => 'hyperspace_technology', :factor => 0, :cost => 350, :maxrank => 1,:duration => 1, :title => "Warp-Antrieb",
-                      :description => ' Ermöglicht deinen Schiffen Hyperraumsprünge zu vollziehen'})
+                      :description => ' Ermöglicht deinen Schiffen Hyperraumsprünge zu vollziehen', :score => 100})
     Technology.create({:name => 'deathstar', :factor => 0, :cost => 400, :maxrank => 1,:duration => 1, :title => "Todesstern",
-                       :description => ' Erforsche einen furchteinflößenden Todesstern um deine Feinde zu zermalmen.'})
+                       :description => ' Erforsche einen furchteinflößenden Todesstern um deine Feinde zu zermalmen.', :score => 500})
   end
 
   def self.init_Technology_Require
