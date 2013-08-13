@@ -35,7 +35,7 @@ class Planet < ActiveRecord::Base
     self.calc_spec
 
     if self.name.nil?
-      #self.under_construction = false
+      #self.under_construction = 0
 
       if self.size.nil?
         self.size = Random.rand(@@MAX_SIZE-@@MIN_SIZE) + @@MIN_SIZE
@@ -161,13 +161,13 @@ class Planet < ActiveRecord::Base
       self.seen_by(user)
       self.user = user;
       self.create_building_job(:Oremine)
-      self.under_construction = false
+      self.under_construction = 0
       self.create_building_job(:Headquarter)
-      self.under_construction = false   
+      self.under_construction = 0
       self.create_building_job(:Powerplant)
-      self.under_construction = false
+      self.under_construction = 0
       self.create_building_job(:City)
-      self.under_construction = false
+      self.under_construction = 0
       self.create_production_job;
     else
       self.user = user;
@@ -295,7 +295,7 @@ class Planet < ActiveRecord::Base
 
   def create_building_job(type)
     return false if type == :Crystalmine && self.special != 4
-    return false if self.under_construction
+    return false if self.under_construction > 0
     buildingtype_arr = Buildingtype.where(name: type.to_s)
     id_list = []
     buildingtype_arr.each do |x|
@@ -327,7 +327,7 @@ class Planet < ActiveRecord::Base
     id_array = []
     id_array << self.id
     id_array << build_me.id
-    self.under_construction = true
+    self.under_construction = build_me.id
     
     self.save
 
@@ -339,7 +339,7 @@ class Planet < ActiveRecord::Base
     id_array << self.id
     id_array << type_id
     if Resque.remove_delayed(BuildBuildings, id_array) == 1
-      self.under_construction = false
+      self.under_construction = 0
       self.save
       destroy_me = Buildingtype.find(type_id)
       give(:Ore, destroy_me.build_cost_ore/2)
@@ -395,7 +395,7 @@ class Planet < ActiveRecord::Base
 
   def build_building(buildingtype_id)
     self.reset_building_cache
-    self.under_construction = false
+    self.under_construction = 0
     self.save
     
     return false if buildingtype_id.nil? || !buildingtype_id.integer?

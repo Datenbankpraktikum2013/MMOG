@@ -92,6 +92,7 @@ class Galaxy < ActiveRecord::Base
       @@users_settled_here[self.id] << user.id
       out = true
       end
+    end
     return out
   end
 
