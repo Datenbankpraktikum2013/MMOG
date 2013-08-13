@@ -88,6 +88,8 @@ Mmog::Application.routes.draw do
 
   post '/alliances/:id/leave' => 'alliances#leave'
 
+  post '/alliances/:id/change_founder' => 'alliances#change_founder'
+
   get 'alliances_overview' => 'alliances#overview'
 
   get 'useroverview' => 'useroverview'

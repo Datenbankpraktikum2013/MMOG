@@ -3,4 +3,4 @@
 <%= render 'showRanks' if @alliance.permission?(current_user,"edit_ranks") %> 
 <%= render 'changeDescription' if @alliance.permission?(current_user,"edit_ranks") %>
 <%= render 'showMassMail' if @alliance.permission?(current_user,"massmail") %>
-<%= render 'showDeleteAlliance' if @alliance.permission?(current_user,"destroy") %>
+<%= render 'showFounderOptions' if @alliance.permission?(current_user,"destroy") %>
