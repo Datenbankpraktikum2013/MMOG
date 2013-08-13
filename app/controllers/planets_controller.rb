@@ -69,13 +69,16 @@ class PlanetsController < ApplicationController
   end
 
 
-#  def abort_upgrade
-#    Planets.find(params["id"]).delete_building_job(params["uid"])
-#    respond_to do |format|
-#      format.html { redirect_to action: 'index', notice: 'Bau abgebrochen.'}
-#      format.json {head :no_content}
-#    end
-#  end
+  def abort_upgrade
+    @planet = Planet.find(params["pid"])
+    if @planet.delete_building_job(params["bid"].to_i) then
+    
+      respond_to do |format|
+        format.html { redirect_to @planet, notice: 'Bau abgebrochen.'}
+        format.json {head :no_content}
+      end
+    end
+  end
 
   def page_refresh()
 
