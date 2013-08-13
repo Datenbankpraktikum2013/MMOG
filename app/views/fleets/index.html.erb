@@ -123,7 +123,9 @@
             <% unless fleet.target_planet == fleet.origin_planet %>
               <button id="fleet-breakup" fleet="<%=fleet.id%>" type="button" class="btn btn-default">
                 <i class="icon-remove"></i>
-              </button> 
+              </button>
+            <% else %>
+              ---   
             <% end %>
           </td>
         </tr>
@@ -217,10 +219,10 @@
           window.location.reload()
         }
       });
-
     });
 
     $("#fleet-breakup").on("click", function(){
+      console.log("JO");
       fleet_id = $(this).attr("fleet");
       $.getJSON("/json/breakup?fleet="+fleet_id, function(data){
         if (data.ok == 1){
