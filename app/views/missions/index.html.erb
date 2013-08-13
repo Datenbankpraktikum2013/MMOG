@@ -120,9 +120,9 @@
   </div>
 
   <div id="choice" style="display:none">
-    <h3 id="ship-header">Wähle deine Schiffe</h3>
+    <h3 id="ship-header" >Wähle deine Schiffe</h3>
     <div id="ship-choice">
-      <table class="table table-striped">
+      <table class="table table-condensed">
         <thead>
           <tr>
             <th>Name</th>
@@ -140,7 +140,7 @@
 
     <div id="ress-choice" style="display:none">
       <h3>Wähle Ressourcen zum Beladen</h3>
-      <table class="table table-striped">
+      <table class="table table-condensed">
         <thead>
           <tr>
             <th>Name</th>
@@ -463,6 +463,7 @@
             $("#send-button").slideDown("slow");
           }
           else {
+            $('html, body').animate({scrollTop: '0px'}, 600);
             $("#error li").remove();
             for (error in data["error"]){
               $("#error ol").append("<li>"+data["error"][error]+"</li>")
