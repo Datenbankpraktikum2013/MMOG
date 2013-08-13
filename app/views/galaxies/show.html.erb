@@ -1,4 +1,4 @@
-<div class="sunsystemordner">
+<div class="sunsystemordner u256_<%= GalaxiesHelper.getImageFilename(@galaxy.x, 256)[-5] %>">
 
   <div class="galaxyinf">
 
@@ -13,7 +13,7 @@
 
       <a class="sunsyspos sunsyspos<%= s.y.to_s %>" title=<%=s.name%> href="<%= sunsystem_path(s)%>"><div>
         <% if !s.y.nil? then %>
-            <%= image_tag('/images/backgrounds/Sunsystem'+ s.y.to_s + '.png')%>
+            <%= image_tag('/images/suns/Sonne' + s.y.to_s  + '.png')%>
 
 
         <% end %>
@@ -24,4 +24,7 @@
 
 
 </div>
+
+
+
 
