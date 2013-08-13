@@ -194,7 +194,7 @@
     var aktiv_reload;
 
     function fetch_finished(){
-        $.getJSON('/json/planet_page_refresh.json?id='+<%=@planet.id%>+'', function(data) {
+        $.getJSON('/json/planet_page_refresh.json?id='+<%=@planet.id%>, function(data) {
             var items = [];
             $.each(data, function(key, val) {
                 items.push(val);
