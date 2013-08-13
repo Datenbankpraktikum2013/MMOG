@@ -68,6 +68,23 @@ class PlanetsController < ApplicationController
     end
   end
 
+
+#  def abort_upgrade
+#    Planets.find(params["id"]).delete_building_job(params["uid"])
+#    respond_to do |format|
+#      format.html { redirect_to action: 'index', notice: 'Bau abgebrochen.'}
+#      format.json {head :no_content}
+#    end
+#  end
+
+  def page_refresh()
+
+    object = {:buildingtype_id => Planet.find(params["id"]).under_construction}
+    respond_to do |format|
+      format.json { render json: object }
+    end
+  end
+
   # DELETE /planets/1
   # DELETE /planets/1.json
   def destroy

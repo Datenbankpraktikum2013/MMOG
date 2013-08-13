@@ -212,6 +212,10 @@ class Planet < ActiveRecord::Base
       return c
     end
   end
+  def get_builttime(btype_id)
+      return Buildingtype.find(btype_id).build_time * @spec[6]
+
+  end
 
   #Method which increases and updates all the resources a player has every ...Minute
   def update_resources
@@ -329,8 +333,8 @@ class Planet < ActiveRecord::Base
     id_array << build_me.id
     self.under_construction = build_me.id
     
+    self.start_construction_at = Time.now
     self.save
-
     Resque.enqueue_in(build_time.second, BuildBuildings, id_array)
   end
 
