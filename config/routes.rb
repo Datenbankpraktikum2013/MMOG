@@ -79,6 +79,7 @@ Mmog::Application.routes.draw do
   get '/json/check' => 'missions#check_mission'
   get '/json/breakup' => 'fleets#breakup'
   get '/json/unload' => 'fleets#unload'
+  get '/json/info' => 'missions#get_info'
 
   get '/confirm/send' => 'missions#send_fleet'
 
