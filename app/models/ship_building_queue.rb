@@ -3,13 +3,73 @@ class ShipBuildingQueue < ActiveRecord::Base
 	belongs_to :planet
 
 	def self.insert(s,p)
-		q=self.new
-		q.ship=s 
-		q.planet=p 
-		q.end_time=s.construction_time + self.get_time(p)
-		puts "Now: #{Time.now.to_i} End: #{q.end_time}"
-		q.save
-		Fleet.add_ship_in(q.end_time, q.ship, q.planet, q.id)
+		crystal_cost=0
+		ore_cost=0
+		credit_cost=0
+		s.each do |key, value|
+			unless(value.to_i.zero?)
+				# puts "xxxxxxxxxxxxxxxxx c #{key.crystal_cost} xxx #{value}"
+				# puts "xxxxxxxxxxxxxxxxx  #{key.ore_cost} xxx #{value}"
+				crystal_cost+=(key.crystal_cost.to_i * value.to_i)
+				ore_cost+=(key.ore_cost.to_i * value.to_i)
+				credit_cost+=(key.credit_cost.to_i * value.to_i)
+			end
+		end
+
+		o=p.take(:Ore, ore_cost)
+		c=p.take(:Crystal, crystal_cost)
+		m=p.take(:Money, credit_cost)
+
+		# puts "|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
+		# puts "|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
+		# puts "|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
+		# puts "|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
+		# puts ("o #{o}=#{ore_cost}, c: #{c}=#{crystal_cost}, m: #{m}=#{credit_cost}")
+		# puts "|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
+		# puts "|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
+		# puts "|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
+		# puts "|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
+		if((o==ore_cost) && (m==credit_cost) && (c==crystal_cost))
+			s.each do |key, value|
+				unless(value.to_i.zero?)
+					# puts ">>>>>>>>>>>>>>>>>>>>>>>> #{value.to_i}"
+					value.to_i.times do
+						q=self.new
+						q.ship=key
+						q.planet=p 
+						q.end_time=key.construction_time + self.get_time(p)
+						# puts "00000000000000000000000000000000000000"
+						# puts "Adding Ship #{q.ship.id }to Planet"
+						# puts "Now: #{Time.now.to_i} End: #{q.end_time}"
+						q.save
+						Fleet.add_ship_in(q.end_time, q.ship, q.planet, q.id)
+						
+					end
+				end
+			end
+			return true
+		else
+			# puts "QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ"
+			# puts "QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ"
+			# puts "QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ"
+
+			# puts "QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ"
+			# puts "QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ"
+			# puts "QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ"
+			p.give(:Ore,o)
+			p.give(:Crystal,c)
+			p.give(:Money,m)
+			return false
+		end
+
+
+		# q=self.new
+		# q.ship=s 
+		# q.planet=p 
+		# q.end_time=s.construction_time + self.get_time(p)
+		# puts "Now: #{Time.now.to_i} End: #{q.end_time}"
+		# q.save
+		# Fleet.add_ship_in(q.end_time, q.ship, q.planet, q.id)
 	end
 
 	def self.get_time(p)

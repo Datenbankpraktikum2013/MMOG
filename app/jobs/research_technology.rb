@@ -6,7 +6,7 @@ class ResearchTechnology
   def self.perform(user, tech)
     puts "Loading job"
     puts "Update UserTechnologies"
-    Technology.find(tech).update_uservalues(User.find(user))
+    Technology.find(tech).update_uservalues(user)
 
   end
 
