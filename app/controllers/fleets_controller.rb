@@ -1,6 +1,7 @@
 class FleetsController < ApplicationController
   before_action :set_fleet, only: [:show, :edit, :update, :destroy]
   before_filter :authenticate_user!
+  
   # GET /fleets
   # GET /fleets.json
   def index
@@ -61,6 +62,27 @@ class FleetsController < ApplicationController
     end
   end
 
+  # Fehlerbehandlung
+  def breakup
+    fleet = Fleet.find(params["fleet"])
+    fleet.breakup_mission
+    render :json => {"ok" => 1}.to_json
+  end
+
+  # Fehlerbehandlung
+  def unload
+    fleet = Fleet.find(params["fleet"])
+    planet = Planet.find(params["planet"])
+    if fleet.target_planet == fleet.start_planet && planet == fleet.origin_planet
+      fleet.unload_ressources(planet)
+      status = {"ok" => 1}
+    else      
+      status = {"ok" => 0}
+    end
+
+    render :json => status.to_json
+  end
+
   # PATCH/PUT /fleets/1
   # PATCH/PUT /fleets/1.json
   def update
@@ -91,11 +113,6 @@ class FleetsController < ApplicationController
 
   end
 
-  # POST /fleets/mission
-  # POST /fleets/mission.json ????????????? 
-  def confirm_mission
-    
-  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

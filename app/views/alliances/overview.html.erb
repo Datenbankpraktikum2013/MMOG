@@ -1,0 +1,19 @@
+<table class="table table-striped table-bordered table-condensed">
+	<h1>Alle Allianzen im Überblick</h1>
+	<tr>
+		<th>Name</th>
+		<th>Allianzscore</th>
+		<th>Gründer</th>
+		<th>Mitglieder</th>
+		<th>Link</th>
+	</tr>
+	<% @alliances.each do |alliance| %>
+		<tr>
+			<td><%=alliance.name%></td>
+			<td><%=0%></td>
+			<td><%=alliance.ranks.where(:is_founder=>true)[0].users[0].username %></td>
+			<td><%=alliance.users.count%></td>
+			<td><%= link_to 'Allianzansicht', alliance, class: 'label label-success', :style=>'color:#FFFFFF'%></td>
+		</tr>
+	<% end %>
+</table>

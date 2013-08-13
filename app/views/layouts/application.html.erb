@@ -61,6 +61,7 @@
                         <li><a href="<%= fleets_path %>">Deine Flotten</a></li>
                         <li><a href="<%= missions_path %>">Missionen</a></li>
                         <li><a href="<%= relationships_path %>">Freundesliste</a></li>
+                        <li><a href="/alliances_overview">Allianzenüberblick</a></li>
 		  				<li><a href="<%= alliances_path %>"><%= if current_user.alliance.nil? then "Allianz gründen" else ("Allianz `"+ current_user.alliance.name + "`") end %></a></li>
 		  			<% end %>
 				</ul>
@@ -109,10 +110,10 @@
 						<%end %>
 					<% end %>
 				</div>
+				<% if user_signed_in? %>
 				<div class="well">					
 					<table class="table table-condensed">
-						<% if user_signed_in? %>
-							<a href="<%= relationships_path %>"><font color ="blue">Kontakte</font></a><br>
+							<a href="<%= relationships_path %>">Kontakte</a><br>
 							<% @friends=current_user.friends %>						
 								<% unless @friends==nil %>								
 								<% @friends.each do |friend| %>
@@ -126,10 +127,10 @@
 									<td><%= link_to 'MSG', new_message_path+'/?recipient='+friend.username , class: 'label label-info', :style=>'color:#FFFFFF;'%></td>
 									</tr>
 								<% end %>								
-							<% end %>											
-						<% end %>
+							<% end %>
 					</table>
-				</div>	
+				</div>
+				<% end %>	
 			</div>		
 		</div>			
 	</div>

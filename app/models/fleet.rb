@@ -9,6 +9,7 @@ class Fleet < ActiveRecord::Base
 
 ############################
 #!!!!!!!!!!!!!!!!!!!!MENTION???????????????????????????
+#HYPERSPACE TECHNOLOGY???????????????
 ############################
 
   # kreiert eine Flotte mit default werten und den aktuellen Forschungsfaktoren.
@@ -38,10 +39,9 @@ class Fleet < ActiveRecord::Base
   end
 
   
-#################################
-############# GETTER ############
-#################################
-
+  #################################
+  ############# GETTER ############
+  #################################
 
   # calculates of a {ship => amount} hash, the building costs by returning a {ressource => cost} hash
   def self.get_ressource_cost (ship_hash)
@@ -72,10 +72,12 @@ class Fleet < ActiveRecord::Base
     return self.get_capacity - self.get_amount_of_ressources
   end
 
+  # returns the capacity of a fleet with respect to the technology factor
   def get_capacity
     capacity = self.ressource_capacity * self.storage_factor
   end
 
+  # returns the amount os stored ressources
   def get_amount_of_ressources
     self.ore + self.credit + self.crystal
   end
@@ -89,6 +91,7 @@ class Fleet < ActiveRecord::Base
       velocity = velocity * self.velocity_factor
     end
   end
+
   # returns the smallest fuel capacity of a ship in the fleet => maximum distance
   def get_fuel_capacity
     if self.ships.nil?
@@ -103,15 +106,11 @@ class Fleet < ActiveRecord::Base
       if velocity == 0 
         v = 0
       else
-        # EVTL HIER ZEIT PAKETE EINFÜHREN (VON 1 - 100, USW)
         v = (distance/velocity) * 5
       end
-
-      #case v
-
   end
 
-  #unschön................
+  # returns the needed energy for a ship in certain time
   def get_needed_fuel(ship, time)
       if ship.consumption == 0 
         0
@@ -120,7 +119,7 @@ class Fleet < ActiveRecord::Base
       end
   end
 
-
+  # returns the needed energy for a fleet in certain time
   def get_needed_fuel_all(time)
       fuel = 0
       self.get_ships.each do |ship, amount|
@@ -129,7 +128,6 @@ class Fleet < ActiveRecord::Base
       return fuel
   end
  
-
   # returns the amount of a shiptype in one fleet
   # check if s is ship
   def get_amount_of_ship(ship)
@@ -158,8 +156,7 @@ class Fleet < ActiveRecord::Base
     end
   end
 
-
-  # Returns a Hash of {ShipName => Amount} pairs
+  # Returns a Hash of {ShipNAME => Amount} pairs
   def get_ships_names()
     ship_hash = {}
     if self.ships.nil?
@@ -172,7 +169,7 @@ class Fleet < ActiveRecord::Base
     end
   end
 
-  # Returns a Hash of {ShipName => Amount} pairs
+  # Returns a Hash of {ShipID => Amount} pairs
   def get_ships_ids()
     ship_hash = {}
     if self.ships.nil?
@@ -185,23 +182,44 @@ class Fleet < ActiveRecord::Base
     end
   end
 
+  # returns STATIC velocity (no technologies)
+  def Fleet.get_velocity_from_array(ships)
+    if ships.nil?
+      0
+    else
+      velocity = ships.sort{|s1,s2| s1.velocity <=> s2.velocity}.first.velocity
+    end
+  end
+  
+  # returns the needed energy of ships that are stored 
+  def Fleet.get_needed_fuel_from_hash(ship_hash, time)
+    fuel = 0
+    ship_hash.each do |ship, amount|
+      unless ship.consumption == 0 
+        fuel += (time/(ship.consumption)) * amount
+      end
+    end
+    fuel
+  end
 
-#################################
-######### MISSION STUFF #########
-#################################
+  #################################
+  ######### MISSION STUFF #########
+  #################################
 
-  # BERECHNUNGEN UEBERDENKEN
-  # FEHLERBEHANDLUNG
-  # GENERELLER ABLAUF:
-  # => es wird Move(X, Y) aufgerufen, wo simple Dinge berechnet werden, wie Sprit, Time
-  # => dann wird die jeweilige Methode aufgerufen, welche den Auftrag in die Resqueue packt
-  #wie wird destination gepeichert?
-  #ID=1 : Based
-  #ID=2 : Colonization
-  #ID=3 : Attack
-  #ID=4 : Travel
-  #ID=5 : Spy
-  #ID=6 : Transport
+  # ++++++++++ #
+  # => MOVE <= #
+  # ++++++++++ #
+
+  # General Procedure:
+  # => es wird move(...) aufgerufen, wo simple Dinge berechnet werden, wie Sprit, Time, etc.
+  # => dann wird die jeweilige Methode aufgerufen, welche den Auftrag in die Resque packt. Diese haben die namen X_planet_in
+  # => diese wiederum führt nach der berechneten "Flugzeit" Eine Missionsmethode aus, welche den Namen der Mission tragen
+  # ID=1 : Based
+  # ID=2 : Colonization
+  # ID=3 : Attack
+  # ID=4 : Travel
+  # ID=5 : Spy
+  # ID=6 : Transport
 
 
 # FALLS FEHLER MÜSSEN DINGE RUECKGAENGIG GEMACHT WERDEN!! begin/rescue/else/ensure
@@ -214,8 +232,8 @@ class Fleet < ActiveRecord::Base
     unless self.origin_planet == self.start_planet && self.origin_planet == self.target_planet
       raise RuntimeError, "Cannot move fleet that is not situated at home -> You can only send it back to origin"
     end
+
     #!!!!!!!!!!! transaction do ...end
-    # split_fleet also updates the values
     fleet = self.split_fleet(ship_hash)
     distance = fleet.origin_planet.getDistance(destination)
     velocity = fleet.get_velocity
@@ -304,10 +322,9 @@ class Fleet < ActiveRecord::Base
     end
   end
 
-####
-# => Attack
-####
-
+  # ++++++++++++ #
+  # => Attack <= #
+  # ++++++++++++ #
 
   def attack_planet_in(time, planet)
     unless planet.is_a?(Planet)
@@ -322,6 +339,7 @@ class Fleet < ActiveRecord::Base
 
   
   def attack(planet)
+    planet.seen_by(self.user)
     @battle_report = Battlereport.new
     
     other_user = planet.user
@@ -537,17 +555,12 @@ class Fleet < ActiveRecord::Base
       end
       self.destroy
     end
-
-
   end
 
+  # +++++++++ #
+  # => Spy <= #
+  # +++++++++ #
 
-####
-# => Spy
-####
-
-  # comment me!
-  # Fehlerbehandlung
   def spy_planet_in(time, planet)
     unless self.get_ships == {Ship.find(7)=>1}
       raise RuntimeError, "Only one Spy Drone for spy-missions allowed"
@@ -564,12 +577,13 @@ class Fleet < ActiveRecord::Base
     Resque.enqueue_at(time, SpyPlanet, self.id, planet.id, own_spy_factor)
   end
 
-
   # the actual spy action, that is triggered by the queue
   def spy(own_spy_factor, planet)
     unless planet.is_a?(Planet)
       raise RuntimeError, "Input is invalid -> only Planets are allowed"
     end
+
+    planet.seen_by(self.user)
 
     factor = 0.0
     other_user = planet.user
@@ -602,12 +616,10 @@ class Fleet < ActiveRecord::Base
   end
 
 
-####
-# => Colonize
-####
+  # ++++++++++++++ #
+  # => Colonize <= #
+  # ++++++++++++++ #
 
-  # comment me!
-  # Fehlerbehandlung
   def colonize_planet_in(time, planet)
     unless self.get_ships.has_key?(Ship.find(10))
       raise RuntimeError, "Fleet has no Colony Ship"
@@ -626,13 +638,12 @@ class Fleet < ActiveRecord::Base
     Resque.enqueue_at(time, ColonizePlanet, self.id, planet.id)
   end
 
-
-  # comment me!
-  # Fehlerbehandlung
   def colonize(planet)
     unless planet.is_a?(Planet)
       raise RuntimeError, "Input is invalid -> only Planets are allowed"
     end
+
+    planet.seen_by(self.user)
 
     other_user = planet.user
     if other_user.nil? # unknown
@@ -667,9 +678,9 @@ class Fleet < ActiveRecord::Base
   end
 
 
-####
-# => Travel
-####
+  # ++++++++++++ #
+  # => Travel <= #
+  # ++++++++++++ #
 
   def travel_to_planet_in(time, planet)
     unless planet.is_a?(Planet)
@@ -680,7 +691,6 @@ class Fleet < ActiveRecord::Base
     end
     
     Resque.enqueue_at(time, TravelToPlanet, self.id, planet.id)
-
   end
 
 
@@ -688,6 +698,8 @@ class Fleet < ActiveRecord::Base
     unless planet.is_a?(Planet)
       raise RuntimeError, "Input is invalid -> only Planets are allowed"
     end
+
+    planet.seen_by(self.user)
 
     travel_report = Travelreport.new
     other_user = planet.user
@@ -710,10 +722,9 @@ class Fleet < ActiveRecord::Base
     end
   end
 
-####
-# => Transport
-####
-
+  # +++++++++++++++ #
+  # => Transport <= #
+  # +++++++++++++++ #
 
   def transport_to_planet_in(time, planet)
     unless planet.is_a?(Planet)
@@ -724,14 +735,14 @@ class Fleet < ActiveRecord::Base
     end
     
     Resque.enqueue_at(time, TransportToPlanet, self.id, planet.id)
-
   end
-
  
   def transport(planet)
-    ############################################################################Problems to transport stuff - planet sets always to zero
+    unless planet.is_a?(Planet)
+      raise RuntimeError, "Input is invalid -> only Planets are allowed"
+    end
+    planet.seen_by(self.user)
     trade_report = Tradereport.new
-    
     other_user = planet.user
 
     if other_user.nil? # unknown planet
@@ -752,10 +763,9 @@ class Fleet < ActiveRecord::Base
   end
 
 
-####
-# => Return
-####
-
+  # ++++++++++++ #
+  # => Return <= #
+  # ++++++++++++ #
 
   # sends a fleet from planet to the planet that is stored in their origin_planet attribute
   def return_to_origin(planet)
@@ -774,27 +784,42 @@ class Fleet < ActiveRecord::Base
     Resque.enqueue_at(self.arrival_time, ReturnToOrigin, self.id)
   end
 
-  # is called, whenever a mission should break up
+  # is called, whenever a mission should break up, i.e. the ship has to fly back home again, without executing, the task
   # the job from the queue will be cancelled and the fleet is sent back home
   # it raises an expeption whenever the fleet is on no mission
   def breakup_mission
+    if self.mission.id == 1
+      raise RuntimeError, "Fleet has to fly to breakup its mission"
+    end
     # calculate the used time till now for the flight and set it as the new arrival date for the return
     diff = Time.now.to_i - self.departure_time
+
     self.departure_time = Time.now.to_i
     self.arrival_time = self.departure_time + diff
     
     self.start_planet = self.target_planet
     self.target_planet = self.origin_planet
 
-    #HERE THE QUEUE ORDER MUST BE DELETED!!!!!!!!!!!!
-
+    # Delete Jobs
+    if self.mission.id == 2
+      Resque.remove_delayed(ColonizePlanet, self.id, self.target_planet.id)
+    elsif self.mission.id == 3
+      Resque.remove_delayed(AttackPlanet, self.id, self.target_planet.id)
+    elsif self.mission.id == 4
+      Resque.remove_delayed(TravelToPlanet, self.id, self.target_planet.id)
+    elsif self.mission.id == 5
+      Resque.remove_delayed(SpyPlanet, self.id, self.target_planet.id, user.user_setting.increased_spypower)
+    else
+      Resque.remove_delayed(TransportToPlanet, self.id, self.target_planet.id)
+    end
     Resque.enqueue_at(self.arrival_time, ReturnToOrigin, self.id)
+    self.save
   end
 
 
-#################################
-######### MANIPULATION ##########
-#################################
+  #################################
+  ######### MANIPULATION ##########
+  #################################
 
   # loads ressources in a fleet after checking if there is enough space for it
   # if there is not enough space for them, it divides the 
@@ -833,7 +858,6 @@ class Fleet < ActiveRecord::Base
     self.crystal = planet.give(:Crystal, self.crystal)
     self.credit = planet.give(:Money, self.credit)
     self.save
-    puts "loaded #{self.ore} ore, #{self.crystal} crystal and #{self.credit} credit back on fleet #{self.id}"
   end
 
 
@@ -844,16 +868,16 @@ class Fleet < ActiveRecord::Base
     unless enough_ships?(ship_hash)
       raise RuntimeError, "Not enough ships for a split"
     end
+    
+    self.update_values
 
     old_capacity = self.get_capacity
-    
-    # get newest technologies
-    self.update_values
 
     new_fleet = Fleet.new(self.origin_planet)
     new_fleet.save
     new_fleet.add_ships(ship_hash)
     self.destroy_ships(ship_hash)
+    
     # if now the fleet contains to much ressources it will split the ressources and load it in the new fleet
     if self.get_capacity < self.get_amount_of_ressources
       #calculate percentage of new fleet
@@ -866,7 +890,8 @@ class Fleet < ActiveRecord::Base
       self.crystal = (self.crystal * (1-factor)).to_i
       self.credit = (self.credit * (1-factor)).to_i
     end
-    return new_fleet
+
+    new_fleet
   end
 
 
@@ -888,15 +913,14 @@ class Fleet < ActiveRecord::Base
   end
 
 
-  # Adds Ship to Fleet in t seconds
-  # Methode aendern?????????????????????????????????? add_ships
+  # Adds a Ship to Fleet in t seconds
   # Fehlerbehandlung
   def self.add_ship_in(t,s,p,id)
     Resque.enqueue_at(t, AddShip, s.id, p.id, id)
   end
 
 
-  #Adds Ship (Planet as Parameter)
+  #Adds a Ship (Planet as Parameter)
   def self.add_ship_to_planet(s,p)
     f=Fleet.where(mission_id: 1, origin_planet: p)
     unless f.empty?
@@ -909,24 +933,20 @@ class Fleet < ActiveRecord::Base
     end
 
   end
-#=end
 
-
-  # fuegt einer Flotte ein Schiff hinzu
-  # after that the fleetattributes are updated
-  def add_ship(s)
-    add_ships({s => 1})
+  # calls add_ships with {ship =>1}
+  def add_ship(ship)
+    add_ships({ship => 1})
   end
 
 
-  # adds ships dependant on a hash like {ship_id:amount}
+  # adds ships dependant on a hash like {ship:amount}
   # after that the fleetattributes are updated
   def add_ships(ship_hash)
     unless Fleet.hash_is_valid?(ship_hash)
       raise RuntimeError, "The Input is not valid (invalid amount or wrong objects), ships cannot be added"
     end
-    # this hash contains the ships that the fleet not yet possesses.
-    # Those get added after the loop
+
     new_ships = Hash.new
     
     # add ships that exist in fleet
@@ -947,23 +967,19 @@ class Fleet < ActiveRecord::Base
       ship.amount = value
       ship.save
     end
+
     self.update_values
   end
 
-  # destroys a shiptype in the fleet
-  # after that the fleetattributes are updated
-  def destroy_ship(s)
-    destroy_ships({s => 1})
+  # calls destroy_ships with {ship =>1}
+  def destroy_ship(ship)
+    destroy_ships({ship => 1})
   end
 
   # destroys ships dependant on a hash of {ship: amount}
   # after that the fleetattributes are updated
   def destroy_ships(ship_hash)
     unless enough_ships?(ship_hash)
-        ship_hash.each do |key, value|
-          puts "ship #{key} : #{value}"
-        end
-      
       raise RuntimeError, "The Input is not valid (invalid amount or wrong objects), ships cannot be destroyed"
     end
 
@@ -972,6 +988,7 @@ class Fleet < ActiveRecord::Base
       ship.amount -= value
       ship.save
     end
+
     self.update_values
   end
 
@@ -993,21 +1010,21 @@ class Fleet < ActiveRecord::Base
 
     self.ressource_capacity = ressource_capacity
 
-     # multiply with research factors
+    # multiply with research factors
     self.offense = offense * user.user_setting.increased_power
     self.defense = defense * user.user_setting.increased_defense
     
     # when fleet is at home, calculate the newest technologies
     if self.target_planet == self.origin_planet && self.start_planet == self.origin_planet 
-      self.velocity_factor = user.user_setting.increased_movement # HYPERSPACE TECHNOLOGY???????????????
+      self.velocity_factor = user.user_setting.increased_movement
       self.storage_factor = user.user_setting.increased_capacity
     end
+
     self.save
   end
 
   # Checks wether self contains more or equal no. of ships of certain type
   # returns true if enough and false if not enough or type not existent
-  # Fehlerbehandlung
   # similar to hash_is_valid?, with numberchecking
   def enough_ships?(ship_hash)
     ship_hash.each do |key, value|
