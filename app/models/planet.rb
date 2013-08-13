@@ -354,7 +354,7 @@ class Planet < ActiveRecord::Base
     end  
   end
 
-  def destroy_buildings
+  def destroy_buildings(fightvalue)
     
     my_buildings = get_buildings
     my_upgraded_buildings = []
@@ -368,9 +368,10 @@ class Planet < ActiveRecord::Base
     
     randomnumber = my_upgraded_buildings.size
     return nil if randomnumber == 0
-    randomnumber = 2 if randomnumber > 2   
+    randomnumber = 2 if randomnumber > 2+fightvalue   
     randomnumber = Random.rand(randomnumber+1)
-    
+    puts "nr: #{randomnumber}"
+    return nil if randomnumber == 0
     destroyed_buildings = []
     randomnumber.times do |i|
       missle = Random.rand(my_upgraded_buildings.size)
