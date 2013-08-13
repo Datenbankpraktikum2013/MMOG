@@ -80,7 +80,10 @@
                       <%= image_tag('/images/planets/anzeigeplanet.png') %>
                       <%= current_user.planets.count%>
                     </div>
-                    <font color="red">Hier soll noch eine Übersicht über allgemeine Spielerressourcen hin.</font>
+                    <div title="Score">
+                    	<b>Score:</b>
+                    	<%= current_user.score %>
+                    </div>
 				</div>
                 </div>
             <%end%>
