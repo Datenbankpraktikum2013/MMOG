@@ -106,19 +106,58 @@
         <div class="buildingpos buildingpos<%=h[0]%>" title="Name: <%= h[0]%>, Level:<%= h[1]%>"
             onclick="javascript:showBuildingInfo('<%= h[0].to_s %>')">
             <%= image_tag('/images/buildings/'+ h[0].to_s + '/' + h[0].to_s + h[1].to_s+'.png')%>
-            <div id="building_info_<%= h[0].to_s %>">
-            <%= button_to 'Upgrade', {:controller => "planets", :action => "upgrade_building", :btype => h[0].to_s, :id => @planet.id } , :method => :post, data: { confirm: 'Möchtest du dein ' + h[0].to_s + ' aufwerten?' } %>
-              <p class="building_info_field">Informationen dazu: <%= h[0].to_s %><br />
-                 Mehr...</p>
-            </div>
+            <!-- <div id="building_info_<%= h[0].to_s %>">
+            
+             <p class="building_info_field">Informationen dazu: <%= h[0].to_s %><br />
+                 Mehr... /p>
+            </div> -->
         </div>
     <%end%>
-    </div>
+  </div>
 
+  <div class="">
+    <!-- <% @planet.upgradable_buildings_to_hash.each do |x| %>
+      <%= x.to_s %>, 
+    <% end %> -->
+    <% b = @planet.buildings_to_hash%>
+    <%  b.each do |h| %>
+    <% bt = Buildingtype.where(name: h[0].to_s, level: h[1] +1).first %>
+    <% if bt.nil? then "Maximale Stufe bereits erreicht!" else %>
+    <div class= "upgrade_building_btn building_info" id= "building_info_<%=h[0]%>" style = "background-color:white">
+       
+      <p class="building_info_field">Gebäude: <%= h[0].to_s %> Level: <%= h[1] %><br />
+       Kosten: <%= bt.build_cost_ore %> Eisen,
+               <%= bt.build_cost_money %> Spacecash,
+               <%= bt.build_cost_population %> Einwohner,
+               <%= bt.build_cost_crystal %> Kristall<br/>
+       Bauzeit:<%= bt.build_time/60 %>:<%=bt.build_time%60 %> Bauzeit<br/>
+       Produktion: <%= bt.production%>
+      </p>
+
+    <% if @planet.under_construction == false %>
+      <%= button_to 'Upgrade', {:controller => "planets", :action => "upgrade_building", :btype => h[0].to_s, :id => @planet.id } , :method => :post, data: { confirm: 'Möchtest du dein ' + h[0].to_s + ' aufwerten?' } %>
+    <% else %>
+      
+
+    <% end %>
+  </div>
+
+  <%end%>
+  <%end%> 
+  <% if @planet.under_construction %>
+  <div class="build_progress">
+    <div class="progress progress-striped active">
+      <span style="font-weight: bold"><%= "Baue Gebäude" %></span>
+      <div class="bar" style="width: 40%;"></div>
+    </div>
+  </div>
+  <% end %>
+  </div>
+<!--
   <div>
     <% @planet.upgradable_buildings_to_hash.each do |x| %>
       <%= x.to_s %>, 
       <% end %>
   </div>
-
+-->
 </div>
