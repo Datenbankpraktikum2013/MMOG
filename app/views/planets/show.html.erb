@@ -134,8 +134,8 @@
        Produktion: <%= bt.production%>
       </p>
 
-    <% if @planet.under_construction == false %>
-      <%= button_to 'Upgrade', {:controller => "planets", :action => "upgrade_building", :btype => h[0].to_s, :id => @planet.id } , :method => :post, data: { confirm: 'Möchtest du dein ' + h[0].to_s + ' aufwerten?' } %>
+    <% if @planet.under_construction == 0 %>
+      <%= button_to 'Upgrade', {:controller => "planets", :action => "upgrade_building", :btype => h[0].to_s, :id => @planet.id } , :method => :post, data: { confirm: 'Möchtest du dein ' + h[0].to_s + ' aufwerten?' }, class: "btn btn-success" %>
     <% else %>
       
 
@@ -144,13 +144,15 @@
 
   <%end%>
   <%end%> 
-  <% if @planet.under_construction %>
+  <% if @planet.under_construction > 0 %>
   <div class="build_progress">
+    <% b = Buildingtype.find(@planet.under_construction)%>
     <div class="progress progress-striped active">
-      <span style="font-weight: bold"><%= "Baue Gebäude" %></span>
-      <div class="bar" style="width: 40%;"></div>
+      <span style="font-weight: bold"><%= "Baue Gebäude "  %><%=b.name%> der Stufe <%=b.level%></span>
+      <div id='auto-updating-progressbar' class="bar"></div>
     </div>
   </div>
+  
   <% end %>
   </div>
 <!--
@@ -161,3 +163,52 @@
   </div>
 -->
 </div>
+
+<script type='text/javascript'>
+    <% building =  @planet.under_construction %>;
+    var building = <%=building%>
+
+    var aktiv_bar;
+    var aktiv_reload;
+
+    function fetch_finished(){
+        $.getJSON('/json/planet_page_refresh.json?id='+<%=@planet.id%>+'', function(data) {
+            var items = [];
+            $.each(data, function(key, val) {
+                items.push(val);
+            });
+            if (items[0] == 0){
+                //window.clearInterval(aktiv_reload);
+                location.reload();
+            }
+        });
+    };
+
+    if(building != 0){   
+
+        var start = <%= @planet.start_construction_at.to_i %>;
+        var gone = <%=Time.now.to_i%> - start; 
+        var end  = <%= @planet.get_builttime(building) if building!=0  %>;
+
+        function update_progressbar(){
+            if (gone >= end) {
+                window.clearInterval(aktiv_bar);
+                aktiv_reload = setInterval(fetch_finished,1000);
+            };
+
+            gone += 0.25;
+            var p = (gone/end)*100;
+            var d = document.getElementById('auto-updating-progressbar');
+            d.style.width = (p+"%");
+
+            if (gone <= end) {
+              window.clearInterval(update_progressbar);
+            };
+        };
+
+        aktiv_bar = window.setInterval(update_progressbar, 250);
+
+  };
+
+
+</script>
