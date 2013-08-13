@@ -1,36 +1,42 @@
-
-<h1>Spionagebericht</h1>
 <p>
-  Du hast am <strong><%= @report.fightdate.strftime('%d.%m.%y') %> um 
-  <%= @report.fightdate.strftime('%H:%M') %> Uhr</strong>  einen Spionagebericht 
-  vom Planeten <b><%= @report.defender_planet.name %></b> erhalten
+  <h1>Spionagebericht</h1> 
+vom <strong><%= @report.fightdate.strftime('%d.%m.%y') %> um <%= @report.fightdate.strftime('%H:%M') %> Uhr</strong>
 </p>
-<h3>Planet:</h3>
-<p>Besitzer: <%= @report.defender.username %></p>
-<p>
-  Bevölkerung: <%= @report.reportable.population %> Energie: <%= @report.reportable.energy %>
-  Erz: <%= @report.reportable.ore %> Space Cash: <%= @report.reportable.space_cash %>
-  Crystal: <%= @report.reportable.crystal %>
-</p>
-<h3>Technologien:</h3>
-<% @report.reportable.techstages.each do |tech| %>
+</br>
+
+<% if @report.reportable.mode < 2 %>
+  <h4>Planet <%= @report.defender_planet.name %> von <%= @report.defender.username %>:</h4>
   <p>
-    <%= tech.technology.name + ': ' + tech.level.to_s %>
+    Bevölkerung: <%= @report.reportable.population %> Energie: <%= @report.reportable.energy %>
+    Erz: <%= @report.reportable.ore %> Space Cash: <%= @report.reportable.space_cash %>
+    Crystal: <%= @report.reportable.crystal %>
   </p>
 <% end %>
+<% if @report.reportable.mode == 0 %>
+  <% unless @report.reportable.techstages.empty? %>
+    <h4>Technologien:</h4>
+    <% @report.reportable.techstages.each do |tech| %>
+      <p>
+        <%= tech.technology.name + ': ' + tech.level.to_s %>
+      </p>
+    <% end %>
+  <% end %>
 
-<h3>Gebäude:</h3>
-<% @report.reportable.buildingtypes.each do |buildingtype| %>
-  <p>
-    <%= buildingtype.name + ': ' + buildingtype.level.to_s %>
-  </p>
+  <% unless @report.reportable.buildingtypes.empty? %>
+    <h4>Gebäude:</h4>
+    <% @report.reportable.buildingtypes.each do |buildingtype| %>
+      <p>
+        <%= buildingtype.name + ': ' + buildingtype.level.to_s %>
+      </p>
+    <% end %>
+  <% end %>
+  <% unless @report.reportable.shipcounts.empty? %>
+    <h4>Schiffe:</h4>
+    <% @report.reportable.shipcounts.each do |shipcount| %>
+      <p>
+        <%= shipcount.ship.name + ': ' + shipcount.amount.to_s %>
+      </p>
+    <% end %>
+  <% end %>
 <% end %>
-
-<h3>Schiffe:</h3>
-<% @report.reportable.shipcounts.each do |shipcount| %>
-  <p>
-    <%= shipcount.ship.name + ': ' + shipcount.amount.to_s %>
-  </p>
-<% end %>
-
 <%= link_to 'Zurück', :back, remote: true %>
