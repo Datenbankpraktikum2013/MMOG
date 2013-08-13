@@ -347,7 +347,42 @@ class Planet < ActiveRecord::Base
       give(:Population, destroy_me.build_cost_population/2)
       give(:Money, destroy_me.build_cost_money/2)
 
+    end  
+  end
+
+  def destroy_buildings
+    
+    my_buildings = get_buildings
+    my_upgraded_buildings = []
+    
+    my_buildings.each do |x|
+    b = Buildingtype.find(x.buildingtype_id)
+      if b.level > 1
+        my_upgraded_buildings << x
+      end  
     end
+    
+    randomnumber = my_upgraded_buildings.size
+    return nil if randomnumber == 0
+    randomnumber = 2 if randomnumber > 2   
+    randomnumber = Random.rand(randomnumber+1)
+    
+    destroyed_buildings = []
+    randomnumber.times do |i|
+      missle = Random.rand(my_upgraded_buildings.size)
+      b = Buildingtype.find(my_upgraded_buildings[missle].buildingtype_id)
+      if b.level == 1 then
+        i-= 1
+      else
+      destroyed_buildings << b
+      new_b = Buildingtype.find_by(level: b.level-1, name: b.name)
+      my_upgraded_buildings[missle].buildingtype_id = new_b.id 
+      my_upgraded_buildings[missle].save
+      end
+      return destroyed_buildings
+    end
+
+
     
   end
 
