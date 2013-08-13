@@ -428,7 +428,7 @@ class Fleet < ActiveRecord::Base
       end
       puts "Generating Battlereport..."
 
-      @battle_report.finish_battlereport(defender_fleets, {}, true)
+      @battle_report.finish_battlereport(defender_fleets, nil, true)
 
       self.destroy
 
