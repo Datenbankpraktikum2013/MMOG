@@ -3,11 +3,12 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th>FlottenID</th>
+        <th>ID</th>
         <th>Planet</th>
         <th>Schiffe</th>
         <th>Erz</th>
-        <th>Kirstall</th>
+        <th>Kristall</th>
+        <th>Aktionen</th>
       </tr>
     </thead>
 
@@ -16,9 +17,24 @@
         <tr>
           <td><%= fleet.id %></td>
           <td><%= fleet.origin_planet.name %></td> <!-- hier noch KOORDINATEN -->
-          <td><a type="button" fleet="<%=fleet.id%>" class="btn btn-link ship-info">Schiffe <i class="icon-chevron-down"></i></a></td>
+          <td>
+            <% if fleet.get_ships.empty? %>
+              keine Schiffe vorhanden
+            <% else %>
+              <a type="button" fleet="<%=fleet.id%>" class="btn btn-link ship-info">Schiffe <i class="icon-chevron-down"></i></a>
+            <% end %>        
+          </td>
           <td><%= fleet.ore %></td>
           <td><%= fleet.crystal %></td>
+          <td>
+            <% if fleet.ore != 0 || fleet.crystal != 0 %>
+            <button planet="<%=fleet.start_planet.id%>" id="fleet-unload" fleet="<%=fleet.id%>" type="button" class="btn btn-default">
+              <i class="icon-arrow-right"></i>
+            <% else %>
+            ---
+            <% end %>
+            </button>
+          </td>
         </tr>
         <% unless fleet.get_ships.empty? %>
           <tr>
@@ -66,7 +82,7 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th>FlottenID</th>
+        <th>ID</th>
         <th>Heimatplanet</th>
         <th>Mission</th>
         <th>Schiffe</th>
@@ -83,7 +99,9 @@
         <tr>
           <td><%= fleet.id %></td>
           <td><%= fleet.origin_planet.name %></td>
-          <% if fleet.mission.id == 2 %>
+          <% if fleet.target_planet == fleet.origin_planet %>
+            <td>Rückkehr</td>
+          <% elsif fleet.mission.id == 2 %>
             <td>Kolonialisieren</td>
           <% elsif fleet.mission.id == 3 %>
             <td>Angriff</td>
@@ -94,23 +112,24 @@
           <% else %>
             <td>Transport</td>
           <% end %>
-          <td><a type="button" fleet="<%=fleet.id%>" class="btn btn-link ship-info">Schiffe <i class="icon-chevron-down"></i></a></td>
-          <td><%= Time.at fleet.arrival_time %></td>
+          <td>
+            <a type="button" fleet="<%=fleet.id%>" class="btn btn-link ship-info">Schiffe <i class="icon-chevron-down"></i></a>
+          </td>
+          <td><%= (Time.at fleet.arrival_time).strftime("%H:%M:%S Uhr %e. %b") %></td>
           <td><%= fleet.target_planet.name %></td> <!-- hier noch KOORDINATEN -->
           <td><%= fleet.ore %></td>
           <td><%= fleet.crystal %></td>
-          <td> 
-            <button planet="<%=fleet.start_planet.id%>" id="fleet-breakup" fleet="<%=fleet.id%>" type="button" class="btn btn-default">
-              <i class="icon-remove"></i>
-            </button> 
-            <button planet="<%=fleet.start_planet.id%>" id="fleet-unload" fleet="<%=fleet.id%>" type="button" class="btn btn-default">
-              <i class="icon-arrow-right"></i>
-            </button>
+          <td>
+            <% unless fleet.target_planet == fleet.origin_planet %>
+              <button id="fleet-breakup" fleet="<%=fleet.id%>" type="button" class="btn btn-default">
+                <i class="icon-remove"></i>
+              </button> 
+            <% end %>
           </td>
         </tr>
         <% unless fleet.get_ships.empty? %>
         <tr>
-          <td colspan="8">
+          <td colspan="9">
             <div class="info-<%= fleet.id %>" style="display:none">
                 <table class"table table-condensed">
                   <thead>
@@ -150,7 +169,7 @@
 <hr>
 
 <% unless @approaching_fleets.empty? %>
-  <h1>Approaching Fleets</h1>
+  <h1>Flotten auf dem Weg zu dir</h1>
   <table class="table">
     <thead>
       <tr>
@@ -163,7 +182,9 @@
 
     <tbody>
       <% @approaching_fleets.each do |fleet| %>
-        <% if fleet.mission.id == 3 %>
+        <% if fleet.target_planet == fleet.origin_planet %>
+          <% mission = "Rückkehr" %>        
+        <% elsif fleet.mission.id == 3 %>
           <% mission = "Attack" %>
           <tr class="error">
         <% elsif fleet.mission.id == 6 %>
@@ -176,7 +197,7 @@
           <td><%= fleet.user.username %></td>
           <td><%= mission %></td>
           <td><%= fleet.target_planet.name %> (<%= fleet.target_planet.id %>)</td>
-          <td><%= Time.at fleet.arrival_time %></td>
+          <td><%= (Time.at fleet.arrival_time).strftime("%H:%M:%S Uhr %e. %b") %></td>
         </tr>
       <% end %>
     </tbody>
@@ -186,15 +207,40 @@
 <% end %>
 
 <script type="text/javascript">
-  $(".ship-info").on("click", function(){
-    id = $(this).attr("fleet");
-    if ($(".info-"+id).css("display") == "none"){
-      $('a[fleet='+id+']').html('Schiffe <i class="icon-chevron-up"></i>');
-    }
-    else {
-      $('a[fleet='+id+']').html('Schiffe <i class="icon-chevron-down"></i>');
-    }
-    $(".info-"+id).animate({ height: 'toggle', opacity: 'toggle' }, 'slow');
-  });
+  $(document).ready(function(){
+    
+    $("#fleet-unload").on("click", function(){
+      fleet_id = $(this).attr("fleet");
+      planet_id = $(this).attr("planet");
+      $.getJSON("/json/unload?fleet="+fleet_id+"&planet="+planet_id, function(data){
+        if (data.ok == 1){
+          window.location.reload()
+        }
+        //ELSE noch??????????
+      });
 
+    });
+
+    $("#fleet-breakup").on("click", function(){
+      fleet_id = $(this).attr("fleet");
+      $.getJSON("/json/breakup?fleet="+fleet_id, function(data){
+        if (data.ok == 1){
+          window.location.reload()
+        }
+        //ELSE noch??????????
+      });      
+
+    });
+
+    $(".ship-info").on("click", function(){
+      id = $(this).attr("fleet");
+      if ($(".info-"+id).css("display") == "none"){
+        $('a[fleet='+id+']').html('Schiffe <i class="icon-chevron-up"></i>');
+      }
+      else {
+        $('a[fleet='+id+']').html('Schiffe <i class="icon-chevron-down"></i>');
+      }
+      $(".info-"+id).animate({ height: 'toggle', opacity: 'toggle' }, 'slow');
+    });
+  });
 </script>
