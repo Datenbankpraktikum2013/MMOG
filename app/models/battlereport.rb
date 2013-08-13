@@ -44,8 +44,6 @@ class Battlereport < ActiveRecord::Base
 		self.stolen_crystal = atk_fleet.crystal
 		self.stolen_space_cash = atk_fleet.credit
 
-		puts "Ore: #{atk_fleet.ore}, Cash: #{atk_fleet.credit}, Crystal: #{atk_fleet.crystal}"
-
 		defended ? self.winner = @r.defender : self.winner = @r.attacker
 		self.save
 		@r.save

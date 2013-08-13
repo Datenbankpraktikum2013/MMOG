@@ -245,9 +245,10 @@ class Fleet < ActiveRecord::Base
       energy = 0
 
       ships = fleet.get_ships  
-      ships.each do |ship, amount|
-        energy += get_needed_fuel(ship, time) * amount
-      end
+      # ships.each do |ship, amount|
+      #   energy += get_needed_fuel(ship, time) * amount
+      # end
+      energy = Fleet.get_needed_fuel_from_hash(ships, time)
 
       #origin and start planet are ok, only target planet needs to be changed
       fleet.target_planet = destination
