@@ -1,7 +1,7 @@
 <% a = @planet.special.to_s%>
 <%test=('/images/planets/planet'+a+'bg.png').to_s %>
 
-<div class="planetbox" style='background-image:url("<%=test %>");background-repeat:no-repeat;background-size:contain;background-position:center;'>
+<div class="planetbox" style='background-image:url("<%=test %>");background-repeat:no-repeat;background-size:<%= (@planet.size / 200).to_i%>px <%= (@planet.size / 200).to_i%>px ;background-position:center;'>
 
   <div class="ressources">
 
@@ -117,11 +117,17 @@
     <%  b.each do |h| %>
 
         <div class="buildingpos buildingpos<%=h[0]%>" title="Name: <%= h[0]%>, Level:<%= h[1]%>"
-            <% if h[0] == "Oremine" %>
-               <% h[1] = (h[1]/ 2) +1%>
+             <% fake_lvl = h[1] %>
+             <% if h[0].to_s == "Oremine" && h[1] != 0%>
+               <% if h[1]%2 == 0 then fake_lvl = (h[1]/ 2) else fake_lvl = (h[1] / 2) + 1 end %>
             <%end%>
             onclick="javascript:showBuildingInfo('<%= h[0].to_s %>')">
-            <%= image_tag('/images/buildings/'+ h[0].to_s + '/' + h[0].to_s + h[1].to_s+'.png')%>
+
+            <% if h[1] != 0%>
+            <%= image_tag('/images/buildings/'+ h[0].to_s + '/' + h[0].to_s + fake_lvl.to_s+'.png')%>
+            <% else %>
+              <%= image_tag('/images/buildings/underconstruction.png')%>
+            <% end%>
             <!-- <div id="building_info_<%= h[0].to_s %>">
             
              <p class="building_info_field">Informationen dazu: <%= h[0].to_s %><br />
@@ -146,7 +152,7 @@
                <%= bt.build_cost_money %> Spacecash,
                <%= bt.build_cost_population %> Einwohner,
                <%= bt.build_cost_crystal %> Kristall<br/>
-       Bauzeit:<%= bt.build_time/60 %>:<%=bt.build_time%60 %> Bauzeit<br/>
+       Bauzeit:<%= bt.build_time/60 %>:<%=bt.build_time%60 %> Minuten<br/>
        Produktion: <%= bt.production%>
       </p>
 
@@ -166,6 +172,9 @@
     <div class="progress progress-striped active">
       <span style="font-weight: bold"><%= "Baue Gebäude "  %><%=b.name%> der Stufe <%=b.level%></span>
       <div id='auto-updating-progressbar' class="bar"></div>
+    </div>
+    <div>
+    <%= button_to 'Abbrechen', {:controller=>"planets", :action=>"abort_upgrade", :pid=>@planet.id, :bid=>@planet.under_construction}, :onclick => "return confirm('Möchtest du den Gebäudebau wirklich abbrechen?')",:method=>:post, class: "btn btn-danger" %>
     </div>
   </div>
   
@@ -188,7 +197,7 @@
     var aktiv_reload;
 
     function fetch_finished(){
-        $.getJSON('/json/planet_page_refresh.json?id='+<%=@planet.id%>+'', function(data) {
+        $.getJSON('/json/planet_page_refresh.json?id='+<%=@planet.id%>, function(data) {
             var items = [];
             $.each(data, function(key, val) {
                 items.push(val);

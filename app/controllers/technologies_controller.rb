@@ -88,7 +88,7 @@ class TechnologiesController < ApplicationController
   end
 
   def page_refresh
-    object = {:researching => current_user.user_setting.researching}
+    object = {:researching => User.find(current_user).user_setting.researching}
     respond_to do |format|
       format.json { render json: object }
     end
