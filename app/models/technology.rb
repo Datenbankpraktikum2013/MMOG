@@ -71,6 +71,9 @@ class Technology < ActiveRecord::Base
       new_rank = 1
       user_technologies.create(:rank => new_rank, :user => user)
     end
+
+    #Füge User Score hinzu
+    user.add_score(score * new_rank)
     #Speichere neuen Faktor ab
     user.user_setting.update_attribute name, factor**new_rank
 
