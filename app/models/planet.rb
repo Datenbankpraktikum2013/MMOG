@@ -366,6 +366,7 @@ class Planet < ActiveRecord::Base
     id_array << build_me.id
     self.under_construction = build_me.id
     
+    build_time = get_builttime(build_me.id)
     self.start_construction_at = Time.now
     self.save
     Resque.enqueue_in(build_time.second, BuildBuildings, id_array)
