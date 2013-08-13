@@ -91,7 +91,9 @@
                 </div>
             <%end%>
             <div class="well">
-		  			<p id="notice"><%= notice %></p>
+            		<% if notice!=nil %>
+		  				<p class="alert alert-info"><%= notice %></p>
+		  			<% end %>
 		  			<%= yield() %>
 		  		</div>
 			</div>

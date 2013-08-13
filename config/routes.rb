@@ -84,6 +84,8 @@ Mmog::Application.routes.draw do
 
   post 'planets/upgrade_building' => 'planets#upgrade_building'
 
+  post '/alliances/:id/leave' => 'alliances#leave'
+
   get 'alliances_overview' => 'alliances#overview'
 
   # The priority is based upon order of creation: first created -> highest priority.
