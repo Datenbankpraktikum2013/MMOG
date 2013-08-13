@@ -23,7 +23,7 @@
 	<div class="container">
 		<div class="row">
 		 	<div class="span2">
-		 		<ul class="nav nav-pills nav-stacked nav-highlight">
+		 		<ul class="nav nav-pills nav-stacked">
 		 			<li class="active">
 		 				<a href="#">
 			 				<% if controller_name == 'welcome'%>
@@ -41,7 +41,11 @@
                             <% elsif controller_name == 'technologies' %>
                                 Technlogien
                     	    <% elsif controller_name == 'reports' %>
-                                Berichte	
+                                Berichte
+                            <% elsif controller_name == 'relationships' %>	
+                            	Freundesliste
+                            <% elsif controller_name == 'starport' %>	
+                            	Schiffswerfte
                             <%end %>
 		 				</a>
 		 			</li>
@@ -53,14 +57,39 @@
 		  				<li><a href="<%= messages_path %>">Nachrichten <span id="msgupdate" class="badge"><%= current_user.unread_messages %></span> </a></li>
                         <li><a href="<%= reports_path %>">Berichte <span class="badge" id="unreadreports"><%= Report.unread_reports(current_user.id) %></span> </a></li>
                         <li><a href="<%= technologies_path %>">Technologiebaum</a></li>
+                        <li><a href="<%= starport_path %>">Schiffswerften</a></li>
                         <li><a href="<%= fleets_path %>">Deine Flotten</a></li>
                         <li><a href="<%= missions_path %>">Missionen</a></li>
+                        <li><a href="<%= relationships_path %>">Freundesliste</a></li>
 		  				<li><a href="<%= alliances_path %>"><%= if current_user.alliance.nil? then "Allianz gründen" else ("Allianz `"+ current_user.alliance.name + "`") end %></a></li>
 		  			<% end %>
 				</ul>
 		  	</div>
-		  	<div class="span8">
-		  		<div class="well">
+
+          <div class="span8">
+            <% if user_signed_in? %>
+                <div class="well">
+                  <div class="inline">
+
+                    <div title="Geld">
+                      <%= image_tag('/images/icons/spacecash.png') %>
+                      <%= current_user.money%>
+                    </div>
+
+                    <div title="Planeten">
+                      <%= image_tag('/images/planets/anzeigeplanet.png') %>
+                      <%= current_user.planets.count%>
+                    </div>
+
+                    <div title="Highscore">
+                      <%= image_tag('/images/icons/star32px.png') %>
+                      <%= current_user.score%>
+                    </div>
+
+                  </div>
+                </div>
+            <%end%>
+            <div class="well">
 		  			<p id="notice"><%= notice %></p>
 		  			<%= yield() %>
 		  		</div>
@@ -108,7 +137,7 @@
           <ul>
             <li>Bug melden</li>
             <li>FAQ</li>
-            <li>Impressum</li>
+            <li><a href="/impressum">Impressum</a></li>
           </ul>
         </div>
 	</div>

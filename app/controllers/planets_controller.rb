@@ -10,6 +10,7 @@ class PlanetsController < ApplicationController
   # GET /planets/1
   # GET /planets/1.json
   def show
+
   end
 
   # GET /planets/new
@@ -48,6 +49,22 @@ class PlanetsController < ApplicationController
         format.html { render action: 'edit' }
         format.json { render json: @planet.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def upgrade_building
+    @planet = Planet.find(params["id"])
+    if @planet.create_building_job(params["btype"].to_sym) then
+    
+    respond_to do |format|
+      format.html { redirect_to @planet, notice: 'Gebäude wird gebaut.' }
+      format.json {render action: 'show'}
+    end
+    else
+      respond_to do |format|
+      format.html { redirect_to @planet, notice: 'Gebäude kann nicht gebaut werden.'}
+      format.json {render action: 'show'}
+    end
     end
   end
 

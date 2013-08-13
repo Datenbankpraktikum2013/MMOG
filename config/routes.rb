@@ -8,7 +8,7 @@ Mmog::Application.routes.draw do
   
   resources :techstages #kommt spaeter noch raus
 
-  resources :reports
+  resources :reports, only: [:show, :index, :destroy]
 
   resources :shipcounts #kommt spaeter noch raus
 
@@ -42,10 +42,15 @@ Mmog::Application.routes.draw do
 
   resources :planets
 
+  resources :impressum
+
   post "requests" => "requests#create"
   post "requests/reaction"=>"requests#reaction"
   get "starport" => "starport#index"
+
   get "starport/:id" => "starport#show"
+  
+
   post "starport/build" => "starport#build"
   get "ship_building_queues/destroy_queue/:id" => "ship_building_queues#destroy_queue"
 
@@ -76,6 +81,8 @@ Mmog::Application.routes.draw do
   get '/json/unload' => 'fleets#unload'
 
   get '/confirm/send' => 'missions#send_fleet'
+
+  post 'planets/upgrade_building' => 'planets#upgrade_building'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -192,5 +192,4 @@ Planet.find(1).give(:Energy, 10000)
 
    Planet.first.seen_by(User.first)
    Planet.first.seen_by(User.find(2))
-
 end
