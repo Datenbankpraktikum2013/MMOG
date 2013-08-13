@@ -8,41 +8,54 @@
     <div class="ressource_item_anzeige" title="Bevölkerung">
       <%= image_tag('/images/icons/menschen32px.png') %>
 
-      <% if @planet.maxpopulation > 9999 %>
+      <% if @planet.maxpopulation > 9999 && @planet.population > 9999 %>
           <%= @planet.population / 1000%> <%= "k" %> / <%= @planet.maxpopulation / 1000%> <%= "k" %>
-      <%else %>
-          <%= @planet.population%> / <%= @planet.maxpopulation%>
-      <% end %>
+      <%else if @planet.maxpopulation > 9999 && @planet.population < 10000 %>
+              <%= @planet.population%> / <%= @planet.maxpopulation / 1000%> <%= "k" %>
+          <%else%>
+              <%= @planet.population%> / <%= @planet.maxpopulation%>
+          <% end %>
+      <% end%>
     </div>
 
     <div class="ressource_item_anzeige" title="Energie">
       <%= image_tag('/images/icons/energy32px.png') %>
 
-      <% if @planet.maxenergy > 9999 %>
+      <% if @planet.maxenergy > 9999 && @planet.energy > 9999%>
           <%= @planet.energy/ 1000%> <%= "k" %> / <%= @planet.maxenergy / 1000%> <%= "k" %>
-      <% else %>
-          <%= @planet.energy%> / <%= @planet.maxenergy%>
-      <% end %>
+      <% else if @planet.maxenergy > 9999 && @planet.energy < 10000%>
+              <%= @planet.energy%> / <%= @planet.maxenergy / 1000%> <%= "k" %>
+          <%else%>
+              <%= @planet.energy%> / <%= @planet.maxenergy%>
+          <% end %>
+      <%end%>
     </div>
 
     <div class="ressource_item_anzeige" title="Eisen">
       <%= image_tag('/images/icons/eisen32px.png') %>
 
-      <% if @planet.maxore > 9999 %>
+      <% if @planet.maxore > 9999 && @planet.ore > 9999%>
           <%= @planet.ore/ 1000%> <%= "k" %> / <%= @planet.maxore / 1000%> <%= "k" %>
-      <% else %>
-          <%= @planet.ore%> / <%= @planet.maxore%>
-      <% end %>
+      <% else if @planet.maxore > 9999 && @planet.ore < 10000%>
+              <%= @planet.ore%> / <%= @planet.maxore / 1000%> <%= "k" %>
+          <%else%>
+              <%= @planet.ore%> / <%= @planet.maxore%>
+          <% end %>
+      <%end%>
     </div>
 
     <div class="ressource_item_anzeige" title="Kristalle">
       <%= image_tag('/images/icons/kristall_blau32px.png') %>
 
-      <% if @planet.maxcrystal > 9999 %>
+      <% if @planet.maxcrystal > 9999 && @planet.crystal > 9999%>
           <%= @planet.crystal/ 1000%> <%= "k" %> / <%= @planet.maxcrystal / 1000%> <%= "k" %>
-      <% else %>
-      <%= @planet.crystal%> / <%= @planet.maxcrystal %>
+      <% else if @planet.maxcrystal > 9999 && @planet.crystal < 10000%>
+              <%= @planet.crystal%> / <%= @planet.maxcrystal / 1000%> <%= "k" %>
+          <%else%>
+              <%= @planet.crystal%> / <%= @planet.maxcrystal%>
           <% end %>
+      <%end%>
+
     </div>
   </div>
 
@@ -104,6 +117,9 @@
     <%  b.each do |h| %>
 
         <div class="buildingpos buildingpos<%=h[0]%>" title="Name: <%= h[0]%>, Level:<%= h[1]%>"
+            <% if h[0] == "Oremine" %>
+               <% h[1] = (h[1]/ 2) +1%>
+            <%end%>
             onclick="javascript:showBuildingInfo('<%= h[0].to_s %>')">
             <%= image_tag('/images/buildings/'+ h[0].to_s + '/' + h[0].to_s + h[1].to_s+'.png')%>
             <!-- <div id="building_info_<%= h[0].to_s %>">
