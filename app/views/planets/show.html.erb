@@ -8,41 +8,54 @@
     <div class="ressource_item_anzeige" title="Bevölkerung">
       <%= image_tag('/images/icons/menschen32px.png') %>
 
-      <% if @planet.maxpopulation > 9999 %>
+      <% if @planet.maxpopulation > 9999 && @planet.population > 9999 %>
           <%= @planet.population / 1000%> <%= "k" %> / <%= @planet.maxpopulation / 1000%> <%= "k" %>
-      <%else %>
-          <%= @planet.population%> / <%= @planet.maxpopulation%>
-      <% end %>
+      <%else if @planet.maxpopulation > 9999 && @planet.population < 10000 %>
+              <%= @planet.population%> / <%= @planet.maxpopulation / 1000%> <%= "k" %>
+          <%else%>
+              <%= @planet.population%> / <%= @planet.maxpopulation%>
+          <% end %>
+      <% end%>
     </div>
 
     <div class="ressource_item_anzeige" title="Energie">
       <%= image_tag('/images/icons/energy32px.png') %>
 
-      <% if @planet.maxenergy > 9999 %>
+      <% if @planet.maxenergy > 9999 && @planet.energy > 9999%>
           <%= @planet.energy/ 1000%> <%= "k" %> / <%= @planet.maxenergy / 1000%> <%= "k" %>
-      <% else %>
-          <%= @planet.energy%> / <%= @planet.maxenergy%>
-      <% end %>
+      <% else if @planet.maxenergy > 9999 && @planet.energy < 10000%>
+              <%= @planet.energy%> / <%= @planet.maxenergy / 1000%> <%= "k" %>
+          <%else%>
+              <%= @planet.energy%> / <%= @planet.maxenergy%>
+          <% end %>
+      <%end%>
     </div>
 
     <div class="ressource_item_anzeige" title="Eisen">
       <%= image_tag('/images/icons/eisen32px.png') %>
 
-      <% if @planet.maxore > 9999 %>
+      <% if @planet.maxore > 9999 && @planet.ore > 9999%>
           <%= @planet.ore/ 1000%> <%= "k" %> / <%= @planet.maxore / 1000%> <%= "k" %>
-      <% else %>
-          <%= @planet.ore%> / <%= @planet.maxore%>
-      <% end %>
+      <% else if @planet.maxore > 9999 && @planet.ore < 10000%>
+              <%= @planet.ore%> / <%= @planet.maxore / 1000%> <%= "k" %>
+          <%else%>
+              <%= @planet.ore%> / <%= @planet.maxore%>
+          <% end %>
+      <%end%>
     </div>
 
     <div class="ressource_item_anzeige" title="Kristalle">
       <%= image_tag('/images/icons/kristall_blau32px.png') %>
 
-      <% if @planet.maxcrystal > 9999 %>
+      <% if @planet.maxcrystal > 9999 && @planet.crystal > 9999%>
           <%= @planet.crystal/ 1000%> <%= "k" %> / <%= @planet.maxcrystal / 1000%> <%= "k" %>
-      <% else %>
-      <%= @planet.crystal%> / <%= @planet.maxcrystal %>
+      <% else if @planet.maxcrystal > 9999 && @planet.crystal < 10000%>
+              <%= @planet.crystal%> / <%= @planet.maxcrystal / 1000%> <%= "k" %>
+          <%else%>
+              <%= @planet.crystal%> / <%= @planet.maxcrystal%>
           <% end %>
+      <%end%>
+
     </div>
   </div>
 
@@ -104,21 +117,114 @@
     <%  b.each do |h| %>
 
         <div class="buildingpos buildingpos<%=h[0]%>" title="Name: <%= h[0]%>, Level:<%= h[1]%>"
+            <% if h[0] == "Oremine" %>
+               <% h[1] = (h[1]/ 2) +1%>
+            <%end%>
             onclick="javascript:showBuildingInfo('<%= h[0].to_s %>')">
             <%= image_tag('/images/buildings/'+ h[0].to_s + '/' + h[0].to_s + h[1].to_s+'.png')%>
-            <div id="building_info_<%= h[0].to_s %>">
-            <%= button_to 'Upgrade', {:controller => "planets", :action => "upgrade_building", :btype => h[0].to_s, :id => @planet.id } , :method => :post, data: { confirm: 'Möchtest du dein ' + h[0].to_s + ' aufwerten?' } %>
-              <p class="building_info_field">Informationen dazu: <%= h[0].to_s %><br />
-                 Mehr...</p>
-            </div>
+            <!-- <div id="building_info_<%= h[0].to_s %>">
+            
+             <p class="building_info_field">Informationen dazu: <%= h[0].to_s %><br />
+                 Mehr... /p>
+            </div> -->
         </div>
     <%end%>
-    </div>
+  </div>
 
+  <div class="">
+    <!-- <% @planet.upgradable_buildings_to_hash.each do |x| %>
+      <%= x.to_s %>, 
+    <% end %> -->
+    <% b = @planet.buildings_to_hash%>
+    <%  b.each do |h| %>
+    <% bt = Buildingtype.where(name: h[0].to_s, level: h[1] +1).first %>
+    <% if bt.nil? then "Maximale Stufe bereits erreicht!" else %>
+    <div class= "upgrade_building_btn building_info" id= "building_info_<%=h[0]%>" style = "background-color:white">
+       
+      <p class="building_info_field">Gebäude: <%= h[0].to_s %> Level: <%= h[1] %><br />
+       Kosten: <%= bt.build_cost_ore %> Eisen,
+               <%= bt.build_cost_money %> Spacecash,
+               <%= bt.build_cost_population %> Einwohner,
+               <%= bt.build_cost_crystal %> Kristall<br/>
+       Bauzeit:<%= bt.build_time/60 %>:<%=bt.build_time%60 %> Bauzeit<br/>
+       Produktion: <%= bt.production%>
+      </p>
+
+    <% if @planet.under_construction == 0 %>
+      <%= button_to 'Upgrade', {:controller => "planets", :action => "upgrade_building", :btype => h[0].to_s, :id => @planet.id } , :method => :post, data: { confirm: 'Möchtest du dein ' + h[0].to_s + ' aufwerten?' }, class: "btn btn-success" %>
+    <% else %>
+      
+
+    <% end %>
+  </div>
+
+  <%end%>
+  <%end%> 
+  <% if @planet.under_construction > 0 %>
+  <div class="build_progress">
+    <% b = Buildingtype.find(@planet.under_construction)%>
+    <div class="progress progress-striped active">
+      <span style="font-weight: bold"><%= "Baue Gebäude "  %><%=b.name%> der Stufe <%=b.level%></span>
+      <div id='auto-updating-progressbar' class="bar"></div>
+    </div>
+  </div>
+  
+  <% end %>
+  </div>
+<!--
   <div>
     <% @planet.upgradable_buildings_to_hash.each do |x| %>
       <%= x.to_s %>, 
       <% end %>
   </div>
-
+-->
 </div>
+
+<script type='text/javascript'>
+    <% building =  @planet.under_construction %>;
+    var building = <%=building%>
+
+    var aktiv_bar;
+    var aktiv_reload;
+
+    function fetch_finished(){
+        $.getJSON('/json/planet_page_refresh.json?id='+<%=@planet.id%>+'', function(data) {
+            var items = [];
+            $.each(data, function(key, val) {
+                items.push(val);
+            });
+            if (items[0] == 0){
+                //window.clearInterval(aktiv_reload);
+                location.reload();
+            }
+        });
+    };
+
+    if(building != 0){   
+
+        var start = <%= @planet.start_construction_at.to_i %>;
+        var gone = <%=Time.now.to_i%> - start; 
+        var end  = <%= @planet.get_builttime(building) if building!=0  %>;
+
+        function update_progressbar(){
+            if (gone >= end) {
+                window.clearInterval(aktiv_bar);
+                aktiv_reload = setInterval(fetch_finished,1000);
+            };
+
+            gone += 0.25;
+            var p = (gone/end)*100;
+            var d = document.getElementById('auto-updating-progressbar');
+            d.style.width = (p+"%");
+
+            if (gone <= end) {
+              window.clearInterval(update_progressbar);
+            };
+        };
+
+        aktiv_bar = window.setInterval(update_progressbar, 250);
+
+  };
+
+
+</script>

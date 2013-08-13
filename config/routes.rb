@@ -73,6 +73,7 @@ Mmog::Application.routes.draw do
   post 'technologies/abort' => 'technologies#abort'
 
   get 'json/page_refresh' => 'technologies#page_refresh'
+  get 'json/planet_page_refresh' => 'planets#page_refresh'
 
   get '/json/distance' => 'missions#get_distance'
   get '/json/fleetships' => 'missions#get_ships'
@@ -85,6 +86,8 @@ Mmog::Application.routes.draw do
   post 'planets/upgrade_building' => 'planets#upgrade_building'
 
   get 'alliances_overview' => 'alliances#overview'
+
+  get 'useroverview' => 'useroverview'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

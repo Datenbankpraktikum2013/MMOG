@@ -1,0 +1,19 @@
+<table class="table table-striped table-bordered table-condensed">
+	<h1>Alle Spieler im Überblick</h1>
+	<tr>
+		<th>Name</th>
+		<th>Allianz</th>
+		<th>Score</th>
+	</tr>
+	<% @users.each do |user| %>
+		<tr>
+			<td><%=user.username%></td>
+			<% if user.alliance!=nil %>
+				<td><%=user.alliance.name%></td>
+			<% else %>
+				<td></td>
+			<% end %>		
+			<td><%=user.score%></td>
+		</tr>
+	<% end %>
+</table>

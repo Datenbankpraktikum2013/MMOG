@@ -8,3 +8,5 @@ function showBuildingInfo(item){
     $("#building_info_"+item).show();
     old_building = item;
 };
+
+$(".building_info").hide();
