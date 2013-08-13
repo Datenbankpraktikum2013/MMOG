@@ -11,10 +11,11 @@
 
   <% @galaxy.sunsystems.each do |s| %>
 
-      <a class="sunsyspos sunsyspos<%= s.y.to_s %>" href="<%= sunsystem_path(s)%>"> <div>
-
+      <a class="sunsyspos sunsyspos<%= s.y.to_s %>" title=<%=s.name%> href="<%= sunsystem_path(s)%>"><div>
         <% if !s.y.nil? then %>
-            <%= image_tag('/images/icons/eisen32px.png')%>
+            <%= image_tag('/images/backgrounds/Sunsystem'+ s.y.to_s + '.png')%>
+
+
         <% end %>
 
       </div></a>
