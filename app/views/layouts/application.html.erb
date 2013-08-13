@@ -46,6 +46,8 @@
                             	Freundesliste
                             <% elsif controller_name == 'starport' %>	
                             	Schiffswerfte
+                            <% elsif controller_name == 'useroverview' %>
+                            	Spielerübersicht	
                             <%end %>
 		 				</a>
 		 			</li>
@@ -62,6 +64,7 @@
                         <li><a href="<%= missions_path %>">Missionen</a></li>
                         <li><a href="<%= relationships_path %>">Freundesliste</a></li>
                         <li><a href="/alliances_overview">Allianzenüberblick</a></li>
+                        <li><a href="/useroverview">Spielerübersicht</a></li>
 		  				<li><a href="<%= alliances_path %>"><%= if current_user.alliance.nil? then "Allianz gründen" else ("Allianz `"+ current_user.alliance.name + "`") end %></a></li>
 		  			<% end %>
 				</ul>
@@ -119,14 +122,14 @@
 							<% @friends=current_user.friends %>						
 								<% unless @friends==nil %>								
 								<% @friends.each do |friend| %>
-								<tr>
-									<td><%= friend.username %><br></td>
-									<% if friend.online? %>
-										<td><font color="green">online</font></td>
-									<% else %>
-										<td><font color="red">offline</font></td>
-									<% end %>
-									<td><%= link_to 'MSG', new_message_path+'/?recipient='+friend.username , class: 'label label-info', :style=>'color:#FFFFFF;'%></td>
+									<tr>
+										<td><%= friend.username %><br></td>
+										<% if friend.online? %>
+											<td class="status_online">online</td>
+										<% else %>
+											<td class="status_offline">offline</td>
+										<% end %>
+										<td><%= link_to 'MSG', new_message_path+'/?recipient='+friend.username , class: 'label label-info', :style=>'color:#FFFFFF;'%></td>
 									</tr>
 								<% end %>								
 							<% end %>

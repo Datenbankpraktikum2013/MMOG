@@ -791,15 +791,7 @@ class Fleet < ActiveRecord::Base
     if self.mission.id == 1
       raise RuntimeError, "Fleet has to fly to breakup its mission"
     end
-    # calculate the used time till now for the flight and set it as the new arrival date for the return
-    diff = Time.now.to_i - self.departure_time
-
-    self.departure_time = Time.now.to_i
-    self.arrival_time = self.departure_time + diff
     
-    self.start_planet = self.target_planet
-    self.target_planet = self.origin_planet
-
     # Delete Jobs
     if self.mission.id == 2
       Resque.remove_delayed(ColonizePlanet, self.id, self.target_planet.id)
@@ -812,6 +804,15 @@ class Fleet < ActiveRecord::Base
     else
       Resque.remove_delayed(TransportToPlanet, self.id, self.target_planet.id)
     end
+
+    # calculate the used time till now for the flight and set it as the new arrival date for the return
+    diff = Time.now.to_i - self.departure_time
+
+    self.departure_time = Time.now.to_i
+    self.arrival_time = self.departure_time + diff
+    
+    self.start_planet = self.target_planet
+    self.target_planet = self.origin_planet
     Resque.enqueue_at(self.arrival_time, ReturnToOrigin, self.id)
     self.save
   end
@@ -833,7 +834,6 @@ class Fleet < ActiveRecord::Base
     end
     
     if (ore + crystal + credit) > self.get_free_capacity
-      puts "Too much to load, have to split ressources"
       part = self.get_free_capacity / 3
       self.ore += planet.take(:Ore, part)
       self.crystal += planet.take(:Crystal, part)

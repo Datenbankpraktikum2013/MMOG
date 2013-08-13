@@ -3,6 +3,7 @@ class Galaxy < ActiveRecord::Base
   has_many :sunsystems
 
   @@gal_factor = (GameSettings.get("WORLD_DISTANCE_FACTOR").to_i) * 10
+  @@users_settled_here = Hash.new
 
   def self.calcX(x, y)
     if x.integer? && y.integer? then
@@ -77,4 +78,22 @@ class Galaxy < ActiveRecord::Base
     return false if user.nil?
     return user.visible_galaxies.include?(self)
   end
+
+  def is_settled_by?(user)
+    return false if user.nil?
+    return true if !@@users_settled_here[self.id].nil? && @@users_settled_here[self.id].include?(user.id)
+    out = false
+    transaction do
+      plans = user.planets
+      plans.each do |p|
+      if @@users_settled_here[p.sunsystem.galaxy.id].nil? then
+         @@users_settled_here[self.id] = Array.new
+      end
+      @@users_settled_here[self.id] << user.id
+      out = true
+      end
+    end
+    return out
+  end
+
 end

@@ -36,18 +36,44 @@ class ShipBuildingQueue < ActiveRecord::Base
 			s.each do |key, value|
 				unless(value.to_i.zero?)
 					# puts ">>>>>>>>>>>>>>>>>>>>>>>> #{value.to_i}"
-					value.to_i.times do
+					q_ary=Array.new
+					last_q=ShipBuildingQueue.last
+					if last_q.nil?
+						l_qid=0
+					else
+						l_qid=last_q.qid+1
+					end
+					value.to_i.times do |i|
 						q=self.new
 						q.ship=key
 						q.planet=p 
-						q.end_time=key.construction_time + self.get_time(p)
+						q.qid=l_qid
+
+						if i==0
+							q.end_time=key.construction_time+Time.now.to_i
+						else
+							q.end_time=key.construction_time + q_ary[i-1].end_time
+						end
 						# puts "00000000000000000000000000000000000000"
 						# puts "Adding Ship #{q.ship.id }to Planet"
 						# puts "Now: #{Time.now.to_i} End: #{q.end_time}"
-						q.save
-						Fleet.add_ship_in(q.end_time, q.ship, q.planet, q.id)
-
+						q_ary[i]=q
+						Fleet.add_ship_in(q.end_time, q.ship, q.planet, q.qid)
+						l_qid+=1
 					end
+
+					
+					
+
+					ActiveRecord::Base.transaction do
+	  					value.to_i.times  do |i| 
+							#puts "<<<<<<<<<<<<<<<<<<<<t=#{q_ary[i].end_time} id=#{q_ary[i].id} qid=#{q_ary[i].qid}"
+
+	  						#Model.create(options)
+	  						ShipBuildingQueue.create(:ship => q_ary[i].ship, :planet=>q_ary[i].planet,:end_time=>q_ary[i].end_time,:qid=>q_ary[i].qid) 
+	  					end
+					end
+
 				end
 			end
 			return true
@@ -87,7 +113,8 @@ class ShipBuildingQueue < ActiveRecord::Base
 
 	def remove_queue
 
-		Resque.remove_delayed(AddShip, self.ship_id, self.planet_id, self.id )
+		
+		Resque.remove_delayed(AddShip, self.ship_id, self.planet_id, self.qid )
 		del_ship_type=Ship.find(self.ship_id)
 		ShipBuildingQueue.update_time(end_time, planet,del_ship_type.construction_time)
 		pl=Planet.find(self.planet_id)
@@ -97,27 +124,33 @@ class ShipBuildingQueue < ActiveRecord::Base
 		m1=pl.give(:Money, del_ship_type.crystal_cost)
 		cr1=pl.give(:Population, del_ship_type.crew_capacity)
 
-		puts "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
-		puts "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
-		puts "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
-		puts "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
-		puts "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
-		puts "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
-		puts "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
+		
 
-		puts "will give back to #{pl.id}: ore #{del_ship_type.ore_cost} (#{o1}), crystal: #{del_ship_type.crystal_cost} (#{c1}) Money: #{del_ship_type.credit_cost} (#{m1}) Crew: #{del_ship_type.crew_capacity} (#{cr1}) "
 
 		self.destroy
 	end
 
 	def self.update_time(t,p,b)
-		queue=self.where("planet_id=? AND end_time>?", p,t)
-		q3=queue.where("end_time<?", t).maximum("end_time")
-		if q3.nil? 
-			q3=Time.now.to_i
-		end
+		puts "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
+		puts "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
+		puts "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
+		puts "|||||||||||||||||aaaaaaaaaaaaaaaaaaaaaaaaaaa||||||||||||||||||||||||"
+		puts "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
+		puts "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
+		puts "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
+		queue=self.where("planet_id=? AND end_time>?", p,t).includes(:ship,:planet).to_a
+		# q3=queue.where("end_time<?", t).maximum("end_time")
+		# if q3.nil? 
+		# 	q3=Time.now.to_i
+		# end
 		
-
+		puts "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
+		puts "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
+		puts "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
+		puts "|||||||||||||||||bbbbbbbbbbbbbbbbbbbbbbbbbbb||||||||||||||||||||||||"
+		puts "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
+		puts "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
+		puts "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
 
 
 		queue.each do |q|
@@ -135,7 +168,15 @@ class ShipBuildingQueue < ActiveRecord::Base
 			
 
 		end
-		ShipBuildingQueue.update_all("end_time= end_time - #{b}","planet_id=#{p.id} AND end_time>#{t}")
+		puts "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
+		puts "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
+		puts "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
+		puts "|||||||||||||||||ccccccccccccccccccccccccccc||||||||||||||||||||||||"
+		puts "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
+		puts "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
+		puts "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
+		plid=p.id
+		ShipBuildingQueue.update_all("end_time= end_time - #{b}","planet_id=#{plid} AND end_time>#{t}")
 
 	end
 end
