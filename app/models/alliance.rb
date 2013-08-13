@@ -31,8 +31,11 @@ class Alliance < ActiveRecord::Base
 		@rank=self.ranks.where(:is_founder=>true).first
 		#add user to this rank
 		@rank.users<<founder
-		#add user to alliance
-		self.users<<founder
+	end
+
+	public
+	def add_score(value)
+	    update_attribute(:score, score + value)
 	end		
 
 	#add user to alliance and set default rank
@@ -43,6 +46,7 @@ class Alliance < ActiveRecord::Base
 			self.users<<user
 			@def=self.ranks.where(:standard=>true).first
 			@def.users<<user
+			self.add_score(user.score)
 			return true
 		end
 		return false
@@ -54,6 +58,7 @@ class Alliance < ActiveRecord::Base
 		if user.alliance==self
 			self.users.delete(user)
 			user.rank.users.delete(user)
+			self.add_score((-1)*user.score)
 			return true
 		end
 		return false

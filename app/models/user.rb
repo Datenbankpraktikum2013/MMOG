@@ -312,6 +312,9 @@ class User < ActiveRecord::Base
   end
 
   def add_score value
+    unless alliance.nil?
+      alliance.add_score(value)
+    end
     update_attribute(:score, score + value)
   end
 

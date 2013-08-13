@@ -6,6 +6,7 @@ class ShipBuildingQueue < ActiveRecord::Base
 		crystal_cost=0
 		ore_cost=0
 		credit_cost=0
+		crew_capacity=0
 		s.each do |key, value|
 			unless(value.to_i.zero?)
 				# puts "xxxxxxxxxxxxxxxxx c #{key.crystal_cost} xxx #{value}"
@@ -13,12 +14,14 @@ class ShipBuildingQueue < ActiveRecord::Base
 				crystal_cost+=(key.crystal_cost.to_i * value.to_i)
 				ore_cost+=(key.ore_cost.to_i * value.to_i)
 				credit_cost+=(key.credit_cost.to_i * value.to_i)
+				crew_capacity+=(key.crew_capacity.to_i * value.to_i)
 			end
 		end
 
 		o=p.take(:Ore, ore_cost)
 		c=p.take(:Crystal, crystal_cost)
 		m=p.take(:Money, credit_cost)
+		crew=p.take(:Population, crew_capacity)
 
 		# puts "|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
 		# puts "|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
@@ -29,7 +32,7 @@ class ShipBuildingQueue < ActiveRecord::Base
 		# puts "|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
 		# puts "|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
 		# puts "|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
-		if((o==ore_cost) && (m==credit_cost) && (c==crystal_cost))
+		if((o==ore_cost) && (m==credit_cost) && (c==crystal_cost) && (crew==crew_capacity))
 			s.each do |key, value|
 				unless(value.to_i.zero?)
 					# puts ">>>>>>>>>>>>>>>>>>>>>>>> #{value.to_i}"
@@ -43,7 +46,7 @@ class ShipBuildingQueue < ActiveRecord::Base
 						# puts "Now: #{Time.now.to_i} End: #{q.end_time}"
 						q.save
 						Fleet.add_ship_in(q.end_time, q.ship, q.planet, q.id)
-						
+
 					end
 				end
 			end
@@ -59,6 +62,7 @@ class ShipBuildingQueue < ActiveRecord::Base
 			p.give(:Ore,o)
 			p.give(:Crystal,c)
 			p.give(:Money,m)
+			p.give(:Population,crew)
 			return false
 		end
 
@@ -84,31 +88,54 @@ class ShipBuildingQueue < ActiveRecord::Base
 	def remove_queue
 
 		Resque.remove_delayed(AddShip, self.ship_id, self.planet_id, self.id )
-		ShipBuildingQueue.update_time(end_time, planet)
+		del_ship_type=Ship.find(self.ship_id)
+		ShipBuildingQueue.update_time(end_time, planet,del_ship_type.construction_time)
+		pl=Planet.find(self.planet_id)
+
+		o1=pl.give(:Ore, del_ship_type.ore_cost)
+		c1=pl.give(:Crystal, del_ship_type.crystal_cost)
+		m1=pl.give(:Money, del_ship_type.crystal_cost)
+		cr1=pl.give(:Population, del_ship_type.crew_capacity)
+
+		puts "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
+		puts "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
+		puts "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
+		puts "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
+		puts "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
+		puts "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
+		puts "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
+
+		puts "will give back to #{pl.id}: ore #{del_ship_type.ore_cost} (#{o1}), crystal: #{del_ship_type.crystal_cost} (#{c1}) Money: #{del_ship_type.credit_cost} (#{m1}) Crew: #{del_ship_type.crew_capacity} (#{cr1}) "
+
 		self.destroy
 	end
 
-	def self.update_time(t,p)
+	def self.update_time(t,p,b)
 		queue=self.where("planet_id=? AND end_time>?", p,t)
 		q3=queue.where("end_time<?", t).maximum("end_time")
 		if q3.nil? 
 			q3=Time.now.to_i
 		end
+		
+
+
+
 		queue.each do |q|
 			
-				q2=self.new
-				q2.ship_id=q.ship_id
-				q2.planet_id=q.planet_id
+				# q2=self.new
+				# q2.ship_id=q.ship_id
+				# q2.planet_id=q.planet_id
 
-				q2.end_time=(Time.now.to_i + (q.end_time-t))+(q3 - Time.now.to_i)
-				q2.save
+				q.end_time-=b
+				
 				Resque.remove_delayed(AddShip, q.ship_id, q.planet_id, q.id )
-				Fleet.add_ship_in(q2.end_time, q2.ship, q2.planet, q2.id)
-				q.destroy
+				Fleet.add_ship_in(q.end_time, q.ship, q.planet, q.id)
+				
 				
 			
 
 		end
+		ShipBuildingQueue.update_all("end_time= end_time - #{b}","planet_id=#{p.id} AND end_time>#{t}")
 
 	end
 end
