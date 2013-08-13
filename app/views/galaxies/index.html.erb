@@ -1,8 +1,56 @@
-<form action="" method="get">
+
+<p>Schnellreise</p>
+
+
+<form id="galaxy_fix_one" action="" method="get">
+    <select name="galaxy_name">
+      <option value="">Galaxie wählen...</option>
+      <% gs = current_user.visible_galaxies.uniq
+         gs.each do |g| %>
+      <option value="<%= g.name %>"><%= g.name %></option>
+      <% end %>
+    </select>
+  <select name="sunsystem_name">
+    <option value="">Sonnensystem wählen...</option>
+    <% ss = current_user.visible_sunsystems.uniq
+        ss.each do |s| %>
+        <option value="<%= s.name %>"><%= s.name %></option>
+    <% end %>
+  </select>
+  <select name="planet_name">
+    <option value="">Planet wählen...</option>
+  <% ps = current_user.visible_planets.uniq
+     ps.each do |p| %>
+      <option value="<%= p.name %>"><%= p.name %></option>
+  <% end %>
+  </select>
+</form>
+
+<form id="galaxy_find_one" action="" method="get">
     <label for="x">X</label><input type="text" name="x" maxlength="2" />
     <label for="y">Y</label><input type="text" name="y" maxlength="2" />
     <input type="submit" name="findGalaxy" value="Galaxie fixieren">
 </form>
+
+
+<div class="galaxy_info" >
+  <% @galaxies.each do |g| %>
+      <div id="galaxy_info_<%= g.x %>" class="galaxy_info_field">
+        <% if g.is_visible_by?(current_user) then %>
+            Position: <%= pos = g.getCoords
+                          pos[0] %>, <%= pos[1] %><br />
+            Galaxie: <%= link_to g.name, galaxy_path(g) %><br />
+            Sonnensysteme: <%= g.sunsystems.count %>
+        <% else %>
+            Position: <%= pos = g.getCoords
+                          pos[0] %>, <%= pos[1] %><br />
+            Galaxie: <%= link_to "Erforschbar", missions_path %><br />
+            Zahl der Sonnensystem unbekannt.
+        <% end %>
+      </div>
+  <% end %>
+</div>
+
 
 <div class="galaxyfield" style="position: relative;">
   <% w_len = GameSettings.get("WORLD_LENGTH")
@@ -18,28 +66,11 @@
          filename = GalaxiesHelper.getImageFilename(g.x, 80)
          out = filename[16] + filename[18, 4] %>
       <% if (g.is_visible_by?(current_user)) then %>
-          <a href="<%= galaxy_path(g) %>"><div class="galaxy visiblegalaxy <%= out %>" style="position: absolute; top: <%= 80*pos[1] %>px; left: <%= 80*pos[0] %>px;" onmouseover="javascript:showGalaxyInfo(<%= g.x %>)"></div></a>
+          <a href="<%= galaxy_path(g) %>"><div class="galaxy visiblegalaxy <%= "mygalaxy" if g.is_settled_by?(current_user) %> <%= out %>" style="position: absolute; top: <%= 80*pos[1] %>px; left: <%= 80*pos[0] %>px;" onmouseover="javascript:showGalaxyInfo(<%= g.x %>)"></div></a>
       <% else %>
-          <a href="<%= messages_path %>" title="Erkunden"><div onmouseover="javascript:showGalaxyInfo(<%= g.x %>)" class="galaxy <%= out %>" style="position: absolute; top: <%= 80*pos[1] %>px; left: <%= 80*pos[0] %>px;"></div></a>
+          <a href="<%= missions_path %>" title="Erkundbar"><div onmouseover="javascript:showGalaxyInfo(<%= g.x %>)" class="galaxy <%= out %>" style="position: absolute; top: <%= 80*pos[1] %>px; left: <%= 80*pos[0] %>px;"></div></a>
       <% end %>
   <% end %>
 
 </div>
 
-<div class="galaxy_info" >
-  <% @galaxies.each do |g| %>
-    <div id="galaxy_info_<%= g.x %>" class="galaxy_info_field">
-      <% if g.is_visible_by?(current_user) then %>
-      <%= g.name %><br />
-      Position: <%= pos = g.getCoords
-        pos[0] %>, <%= pos[1] %><br />
-      Sonnensysteme: <%= g.sunsystems.count %>
-          <% else %>
-      Unbekannte Galaxie<br />
-      Position: <%= pos = g.getCoords
-                        pos[0] %>, <%= pos[1] %><br />
-      Zahl der Sonnensystem unbekannt.
-      <% end %>
-    </div>
-  <% end %>
-</div>

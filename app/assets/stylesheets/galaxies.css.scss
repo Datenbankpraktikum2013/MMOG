@@ -112,8 +112,33 @@
   background-image: image-url("galaxies/r/80_6.png");
 }
 
+.u256_1{
+  background-image: image-url("galaxies/u/256_1.png");
+}
+.u256_2{
+  background-image: image-url("galaxies/u/256_2.png");
+}
+.u256_3{
+  background-image: image-url("galaxies/u/256_3.png");
+}
+.u256_4{
+  background-image: image-url("galaxies/u/256_4.png");
+}
+.u256_5{
+  background-image: image-url("galaxies/u/256_5.png");
+}
+.u256_6{
+  background-image: image-url("galaxies/u/256_6.png");
+}
+
+
+
+
+
 .sunsystemordner{
-  background-color: #a0a0a0;
+  background-repeat: no-repeat;
+  background-color: black;
+  background-size: 490px 490px;
   color: #fff;
   width:490px;
   height: 490px;
@@ -124,7 +149,7 @@
 
 .sunsyspos, .sunsyspos div{
   text-decoration: none;
-  width:170px;
+  width: 70px;
   height: 70px;
   display: inline;
   position: absolute;
@@ -133,46 +158,47 @@
 
 .sunsyspos:hover{
   text-decoration: none;
+  background-color: transparent;
 }
 
 .sunsyspos1{
-  top: 50px;
+  top: 150px;
   left: 30px;
 }
 
 .sunsyspos2{
- top: 50px;
- left:298px;
+ top: 70px;
+ left:150px;
 }
 
 .sunsyspos3{
-  top: 160px;
-  left:30px;
+  top: 70px;
+  left:250px;
 }
 
 .sunsyspos4{
-  top: 170px;
-  left:298px;
+  top: 150px;
+  left:400px;
 }
 
 .sunsyspos5{
-  top: 280px;
-  left:30px;
+  top: 300px;
+  left:400px;
 }
 
 .sunsyspos6{
-  top: 280px;
-  left:298px;
+  top: 400px;
+  left:250px;
 }
 
 .sunsyspos7{
-  top: 390px;
-  left:30px;
+  top: 400px;
+  left:150px;
 }
 
 .sunsyspos8{
-  top: 390px;
-  left: 298px;
+  top: 300px;
+  left: 30px;
 }
 
 .galaxyinf{
@@ -180,6 +206,14 @@
   float: top;
 }
 
+#galaxy_find_one input[type=text] {
+  display: inline;
+  width: 20px;
+}
+
+#galaxy_find_one label {
+  display: inline;
+}
 .pfeil{
   font-size: 20px;
   top: 20px;
