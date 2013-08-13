@@ -79,7 +79,7 @@
 
     if(researching != 0){
         var gone = <%=Time.now.to_i - array[2].to_i %>;
-        var end  = <%=(array[3].to_i) %>;
+        var end  = <%=(array[3].to_i) +1%>;
 
         function update_progressbar(){
             if (gone >= end) {
