@@ -13,14 +13,21 @@
 
   <% @sunsystem.planets.each do |p| %>
 
-      <a class="planetspos planetspos<%= p.z.to_s %>" href="<%= planet_path(p)%>" > <div>
+      <a class="planetspos planetspos<%= p.z.to_s %>" href="<%= planet_path(p)%>" ><div>
         <% a = p.special.to_s%>
         <%= image_tag('/images/planets/Planet'+a+'.png') %>
-
-
       </div></a>
 
   <% end %>
+
+
+  <% xyz = Random.rand(1000)
+      if xyz == 999 then %>
+      <div class="planetpos findable_planet" style="position: relative; top: <%= (Random.rand(400)+50).to_s %>px; left: <%= (Random.rand(400)+50).to_s %>px;">
+        <div title="Hier wohnt MaGe.">LOL?!</div>
+      </div>
+  <% end %>
+
 
 
 </div>

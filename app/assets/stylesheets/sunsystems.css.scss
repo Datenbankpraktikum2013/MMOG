@@ -86,3 +86,20 @@
   background-color: transparent;
   text-decoration: none;
 }
+
+.findable_planet {
+  width: 2px;
+  height: 2px;
+  border-radius: 2px;
+  background-color: #FFF;
+}
+
+.findable_planet div {
+  display: none;
+}
+
+.findable_planet:hover div{
+  background-color: #FFF;
+  color: #000;
+  display: inline;
+}

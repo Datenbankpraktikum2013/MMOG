@@ -233,7 +233,6 @@ class Fleet < ActiveRecord::Base
       raise RuntimeError, "Cannot move fleet that is not situated at home -> You can only send it back to origin"
     end
 
-    #!!!!!!!!!!! transaction do ...end
     fleet = self.split_fleet(ship_hash)
     distance = fleet.origin_planet.getDistance(destination)
     velocity = fleet.get_velocity
@@ -243,11 +242,8 @@ class Fleet < ActiveRecord::Base
     fleet.arrival_time = fleet.departure_time + time
 
     energy = 0
-
     ships = fleet.get_ships  
-    ships.each do |ship, amount|
-      energy += get_needed_fuel(ship, time) * amount
-    end
+    energy = Fleet.get_needed_fuel_from_hash(ships, time)
 
     #origin and start planet are ok, only target planet needs to be changed
     fleet.target_planet = destination
@@ -319,7 +315,7 @@ class Fleet < ActiveRecord::Base
       else
         self.merge_fleet(fleet) 
         raise RuntimeError "Invalid Mission for Movement (needed 1 < id <= 6)"
-    end
+      end
   end
 
   # ++++++++++++ #
