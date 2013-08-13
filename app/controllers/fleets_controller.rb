@@ -10,12 +10,9 @@ class FleetsController < ApplicationController
     @approaching_fleets = Array.new
     planets = current_user.planets
     planets.each do |planet|
-      Fleet.where(target_planet: planet).each do |fleet|
-        if fleet.mission.id == 5 || fleet.mission.id == 1 || fleet.mission.id == 2
-          
-        else
-          @approaching_fleets.push(fleet)
-        end
+      Fleet.where("target_planet = ? AND start_planet != target_planet", planet).each do |fleet|
+      #Fleet.where(target_planet: planet).each do |fleet|  
+        @approaching_fleets.push(fleet)
       end
     end
 
