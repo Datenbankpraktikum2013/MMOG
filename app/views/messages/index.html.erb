@@ -36,6 +36,7 @@
     <% end %>
   </tbody>
 </table>
+<%= button_to 'Posteingang löschen', '/flush_inbox', method: :delete, class: 'btn btn-info btn-small', data: { confirm: 'Bist du dir sicher?' } %>
 </div>
 <br>
 <strong>Postausgang</strong>
@@ -63,5 +64,7 @@
     <% end %>
   </tbody>
 </table>
+<%= button_to 'Postausgang löschen', '/flush_outbox', method: :delete, class: 'btn btn-info btn-small', data: { confirm: 'Bist du dir sicher?' } %>
+
 
 <%= button_to 'Nachricht schreiben', new_message_path,method: :get, class: 'btn' %>

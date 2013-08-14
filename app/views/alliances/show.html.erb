@@ -45,7 +45,7 @@
 	</table>
 </p>
 <% if current_user.alliance==@alliance %>
-	<p><strong>Score-Anteile:</strong>
+	<p><strong>Deine Score-Anteile:</strong>
 		<div class="progress progress-striped">
 			<% if @alliance.score!=0 %>
 				<% usr=(current_user.score.to_f/@alliance.score.to_f)*100 %>
