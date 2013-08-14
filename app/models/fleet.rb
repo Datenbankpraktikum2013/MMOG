@@ -42,7 +42,8 @@ class Fleet < ActiveRecord::Base
   #################################
   ############# GETTER ############
   #################################
-
+  
+  # DESTROY?????????
   # calculates of a {ship => amount} hash, the building costs by returning a {ressource => cost} hash
   def self.get_ressource_cost (ship_hash)
     unless hash_is_valid?(ship_hash)
@@ -58,6 +59,7 @@ class Fleet < ActiveRecord::Base
     ressource_hash
   end
 
+  # returns the based fleet of the user that owns planet
   def self.get_home_fleet(planet)
     unless planet.is_a?(Planet)
       raise RuntimeError, "Input is invalid -> needs to be a planet"
@@ -97,14 +99,15 @@ class Fleet < ActiveRecord::Base
     end
   end
 
-  # returns the smallest fuel capacity of a ship in the fleet => maximum distance
-  def get_fuel_capacity
-    if self.ships.nil?
-      0
-    else
-      self.ships.sort{|s1,s2| s1.fuel_capacity <=> s2.fuel_capacity}.first.fuel_capacity
-    end
-  end
+  # DESTROYED
+  # # returns the smallest fuel capacity of a ship in the fleet => maximum distance
+  # def get_fuel_capacity
+  #   if self.ships.nil?
+  #     0
+  #   else
+  #     self.ships.sort{|s1,s2| s1.fuel_capacity <=> s2.fuel_capacity}.first.fuel_capacity
+  #   end
+  # end
 
   # returns the time in seconds that is needed to fly a distance with certain velocity
   def get_needed_time(velocity, distance)
@@ -198,25 +201,27 @@ class Fleet < ActiveRecord::Base
     end
   end
 
-  # returns STATIC velocity (no technologies)
-  def Fleet.get_velocity_from_array(ships)
-    if ships.nil?
-      0
-    else
-      velocity = ships.sort{|s1,s2| s1.velocity <=> s2.velocity}.first.velocity
-    end
-  end
+  # DESTROYED
+  # # returns STATIC velocity (no technologies)
+  # def Fleet.get_velocity_from_array(ships)
+  #   if ships.nil?
+  #     0
+  #   else
+  #     velocity = ships.sort{|s1,s2| s1.velocity <=> s2.velocity}.first.velocity
+  #   end
+  # end
   
-  # returns the needed energy of ships that are stored 
-  def Fleet.get_needed_fuel_from_hash(ship_hash, time)
-    fuel = 0
-    ship_hash.each do |ship, amount|
-      unless ship.consumption == 0 
-        fuel += (time/(ship.consumption)) * amount
-      end
-    end
-    fuel
-  end
+  # DESTROYED
+  # # returns the needed energy of ships that are stored 
+  # def Fleet.get_needed_fuel_from_hash(ship_hash, time)
+  #   fuel = 0
+  #   ship_hash.each do |ship, amount|
+  #     unless ship.consumption == 0 
+  #       fuel += (time/(ship.consumption)) * amount
+  #     end
+  #   end
+  #   fuel
+  # end
 
   #################################
   ######### MISSION STUFF #########

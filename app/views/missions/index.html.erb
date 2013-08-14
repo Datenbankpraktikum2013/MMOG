@@ -34,7 +34,7 @@
    
   <div id="own-ships" style="display:none">
     <h3>Wähle deine Flotte</h3>
-    <table class="table table-striped">
+    <table class="table">
       <thead>
         <tr>
           <th>Stationiert</th>
@@ -60,7 +60,7 @@
             <% if fleet.get_amount_of_ships == 0 %>
               <td>---</td>
             <% else %>  
-              <td><button planet="<%=fleet.start_planet.id%>" class="fleet-choice" fleet="<%=fleet.id%>" type="button" class="btn btn-default">Wähle</button></td>
+              <td><button planet="<%=fleet.start_planet.id%>" class="fleet-choice" fleet="<%=fleet.id%>" type="button" class="btn btn-default"><i class="icon-ok"></i></button></td>
             <% end %>
           </tr>
           <% unless fleet.get_amount_of_ships == 0%>
@@ -80,7 +80,7 @@
                     </thead>
                     <tbody>
                   <% fleet.get_ships.each do |ship, amount| %>
-                    <tr>
+                    <tr class="image-popover" ship="<%= ship.id %>" data-trigger="hover" data-html="true" data-placement="left">
                       <td><%= ship.name %></td>
                       <td><%= ship.offense %></td>
                       <td><%= ship.defense %></td>
@@ -217,6 +217,11 @@
       });
 
       $(".ress2-popover").popover({title:"Ressourcen"});
+
+      $(".image-popover").popover({content: function(){
+          return '<img src="images/ships/'+$(this).attr("ship")+'.png"/>';
+        }
+      });
 
       // delegated event
       $(document).on("focusout", ".ship-amount", function(){

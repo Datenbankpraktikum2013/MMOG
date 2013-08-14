@@ -8,18 +8,44 @@ class MissionsController < ApplicationController
   end
 
   def get_value_helper
-    @planets = current_user.visible_planets.uniq!
-    @galaxies = current_user.visible_galaxies.uniq!
-    @sunsystems = current_user.visible_sunsystems.uniq!
+    @planets = current_user.visible_planets.uniq
+    @galaxies = current_user.visible_galaxies.uniq
+    @sunsystems = current_user.visible_sunsystems.uniq
 
     @susy_names_hash = Hash.new
     @sunsystems.each do |sunsystem|
       @susy_names_hash[sunsystem.id] = sunsystem.y.to_s + " &sdot; " + sunsystem.name
     end
     
+    own_planets = current_user.planets
+    alliance = nil
+    unless current_user.alliance.nil?
+      alliance = Alliance.find(current_user.alliance)
+      alliance_members = alliance.users
+    end
+
+    alliance_planets = []
+    if alliance.nil?
+      alliance_planets = []
+    else
+      alliance_members.each do |user|
+        user.planets.each do |planet|
+          unless user == current_user
+            alliance_planets.push(planet)
+          end
+        end
+      end
+    end
+
     @planets_names_hash = Hash.new
     @planets.each do |planet|
-      @planets_names_hash[planet.id] = planet.z.to_s + " &sdot; " + planet.name
+      name = planet.z.to_s + " &sdot; " + planet.name
+      if alliance_planets.include?(planet)
+        name += " (Allianz)"
+      elsif own_planets.include?(planet)
+        name += " (Deiner)"
+      end
+      @planets_names_hash[planet.id] = name
     end
       
     @susy_hash = Hash.new
@@ -206,72 +232,6 @@ class MissionsController < ApplicationController
     end
 
     return fehler
-    ################
-    # ships = ship_hash.keys
-    # if ships.empty?
-    #   fehler.push("Bitte Schiffe auswählen")
-    # else
-    #   velocity = Fleet.get_velocity_from_array(ships)
-    #   velocity = velocity * fleet.velocity_factor
-    #   distance = planet1.getDistance(planet2)
-    #   time = fleet.get_needed_time(velocity, distance)
-    #   needed_energy = Fleet.get_needed_fuel_from_hash(ship_hash, time)
-    # end
-
-    # # Fehlersammlung
-    # begin      
-    #   if ress_credit < 0 || ress_crystal < 0 || ress_ore < 0
-    #     fehler.push("Fehlerhafte Eingabe der Ressourcen")
-    #   end
-
-    #   if planet1 == planet2
-    #     fehler.push("Flotte muss zu einem anderen Planeten fliegen")
-    #   end
-
-    #   if needed_energy > planet1.energy
-    #     fehler.push("Nicht genügend Energie")
-    #   end
-      
-    #   unless fleet.enough_ships?(ship_hash)
-    #     fehler.push("Nicht genügend Schiffe vorhanden")
-    #   end
-      
-    #   if mission.id == 2 && !ship_hash.include?(Ship.find(10))
-    #     fehler.push("Zum Kolonialisieren wird ein Kolonieschiff benötigt")
-    #   end
-      
-    #   if mission.id == 5 && ship_hash != {Ship.find(7)=>1}
-    #     fehler.push("Zum Spionieren, darf nur eine Spionagesonde gewählt werden")
-    #   end
-
-    #   if (ress_ore + ress_crystal + ress_credit) > fleet.get_free_capacity
-    #     fehler.push("Zu wenig Platz in der Flotte vorhanden")
-    #   end
-
-    #   if ress_ore > planet1.ore
-    #     fehler.push("nicht genug Erz vorhanden")
-    #   end
-
-    #   if ress_crystal > planet1.crystal
-    #     fehler.push("nicht genug Kristall vorhanden")
-    #   end
-
-    #   if ress_credit > current_user.money
-    #     fehler.push("nicht genug Space-Cash vorhanden")
-    #   end
-
-    #   if mission.id != 2 && mission.id != 6
-    #     if ress_ore != 0 || ress_crystal != 0 || ress_credit != 0
-    #       fehler.push("Ressourcen nur bei Kolonialisierung oder Transport erlaubt")
-    #     end
-    #   end
-    # rescue
-    #   puts "FEHLER"
-    # ensure
-    #   fleet.merge_fleet(ship_hash)
-    # end
-
-    # return fehler
   end
 
   # GET /confirm/send
