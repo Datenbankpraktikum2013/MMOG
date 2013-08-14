@@ -7,12 +7,12 @@ vom <strong><%= @report.fightdate.strftime('%d.%m.%y') %> um <%= @report.fightda
 <% if @report.reportable.mode < 2 %>
   <h4>Planet <%= @report.defender_planet.name %> von <%= @report.defender.username %>:</h4>
   <p>
-    Bevölkerung: <%= @report.reportable.population %> Energie: <%= @report.reportable.energy %>
-    Erz: <%= @report.reportable.ore %> Space Cash: <%= @report.reportable.space_cash %>
-    Crystal: <%= @report.reportable.crystal %>
+    Bevölkerung: <%= @report.reportable.population %>/<%= @report.reportable.maxpopulation %> Energie: <%= @report.reportable.energy %>/<%= @report.reportable.maxenergy %>
+    Erz: <%= @report.reportable.ore %>/<%= @report.reportable.maxore %> Space Cash: <%= @report.reportable.space_cash %>
+    Crystal: <%= @report.reportable.crystal %>/<%= @report.reportable.maxcrystal %>
   </p>
 <% end %>
-<% if @report.reportable.mode == 0 %>
+<% if @report.reportable.mode == 0  %>
   <% unless @report.reportable.techstages.empty? %>
     <h4>Technologien:</h4>
     <% @report.reportable.techstages.each do |tech| %>
