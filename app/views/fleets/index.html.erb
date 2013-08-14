@@ -54,7 +54,7 @@
                   <tbody>
                     <% fleet.get_ships.each do |ship, amount| %>
                       <tr>
-                        <td><%= ship.name %></td>
+                        <td><p class="image-popover" ship="<%= ship.id %>" data-trigger="hover" data-html="true" data-placement="left"><%= ship.name %></p></td>
                         <td><%= ship.offense %></td>
                         <td><%= ship.defense %></td>
                         <td><%= ship.velocity %></td>
@@ -224,6 +224,11 @@
   $(document).ready(function(){
     
     $(".ress-popover").popover({title:"Ressourcen"});
+
+    $(".image-popover").popover({title:"Ressourcen", content: function(){
+        return '<img src="images/ships/'+$(this).attr("ship")+'.png"/>';
+      }
+    });
 
     $(".fleet-unload").on("click", function(){
       fleet_id = $(this).attr("fleet");
