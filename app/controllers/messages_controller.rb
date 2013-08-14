@@ -22,6 +22,29 @@ class MessagesController < ApplicationController
     end
   end
 
+  def flush_outbox
+    relations=Message.all.where(:sender_id=>current_user)
+    relations.each do |r|
+      r.sender_deleted=true
+      r.save
+    end
+    respond_to do |format|
+      format.html { redirect_to messages_url }
+    end
+  end
+
+  def flush_inbox
+    relations=MessagesUser.all.where(:user_id=>current_user)
+    relations.each do |r|
+      r.recipient_deleted=true
+      r.save
+      r.message.tag_msg_as_seen!(current_user)
+    end
+    respond_to do |format|
+      format.html { redirect_to messages_url }
+    end
+  end
+
   # GET /messages/new
   def new
     @message = Message.new
@@ -40,7 +63,7 @@ class MessagesController < ApplicationController
   def create
     @message = Message.new(message_params)
     @users=User.all
-    @recipient=@users.where('username == ?',params['recipient']).first
+    @recipient=@users.where('username = ?',params['recipient']).first
     respond_to do |format|
       #assign params
       @message.subject=params['subject']
@@ -58,10 +81,9 @@ class MessagesController < ApplicationController
   # DELETE /messages/1
   # DELETE /messages/1.json
   def destroy
-    if @message.recipients.exists?(current_user)
+    if @message.recipients.exists?(current_user) > 0
       @entry=MessagesUser.all.where(:user_id=>current_user,:message_id=>@message).first
-      @entry.recipient_deleted=true
-      @entry.save
+      @entry.update_attributes(:recipient_deleted => true);
       @message.tag_msg_as_seen!(current_user)
     elsif current_user==@message.sender
       @message.sender_deleted=true

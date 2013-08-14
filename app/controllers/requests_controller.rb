@@ -11,11 +11,22 @@ class RequestsController < ApplicationController
     @request.sender=current_user
     respond_to do |format|
       if @usr!=nil and @request.save
-        @request.decide_notify()
-        format.html { redirect_to root_path, notice: GameSettings.get("SUCCESSMSG_REQUESTCREATE") }
+        #if user is already in some alliance, then don't send any notifies and DESTROY the request
+        if @request.action=="alliance_invite" and @request.recipient.alliance!=nil
+          format.html { redirect_to root_path, notice: GameSettings.get("ERRMSG_USER_ALREADY_IN_ALLIANCE") }
+          @request.destroy  
+        #same here, if user is already in your friendlist
+        elsif @request.action=="friendship_invite" and @request.sender.friends.exists?(@request.recipient)!=nil
+          format.html { redirect_to root_path, notice: GameSettings.get("ERRMSG_USER_ALREADY_IN_FRIENDLIST")}
+          @request.destroy
+        #send notify, if request is valid
+        else
+          @request.decide_notify()
+          format.html { redirect_to root_path, notice: GameSettings.get("SUCCESSMSG_REQUESTCREATE") }
+        end
       else
         format.html { redirect_to root_path, notice: GameSettings.get("ERRMSG_REQUESTCREATE") }
-      end
+      end  
     end
   end
 
@@ -25,10 +36,10 @@ class RequestsController < ApplicationController
     request=Request.all.where(:requestvalue=>token).first
     respond_to do |format|
       if request!=nil and request.recipient==current_user
-        if answer=='no'
+        if answer=='no'          
           request.destroy
           format.html { redirect_to root_path, notice: GameSettings.get("DECLINEMSG_REQUESTREACTION") }
-        elsif answer=='yes'
+        elsif answer=='yes' 
           request.launch_action!
           format.html { redirect_to root_path, notice: GameSettings.get("ACCEPTMSG_REQUESTREACTION") }
         end

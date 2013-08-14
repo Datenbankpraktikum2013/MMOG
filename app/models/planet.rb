@@ -150,6 +150,7 @@ class Planet < ActiveRecord::Base
   end
 
   def get_info
+    info_text = ""
     if special == 0
       info_text ="Ein gewöhnlicher Planet wie er häufig im Universum zu treffen ist. Er zeichnet sich dadurch aus, dass er keine Spezialisierung besitzt.
       Auf diesem Planeten wurden keine Kristallvorkommen entdeckt!"
@@ -175,7 +176,8 @@ class Planet < ActiveRecord::Base
        Auf diesem Planeten wurden keine Kristallvorkommen entdeckt!"
     end
     return  info_text
-  end  
+  end
+
   def mention()
     self.sunsystem.mention()
     #Hier weitere Aktionen starten: z.B. Rohstoffproduktion, falls gestoppt wurde
@@ -213,34 +215,23 @@ class Planet < ActiveRecord::Base
     if type == :Oremine
       sci_factor = self.user.get_ironproduction
       c = sci_factor * prod * @spec[0]
-      return c
-    end
-
-    if type == :City
+    elsif type == :City
       c = @spec[2] * prod
-      return c
-    end
-
-    if type == :Headquarter
+    elsif type == :Headquarter
       sci_factor = self.user.get_income
       c = sci_factor * @spec[3] * (self.population / 100) * prod 
-      return c
-    end
-
-    if type == :Powerplant
+    elsif type == :Powerplant
       sci_factor = self.user.get_energy_efficiency
       c = sci_factor * prod * @spec[1] 
-      return c
+    elsif type == :Crystalmine
+      c = @spec[4] * prod 
     end
-
-    if type == :Crystalmine
-      c = @spec[4] * prod
-      return c
-    end
+    return c
+    
   end
+
   def get_builttime(btype_id)
       return Buildingtype.find(btype_id).build_time * @spec[6]
-
   end
 
   #Method which increases and updates all the resources a player has every ...Minute
@@ -264,8 +255,8 @@ class Planet < ActiveRecord::Base
       #
       city_population = self.get_production(:City).to_i
       if city_population.integer? then
-        if (self.population + city_population) < self.maxpopulation then
-          self.population += city_population
+        if (self.population + self.population/500 + city_population) < self.maxpopulation then
+          self.population += (city_population + self.population/500)
         else
           self.population = self.maxpopulation
         end
@@ -445,6 +436,7 @@ class Planet < ActiveRecord::Base
           depot_size_increase(btype.production)
         end  
         b.save
+        self.user.system_notify( 'Gebäude', build_me.name.to_s, ' Gebäude: '+build_me.name.to_s+' Level '+build_me.level.to_s+', auf Planet '+self.name.to_s+' erfolgreich gebaut.')
         return true
       end
     end
@@ -453,13 +445,14 @@ class Planet < ActiveRecord::Base
       if build_me.name == "Depot"
         depot_size_increase(build_me.production)
       end
+      self.user.system_notify( 'Gebäude', build_me.name.to_s, ' Gebäude: '+build_me.name.to_s+' Level '+build_me.level.to_s+', auf Planet '+self.name.to_s+' erfolgreich gebaut.')
       return true
     end
     return false
   end
 
   def create_production_job()
-    Resque.enqueue_in(10.second, ProduceResources, self.id)
+    Resque.enqueue_in(30.second, ProduceResources, self.id)
   end
 
   def getDistance(other)

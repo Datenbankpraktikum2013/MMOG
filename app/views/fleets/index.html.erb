@@ -6,9 +6,8 @@
         <th>ID</th>
         <th>Planet</th>
         <th>Schiffe</th>
-        <th>Erz</th>
-        <th>Kristall</th>
-        <th>Aktionen</th>
+        <th>Fracht</th>
+        <th>Entladen</th>
       </tr>
     </thead>
 
@@ -16,19 +15,20 @@
       <% @based_fleets.each do |fleet| %>
         <tr>
           <td><%= fleet.id %></td>
-          <td><%= fleet.origin_planet.name %></td> <!-- hier noch KOORDINATEN -->
+          <td><%= fleet.origin_planet.name %></td>
           <td>
-            <% if fleet.get_ships.empty? %>
+            <% if fleet.get_amount_of_ships == 0 %>
               keine Schiffe vorhanden
             <% else %>
-              <a type="button" fleet="<%=fleet.id%>" class="btn btn-link ship-info">Schiffe <i class="icon-chevron-down"></i></a>
+              <a type="button" fleet="<%=fleet.id%>" class="btn btn-link ship-info"><i class="icon-chevron-down"></i></a>
             <% end %>        
           </td>
-          <td><%= fleet.ore %></td>
-          <td><%= fleet.crystal %></td>
+          <td>
+            <a type="button" class="btn btn-link ress-popover" data-trigger="hover" data-html="true" data-placement="right" data-content="<ul><li>Erz: <%=fleet.ore%></li><li>Kristall: <%=fleet.crystal%></li><li>SpaceCash<sup>&copy;</sup>: <%=fleet.credit%></li></ul>"><i class="icon-info-sign"></i></a>
+          </td>
           <td>
             <% if fleet.ore != 0 || fleet.crystal != 0 %>
-            <button planet="<%=fleet.start_planet.id%>" id="fleet-unload" fleet="<%=fleet.id%>" type="button" class="btn btn-default">
+            <button planet="<%=fleet.start_planet.id%>" class="fleet-unload" fleet="<%=fleet.id%>" type="button" class="btn btn-default">
               <i class="icon-arrow-right"></i>
             <% else %>
             ---
@@ -36,9 +36,9 @@
             </button>
           </td>
         </tr>
-        <% unless fleet.get_ships.empty? %>
+        <% unless fleet.get_amount_of_ships == 0 %>
           <tr>
-            <td colspan="6">
+            <td colspan="5">
               <div class="info-<%= fleet.id %>" style="display:none">
                 <table class"table table-condensed">
                   <thead>
@@ -83,14 +83,13 @@
     <thead>
       <tr>
         <th>ID</th>
-        <th>Heimatplanet</th>
+        <th>Heimat</th>
         <th>Mission</th>
-        <th>Schiffe</th>
-        <th>Ankunftszeit</th>
         <th>Ziel</th>
-        <th>Erz</th>
-        <th>Kirstall</th>
-        <th>Aktionen</th>
+        <th>Ankunftszeit</th>
+        <th>Schiffe</th>
+        <th>Fracht</th>
+        <th>Abbruch</th>
       </tr>
     </thead>
 
@@ -112,16 +111,23 @@
           <% else %>
             <td>Transport</td>
           <% end %>
+          <td><%= fleet.target_planet.name %></td>
           <td>
-            <a type="button" fleet="<%=fleet.id%>" class="btn btn-link ship-info">Schiffe <i class="icon-chevron-down"></i></a>
+            <% if Time.now < Time.at(fleet.arrival_time) %>
+              <%= distance_of_time_in_words(Time.now, Time.at(fleet.arrival_time), include_seconds: true) %>
+            <% else %>
+              jetzt...
+            <% end %>
           </td>
-          <td><%= (Time.at fleet.arrival_time).strftime("%H:%M:%S Uhr %e. %b") %></td>
-          <td><%= fleet.target_planet.name %></td> <!-- hier noch KOORDINATEN -->
-          <td><%= fleet.ore %></td>
-          <td><%= fleet.crystal %></td>
+           <td>
+            <a type="button" fleet="<%=fleet.id%>" class="btn btn-link ship-info"><i class="icon-chevron-down"></i></a>
+          </td>
+          <td>
+            <a type="button" class="btn btn-link ress-popover" data-trigger="hover" data-html="true" data-placement="right" data-content="<ul><li>Erz: <%=fleet.ore%></li><li>Kristall: <%=fleet.crystal%></li><li>SpaceCash<sup>&copy;</sup>: <%=fleet.credit%></li></ul>"><i class="icon-info-sign"></i></a>
+          </td>
           <td>
             <% unless fleet.target_planet == fleet.origin_planet %>
-              <button id="fleet-breakup" fleet="<%=fleet.id%>" type="button" class="btn btn-default">
+              <button class="fleet-breakup" fleet="<%=fleet.id%>" type="button" class="btn btn-default">
                 <i class="icon-remove"></i>
               </button>
             <% else %>
@@ -129,9 +135,9 @@
             <% end %>
           </td>
         </tr>
-        <% unless fleet.get_ships.empty? %>
+        <% unless fleet.get_amount_of_ships == 0 %>
         <tr>
-          <td colspan="9">
+          <td colspan="8">
             <div class="info-<%= fleet.id %>" style="display:none">
                 <table class"table table-condensed">
                   <thead>
@@ -177,8 +183,8 @@
       <tr>
         <th>User</th>
         <th>Mission</th>
-        <th>Target</th>
-        <th>approaches in</th>
+        <th>Ziel</th>
+        <th>Ankunftszeit</th>
       </tr>
     </thead>
 
@@ -198,8 +204,14 @@
         <% end %>
           <td><%= fleet.user.username %></td>
           <td><%= mission %></td>
-          <td><%= fleet.target_planet.name %> (<%= fleet.target_planet.id %>)</td>
-          <td><%= (Time.at fleet.arrival_time).strftime("%H:%M:%S Uhr %e. %b") %></td>
+          <td><%= fleet.target_planet.name %></td>
+          <td>
+          <% if Time.now < Time.at(fleet.arrival_time) %>
+            <%= distance_of_time_in_words(Time.now, Time.at(fleet.arrival_time), include_seconds: true) %>
+          <% else %>
+            jetzt...
+          <% end %>
+        </td>
         </tr>
       <% end %>
     </tbody>
@@ -211,7 +223,9 @@
 <script type="text/javascript">
   $(document).ready(function(){
     
-    $("#fleet-unload").on("click", function(){
+    $(".ress-popover").popover({title:"Ressourcen"});
+
+    $(".fleet-unload").on("click", function(){
       fleet_id = $(this).attr("fleet");
       planet_id = $(this).attr("planet");
       $.getJSON("/json/unload?fleet="+fleet_id+"&planet="+planet_id, function(data){
@@ -221,8 +235,7 @@
       });
     });
 
-    $("#fleet-breakup").on("click", function(){
-      console.log("JO");
+    $(".fleet-breakup").on("click", function(){
       fleet_id = $(this).attr("fleet");
       $.getJSON("/json/breakup?fleet="+fleet_id, function(data){
         if (data.ok == 1){
@@ -235,12 +248,13 @@
     $(".ship-info").on("click", function(){
       id = $(this).attr("fleet");
       if ($(".info-"+id).css("display") == "none"){
-        $('a[fleet='+id+']').html('Schiffe <i class="icon-chevron-up"></i>');
+        $('a[fleet='+id+']').html('<i class="icon-chevron-up"></i>');
       }
       else {
-        $('a[fleet='+id+']').html('Schiffe <i class="icon-chevron-down"></i>');
+        $('a[fleet='+id+']').html('<i class="icon-chevron-down"></i>');
       }
       $(".info-"+id).animate({ height: 'toggle', opacity: 'toggle' }, 'slow');
     });
+
   });
 </script>
