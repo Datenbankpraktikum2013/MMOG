@@ -96,6 +96,18 @@ class PlanetsController < ApplicationController
     end
   end
 
+  def rename_planet
+    @planet = Planet.find(params["planets"]["id"])
+    if !@planet.user.nil? && @planet.user.id == current_user.id && params["planets"]["planet_name"].length > 3 then
+      @planet.name = params["planets"]["planet_name"]
+      @planet.save
+    end
+    respond_to do |format|
+      format.html { redirect_to @planet, notice: 'Planet umbenannt.' }
+      format.json { render action: 'show' }
+    end
+  end
+
 
   def abort_upgrade
     @planet = Planet.find(params["pid"])

@@ -50,7 +50,7 @@ class User < ActiveRecord::Base
   @cache_visible_galaxies
 
   def online?
-    self.last_activity>5.seconds.ago
+    self.last_activity>15.seconds.ago
   end
   
   def set_initial_activity()

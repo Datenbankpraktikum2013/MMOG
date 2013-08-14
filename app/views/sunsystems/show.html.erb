@@ -13,13 +13,53 @@
 
   <% @sunsystem.planets.each do |p| %>
 
-      <a class="planetspos planetspos<%= p.z.to_s %>" href="<%= planet_path(p)%>" ><div>
-        <% a = p.special.to_s%>
-        <%= image_tag('/images/planets/Planet'+a+'.png') %>
-      </div></a>
+      <% if p.is_visible_by?(current_user) %>
 
-  <% end %>
 
+
+          <% if p.user.nil? %>
+              <a class="darker planetspos planetspos<%= p.z.to_s %>" title="Unbekannter Planet"><div>
+                <% a = p.special.to_s%>
+                <%= image_tag('/images/planets/Planet'+a+'.png') %> </div></a>
+
+          <%else%>
+
+              <%if p.user == current_user%>
+                  <a class="planetspos planetspos<%= p.z.to_s %>" title="Name: <%=p.name%>" href="<%= planet_path(p)%>" ><div>
+                    <% a = p.special.to_s%>
+                    <%= image_tag('/images/planets/Planet'+a+'.png') %></div></a>
+
+              <%else%>
+                  <%if p.user.friends.include?(current_user)%>
+                      <a class="planetspos planetspos<%= p.z.to_s %>" title="Name: <%=p.name%>" href="<%= planet_path(p)%>" ><div>
+                        <% a = p.special.to_s%>
+                        <%= image_tag('/images/planets/Planet'+a+'.png') %></div></a>
+                  <%else%>
+                      <% if p.user.alliance.nil?%>
+                          <a class="darker planetspos planetspos<%= p.z.to_s %>" title="Spieler: <%=p.user.username%>"><div>
+                            <% a = p.special.to_s%>
+                            <%= image_tag('/images/planets/Planet'+a+'.png') %> </div></a>
+                      <%else%>
+                          <% if p.user.alliance == current_user.alliance%>
+                              <a class="planetspos planetspos<%= p.z.to_s %>" title="Name: <%=p.name%>" href="<%= planet_path(p)%>" ><div>
+                                <% a = p.special.to_s%>
+                                <%= image_tag('/images/planets/Planet'+a+'.png') %></div></a>
+                          <%else%>
+                              <a class="darker planetspos planetspos<%= p.z.to_s %>" title=<%=p.user.username %>>><div>
+                                <% a = p.special.to_s%>
+                                <%= image_tag('/images/planets/Planet'+a+'.png') %> </div></a>
+                          <%end%>
+                      <%end%>
+                  <%end%>
+              <%end%>
+          <%end%>
+
+      <%else%>
+          <a class="darker planetspos planetspos<%= p.z.to_s %>" title="Unbekannter Planet"><div>
+            <% a = p.special.to_s%>
+            <%= image_tag('/images/planets/Planet'+a+'.png') %> </div></a>
+      <% end %>
+  <%end%>
 
   <% xyz = Random.rand(1000)
       if xyz == 999 then %>

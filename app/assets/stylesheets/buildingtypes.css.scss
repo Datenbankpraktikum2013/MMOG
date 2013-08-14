@@ -3,12 +3,17 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .trennerunten{
-  border-style:solid ;
-  border-bottom:thick solid #000;
+  /*border-style:solid ;
+  border-bottom:1px solid #000;*/
+  background-color: #CCC;
 
 }
 
 .trennerrechts{
-  border-style:solid;
-  border-right:thick solid #000;
+  /*border-style:solid;
+  border-right:1px solid #000;*/
+}
+
+table.gebaeudeliste{
+  border: 1px solid #000;
 }

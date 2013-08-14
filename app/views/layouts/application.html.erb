@@ -58,6 +58,7 @@
                         <li><a href="<%= planet_path(current_user.home_planet) %>">Hauptplanet</a></li>
 		  				<li><a href="<%= messages_path %>">Nachrichten <span id="msgupdate" class="badge"><%= current_user.unread_messages %></span> </a></li>
                         <li><a href="<%= reports_path %>">Berichte <span class="badge" id="unreadreports"><%= Report.unread_reports(current_user.id) %></span> </a></li>
+                        <li><a href="<%= buildingtypes_path%>">Gebäudeübersicht</a></li>
                         <li><a href="<%= technologies_path %>">Technologiebaum</a></li>
                         <li><a href="<%= starport_path %>">Schiffswerften</a></li>
                         <li><a href="<%= fleets_path %>">Deine Flotten</a></li>
@@ -77,7 +78,7 @@
 
                     <div title="Geld">
                       <%= image_tag('/images/icons/spacecash.png') %>
-                      <%= number_with_delimiter(current_user.money)%>
+                      <span id="my_money"><%= number_with_delimiter(current_user.money) %></span>
                     </div>
 
                     <div title="Planeten">
@@ -154,22 +155,46 @@
 	<script>
 	    function update_messages(value){
 	        d = document.getElementById('msgupdate');
-	        d.innerHTML = value
+	        d.innerHTML = value;
 	    };
 
 	    function update_reports(value){
-	    	d = document.getElementById('unreadreports')
-	    	d.innerHTML = value
+	    	d = document.getElementById('unreadreports');
+	    	d.innerHTML = value;
 	    };
-		
+
+        function update_money(value){
+            d = document.getElementById('my_money');
+            d.innerHTML = value;
+        };
+
+        <% if controller_name == "planets" then %>
+        function update_ressources(type, value){
+            d = document.getElementById('my_ressources_'+type);
+            d.innerHTML = value;
+        };
+        <% end %>
+
+        fetch_count = 0;
 		function refresh(){
-			$.getJSON('/json/fetch_unread_msgs.json', function(data) {
-				var items = [];
-				$.each(data, function(key, val) {
-					items.push(val);
-				});
-				update_messages(items[0]);
-				update_reports(items[1]);
+            fetch_count = fetch_count + 1;
+            askthis = "/json/fetch?messages=1";
+            if (fetch_count % 6 == 0) {
+                askthis = askthis + "&money=1";
+                <% if controller_name == "planets" then %>
+                    askthis = askthis + "&ressources=1&planet=<%= @planet.id unless @planet.nil? %>";
+                <% end %>
+            }
+			kill_me_later = $.getJSON(askthis, function(data) {
+				if (data["msgs"] != null) update_messages(data["msgs"]);
+				if (data["reports"] != null) update_reports(data["reports"]);
+                if (data["money"] != null) update_money(data["money"]);
+                <% if controller_name == "planets" then %>
+                if (data["ore"] != null) update_ressources("ore", data["ore"]);
+                if (data["crystal"] != null) update_ressources("crystal", data["crystal"]);
+                if (data["energy"] != null) update_ressources("energy", data["energy"]);
+                if (data["population"] != null) update_ressources("population", data["population"]);
+                <% end %>
 			});
 		};
 
