@@ -132,8 +132,7 @@
 
     <div class="planet_info_anzeige">
 
-      <strong>Spezialisierung:</strong>
-      <%= @planet.special%>
+      <%= @planet.get_info%>
 
     </div>
 
@@ -141,6 +140,27 @@
 
       <strong>Groesse:</strong>
       <%= @planet.size %>
+
+    </div>
+
+    <div class="planet_info_anzeige">
+
+      <strong>Produktion: +</strong>
+      <%= @planet.get_production(:Oremine) %> <%= image_tag('/images/icons/eisen32px.png') %>
+      +
+      <%= @planet.get_production(:City) %> <%= image_tag('/images/icons/menschen32px.png') %>
+      -
+      <%= @planet.energy_usage %> <%= image_tag('/images/icons/energyusage32px.png') %>
+      +
+      <%= @planet.get_production(:Powerplant) %> <%= image_tag('/images/icons/energy32px.png') %> 
+      +
+      <%= @planet.get_production(:Crystalmine) %> <%= image_tag('/images/icons/kristall_blau32px.png') %>
+      +
+      <%= @planet.get_production(:Headquarter) %> <%= image_tag('/images/icons/spacecash.png') %>
+
+      <%if @planet.energy_usage > @planet.get_production(:Powerplant)%>
+      <span style="color:red; font-weight:bold">OUT OF ENERGY!! WE NEED MORE PYLONS </span> 
+      <%end%>
 
     </div>
    </div>

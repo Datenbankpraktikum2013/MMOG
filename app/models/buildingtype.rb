@@ -49,11 +49,11 @@ class Buildingtype < ActiveRecord::Base
     Buildingtype.create({:name =>'ResearchLab', :level => 3, :production=> 0, :energyusage=> 400, :build_time=>12500, :build_cost_ore =>1000, :build_cost_crystal =>0, :build_cost_money =>0, :build_cost_population =>300})
     Buildingtype.create({:name =>'ResearchLab', :level => 4, :production=> 0, :energyusage=> 700, :build_time=>70000, :build_cost_ore =>10000, :build_cost_crystal =>2, :build_cost_money =>0, :build_cost_population =>500})
 
-    Buildingtype.create({:name =>'City', :level=> 1, :production=> 50, :energyusage=> 20, :build_time=>0, :build_cost_ore =>0, :build_cost_crystal =>0, :build_cost_money =>0, :build_cost_population =>0})
-    Buildingtype.create({:name =>'City', :level=> 2, :production=> 100, :energyusage=> 50, :build_time=>300, :build_cost_ore =>100, :build_cost_crystal =>0, :build_cost_money =>0, :build_cost_population =>50})
-    Buildingtype.create({:name =>'City', :level=> 3, :production=> 150, :energyusage=> 100, :build_time=>2500, :build_cost_ore =>500, :build_cost_crystal =>0, :build_cost_money =>0, :build_cost_population =>100})
-    Buildingtype.create({:name =>'City', :level=> 4, :production=> 200, :energyusage=> 250, :build_time=>10000, :build_cost_ore =>2500, :build_cost_crystal =>0, :build_cost_money =>0, :build_cost_population =>200})
-    Buildingtype.create({:name =>'City', :level=> 5, :production=> 300, :energyusage=> 500, :build_time=>50000, :build_cost_ore =>10000, :build_cost_crystal =>1, :build_cost_money =>0, :build_cost_population =>500})
+    Buildingtype.create({:name =>'City', :level=> 1, :production=> 5, :energyusage=> 20, :build_time=>0, :build_cost_ore =>0, :build_cost_crystal =>0, :build_cost_money =>0, :build_cost_population =>0})
+    Buildingtype.create({:name =>'City', :level=> 2, :production=> 10, :energyusage=> 50, :build_time=>300, :build_cost_ore =>100, :build_cost_crystal =>0, :build_cost_money =>0, :build_cost_population =>50})
+    Buildingtype.create({:name =>'City', :level=> 3, :production=> 20, :energyusage=> 100, :build_time=>2500, :build_cost_ore =>500, :build_cost_crystal =>0, :build_cost_money =>0, :build_cost_population =>100})
+    Buildingtype.create({:name =>'City', :level=> 4, :production=> 40, :energyusage=> 250, :build_time=>10000, :build_cost_ore =>2500, :build_cost_crystal =>0, :build_cost_money =>0, :build_cost_population =>200})
+    Buildingtype.create({:name =>'City', :level=> 5, :production=> 75, :energyusage=> 500, :build_time=>50000, :build_cost_ore =>10000, :build_cost_crystal =>1, :build_cost_money =>0, :build_cost_population =>500})
 
     Buildingtype.create({:name =>'Depot', :level=> 1, :production=> 200, :energyusage=> 5, :build_time=>250, :build_cost_ore =>50, :build_cost_crystal =>0, :build_cost_money =>0, :build_cost_population =>50})
     Buildingtype.create({:name =>'Depot', :level=> 2, :production=> 300, :energyusage=> 20, :build_time=>2000, :build_cost_ore =>100, :build_cost_crystal =>0, :build_cost_money =>0, :build_cost_population =>100})
