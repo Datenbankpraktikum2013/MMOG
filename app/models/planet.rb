@@ -285,13 +285,8 @@ class Planet < ActiveRecord::Base
       
 
       # Energy costs 
-      @structures = self.buildings
-      ener_usage = 0
-      @structures.each do |str|
-        building_typ = Buildingtype.find_by_id(str.buildingtype_id)
-        ener_usage += building_typ.energyusage
-        self.energy -= ener_usage
-      end 
+      self.energy -= energy_usage 
+     
 
     end
 
@@ -313,6 +308,19 @@ class Planet < ActiveRecord::Base
     self.create_production_job
 
   end
+  def energy_usage
+            @structures = self.buildings
+      ener_usage = 0
+      @structures.each do |str|
+        building_typ = Buildingtype.find_by_id(str.buildingtype_id)
+        ener_usage += building_typ.energyusage
+      end
+        
+      return ener_usage
+  
+
+  end  
+
 
   def create_building_job(type)
     return false if type == :Crystalmine && self.special != 4
@@ -399,6 +407,7 @@ class Planet < ActiveRecord::Base
       if b.level == 1 then
         i-= 1
       else
+      user.add_score(5*(-b.level.to_i))
       destroyed_buildings << b
       new_b = Buildingtype.find_by(level: b.level-1, name: b.name)
       my_upgraded_buildings[missle].buildingtype_id = new_b.id 
@@ -436,6 +445,7 @@ class Planet < ActiveRecord::Base
           depot_size_increase(btype.production)
         end  
         b.save
+        user.add_score(5*build_me.level.to_i)
         self.user.system_notify( 'Gebäude', build_me.name.to_s, ' Gebäude: '+build_me.name.to_s+' Level '+build_me.level.to_s+', auf Planet '+self.name.to_s+' erfolgreich gebaut.')
         return true
       end
@@ -445,6 +455,7 @@ class Planet < ActiveRecord::Base
       if build_me.name == "Depot"
         depot_size_increase(build_me.production)
       end
+      user.add_score(5*build_me.level.to_i)
       self.user.system_notify( 'Gebäude', build_me.name.to_s, ' Gebäude: '+build_me.name.to_s+' Level '+build_me.level.to_s+', auf Planet '+self.name.to_s+' erfolgreich gebaut.')
       return true
     end

@@ -14,4 +14,4 @@
   <div><%= f.submit "Anmelden" %></div>
 <% end %>
 
-<%= render "devise/shared/links" %>
+<%= button_to 'Registrieren', '/users/sign_up' , :method=>:get, class: 'btn btn-info' %>

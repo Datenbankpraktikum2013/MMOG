@@ -56,7 +56,8 @@ Mmog::Application.routes.draw do
 
   post 'alliances/:id/edit/change_default_rank' => 'alliances#change_default_rank'
 
-  get 'json/fetch_unread_msgs' => 'messages#fetch_unread_msgs'
+  #get 'json/fetch_unread_msgs' => 'messages#fetch_unread_msgs'
+  get 'json/fetch' => 'json_fetch#fetch'
 
   put 'alliances/:id/edit/change_user_rank' => 'alliances#change_user_rank'
 
@@ -86,6 +87,8 @@ Mmog::Application.routes.draw do
 
   post 'planets/upgrade_building' => 'planets#upgrade_building'
   post 'planets/abort_upgrade' => 'planets#abort_upgrade'
+  post 'planets/rename_planet' => 'planets#rename_planet'
+
 
   post '/alliances/:id/leave' => 'alliances#leave'
 

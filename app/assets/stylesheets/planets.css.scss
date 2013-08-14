@@ -17,6 +17,7 @@
 
 .ressource_item_anzeige{
   display: inline-block;
+  color: white;
   width: 125px;
 
 }
@@ -103,7 +104,10 @@
    text-decoration: none;
 }
 
-.planet_info_anzeige{
+.planet_info_anzeige img{
+  width: 16px;
+  heigth: 16px;
+
   
 }
 
@@ -120,5 +124,38 @@
 .build_progress{
  
 }
+.planet_background{
+  background-image: image-url("/images/backgrounds/spacebg.jpg");
+  width: 100;
+  heigth: 100;
+  background-size: 100% 100%;
+  background-opacity:0.5;
+}
+
+.hide_me_first {
+  display: none;
+}
+
+.rename_closer{
+  display: inline;
+}
 
 
+.planet_name {
+  font-size: 20px;
+  color: #d9edf7;
+  text-shadow: 1px 1px 2px #000;
+  max-width: 100px;
+}
+
+.rename_form {
+  clear: none;
+}
+
+.rename_form form, .rename_form form div {
+  display: inline;
+}
+
+.rename_form form input[type=text] {
+  width: 100px;
+}
