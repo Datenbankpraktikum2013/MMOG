@@ -33,8 +33,7 @@
 }
 
 .planetinfos{
-  float: right;
-  min-width: 200px;
+  background-color: white;
 }
 
 .buildingpos{
@@ -86,7 +85,7 @@
 }
 
 .buildingpos div{
-  display: bla;
+  
 }
 
 .building_info_field {
@@ -105,11 +104,16 @@
 }
 
 .planet_info_anzeige{
-   right: 50px;
+  
 }
 
 .upgrade_building_btn{
+  background-color: white;
   top: 600px;
+  display: none;
+}
+
+.close_building_info{
   display: none;
 }
 

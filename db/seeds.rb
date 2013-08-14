@@ -56,6 +56,8 @@ GameSettings.set "SUCCESSMSG_ALLIANCE_LEAVE", "Du bist nun nicht mehr Mitglied d
 GameSettings.set "ERRMSG_ALLIANCE_LEAVE", "Du kannst diese Allianz nicht verlassen."
 GameSettings.set "SUCCESSMSG_ALLIANCE_CHANGEFOUNDER", "Du bist zurückgetreten."
 GameSettings.set "ERRMSG_ALLIANCE_CHANGEFOUNDER", "Du hast keine Erlaubnis für diese Aktion."
+GameSettings.set "ERRMSG_USER_ALREADY_IN_ALLIANCE", "Dieser Benutzer gehört bereits zu einer Allianz."
+GameSettings.set "ERRMSG_USER_ALREADY_IN_FRIENDLIST", "Dieser Benutzer ist bereits in deiner Kontaktliste."
 
 GalaxiesHelper.generateAt(0,0)
 Buildingtype.init()

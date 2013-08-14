@@ -5,8 +5,14 @@
 old_building = ''
 function showBuildingInfo(item){
     $("#building_info_"+old_building).hide();
+
+    if ( item == '') {
+    	$("#close_building_info").hide();
+    	$("#planet_infos_shower").show();
+    }else { 
+    	$("#planet_infos_shower").hide();
+    	$("#close_building_info").show();
+	}
     $("#building_info_"+item).show();
     old_building = item;
 };
-
-$(".building_info").hide();
