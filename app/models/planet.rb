@@ -445,8 +445,8 @@ class Planet < ActiveRecord::Base
       if build_me.name == "Depot"
         depot_size_increase(build_me.production)
       end
+      self.user.system_notify( 'Gebäude', build_me.name.to_s, ' Gebäude: '+build_me.name.to_s+' Level '+build_me.level.to_s+', auf Planet '+self.name.to_s+' erfolgreich gebaut.')
       return true
-      self.user.system_notify( 'Gebäude', build_me.to_s, ' Gebäude: '+build_me.to_s+' Level '+build_me.level+', auf Planet '+self.name.to_s+' erfolgreich gebaut.')
     end
     return false
   end
