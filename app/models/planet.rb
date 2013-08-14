@@ -437,7 +437,6 @@ class Planet < ActiveRecord::Base
         end  
         b.save
         self.user.system_notify( 'Gebäude', build_me.name.to_s, ' Gebäude: '+build_me.name.to_s+' Level '+build_me.level.to_s+', auf Planet '+self.name.to_s+' erfolgreich gebaut.')
-        puts "Was geht man?????????????"
         return true
       end
     end
