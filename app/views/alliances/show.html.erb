@@ -59,6 +59,6 @@
   		</div>
 	</p>
 <%end %>
-<%= button_to 'Austreten', alliance_path(@alliance)+"/leave", class: 'btn btn-danger', :method => :post unless @alliance.permission?(current_user,"destroy")%>
+<%= button_to 'Austreten', alliance_path(@alliance)+"/leave", class: 'btn btn-danger', :method => :post unless current_user.alliance==@alliance and @alliance.permission?(current_user,"destroy")%>
 
 <%= button_to 'Bearbeiten', edit_alliance_path(@alliance), class: 'btn', :method => :get if @alliance.permission?(current_user,"show_edit")%>
