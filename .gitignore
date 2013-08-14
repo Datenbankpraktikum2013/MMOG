@@ -16,7 +16,7 @@
 /tmp
 
 # Ignore database credentials
-/db/database.yml
+/config/database.yml
 
 #ignore Fucking schema.rb
 /db/schema.rb
