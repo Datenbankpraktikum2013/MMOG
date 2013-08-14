@@ -74,6 +74,7 @@ GEM
     minitest (4.7.5)
     mono_logger (1.1.0)
     multi_json (1.7.9)
+    mysql2 (0.3.13)
     orm_adapter (0.4.0)
     polyglot (0.3.3)
     rack (1.5.2)
@@ -170,6 +171,7 @@ DEPENDENCIES
   jquery-rails
   less
   less-rails
+  mysql2
   rails (= 4.0.0)
   resque
   resque-scheduler

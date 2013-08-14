@@ -62,13 +62,49 @@
 
 
 
-  <div class="planetinfos">
 
+
+
+
+  <div class="buildingsanzeige">
+    <% b = @planet.buildings_to_hash%>
+    <%  b.each do |h| %>
+
+        <div class="buildingpos buildingpos<%=h[0]%>" title="Name: <%= h[0]%>, Level:<%= h[1]%>"
+             <% fake_lvl = h[1] %>
+             <% if h[0].to_s == "Oremine" && h[1] != 0%>
+               <% if h[1]%2 == 0 then fake_lvl = (h[1]/ 2) else fake_lvl = (h[1] / 2) + 1 end %>
+            <%end%>
+            onclick="javascript:showBuildingInfo('<%= h[0].to_s %>')">
+
+            <% if h[1] != 0%>
+            <%= image_tag('/images/buildings/'+ h[0].to_s + '/' + h[0].to_s + fake_lvl.to_s+'.png')%>
+            <% else %>
+              <%= image_tag('/images/buildings/underconstruction.png')%>
+            <% end%>
+            <!-- <div id="building_info_<%= h[0].to_s %>">
+            
+             <p class="building_info_field">Informationen dazu: <%= h[0].to_s %><br />
+                 Mehr... /p>
+            </div> -->
+        </div>
+    <%end%>
+  </div>
+
+  <div>
+
+  <div class="planetinfos" id="planetinfos">
 
     <a class="pfeil" href="<%= sunsystem_path(@planet.sunsystem)%>"> <div>
         ↶
     </div></a>
 
+
+   <div class="close_building_info pfeil" id="close_building_info" onclick="javascript:showBuildingInfo('');">
+        x
+    </div>
+    
+   <div id="planet_infos_shower">
     <div class="planet_info_anzeige">
 
       <strong>User:</strong>
@@ -107,37 +143,9 @@
       <%= @planet.size %>
 
     </div>
-
+   </div>
   </div>
 
-
-
-  <div class="buildingsanzeige">
-    <% b = @planet.buildings_to_hash%>
-    <%  b.each do |h| %>
-
-        <div class="buildingpos buildingpos<%=h[0]%>" title="Name: <%= h[0]%>, Level:<%= h[1]%>"
-             <% fake_lvl = h[1] %>
-             <% if h[0].to_s == "Oremine" && h[1] != 0%>
-               <% if h[1]%2 == 0 then fake_lvl = (h[1]/ 2) else fake_lvl = (h[1] / 2) + 1 end %>
-            <%end%>
-            onclick="javascript:showBuildingInfo('<%= h[0].to_s %>')">
-
-            <% if h[1] != 0%>
-            <%= image_tag('/images/buildings/'+ h[0].to_s + '/' + h[0].to_s + fake_lvl.to_s+'.png')%>
-            <% else %>
-              <%= image_tag('/images/buildings/underconstruction.png')%>
-            <% end%>
-            <!-- <div id="building_info_<%= h[0].to_s %>">
-            
-             <p class="building_info_field">Informationen dazu: <%= h[0].to_s %><br />
-                 Mehr... /p>
-            </div> -->
-        </div>
-    <%end%>
-  </div>
-
-  <div class="">
     <!-- <% @planet.upgradable_buildings_to_hash.each do |x| %>
       <%= x.to_s %>, 
     <% end %> -->
@@ -145,7 +153,7 @@
     <%  b.each do |h| %>
     <% bt = Buildingtype.where(name: h[0].to_s, level: h[1] +1).first %>
     <% if bt.nil? then "Maximale Stufe bereits erreicht!" else %>
-    <div class= "upgrade_building_btn building_info" id= "building_info_<%=h[0]%>" style = "background-color:white">
+    <div class= "upgrade_building_btn building_info" id= "building_info_<%=h[0]%>" >
        
       <p class="building_info_field">Gebäude: <%= h[0].to_s %> Level: <%= h[1] %><br />
        Kosten: <%= bt.build_cost_ore %> Eisen,
@@ -156,7 +164,7 @@
        Produktion: <%= bt.production%>
       </p>
 
-    <% if @planet.under_construction == 0 %>
+    <% if @planet.under_construction == 0 && @planet.user.id == current_user.id then%>
       <%= button_to 'Upgrade', {:controller => "planets", :action => "upgrade_building", :btype => h[0].to_s, :id => @planet.id } , :method => :post, data: { confirm: 'Möchtest du dein ' + h[0].to_s + ' aufwerten?' }, class: "btn btn-success" %>
     <% else %>
       
@@ -166,7 +174,7 @@
 
   <%end%>
   <%end%> 
-  <% if @planet.under_construction > 0 %>
+  <% if @planet.under_construction > 0 && @planet.user.id == current_user.id then %>
   <div class="build_progress">
     <% b = Buildingtype.find(@planet.under_construction)%>
     <div class="progress progress-striped active">
@@ -177,7 +185,7 @@
     <%= button_to 'Abbrechen', {:controller=>"planets", :action=>"abort_upgrade", :pid=>@planet.id, :bid=>@planet.under_construction}, :onclick => "return confirm('Möchtest du den Gebäudebau wirklich abbrechen?')",:method=>:post, class: "btn btn-danger" %>
     </div>
   </div>
-  
+
   <% end %>
   </div>
 <!--
@@ -213,12 +221,12 @@
 
         var start = <%= @planet.start_construction_at.to_i %>;
         var gone = <%=Time.now.to_i%> - start; 
-        var end  = <%= @planet.get_builttime(building) if building!=0  %>;
+        var end  = <%= @planet.get_builttime(building) + 1 if building!=0  %>;
 
         function update_progressbar(){
             if (gone >= end) {
                 window.clearInterval(aktiv_bar);
-                aktiv_reload = setInterval(fetch_finished,1000);
+                aktiv_reload = setInterval(fetch_finished, 1000);
             };
 
             gone += 0.25;

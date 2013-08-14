@@ -6,7 +6,7 @@
     <h5>Verteidiger:</h5>
     <% @report.reportable.shipcounts.where(shipowner_time_type: 0).order(:user_id).each do |shipcount| %>
       <p>
-        <%= shipcount.ship.name + ': ' + shipcount.amount.to_s + ' von ' + shipcount.user.username %>
+        <%= shipcount.ship.name + ': ' + shipcount.amount.to_s + ' zu ' + shipcount.amount_after.to_s + ' von ' + shipcount.user.username %>
       </p>
     <% end %>
   </div>
@@ -14,7 +14,7 @@
     <h5>Angreifer:</h5>
     <% @report.reportable.shipcounts.where(shipowner_time_type: 1).order(:user_id).each do |shipcount| %>
       <p>
-        <%= shipcount.ship.name + ': ' + shipcount.amount.to_s + ' von ' + shipcount.user.username %>
+        <%= shipcount.ship.name + ': ' + shipcount.amount.to_s + ' zu ' + shipcount.amount_after.to_s + ' von ' + shipcount.user.username %>
       </p>
     <% end %>
   </div>
@@ -24,17 +24,17 @@
   <h4>Schiffe nach dem Kampf:</h4>
   <div style="float: left; min-width: 350px; padding-bottom: 15px;">
     <h5>Verteidiger:</h5>
-    <% @report.reportable.shipcounts.where(shipowner_time_type: 2).order(:user_id).each do |shipcount| %>
+    <% @report.reportable.shipcounts.where(shipowner_time_type: 0).order(:user_id).each do |shipcount| %>
       <p>
-        <%= shipcount.ship.name + ': ' + shipcount.amount.to_s + ' von ' + shipcount.user.username %>
+        <%= shipcount.ship.name + ': ' + shipcount.amount.to_s + ' zu ' + shipcount.amount_after.to_s + ' von ' + shipcount.user.username %>
       </p>
     <% end %>
   </div>
   <div style="float: left; min-width: 350px; padding-bottom: 15px;">
     <h5>Angreifer:</h5>
-    <% @report.reportable.shipcounts.where(shipowner_time_type: 3).order(:user_id).each do |shipcount| %>
+    <% @report.reportable.shipcounts.where(shipowner_time_type: 1).order(:user_id).each do |shipcount| %>
       <p>
-        <%= shipcount.ship.name + ': ' + shipcount.amount.to_s + ' von ' + shipcount.user.username %>
+        <%= shipcount.ship.name + ': ' + shipcount.amount.to_s + ' zu ' + shipcount.amount_after.to_s + ' von ' + shipcount.user.username %>
       </p>
     <% end %>
   </div>

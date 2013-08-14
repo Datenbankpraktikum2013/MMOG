@@ -59,16 +59,20 @@ class Battlereport < ActiveRecord::Base
 	def add_fleet_info(fleet, type)
 		unless fleet.nil?
 			Shipfleet.where(fleet_id: fleet.id).each do |shipfleet|
-				tmp = Shipcount.new
-				tmp.amount = shipfleet.amount
-				tmp.ship = shipfleet.ship
-				tmp.shipowner_time_type = type
-				tmp.user = fleet.user
-				self.shipcounts << tmp
-			end
-			# fleet.shipfleets.each do |shipfleet|
+				if (type > 1)
+					tmp = self.shipcounts.select{ |s| s.user_id == fleet.user.id && s.ship_id == shipfleet.ship_id}
 
-			# end
+					tmp.first.amount_after = shipfleet.amount unless tmp.nil?
+				else
+					tmp = Shipcount.new
+					tmp.amount = shipfleet.amount
+					tmp.amount_after = 0
+					tmp.ship = shipfleet.ship
+					tmp.shipowner_time_type = type
+					tmp.user = fleet.user
+					self.shipcounts << tmp
+				end
+			end
 		end
 	end
 
