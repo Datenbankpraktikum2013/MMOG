@@ -43,7 +43,11 @@ class ShipBuildingQueue < ActiveRecord::Base
 						plus=Time.now.to_i;
 					else
 						l_qid=last_q.qid+1
-						plus=last_q.end_time
+						plus=ShipBuildingQueue.where(planet_id: p.id).last
+						if plus.nil?
+							plus=Time.now.to_i 
+						else plus=plus.end_time
+						end
 					end
 					value.to_i.times do |i|
 						q=self.new
