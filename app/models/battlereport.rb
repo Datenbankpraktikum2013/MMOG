@@ -35,16 +35,17 @@ class Battlereport < ActiveRecord::Base
 	end
 
 	def finish_battlereport(def_fleets, atk_fleet, defended=false)
+
 		def_fleets.each do |fleet|
 			self.add_fleet_info(fleet, 2)
 		end
 		self.add_fleet_info(atk_fleet, 3)
 
-		self.stolen_ore = atk_fleet.ore
-		self.stolen_crystal = atk_fleet.crystal
-		self.stolen_space_cash = atk_fleet.credit
-
-		puts "Ore: #{atk_fleet.ore}, Cash: #{atk_fleet.credit}, Crystal: #{atk_fleet.crystal}"
+		unless atk_fleet.nil?
+			self.stolen_ore = atk_fleet.ore
+			self.stolen_crystal = atk_fleet.crystal
+			self.stolen_space_cash = atk_fleet.credit
+		end
 
 		defended ? self.winner = @r.defender : self.winner = @r.attacker
 		self.save

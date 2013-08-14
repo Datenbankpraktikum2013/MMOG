@@ -10,7 +10,33 @@ class PlanetsController < ApplicationController
   # GET /planets/1
   # GET /planets/1.json
   def show
+    @planet = Planet.find(params[:id])
+    if @planet.user.nil? then
+      respond_to do |format|
+        format.html { redirect_to galaxies_url }
+        format.json { head :no_content }
+      end
+    else
+      if @planet.user == current_user then
 
+      else
+        if (x = @planet.user.alliance).nil? then
+          respond_to do |format|
+            format.html { redirect_to galaxies_url }
+            format.json { head :no_content }
+          end
+        else
+          if x.users.include?(current_user) then
+
+          else
+            respond_to do |format|
+              format.html { redirect_to galaxies_url }
+              format.json { head :no_content }
+            end
+          end
+          end
+      end
+    end
   end
 
   # GET /planets/new
@@ -54,6 +80,7 @@ class PlanetsController < ApplicationController
 
   def upgrade_building
     @planet = Planet.find(params["id"])
+    if @planet.user.id == current_user.id then
     if @planet.create_building_job(params["btype"].to_sym) then
     
     respond_to do |format|
@@ -64,6 +91,7 @@ class PlanetsController < ApplicationController
       respond_to do |format|
       format.html { redirect_to @planet, notice: 'Gebäude kann nicht gebaut werden.'}
       format.json {render action: 'show'}
+    end
     end
     end
   end

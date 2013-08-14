@@ -233,94 +233,89 @@ class Fleet < ActiveRecord::Base
       raise RuntimeError, "Cannot move fleet that is not situated at home -> You can only send it back to origin"
     end
 
-    ActiveRecord::Base.transaction do
-      fleet = self.split_fleet(ship_hash)
-      distance = fleet.origin_planet.getDistance(destination)
-      velocity = fleet.get_velocity
-      time = get_needed_time(velocity, distance)
+    fleet = self.split_fleet(ship_hash)
+    distance = fleet.origin_planet.getDistance(destination)
+    velocity = fleet.get_velocity
+    time = get_needed_time(velocity, distance)
 
-      fleet.departure_time = Time.now.to_i
-      fleet.arrival_time = fleet.departure_time + time
+    fleet.departure_time = Time.now.to_i
+    fleet.arrival_time = fleet.departure_time + time
 
-      energy = 0
+    energy = 0
+    ships = fleet.get_ships  
+    energy = Fleet.get_needed_fuel_from_hash(ships, time)
 
-      ships = fleet.get_ships  
-      ships.each do |ship, amount|
-        energy += get_needed_fuel(ship, time) * amount
-      end
+    #origin and start planet are ok, only target planet needs to be changed
+    fleet.target_planet = destination
+    home = fleet.origin_planet
 
-      #origin and start planet are ok, only target planet needs to be changed
-      fleet.target_planet = destination
-      home = fleet.origin_planet
+    case mission.id
+      when 2 then # Colonization
+        energy *= 2
 
-      case mission.id
-        when 2 then # Colonization
-          energy *= 2
-
-          # subtract energy from planet if enough, else Error
-          if home.energy >= energy
-            home.take(:Energy, energy)
-            fleet.load_ressources(ore, crystal, credit, fleet.origin_planet)
-            fleet.mission = mission
-            fleet.save
-            fleet.colonize_planet_in(fleet.arrival_time, destination)
-          else
-            self.merge_fleet(fleet)
-            raise RuntimeError, "Not enough energy to move the fleet"
-          end
-        when 3 then # Attack
-          energy *= 2
-          # subtract energy from planet if enough, else Error
-          if home.energy >= energy
-            home.take(:Energy, energy)
-            fleet.mission = mission
-            fleet.save
-            fleet.attack_planet_in(fleet.arrival_time, destination)
-          else
-            self.merge_fleet(fleet)
-            raise RuntimeError, "Not enough energy to move the fleet"
-          end
-        when 4 then # Travel
-          # subtract energy from planet if enough, else Error
-          if home.energy >= energy
-            home.take(:Energy, energy)
-            fleet.mission = mission
-            fleet.save
-            fleet.travel_to_planet_in(fleet.arrival_time, destination)
-          else
-            self.merge_fleet(fleet)
-            raise RuntimeError, "Not enough energy to move the fleet"
-          end
-        when 5 then # Spy
-          energy *= 2
-          # subtract energy from planet if enough, else Error
-          if home.energy >= energy
-            home.take(:Energy, energy)
-            fleet.mission = mission
-            fleet.save
-            fleet.spy_planet_in(fleet.arrival_time, destination)
-          else
-            self.merge_fleet(fleet)
-            raise RuntimeError, "Not enough energy to move the fleet"
-          end
-        when 6 then # Transport
-          energy *= 2
-          # subtract energy from planet if enough, else Error
-          if home.energy >= energy
-            home.take(:Energy, energy)
-            fleet.load_ressources(ore, crystal, credit, fleet.origin_planet)
-            fleet.mission = mission
-            fleet.save
-            fleet.transport_to_planet_in(fleet.arrival_time, destination)
-          else
-            self.merge_fleet(fleet)
-            raise RuntimeError, "Not enough energy to move the fleet"
-          end
+        # subtract energy from planet if enough, else Error
+        if home.energy >= energy
+          home.take(:Energy, energy)
+          fleet.load_ressources(ore, crystal, credit, fleet.origin_planet)
+          fleet.mission = mission
+          fleet.save
+          fleet.colonize_planet_in(fleet.arrival_time, destination)
         else
-          self.merge_fleet(fleet) 
-          raise RuntimeError "Invalid Mission for Movement (needed 1 < id <= 6)"
+          self.merge_fleet(fleet)
+          raise RuntimeError, "Not enough energy to move the fleet"
+        end
+      when 3 then # Attack
+        energy *= 2
+        # subtract energy from planet if enough, else Error
+        if home.energy >= energy
+          home.take(:Energy, energy)
+          fleet.mission = mission
+          fleet.save
+          fleet.attack_planet_in(fleet.arrival_time, destination)
+        else
+          self.merge_fleet(fleet)
+          raise RuntimeError, "Not enough energy to move the fleet"
+        end
+      when 4 then # Travel
+        # subtract energy from planet if enough, else Error
+        if home.energy >= energy
+          home.take(:Energy, energy)
+          fleet.mission = mission
+          fleet.save
+          fleet.travel_to_planet_in(fleet.arrival_time, destination)
+        else
+          self.merge_fleet(fleet)
+          raise RuntimeError, "Not enough energy to move the fleet"
+        end
+      when 5 then # Spy
+        energy *= 2
+        # subtract energy from planet if enough, else Error
+        if home.energy >= energy
+          home.take(:Energy, energy)
+          fleet.mission = mission
+          fleet.save
+          fleet.spy_planet_in(fleet.arrival_time, destination)
+        else
+          self.merge_fleet(fleet)
+          raise RuntimeError, "Not enough energy to move the fleet"
+        end
+      when 6 then # Transport
+        energy *= 2
+        # subtract energy from planet if enough, else Error
+        if home.energy >= energy
+          home.take(:Energy, energy)
+          fleet.load_ressources(ore, crystal, credit, fleet.origin_planet)
+          fleet.mission = mission
+          fleet.save
+          fleet.transport_to_planet_in(fleet.arrival_time, destination)
+        else
+          self.merge_fleet(fleet)
+          raise RuntimeError, "Not enough energy to move the fleet"
+        end
+      else
+        self.merge_fleet(fleet) 
+        raise RuntimeError "Invalid Mission for Movement (needed 1 < id <= 6)"
       end
-    end
   end
 
   # ++++++++++++ #
