@@ -19,16 +19,37 @@
     <tr >
 	    <td><%= s.name %></td>
 	    <td><%= s.construction_time %></td>
-	    <td><%= s.ore_cost %></td>
-	    <td><%= s.crystal_cost %></td>
-	    <td><%= s.credit_cost %></td>
+	    <td id="ore-cost"><%= s.ore_cost %></td>
+	    <td id="crystal-cost"><%= s.crystal_cost %></td>
+	    <td id="credit-cost"><%= s.credit_cost %></td>
 	    <td><a id="s<%= s.id %>" href="#"  class="btn btn-mini" data-html="true" ><i class="icon-question-sign" ></i></a>
 	    </td>
-	    <td><%= number_field(:ship, s.id ,:class=> "span1 ship-amount") %></td>
+	    <td><%= number_field(:ship, s.id ,:class=> "span1 ship-amount",  :id=> "nr-field") %></td>
     </tr>
     <% end %>
 
 
+</table>
+
+<table id="need-ressource" class="table table-striped table-bordered">
+	<thead>
+		<tr>
+			<th>Needed Ressources:</th>
+
+		</tr>
+		<tr>
+			<th>Ore:</th>
+			<th>Crystal:</th>
+			<th>Space-Cash</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td id="ore-t"></td>
+			<td id="crystal-t"></td>
+			<td id="credit-t"></td>
+		</tr>
+	</tbod>
 </table>
 <%= hidden_field_tag 'planet', @planet.id.to_s %>
 <%= submit_tag("Build") %> 
@@ -37,6 +58,11 @@
   
   <% end %>
 <script>  
+$(document).ready(function() {
+	$("#ore-t").text("0");
+	$("#crystal-t").text("0");
+	$("#credit-t").text("0");
+});
 $(function ()  
 { 	
 	<% unless @sh.nil? %>
@@ -46,4 +72,46 @@ $(function ()
 	<%end%>
 
 });  
+
+$(".ship-amount").keyup(function() {
+	$("#ore-t").text("0");
+	$("#crystal-t").text("0");
+	$("#credit-t").text("0");
+	console.log(($(this).parent().parent().find("td[id=ore-cost]").first().text())*$(this).val());
+	$(".ship-amount").each(function(){
+		new_ore=($(this).parent().parent().find("td[id=ore-cost]").first().text())*$(this).val();
+		new_credit=($(this).parent().parent().find("td[id=credit-cost]").first().text())*$(this).val();
+		new_crystal=($(this).parent().parent().find("td[id=crystal-cost]").first().text())*$(this).val();
+		$("#ore-t").text(parseInt($("#ore-t").text())+new_ore);
+		$("#crystal-t").text(parseInt($("#crystal-t").text())+new_crystal);
+		$("#credit-t").text(parseInt($("#credit-t").text())+new_credit);
+
+
+	});
+
+	//new_ore=($(this).parent().parent().find("td[id=ore-cost]").first().text())*
+	//console.log(($(this).parent().parent().find("td[id=ore-cost]").first().text()));
+
+});
+$(".ship-amount").change(function() {
+	$("#ore-t").text("0");
+	$("#crystal-t").text("0");
+	$("#credit-t").text("0");
+	console.log(($(this).parent().parent().find("td[id=ore-cost]").first().text())*$(this).val());
+	$(".ship-amount").each(function(){
+		new_ore=($(this).parent().parent().find("td[id=ore-cost]").first().text())*$(this).val();
+		new_credit=($(this).parent().parent().find("td[id=credit-cost]").first().text())*$(this).val();
+		new_crystal=($(this).parent().parent().find("td[id=crystal-cost]").first().text())*$(this).val();
+		$("#ore-t").text(parseInt($("#ore-t").text())+new_ore);
+		$("#crystal-t").text(parseInt($("#crystal-t").text())+new_crystal);
+		$("#credit-t").text(parseInt($("#credit-t").text())+new_credit);
+
+
+	});
+
+	//new_ore=($(this).parent().parent().find("td[id=ore-cost]").first().text())*
+	//console.log(($(this).parent().parent().find("td[id=ore-cost]").first().text()));
+
+});
+
 </script>  
