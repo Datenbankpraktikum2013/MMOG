@@ -60,7 +60,7 @@
 	</p>
 <%end %>
 <% if current_user.alliance==@alliance %>
-	<%= button_to 'Austreten', alliance_path(@alliance)+"/leave", class: 'btn btn-danger', :method => :post @alliance.permission?(current_user,"destroy")%>
+	<%= button_to 'Austreten', alliance_path(@alliance)+"/leave", class: 'btn btn-danger', :method => :post unless @alliance.permission?(current_user,"destroy")%>
 <% end %>
 
 <%= button_to 'Bearbeiten', edit_alliance_path(@alliance), class: 'btn', :method => :get if @alliance.permission?(current_user,"show_edit")%>
