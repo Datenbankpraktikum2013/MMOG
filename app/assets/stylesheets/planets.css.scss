@@ -17,6 +17,7 @@
 
 .ressource_item_anzeige{
   display: inline-block;
+  color: white;
   width: 125px;
 
 }
@@ -122,6 +123,13 @@
 
 .build_progress{
  
+}
+.planet_background{
+  background-image: image-url("/images/backgrounds/spacebg.jpg");
+  width: 100;
+  heigth: 100;
+  background-size: 100% 100%;
+  background-opacity:0.5;
 }
 
 
