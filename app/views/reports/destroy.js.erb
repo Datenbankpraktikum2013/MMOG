@@ -1,4 +1,4 @@
 $('#report_<%= @report.id %>').fadeOut("slow", function() {
-	remove();
+	$(this).remove();
 } );
 $('#unreadreports').text('<%= Report.unread_reports(current_user.id) %>');

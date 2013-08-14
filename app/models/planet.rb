@@ -154,37 +154,30 @@ class Planet < ActiveRecord::Base
     if special == 0
       info_text ="Ein gewöhnlicher Planet wie er häufig im Universum zu treffen ist. Er zeichnet sich dadurch aus, dass er keine Spezialisierung besitzt.
       Auf diesem Planeten wurden keine Kristallvorkommen entdeckt!"
-    end 
-    if special == 1
+    elsif  special == 1
       info_text ="Dieser Planet zeichnet sich durch seine reichen Erzvorkommen aus. Die Erzproduktion ist auf solchen einem Planeten stark erhöht.
        Auf diesem Planeten wurden keine Kristallvorkommen entdeckt!"
-    end
-    if special == 2
+    elsif  special == 2
        info_text ="Die Luft auf diesem Planeten ist stark mit Pheromone geschwängert, was den Fortplanzungstrieb der Bewohner anheitzt
        Auf diesem Planeten wurden keine Kristallvorkommen entdeckt!"
-    end
-   if special == 3
+    elsif  special == 3
        info_text ="Die Bewohner dieses Planeten sind dafür bekannt sich in Geldgeschäften besonders gut auszukennen.   
        Auf diesem Planeten wurden keine Kristallvorkommen entdeckt!"
-    end
-    if special == 4
+    elsif special == 4
        info_text ="Ein lebensfeindlicher kleiner Planet. Wer würde hier leben oder arbeiten wollen?" 
-    end
-
-    if special == 5
+    elsif  special == 5
        info_text ="Die Kraft und die Intelligenz der Bewohner dieses Planeten, ermöglicht ihnen in Windeseile Gebäude zu errichten
        Auf diesem Planeten wurden keine Kristallvorkommen entdeckt!"
-    end
-    if special == 6
+    elsif special == 6
        info_text ="Tiefe Krater auf der Oberfläche des Planeten ermöglichen es große Menge Resourcen zu speichern
        Auf diesem Planeten wurden keine Kristallvorkommen entdeckt!"
-    end
-    if special == 7
+    elsif special == 7
        info_text ="Die Nähe des Planeten zur Sonne unterstützt die Energieproduktion 
        Auf diesem Planeten wurden keine Kristallvorkommen entdeckt!"
     end
-    return info_text
-  end  
+    return  info_text
+  end
+    
   def mention()
     self.sunsystem.mention()
     #Hier weitere Aktionen starten: z.B. Rohstoffproduktion, falls gestoppt wurde
