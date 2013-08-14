@@ -177,7 +177,7 @@ class Planet < ActiveRecord::Base
     end
     return  info_text
   end
-    
+
   def mention()
     self.sunsystem.mention()
     #Hier weitere Aktionen starten: z.B. Rohstoffproduktion, falls gestoppt wurde
@@ -242,7 +242,6 @@ class Planet < ActiveRecord::Base
   end
   def get_builttime(btype_id)
       return Buildingtype.find(btype_id).build_time * @spec[6]
-
   end
 
   #Method which increases and updates all the resources a player has every ...Minute
@@ -447,6 +446,8 @@ class Planet < ActiveRecord::Base
           depot_size_increase(btype.production)
         end  
         b.save
+        self.user.system_notify( 'Gebäude', build_me.name.to_s, ' Gebäude: '+build_me.name.to_s+' Level '+build_me.level.to_s+', auf Planet '+self.name.to_s+' erfolgreich gebaut.')
+        puts "Was geht man?????????????"
         return true
       end
     end
@@ -456,6 +457,7 @@ class Planet < ActiveRecord::Base
         depot_size_increase(build_me.production)
       end
       return true
+      self.user.system_notify( 'Gebäude', build_me.to_s, ' Gebäude: '+build_me.to_s+' Level '+build_me.level+', auf Planet '+self.name.to_s+' erfolgreich gebaut.')
     end
     return false
   end
