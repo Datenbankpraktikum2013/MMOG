@@ -69,7 +69,12 @@ class Fleet < ActiveRecord::Base
 
   # returns the free capacity of a fleet
   def get_free_capacity
-    return self.get_capacity - self.get_amount_of_ressources
+    cap = self.get_capacity - self.get_amount_of_ressources
+    if cap < 0
+      0
+    else
+      cap
+    end
   end
 
   # returns the capacity of a fleet with respect to the technology factor
@@ -79,7 +84,7 @@ class Fleet < ActiveRecord::Base
 
   # returns the amount os stored ressources
   def get_amount_of_ressources
-    self.ore + self.credit + self.crystal
+    ress = self.ore + self.credit + self.crystal
   end
 
   #Returns Speed of slowest ship in the fleet
@@ -141,6 +146,17 @@ class Fleet < ActiveRecord::Base
     else
       sf.amount
     end
+  end
+
+  # returns the amount of a shiptype in one fleet
+  # check if s is ship
+  def get_amount_of_ships()
+    ships = self.get_ships
+    count = 0
+    ships.each do |ship, amount|
+      count += amount
+    end
+    count
   end
 
   # Returns a Hash of {Ship => Amount} pairs
@@ -241,9 +257,7 @@ class Fleet < ActiveRecord::Base
     fleet.departure_time = Time.now.to_i
     fleet.arrival_time = fleet.departure_time + time
 
-    energy = 0
-    ships = fleet.get_ships  
-    energy = Fleet.get_needed_fuel_from_hash(ships, time)
+    energy = fleet.get_needed_fuel_all(time)
 
     #origin and start planet are ok, only target planet needs to be changed
     fleet.target_planet = destination
@@ -640,12 +654,10 @@ class Fleet < ActiveRecord::Base
     end
 
     planet.seen_by(self.user)
-
     other_user = planet.user
     if other_user.nil? # unknown
       # take Planet
       planet.claim(self.user)
-
       self.start_planet = planet
       self.target_planet = planet
       self.origin_planet = planet
@@ -655,6 +667,12 @@ class Fleet < ActiveRecord::Base
       self.unload_ressources(planet)
       # delete the Colony Ship
       self.destroy_ship(Ship.find(10))
+      if self.get_capacity < self.get_amount_of_ressources
+        self.ore = (self.get_capacity / 3).to_i
+        self.crystal = (self.get_capacity / 3).to_i
+        self.credit = (self.get_capacity / 3).to_i
+        puts "due to heavy load, a few ressources got lost in the void..."
+      end
       self.update_values
       type = 1
     elsif other_user == self.user # own planet
@@ -667,7 +685,7 @@ class Fleet < ActiveRecord::Base
       type = 0
       self.return_to_origin(planet)
     end
-
+    # SEEMS NOT TO WROK PROPERLY===============????????????
     colo_report = Colonisationreport.new
     colo_report.finish_colonisationreport(planet, self, type)
 
@@ -776,7 +794,7 @@ class Fleet < ActiveRecord::Base
     self.start_planet = planet
     self.departure_time = Time.now.to_i
     self.arrival_time = time + self.departure_time
-
+    self.save
     Resque.enqueue_at(self.arrival_time, ReturnToOrigin, self.id)
   end
 
@@ -866,7 +884,6 @@ class Fleet < ActiveRecord::Base
     end
     
     self.update_values
-
     old_capacity = self.get_capacity
 
     new_fleet = Fleet.new(self.origin_planet)
