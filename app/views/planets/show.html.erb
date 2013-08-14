@@ -89,16 +89,19 @@
         <div class="buildingpos buildingpos<%=h[0]%>" title="Name: <%= h[0]%>, Level:<%= h[1]%>"
              <% fake_lvl = h[1] %>
              <% if h[0].to_s == "Oremine" && h[1] != 0%>
-               <% if h[1]%2 == 0 then fake_lvl = (h[1]/ 2) else fake_lvl = (h[1] / 2) + 1 end %>
-            <%end%>
-            onclick="javascript:showBuildingInfo('<%= h[0].to_s %>')">
+             <% if h[1]%2 == 0 then fake_lvl = (h[1]/ 2) else fake_lvl = (h[1] / 2) + 1 end %>
+             <%end%>
+             onclick="javascript:showBuildingInfo('<%= h[0].to_s %>')">
 
-            <% if h[1] != 0%>
-            <%= image_tag('/images/buildings/'+ h[0].to_s + '/' + h[0].to_s + fake_lvl.to_s+'.png')%>
-            <% else %>
-              <%= image_tag('/images/buildings/underconstruction.png')%>
-            <% end%>
-            <!-- <div id="building_info_<%= h[0].to_s %>">
+          <% if h[1] != 0 && (h[0].to_s == "Oremine" || h[0].to_s == "Headquarter" || h[0].to_s == "Powerplant")%>
+              <%= image_tag('/images/buildings/'+ h[0].to_s + '/' + h[0].to_s + fake_lvl.to_s+'.png')%>
+          <% else if h[1] == 0%>
+                  <%= image_tag('/images/buildings/underconstruction.png')%>
+              <% else %>
+                  <%= image_tag('/images/buildings/'+ h[0].to_s + '/' + h[0].to_s + '.png')%>
+              <% end%>
+          <%end%>
+          <!-- <div id="building_info_<%= h[0].to_s %>">
             
              <p class="building_info_field">Informationen dazu: <%= h[0].to_s %><br />
                  Mehr... /p>

@@ -1,6 +1,6 @@
 <h1>Baubedingungen der Gebäude</h1>
 
-<table>
+<table class="gebaeudeliste">
   <thead>
   <tr>
     <th>Name</th>
@@ -15,8 +15,10 @@
   </thead>
 
   <tbody>
+  <% i = 1 %>
   <% @buildingtypes.each do |buildingtype| %>
-      <tr class="trennerunten">
+  <% i+=1 %>
+      <tr class="<%= "trennerunten" if i%2==0 %>">
         <td class="trennerrechts"><%= buildingtype.name %></td>
         <td class="trennerrechts"><%= buildingtype.level %></td>
         <td class="trennerrechts"><%= buildingtype.production %></td>
@@ -32,9 +34,6 @@
           <% end %>
         </td>
 
-        <td><%= link_to 'Show', buildingtype %></td>
-        <td><%= link_to 'Edit', edit_buildingtype_path(buildingtype) %></td>
-        <td><%= link_to 'Destroy', buildingtype, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
   <% end %>
   </tbody>
@@ -42,4 +41,3 @@
 
 <br>
 
-<%= link_to 'New Buildingtype', new_buildingtype_path %>
