@@ -28,18 +28,20 @@
 	</tr>
 </thead>
   <tbody>
+    <% i=0 %>
 	<% @queue.each do |q| %>
 		<tr>
 			<td><%= q.planet.name %></td>
-			<td> <%= @ships.find(q.ship_id).name %> </td>
+			<td id="time"> <%= @ships.find(q.ship_id).name %> </td>
       <% if (q.end_time - @time.now.to_i) <= 0 %>
-        <td>0</td>
+        <td id="time">0</td>
       <% else %>
 
 			<td><%= (q.end_time - @time.now.to_i) %></td>
 <!-- 			<td><div class="bar" style="width: <%= q.end_time - @time.now.to_i %>%;"></div></td> -->
     <%end%>
-    <td><%= link_to "Destroy" , controller: "ship_building_queues", action: "destroy_queue", id:  q.id%></td>
+    <td><input type='button' class="destroy-button" value='destroy' name='destroy' data-zeile='<%= i%>' id='<%= q.id %>' /></td>
+    <% i+=1 %>
 		</tr>
 	<% end %>
 <% end %>
@@ -57,11 +59,39 @@ $(document).ready(function() {
     {sWidth: "10%"},
     {sWidth: "10%"}
   ]
+  // setInterval(function(){
+  //   $.("#time").text(parseInt($.("#time").text())-1);
+  // },1000);
 });
 $.extend( $.fn.dataTableExt.oStdClasses, {
     "sWrapper": "dataTables_wrapper form-inline"
 } );
+
+
+
 } );
+$(".destroy-button").on("click", function(){
+  
+  $(self).attr("disabled","true");
+  id = $(this).attr("id");
+  del_index=$(this).data("zeile");
+  $.getJSON('/ship_building_queues/destroy_queue/'+id, function(data){
+    $('#shipdata').dataTable().fnDeleteRow( del_index );
+    //if ... data.ok=1 ...  
+    var i=0;
+    $('#shipdata input[name="destroy"]').each(function(){
+      $(this).attr("data-zeile",i);
+      i++;
+    });
+  });
+  
+
+});
+
+function deleteRow(i){
+
+
+}
 </script>
 
 

@@ -3,7 +3,7 @@
 
 
 <form id="galaxy_fix_one" action="" method="get">
-    <select name="galaxy_name">
+    <!--<select name="galaxy_name">
       <option value="">Galaxie wählen...</option>
       <% gs = current_user.visible_galaxies.uniq
          gs.each do |g| %>
@@ -16,13 +16,20 @@
         ss.each do |s| %>
         <option value="<%= s.name %>"><%= s.name %></option>
     <% end %>
-  </select>
+  </select>-->
   <select name="planet_name">
     <option value="">Planet wählen...</option>
-  <% ps = current_user.visible_planets.uniq
+  <% ps = current_user.planets.uniq
      ps.each do |p| %>
       <option value="<%= p.name %>"><%= p.name %></option>
   <% end %>
+  </select>
+  <select name="allied_planet_name">
+    <option value="">Planet wählen...</option>
+    <% ps = current_user.visible_planets.uniq
+       ps.each do |p| %>
+        <option value="<%= p.name %>"><%= p.name %></option>
+    <% end %>
   </select>
 </form>
 

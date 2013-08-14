@@ -8,7 +8,8 @@ class AddShip
 		# qid=ids["queue"]
 		puts "#{Time.now} === Added Ship #{ship_id} to Planet #{planet_id}"
 		Fleet.add_ship_to_planet(Ship.find(ship_id),Planet.find(planet_id))
-		ShipBuildingQueue.where("qid=?",qid).last.destroy
+		q=ShipBuildingQueue.where("qid=?",qid).last
+		q.destroy unless q.nil?
 		#Fleet.find(fleet_id).add_ship(Ship.find(ship_id))
 		
 	end

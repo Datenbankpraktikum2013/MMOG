@@ -158,11 +158,12 @@ class ShipBuildingQueue < ActiveRecord::Base
 				# q2=self.new
 				# q2.ship_id=q.ship_id
 				# q2.planet_id=q.planet_id
-
+				puts "#{q.id}"
 				q.end_time-=b
 				
-				Resque.remove_delayed(AddShip, q.ship_id, q.planet_id, q.id )
-				Fleet.add_ship_in(q.end_time, q.ship, q.planet, q.id)
+				x=Resque.remove_delayed(AddShip, q.ship_id, q.planet_id, q.qid )
+				puts x
+				Fleet.add_ship_in(q.end_time, q.ship, q.planet, q.qid)
 				
 				
 			

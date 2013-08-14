@@ -156,7 +156,7 @@
        Produktion: <%= bt.production%>
       </p>
 
-    <% if @planet.under_construction == 0 %>
+    <% if @planet.under_construction == 0 && @planet.user.id == current_user.id then%>
       <%= button_to 'Upgrade', {:controller => "planets", :action => "upgrade_building", :btype => h[0].to_s, :id => @planet.id } , :method => :post, data: { confirm: 'Möchtest du dein ' + h[0].to_s + ' aufwerten?' }, class: "btn btn-success" %>
     <% else %>
       
@@ -166,7 +166,7 @@
 
   <%end%>
   <%end%> 
-  <% if @planet.under_construction > 0 %>
+  <% if @planet.under_construction > 0 && @planet.user.id == current_user.id then %>
   <div class="build_progress">
     <% b = Buildingtype.find(@planet.under_construction)%>
     <div class="progress progress-striped active">
@@ -177,7 +177,7 @@
     <%= button_to 'Abbrechen', {:controller=>"planets", :action=>"abort_upgrade", :pid=>@planet.id, :bid=>@planet.under_construction}, :onclick => "return confirm('Möchtest du den Gebäudebau wirklich abbrechen?')",:method=>:post, class: "btn btn-danger" %>
     </div>
   </div>
-  
+
   <% end %>
   </div>
 <!--
@@ -213,12 +213,12 @@
 
         var start = <%= @planet.start_construction_at.to_i %>;
         var gone = <%=Time.now.to_i%> - start; 
-        var end  = <%= @planet.get_builttime(building) if building!=0  %>;
+        var end  = <%= @planet.get_builttime(building) + 1 if building!=0  %>;
 
         function update_progressbar(){
             if (gone >= end) {
                 window.clearInterval(aktiv_bar);
-                aktiv_reload = setInterval(fetch_finished,1000);
+                aktiv_reload = setInterval(fetch_finished, 1000);
             };
 
             gone += 0.25;
