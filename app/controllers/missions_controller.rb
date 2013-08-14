@@ -8,18 +8,44 @@ class MissionsController < ApplicationController
   end
 
   def get_value_helper
-    @planets = current_user.visible_planets.uniq!
-    @galaxies = current_user.visible_galaxies.uniq!
-    @sunsystems = current_user.visible_sunsystems.uniq!
+    @planets = current_user.visible_planets.uniq
+    @galaxies = current_user.visible_galaxies.uniq
+    @sunsystems = current_user.visible_sunsystems.uniq
 
     @susy_names_hash = Hash.new
     @sunsystems.each do |sunsystem|
       @susy_names_hash[sunsystem.id] = sunsystem.y.to_s + " &sdot; " + sunsystem.name
     end
     
+    own_planets = current_user.planets
+    alliance = nil
+    unless current_user.alliance.nil?
+      alliance = Alliance.find(current_user.alliance)
+      alliance_members = alliance.users
+    end
+
+    alliance_planets = []
+    if alliance.nil?
+      alliance_planets = []
+    else
+      alliance_members.each do |user|
+        user.planets.each do |planet|
+          unless user == current_user
+            alliance_planets.push(planet)
+          end
+        end
+      end
+    end
+
     @planets_names_hash = Hash.new
     @planets.each do |planet|
-      @planets_names_hash[planet.id] = planet.z.to_s + " &sdot; " + planet.name
+      name = planet.z.to_s + " &sdot; " + planet.name
+      if alliance_planets.include?(planet)
+        name += " (Allianz)"
+      elsif own_planets.include?(planet)
+        name += " (Deiner)"
+      end
+      @planets_names_hash[planet.id] = name
     end
       
     @susy_hash = Hash.new
