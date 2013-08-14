@@ -4,9 +4,9 @@
 <div id="reports">
     <h1>Berichte</h1>
 
-    <table class="table table-striped table-bordered table-condensed table-hover">
+    <table class="table table-bordered table-condensed">
       <thead>
-        <tr class="center">
+        <tr>
           <th>Typ</th>
           <th>Ziel</th>
           <th>Quelle</th>
@@ -18,7 +18,7 @@
 
       <tbody>
         <% @reports.each do |report| %>
-          <tr class="center<%= " unread" if report.read == 'f' %>" id="report_<%= report.id %>">
+          <tr class="<%= " unread" if report.read == 'f' %>" id="report_<%= report.id %>">
             <td>
               <%= report.reportable_type %>
             </td>
