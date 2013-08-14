@@ -16,3 +16,17 @@ function showBuildingInfo(item){
     $("#building_info_"+item).show();
     old_building = item;
 };
+
+renaming = false
+function toggleRenameForm(){
+    if(renaming == true){
+        $("#rename_planet_form").hide();
+        $("#planet_name").show();
+        renaming = false;
+    }
+    else{
+        $("#planet_name").hide();
+        $("#rename_planet_form").show();
+        renaming = true;
+    }
+}

@@ -121,4 +121,30 @@
  
 }
 
+.hide_me_first {
+  display: none;
+}
 
+.rename_closer{
+  display: inline;
+}
+
+
+.planet_name {
+  font-size: 20px;
+  color: #d9edf7;
+  text-shadow: 1px 1px 2px #000;
+  max-width: 100px;
+}
+
+.rename_form {
+  clear: none;
+}
+
+.rename_form form, .rename_form form div {
+  display: inline;
+}
+
+.rename_form form input[type=text] {
+  width: 100px;
+}
