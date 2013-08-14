@@ -1,6 +1,6 @@
 <% a = @planet.special.to_s%>
 <%test=('/images/planets/planet'+a+'bg.png').to_s %>
-
+<div class="planet_background">
 <div class="planetbox" style='background-image:url("<%=test %>");background-repeat:no-repeat;background-size:<%= (@planet.size / 200).to_i%>px <%= (@planet.size / 200).to_i%>px ;background-position:center;'>
 
   <div class="ressources">
@@ -236,7 +236,7 @@
   </div>
 -->
 </div>
-
+</div>
 <script type='text/javascript'>
     <% building =  @planet.under_construction %>;
     var building = <%=building%>
