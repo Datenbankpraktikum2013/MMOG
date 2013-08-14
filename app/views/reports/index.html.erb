@@ -18,9 +18,9 @@
 
       <tbody>
         <% @reports.each do |report| %>
-          <tr class="<%= " unread" if report.read == 'f' %>" id="report_<%= report.id %>">
+          <tr <%= "class=\"unread\"".html_safe if (report.read == 0) || (report.read == "f") %> id="report_<%= report.id %>">
             <td>
-              <%= report.reportable_type %>
+              <%= report.reportable_type %> <%= report.read %>
             </td>
             <td>
               <%= report.defender.nil? ?  "-" : report.defender.username %><br />
