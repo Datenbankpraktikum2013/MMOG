@@ -13,7 +13,7 @@
   <tbody>
     <% @usermessages = current_user.messages %>  
     <% @usermessages.each do |message| %>
-      <% unless message.deleted == 't' %>
+      <% unless message.deleted?  %>
         <% @read=message.read %>
         <tr>
           <td>

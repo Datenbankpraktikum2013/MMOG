@@ -105,7 +105,7 @@ class MissionsController < ApplicationController
       fehler.push("Fehlerhafte Eingabe der Mission")
     end
       
-    planet1 = fleet.start_planet
+    planet1 = fleet.origin_planet
     
     begin
       planet2 = Planet.find(params[:planet])
@@ -124,34 +124,16 @@ class MissionsController < ApplicationController
         ship_hash[Ship.find(ship.id)] = params["ship-#{ship.id}"].to_i
       end
     end
+    #############
 
-    ships = ship_hash.keys
-    if ships.empty?
-      fehler.push("Bitte Schiffe auswählen")
-    else
-      velocity = Fleet.get_velocity_from_array(ships)
-      velocity = velocity * fleet.velocity_factor
-      distance = planet1.getDistance(planet2)
-      time = fleet.get_needed_time(velocity, distance)
-      needed_energy = Fleet.get_needed_fuel_from_hash(ship_hash, time)
-    end
-
-    # Fehlersammlung
-    begin      
+    begin
+    
       if ress_credit < 0 || ress_crystal < 0 || ress_ore < 0
         fehler.push("Fehlerhafte Eingabe der Ressourcen")
       end
-
+      
       if planet1 == planet2
         fehler.push("Flotte muss zu einem anderen Planeten fliegen")
-      end
-
-      if needed_energy > planet1.energy
-        fehler.push("Nicht genügend Energie")
-      end
-      
-      unless fleet.enough_ships?(ship_hash)
-        fehler.push("Nicht genügend Schiffe vorhanden")
       end
       
       if mission.id == 2 && !ship_hash.include?(Ship.find(10))
@@ -161,33 +143,135 @@ class MissionsController < ApplicationController
       if mission.id == 5 && ship_hash != {Ship.find(7)=>1}
         fehler.push("Zum Spionieren, darf nur eine Spionagesonde gewählt werden")
       end
-
-      if (ress_ore + ress_crystal + ress_credit) > fleet.get_free_capacity
-        fehler.push("Zu wenig Platz in der Flotte vorhanden")
-      end
-
+      
       if ress_ore > planet1.ore
         fehler.push("nicht genug Erz vorhanden")
       end
-
+      
       if ress_crystal > planet1.crystal
         fehler.push("nicht genug Kristall vorhanden")
       end
-
-      if ress_credit > current_user.money
-        fehler.push("nicht genug Space-Cash vorhanden")
-      end
-
+      
       if mission.id != 2 && mission.id != 6
         if ress_ore != 0 || ress_crystal != 0 || ress_credit != 0
           fehler.push("Ressourcen nur bei Kolonialisierung oder Transport erlaubt")
         end
       end
     rescue
-      puts "FEHLER"
+      puts "FEHLER in unkritischen methoden"
+    end
+
+    if ship_hash.empty?
+      fehler.push("Bitte Schiffe auswählen")
+      return fehler
+    end
+
+    unless fleet.enough_ships?(ship_hash)
+      fehler.push("Nicht genügend Schiffe vorhanden")
+      return fehler
+    end
+
+    begin
+      puts ship_hash
+      puts planet1.energy
+      new_fleet = fleet.split_fleet(ship_hash)
+      
+      velocity = new_fleet.get_velocity
+      distance = planet1.getDistance(planet2)
+      time = get_needed_time(velocity, distance)
+      needed_energy = new_fleet.get_needed_fuel_all(time)
+      if mission.id == 2 || mission.id ==3 || mission.id == 5 || mission.id == 6
+        needed_energy *=2
+      end
+      puts needed_energy
+      puts planet1.energy
+
+    rescue
+      puts "FEHLER in TMP BAu der fleet"
+    end
+
+    begin
+      if needed_energy > planet1.energy
+        fehler.push("Nicht genügend Energie")
+      end
+
+      if (ress_ore + ress_crystal + ress_credit) > new_fleet.get_free_capacity
+        fehler.push("Zu wenig Platz in der Flotte vorhanden evtl muss entladen werden")
+      end
+
+    rescue
+      puts "FEHLER in kritischen methoden"
+    ensure
+      fleet.merge_fleet(new_fleet)
     end
 
     return fehler
+    ################
+    # ships = ship_hash.keys
+    # if ships.empty?
+    #   fehler.push("Bitte Schiffe auswählen")
+    # else
+    #   velocity = Fleet.get_velocity_from_array(ships)
+    #   velocity = velocity * fleet.velocity_factor
+    #   distance = planet1.getDistance(planet2)
+    #   time = fleet.get_needed_time(velocity, distance)
+    #   needed_energy = Fleet.get_needed_fuel_from_hash(ship_hash, time)
+    # end
+
+    # # Fehlersammlung
+    # begin      
+    #   if ress_credit < 0 || ress_crystal < 0 || ress_ore < 0
+    #     fehler.push("Fehlerhafte Eingabe der Ressourcen")
+    #   end
+
+    #   if planet1 == planet2
+    #     fehler.push("Flotte muss zu einem anderen Planeten fliegen")
+    #   end
+
+    #   if needed_energy > planet1.energy
+    #     fehler.push("Nicht genügend Energie")
+    #   end
+      
+    #   unless fleet.enough_ships?(ship_hash)
+    #     fehler.push("Nicht genügend Schiffe vorhanden")
+    #   end
+      
+    #   if mission.id == 2 && !ship_hash.include?(Ship.find(10))
+    #     fehler.push("Zum Kolonialisieren wird ein Kolonieschiff benötigt")
+    #   end
+      
+    #   if mission.id == 5 && ship_hash != {Ship.find(7)=>1}
+    #     fehler.push("Zum Spionieren, darf nur eine Spionagesonde gewählt werden")
+    #   end
+
+    #   if (ress_ore + ress_crystal + ress_credit) > fleet.get_free_capacity
+    #     fehler.push("Zu wenig Platz in der Flotte vorhanden")
+    #   end
+
+    #   if ress_ore > planet1.ore
+    #     fehler.push("nicht genug Erz vorhanden")
+    #   end
+
+    #   if ress_crystal > planet1.crystal
+    #     fehler.push("nicht genug Kristall vorhanden")
+    #   end
+
+    #   if ress_credit > current_user.money
+    #     fehler.push("nicht genug Space-Cash vorhanden")
+    #   end
+
+    #   if mission.id != 2 && mission.id != 6
+    #     if ress_ore != 0 || ress_crystal != 0 || ress_credit != 0
+    #       fehler.push("Ressourcen nur bei Kolonialisierung oder Transport erlaubt")
+    #     end
+    #   end
+    # rescue
+    #   puts "FEHLER"
+    # ensure
+    #   fleet.merge_fleet(ship_hash)
+    # end
+
+    # return fehler
   end
 
   # GET /confirm/send

@@ -17,7 +17,6 @@
   
   <div class="alert alert-error" id="error" style="display:none">
     <h4>Fehler:</h4>
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
     <ol>
 
     </ol>
@@ -40,6 +39,7 @@
         <tr>
           <th>Stationiert</th>
           <th>Schiffe</th>
+          <th>Fracht</th>
           <th>Auswahl</th>
         </tr>
       </thead>
@@ -47,50 +47,58 @@
         <% @fleets.each do |fleet| %>
           <tr>
             <td><%= fleet.start_planet.name %></td>
-            <% if fleet.ships.empty? %>
+            <% if fleet.get_amount_of_ships == 0 %>
               <td>Keine Schiffe vorhanden</td>
             <% else %>
             <td fleet="<%=fleet.id%>">
-              <a type="button" fleet="<%=fleet.id%>" class="btn btn-link ship-info" data-toggle="tooltip" title="Klicken für Informationen">Schiffe</a>
+              <a type="button" fleet="<%=fleet.id%>" class="btn btn-link ship-info" ><i class="icon-chevron-down"></i></a>
             </td>
             <% end %>
-            <td><button planet="<%=fleet.start_planet.id%>" class="fleet-choice" fleet="<%=fleet.id%>" type="button" class="btn btn-default">Wähle</button></td>
+            <td>
+              <a type="button" class="btn btn-link ress2-popover" data-trigger="hover" data-html="true" data-placement="top" data-content="<ul><li>Erz: <%=fleet.ore%></li><li>Kristall: <%=fleet.crystal%></li><li>SpaceCash<sup>&copy;</sup>: <%=fleet.credit%></li></ul>"><i class="icon-info-sign"></i></a>
+            </td>
+            <% if fleet.get_amount_of_ships == 0 %>
+              <td>---</td>
+            <% else %>  
+              <td><button planet="<%=fleet.start_planet.id%>" class="fleet-choice" fleet="<%=fleet.id%>" type="button" class="btn btn-default">Wähle</button></td>
+            <% end %>
           </tr>
-          
-          <tr>
-        <td colspan="5">
-          <div class="info-<%= fleet.id %>" style="display:none">
-              <table class"table table-condensed">
-                <thead>
-                  <tr>
-                    <th>Schiffsname</th>
-                    <th>Angriff</th>
-                    <th>Verteidigung</th>
-                    <th>Geschwindigkeit</th>
-                    <th>Ladekapazität</th>
-                    <th>Anzahl</th>
-                  </tr>
-                </thead>
-                <tbody>
-              <% fleet.get_ships.each do |ship, amount| %>
-                <tr>
-                  <td><%= ship.name %></td>
-                  <td><%= ship.offense %></td>
-                  <td><%= ship.defense %></td>
-                  <td><%= ship.velocity %></td>
-                  <td><%= ship.ressource_capacity %></td>
-                  <td><%= amount %></td>
-                </tr>
-                <% end%>
-                </tbody>
-              </table>
-            </div>
-        </td>
-      </tr>
-      <% end %>
-      </tbody>
-    </table>
-  </div>
+          <% unless fleet.get_amount_of_ships == 0%>
+            <tr>
+              <td colspan="5">
+                <div class="info-<%= fleet.id %>" style="display:none">
+                  <table class"table table-condensed">
+                    <thead>
+                      <tr>
+                        <th>Schiffsname</th>
+                        <th>Angriff</th>
+                        <th>Verteidigung</th>
+                        <th>Geschwindigkeit</th>
+                        <th>Ladekapazität</th>
+                        <th>Anzahl</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                  <% fleet.get_ships.each do |ship, amount| %>
+                    <tr>
+                      <td><%= ship.name %></td>
+                      <td><%= ship.offense %></td>
+                      <td><%= ship.defense %></td>
+                      <td><%= ship.velocity %></td>
+                      <td><%= ship.ressource_capacity %></td>
+                      <td><%= amount %></td>
+                    </tr>
+                    <% end%>
+                    </tbody>
+                  </table>
+                </div>
+              </td>
+            </tr>
+          <% end %>  
+        <% end %>
+        </tbody>
+      </table>
+    </div>
 
 
   <div id="destination" style="display:none">
@@ -161,7 +169,7 @@
             </td>
           </tr>
           <tr>
-            <td>Space-Cash&copy;</td>
+            <td>SpaceCash<sup>&copy;</sup></td>
             <td>
               <input class="span1 ress-amount" ress="credit" type="number" name="amount-credit" placeholder="0">
             </td>
@@ -199,12 +207,6 @@
       distance = 0;
       missiontypes = ["#spy", "#travel", "#colonization", "#transport", "#attack"];
       
-      // susy = $.parseJSON('<%=raw @susy_hash.to_json %>');
-      // gala = $.parseJSON('<%=raw @gala_hash.to_json %>');
-      // susy_names = $.parseJSON('<%=raw @susy_names_hash.to_json %>');
-      // planets_names = $.parseJSON('<%=raw @planets_names_hash.to_json %>');
-      // ships = $.parseJSON('<%=raw @ships.to_json %>');
-
       //Receives Information that is necessary to display
       $.getJSON('/json/info', function(data){
         susy = data.susy_hash;
@@ -214,6 +216,7 @@
         ships = data.ships;
       });
 
+      $(".ress2-popover").popover({title:"Ressourcen"});
 
       // delegated event
       $(document).on("focusout", ".ship-amount", function(){
@@ -387,7 +390,7 @@
           $.getJSON("/json/distance?planet1="+planet1+"&planet2="+planet_id, function(data){
             distance = parseInt(data.distance);
             $("#choice").slideDown("fast");
-            $("#ship-header").html("Entfernung: "+distance+" Space-Kilometer<sup>&copy;</sup>");
+            $("#ship-header").html("Entfernung: "+distance+" SpaceKilometer<sup>&copy;</sup>");
           });
         }
         else{
@@ -399,14 +402,16 @@
         $("#send").append('<input class="input-stuff" type="hidden" name="planet" value="'+planet_id+'">');
       });
 
-      $('.ship-info').on("mouseover", function(){
-        var id = $(this).attr("fleet");
-        $(".ship-info[fleet="+id+"]").tooltip('toggle');
-      });
 
       $(".ship-info").on("click", function(){
         var id = $(this).attr("fleet");
-        $(".info-"+id).animate({ height: 'toggle', opacity: 'toggle' }, 'slow');
+        if ($(".info-"+id).css("display") == "none"){
+          $('a[fleet='+id+']').html('<i class="icon-chevron-up"></i>');
+        }
+        else {
+          $('a[fleet='+id+']').html('<i class="icon-chevron-down"></i>');
+        }
+          $(".info-"+id).animate({ height: 'toggle', opacity: 'toggle' }, 'slow');
       });
 
       $(".fleet-choice").on("click", function(){
@@ -449,6 +454,8 @@
             $("#send").append('<input class="input-stuff" type="hidden" name="ress-'+ress+'" value="'+amount+'">');
           }
         });
+
+        
         
         //bauen der URL
         url = "/json/check?";
