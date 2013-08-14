@@ -63,7 +63,7 @@ class MessagesController < ApplicationController
   def create
     @message = Message.new(message_params)
     @users=User.all
-    @recipient=@users.where('username == ?',params['recipient']).first
+    @recipient=@users.where('username = ?',params['recipient']).first
     respond_to do |format|
       #assign params
       @message.subject=params['subject']

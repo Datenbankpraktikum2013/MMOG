@@ -312,7 +312,9 @@ class User < ActiveRecord::Base
   end
 
   def add_score value
-    self.alliance.add_score(value)
+    if self.alliance!=nil
+      self.alliance.add_score(value)
+    end
     update_attribute(:score, score + value)
   end
 
