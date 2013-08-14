@@ -40,8 +40,10 @@ class ShipBuildingQueue < ActiveRecord::Base
 					last_q=ShipBuildingQueue.last
 					if last_q.nil?
 						l_qid=0
+						plus=Time.now.to_i;
 					else
 						l_qid=last_q.qid+1
+						plus=last_q.end_time
 					end
 					value.to_i.times do |i|
 						q=self.new
@@ -50,13 +52,13 @@ class ShipBuildingQueue < ActiveRecord::Base
 						q.qid=l_qid
 
 						if i==0
-							q.end_time=key.construction_time+Time.now.to_i
+							q.end_time=key.construction_time+plus
 						else
 							q.end_time=key.construction_time + q_ary[i-1].end_time
 						end
-						# puts "00000000000000000000000000000000000000"
-						# puts "Adding Ship #{q.ship.id }to Planet"
-						# puts "Now: #{Time.now.to_i} End: #{q.end_time}"
+						puts "00000000000000000000000000000000000000"
+						puts "Adding Ship #{q.ship.id }to Planet"
+						puts "Now: #{Time.now.to_i} End: #{Time.at(q.end_time)}"
 						q_ary[i]=q
 						Fleet.add_ship_in(q.end_time, q.ship, q.planet, q.qid)
 						l_qid+=1
