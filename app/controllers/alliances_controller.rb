@@ -1,5 +1,5 @@
 class AlliancesController < ApplicationController
-  before_action :set_alliance, only: [:leave,:show, :edit, :update, :destroy, :useradd, :user_add_action, :change_user_rank, :remove_user, :change_description, :send_mail]
+  before_action :set_alliance, only: [:change_founder, :leave, :show, :edit, :update, :destroy, :useradd, :user_add_action, :change_user_rank, :remove_user, :change_description, :send_mail]
   before_filter :authenticate_user!
 
   # GET /alliances
@@ -26,6 +26,20 @@ class AlliancesController < ApplicationController
         format.json { render json: @alliance.errors, status: :unprocessable_entity }
       end
     end    
+  end
+
+  def change_founder
+    respond_to do |format|
+      new_founder=@alliance.users.find(params['uid'])
+      if @alliance.permission?(current_user,"destroy") and new_founder!=nil and new_founder!=current_user
+        @alliance.set_founder(new_founder,current_user)
+        format.html { redirect_to @alliance, notice: GameSettings.get("SUCCESSMSG_ALLIANCE_CHANGEFOUNDER") }
+        format.json { render action: 'show', status: :created, location: @alliance }
+      else
+        format.html { redirect_to @alliance, notice: GameSettings.get("ERRMSG_ALLIANCE_CHANGEFOUNDER") }
+        format.json { render json: @alliance.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   # POST /alliances/1/edit/change_default_rank
