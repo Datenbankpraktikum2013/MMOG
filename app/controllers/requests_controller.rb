@@ -36,10 +36,10 @@ class RequestsController < ApplicationController
     request=Request.all.where(:requestvalue=>token).first
     respond_to do |format|
       if request!=nil and request.recipient==current_user
-        if answer=='no'
+        if answer=='no'          
           request.destroy
           format.html { redirect_to root_path, notice: GameSettings.get("DECLINEMSG_REQUESTREACTION") }
-        elsif answer=='yes'
+        elsif answer=='yes' 
           request.launch_action!
           format.html { redirect_to root_path, notice: GameSettings.get("ACCEPTMSG_REQUESTREACTION") }
         end

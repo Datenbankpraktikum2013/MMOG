@@ -101,6 +101,11 @@ class AlliancesController < ApplicationController
   def leave
     respond_to do |format|
       if @alliance.permission?(current_user,"destroy")==false and @alliance.remove_user(current_user)
+        #destroy all pending requests
+        @pending_invites=Request.all.where(:sender => current_user, :action => "alliance_invite")
+        @pending_invites.each do |invite|
+          invite.destroy
+        end  
         format.html { redirect_to alliances_path, notice: GameSettings.get("SUCCESSMSG_ALLIANCE_LEAVE") }
       else
         format.html { redirect_to alliances_path, notice: GameSettings.get("ERRMSG_ALLIANCE_LEAVE") }
@@ -140,6 +145,11 @@ class AlliancesController < ApplicationController
       #destroy all ranks
       @alliance.ranks.each do |rank|
         rank.destroy
+      end
+      #destroy all pending requests
+      @pending_invites=Request.all.where(:sender => current_user, :action => "alliance_invite")
+      @pending_invites.each do |invite|
+        invite.destroy
       end
       @alliance.destroy
     end
