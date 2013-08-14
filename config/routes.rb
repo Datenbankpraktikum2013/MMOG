@@ -93,6 +93,9 @@ Mmog::Application.routes.draw do
 
   get 'alliances_overview' => 'alliances#overview'
 
+  delete 'flush_inbox' => 'messages#flush_inbox'
+  delete 'flush_outbox' => 'messages#flush_outbox'
+
   get 'useroverview' => 'useroverview'
 
   # The priority is based upon order of creation: first created -> highest priority.

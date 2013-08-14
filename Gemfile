@@ -3,6 +3,8 @@ source 'https://rubygems.org'
 # Devise gem for user authentication
 gem 'devise'
 
+gem 'mysql2'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0'
 

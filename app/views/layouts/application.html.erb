@@ -77,7 +77,7 @@
 
                     <div title="Geld">
                       <%= image_tag('/images/icons/spacecash.png') %>
-                      <%= current_user.money%>
+                      <%= number_with_delimiter(current_user.money)%>
                     </div>
 
                     <div title="Planeten">
