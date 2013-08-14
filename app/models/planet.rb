@@ -150,6 +150,7 @@ class Planet < ActiveRecord::Base
   end
 
   def get_info
+    info_text = ""
     if special == 0
       info_text ="Ein gewöhnlicher Planet wie er häufig im Universum zu treffen ist. Er zeichnet sich dadurch aus, dass er keine Spezialisierung besitzt.
       Auf diesem Planeten wurden keine Kristallvorkommen entdeckt!"
@@ -175,7 +176,8 @@ class Planet < ActiveRecord::Base
        Auf diesem Planeten wurden keine Kristallvorkommen entdeckt!"
     end
     return  info_text
-  end  
+  end
+    
   def mention()
     self.sunsystem.mention()
     #Hier weitere Aktionen starten: z.B. Rohstoffproduktion, falls gestoppt wurde

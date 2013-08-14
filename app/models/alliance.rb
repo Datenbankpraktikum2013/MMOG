@@ -26,11 +26,13 @@ class Alliance < ActiveRecord::Base
 	end
 
 	public
-	def set_founder(founder)
-		#get founder rank
+	def set_founder(newfounder,oldfounder=nil)
 		@rank=self.ranks.where(:is_founder=>true).first
+		if oldfounder!=nil
+			newfounder.rank.users<<oldfounder
+		end
 		#add user to this rank
-		@rank.users<<founder
+		@rank.users<<newfounder
 	end
 
 	public
