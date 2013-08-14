@@ -11,7 +11,7 @@ class RequestsController < ApplicationController
     @request.sender=current_user
     respond_to do |format|
       if @usr!=nil and @request.save
-        #if user is already in some alliance, then dont send any notifies and DESTROY the request
+        #if user is already in some alliance, then don't send any notifies and DESTROY the request
         if @request.action=="alliance_invite" and @request.recipient.alliance!=nil
           format.html { redirect_to root_path, notice: GameSettings.get("ERRMSG_USER_ALREADY_IN_ALLIANCE") }
           @request.destroy  
