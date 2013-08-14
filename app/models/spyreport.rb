@@ -33,9 +33,13 @@ class Spyreport < ActiveRecord::Base
 		if mode < 2
 			unless spylevel < 1
 				self.energy = planet.energy
+				self.maxenergy = planet.maxenergy
 				self.population = planet.population
+				self.maxpopulation = planet.maxpopulation
 				self.ore = planet.ore
+				self.maxore = planet.maxore
 				self.crystal = planet.crystal
+				self.maxcrystal = planet.maxcrystal
 				self.space_cash = planet.user.money
 			end
 
@@ -92,7 +96,7 @@ class Spyreport < ActiveRecord::Base
 		p = Planet.find(1)
 		f = Fleet.find(1)
 		f.arrival_time = Time.now.to_i
-		s.finish_spyreport(p, f, 1, 2, 0)
+		s.finish_spyreport(p, f, 2, 1, 0)
 	end
 
 	def calc_spylevel(atk_spy_factor, def_spy_factor)

@@ -6,7 +6,8 @@ class ReportsController < ApplicationController
   # GET /reports
   # GET /reports.json
   def index
-    @reports = Report.all.joins(:receiving_reports).select('reports.*, receiving_reports.read AS read').where(receiving_reports: {user_id: current_user.id}).order('receiving_reports.read', fightdate: :desc)
+    #@reports = Report.all.joins("INNER JOIN receiving_reports ON receiving_reports.report_id = reports.id").select("reports.*, receiving_reports.read AS read").where("receiving_reports.user_id = #{current_user.id}").order("receiving_reports.read", "reports.fightdate DESC")
+    @reports = Report.all.includes([:defender, :attacker], [:defender_planet, :attacker_planet]).joins(:receiving_reports).select("`reports`.*, `receiving_reports`.`read`").where(receiving_reports: {user_id: current_user.id}).order("`receiving_reports`.`read`", fightdate: :desc)
       respond_to do |format|
         format.html
         format.js
@@ -40,7 +41,25 @@ class ReportsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_report
-      @report = Report.find_by_id(params[:id])
+      type = Report.select(:reportable_type).find_by_id(params[:id])
+      if type.nil?
+        return @report = nil
+      end
+
+      case type.reportable_type
+      when "Battlereport"
+        @report = Report.includes(reportable: [:buildingtypes, shipcounts: [:ship, :user]]).where(id: params[:id]).first
+      when "Colonisationreport"
+        @report = Report.includes(:reportable).where(id: params[:id]).first
+      when "Spyreport"
+        @report = Report.includes(reportable: [:buildingtypes, techstages: :technology, shipcounts: [:ship, :user]]).where(id: params[:id]).first
+      when "Tradereport"
+        @report = Report.includes(:reportable).where(id: params[:id]).first
+      when "Travelreport"
+        @report = Report.includes(reportable: [shipcounts: [:ship, :user]]).where(id: params[:id]).first
+      else
+        @report = nil
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
