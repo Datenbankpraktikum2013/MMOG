@@ -18,7 +18,7 @@ Deine Sonde wurde beim spionieren zerstört
   <p>
     Bevölkerung: <%= @report.reportable.population %>/<%= @report.reportable.maxpopulation %> Energie: <%= @report.reportable.energy %>/<%= @report.reportable.maxenergy %>
     Erz: <%= @report.reportable.ore %>/<%= @report.reportable.maxore %> Space Cash: <%= @report.reportable.space_cash %>
-    Crystal: <%= @report.reportable.crystal %>/<%= @report.reportable.maxcrystal %>
+    Crystal: <%= @report.reportable.crystal %>/<%= @report.reportable.maxcrystal %> Spezialisierung: <%= @report.defender_planet.special %>
   </p>
 <% end %>
 <% if @report.reportable.mode == 0  %>
