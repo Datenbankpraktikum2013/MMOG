@@ -24,11 +24,11 @@
 
   <div class="part">
     <h3>Wähle den Missionstyp</h3>
-    <button id="travel" type="button" class="btn btn-default">Travel</button>
-    <button id="colonization" type="button" class="btn btn-primary">Colonization</button>
-    <button id="transport" type="button" class="btn btn-success">Transport</button>
-    <button id="spy" type="button" class="btn btn-warning">Spy</button>
-    <button id="attack" type="button" class="btn btn-danger">Attack</button>
+    <button id="travel" data-trigger="hover" data-placement="bottom" type="button" class="btn btn-default">Travel</button>
+    <button id="colonization" data-trigger="hover" data-placement="bottom" type="button" class="btn btn-primary">Colonization</button>
+    <button id="transport" data-trigger="hover" data-placement="bottom" type="button" class="btn btn-success">Transport</button>
+    <button id="spy" data-trigger="hover" data-placement="bottom" type="button" class="btn btn-warning">Spy</button>
+    <button id="attack" data-trigger="hover" data-placement="bottom" type="button" class="btn btn-danger">Attack</button>
   </div>
 
    
@@ -127,9 +127,9 @@
           <option selected="selected" value="">---</option>
         </select>
       </div>
-      <div id="explore" class="span2">
+      <div id="explore" class="span2" style="display:none">
         <label for="explore-button">Erkundung</label> 
-        <a type="button" id="explore-button" class="btn btn-info" ><i class="icon-random"></i></a>
+        <a type="button" data-placement="right" data-trigger="hover" id="explore-button" class="btn btn-info" ><i class="icon-random"></i></a>
       </div>
     </div>
   </div>
@@ -231,22 +231,31 @@
         }
       });
 
-      // $("#explore-button").on("click", function(){
-      //   $("#s-select > option, #p-select > option, #g-select > option").first().remove();
-      //   $("#g-select").append('<option value="">---</option>');
-      //   $("#s-select").append('<option value="">---</option>');
-      //   $("#p-select").append('<option value="">---</option>');
-      //   index = 1
-      //   rand = Math.floor((Math.random()*10)+1); 
-      //   for (i in explore_planets){
-      //     if (rand == index){
-      //       planet = explore_planets[i]
-      //       $("#p-select").prepend('<option value="">'+planet.z+" &sdot; "+planet.name+'</option>');
-      //     }
-          
-      //   }
-        
-      // });
+      $("#explore-button").popover({content: "Nach dem Klicken wird ein Planet in die Planeten-Auswahl eingefügt, welcher erkundet werden kann. Dieser Planet ist dir unbekannt und eröffnet dir neue Welten."});
+
+      $("#travel").popover({content: "Du kannst Schiffen deiner Flotten zu anderen Planeten reisen lassen. So kannst du Schiffe an Planeten deiner Allianzmitglieder stationieren um sie bei Angriffen zu unterstützen oder einfach eigene Flotten an anderen Planeten aufstocken."});
+      $("#colonization").popover({content: "Du kannst unbekannte Planeten erkunden indem du mindestens ein Kolonieschiff zu diesem schickst. Dort wird es zerstört um als Startkapital deiner Ressourcen zu dienen. Am besten solltest du vorher den Planeten ausspionieren."});
+      $("#attack").popover({content: "Du kannst andere Planeten angreifen. Die Gewinnchance hängt von deiner und der gegenerischen Flotte ab."});
+      $("#spy").popover({content: "Du kannst andere Planeten ausspionieren. Wenn der Planet unbesetzt ist, dann siehst du die vorhandenen Planetattribute. Sollte ein gegenerischer Spieler dort angesiedelt sein, kannst du seine Ressourcen auskundschaften. Es kann aber passieren, dass deine Sonde dabei vom gegner zerstört wird"});
+      $("#transport").popover({content: "Du kannst Ressourcen zwischen Planeten hin- und herbewegen. Allerdings nur zu dir selber und deinen Allianzmitgliedern."});
+
+      $("#explore-button").on("click", function(){
+        $("#s-select > option, #p-select > option, #g-select > option").remove();
+        $("#g-select").append('<option value="">---</option>');
+        $("#s-select").append('<option value="">---</option>');
+        $("#p-select").append('<option value="">---</option>');
+        index = 1
+        rand = Math.floor((Math.random()*10)+1); 
+        for (i in explore_planets){
+          if (rand == index){
+            planet = explore_planets[i]
+            $("#p-select").append('<option value="'+planet.id+'">'+planet.z+" &sdot; "+planet.name+'</option>');
+          }
+          index++;
+        }
+      });
+
+      $("#explore-button").popover({content: "Nach dem Klicken wird ein Planet in die Planeten-Auswahl eingefügt, welcher erkundet werden kann. Dieser Planet ist dir unbekannt und eröffnet dir neue Welten."})
 
       // delegated event
       $(document).on("focusout", ".ship-amount", function(){
@@ -256,7 +265,7 @@
         var amount = parseInt($(this).val());
         var amount_input = parseInt($(this).parent().prev().html());
         
-        if (amount <= amount_input && amount > 0){
+        if (amount <= amount_input && amount >= 0){
           $("#offense-"+ship_id).html(ships[ship_id]["offense"] * amount);
           $("#defense-"+ship_id).html(ships[ship_id]["defense"] * amount);
           $("#capacity-"+ship_id).html(ships[ship_id]["ressource_capacity"] * amount);
@@ -367,8 +376,9 @@
         disable_helper("#spy", spy_clicked);
         spy_clicked = !spy_clicked;
         $("#send").append('<input class="input-stuff" type="hidden" name="mission" value="5">');
-        $("#ress-choice").slideUp("fast");
+        $("#ress-choice").slideUp("slow");
         $("#own-ships").slideToggle("slow");
+        $("#explore").slideToggle("slow");
       });
  
       $("#attack").on("click", function(){
