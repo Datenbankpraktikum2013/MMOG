@@ -1,6 +1,6 @@
 Mmog::Application.routes.draw do
 
-  resources :ship_building_queues
+  resources :ship_building_queues , :except => [:edit, :update, :create, :new, :show]
 
   resources :receiving_reports #kommt spaeter noch raus
 
@@ -20,7 +20,7 @@ Mmog::Application.routes.draw do
 
   resources :missions
 
-  resources :ships
+  resources :ships , :except => [:edit, :update, :create, :new, :destroy, :show]
 
   resources :buildingtypes
 
@@ -89,6 +89,7 @@ Mmog::Application.routes.draw do
   post 'planets/abort_upgrade' => 'planets#abort_upgrade'
   post 'planets/rename_planet' => 'planets#rename_planet'
   post 'planets/set_home_planet' => 'planets#set_home_planet'
+  #post 'planets/redirect_to_planet' => 'planets#redirect_to_planet'
 
 
   post '/alliances/:id/leave' => 'alliances#leave'

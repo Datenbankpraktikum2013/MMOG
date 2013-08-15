@@ -142,7 +142,22 @@ class PlanetsController < ApplicationController
         format.json { render action: 'show' }
       end
   end
+  end 
+
+  def redirect_to_planet
+    if !params["planet_name"].nil?
+      @planet = Planet.find(params["planet_name"])
+    end
+    if !params["allied_planet_name"].nil?
+      @planet = Planet.find(params["allied_planet_name"])
+    end
+      respond_to do |format|
+        format.html { redirect_to @planet, notice: 'Schnellreise erfolgreich.'}
+        format.json { render action: 'show' }
+      end
+
   end
+
   def page_refresh()
 
     object = {:buildingtype_id => Planet.find(params["id"]).under_construction}
