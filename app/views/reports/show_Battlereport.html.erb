@@ -76,7 +76,8 @@
                   <td><%= shipcount.ship.name %></td>
                   <td><%= shipcount.amount.to_s %></td>
                   <td><%= shipcount.amount_after.to_s %></td>
-                  <td><%= "" + (shipcount.amount - shipcount.amount_after).to_s + "(" + (((shipcount.amount.to_f / shipcount.amount_after.to_f)-1)*100).abs.to_s + "%)" %></td>
+                  <% verlust = shipcount.amount - shipcount.amount_after %>
+                  <td><%= "" + (shipcount.amount - shipcount.amount_after).to_s + "(" + ((verlust.to_f/shipcount.amount )*100).abs.to_s + "%)" %></td>
                 </tr>
                 <% end %>
             </tbody>

@@ -41,6 +41,10 @@ class Battlereport < ActiveRecord::Base
 		end
 		self.add_fleet_info(atk_fleet, 3)
 
+		self.stolen_ore = 0
+		self.stolen_crystal = 0
+		self.stolen_space_cash = 0
+
 		unless atk_fleet.nil?
 			self.stolen_ore = atk_fleet.ore
 			self.stolen_crystal = atk_fleet.crystal
