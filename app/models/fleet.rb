@@ -445,7 +445,8 @@ class Fleet < ActiveRecord::Base
 
     elsif fight_factor>0
       
-      unless defender_fleets.first.defense == 0
+
+      unless defender_fleets.first.nil?
         self.user.add_score((fight_factor/10).round)
       end
 
