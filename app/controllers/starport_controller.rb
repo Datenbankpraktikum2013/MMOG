@@ -32,7 +32,15 @@ class StarportController < ApplicationController
   end
 
   def build
-  	build_planet=Planet.find(params["planet"].first)
+  	build_planet=Planet.find(params["planet"])
+
+
+
+    puts "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    puts "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    puts "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    puts "xxxxxxxxxxx#{build_planet.id}xxxxxxxxxxxxxxx"
+    puts "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 		build_fleet=Fleet.where(mission: 1, origin_planet: build_planet)
     
     ship_array=Hash.new(Ship)
@@ -44,7 +52,7 @@ class StarportController < ApplicationController
          end
       #puts "Ship ID:#{p[0]} amount: #{p[1]} planet #{params["planet"].first}"
     end
-    result=ShipBuildingQueue.insert(ship_array, Planet.find(params["planet"].first))
+    result=ShipBuildingQueue.insert(ship_array, Planet.find(params["planet"]))
 
 
   	# params["ship"].each do |p|
