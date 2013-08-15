@@ -22,6 +22,8 @@ class StarportController < ApplicationController
 	  	@planet=Planet.find_by_id(params["id"])
 	  	@fleet=Fleet
 	  	@shipshelper=ShipsHelper
+      @credit=current_user.money
+      
 	  else 
 	  	respond_to do |format|
 	  		format.html { redirect_to controller: "starport", notice: 'Not your Planet'}

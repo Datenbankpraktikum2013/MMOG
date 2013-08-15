@@ -106,7 +106,7 @@ $.extend( $.fn.dataTableExt.oStdClasses, {
        
           
          $('table[id^=shipdata] td[id=time]').each(function(){
-          if($(this).text()>0){
+          if($(this).text()>1){
             $(this).text($(this).text()-1);
           }
           else if ($(this).text()==""){

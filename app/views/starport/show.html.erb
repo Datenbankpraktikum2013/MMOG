@@ -38,9 +38,9 @@
 
 		</tr>
 		<tr>
-			<th>Ore:</th>
-			<th>Crystal:</th>
-			<th>Space-Cash</th>
+			<th id="got-ore"data-ore="<%=@planet.ore%>">Ore (<%=@planet.ore%>):</th>
+			<th id="got-crystal" data-crystal="<%=@planet.crystal%>" >Crystal (<%=@planet.crystal%>):</th>
+			<th id="got-credit" data-credit="<%=@credit%>" >Space-Cash (<%=@credit%>):</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -52,8 +52,8 @@
 	</tbod>
 </table>
 <%= hidden_field_tag 'planet', @planet.id.to_s %>
-<%= submit_tag("Build") %> 
-<%= link_to 'Zurück', controller: "starport" %>
+<%= submit_tag("Build", :id => "build-button", :class=> "btn") %> 
+<%= link_to 'Zurück',{ controller: "starport"}, class: "btn" %>
     <% end %>
   
   <% end %>
@@ -62,6 +62,7 @@ $(document).ready(function() {
 	$("#ore-t").text("0");
 	$("#crystal-t").text("0");
 	$("#credit-t").text("0");
+	
 });
 $(function ()  
 { 	
@@ -88,6 +89,37 @@ $(".ship-amount").keyup(function() {
 
 
 	});
+
+	if(parseInt($("#ore-t").text()) > parseInt($("#got-ore").data("ore"))){
+		$("#ore-t").css( "color", "red" );
+		$("#build-button").hide();
+	}
+	else{
+		$("#ore-t").css( "color", "black" );
+	}
+	if(parseInt($("#credit-t").text()) > parseInt($("#got-credit").data("credit"))){
+		$("#credit-t").css( "color", "red" );
+		$("#build-button").hide();
+	}
+	else{
+		$("#credit-t").css( "color", "black" );
+	}
+	if(parseInt($("#crystal-t").text()) > parseInt($("#got-crystal").data("crystal"))){
+		$("#crystal-t").css( "color", "red" );
+		$("#build-button").hide();
+	}
+	else{
+		$("#crystal-t").css( "color", "black" );
+	}
+
+	if((parseInt($("#crystal-t").text()) < parseInt($("#got-crystal").data("crystal")))  && (parseInt($("#credit-t").text()) < parseInt($("#got-credit").data("credit")))  &&  (parseInt($("#ore-t").text()) < parseInt($("#got-ore").data("ore")))){
+		$("#crystal-t").css( "color", "black" );
+		$("#ore-t").css( "color", "black" );
+		$("#credit-t").css( "color", "black" );
+		$("#build-button").show();
+	}
+
+
 
 	//new_ore=($(this).parent().parent().find("td[id=ore-cost]").first().text())*
 	//console.log(($(this).parent().parent().find("td[id=ore-cost]").first().text()));
