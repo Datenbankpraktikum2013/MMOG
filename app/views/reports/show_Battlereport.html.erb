@@ -1,61 +1,139 @@
-<h1>Battlereport</h1>
+<h1>Battlereport</h1> 
+<strong><%= @report.fightdate.strftime('%d.%m.%y') %>, <%= @report.fightdate.strftime('%H:%M') %> Uhr</strong>
 </br>
-<div>
-  <h4>Flotten vor dem Kampf:</h4>
-  <div style="float: left; min-width: 350px;">
-    <h5>Verteidiger:</h5>
-    <% @report.reportable.shipcounts.where(shipowner_time_type: 0).order(:user_id).each do |shipcount| %>
-      <p>
-        <%= shipcount.ship.name + ': ' + shipcount.amount.to_s + ' zu ' + shipcount.amount_after.to_s + ' von ' + shipcount.user.username %>
-      </p>
+</br>
+<% if @report.reportable.mode == 3 %>
+<p>Der Planet war nicht bewohnt.</p>
+<% elsif @report.reportable.mode == 4 %>
+<p>Der Planet gehört einem allianzmitglied und konnte deshalb nicht angegriffen werden.</p>
+<% elsif@report.reportable.mode == 5 %>
+<p>Der Planet gehört dir und konnte deshalb nicht angegriffen werden.</p>
+<% else %>
+  <h5>Verteidiger:</h5>
+  <div class="accordion" id="defender">
+    <%= "Zum Kampfzeitpunkt waren keine Flotten auf dem Planeten stationiert." if @def_ships.empty? %>
+    <% @def_ships.each do |ship| %>
+      <% next if ship.nil? %>
+      <div class="accordion-group">
+        <div class="accordion-heading">
+          <a class="accordion-toggle" data-toggle="collapse" data-parent="#defender" href="#<%= ship[0].id %>">
+            <%= ship[0].user.username %>
+          </a>
+        </div>
+        <div id="<%= ship[0].id %>" class="accordion-body collapse">
+          <div class="accordion-inner">
+            <table class="table table-bordered table-condensed">
+              <thead>
+                <tr class="center">
+                  <th>Schiffstyp</th>
+                  <th>Anzahl vorher</th>
+                  <th>Anzahl nachher</th>
+                  <th>Verlust</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% ship.each do |shipcount| %>
+                <tr class="center">
+                  <td><%= shipcount.ship.name %></td>
+                  <td><%= shipcount.amount.to_s %></td>
+                  <td><%= shipcount.amount_after.to_s %></td>
+                  <td><%= "" + (shipcount.amount - shipcount.amount_after).to_s + "(" + (((shipcount.amount.to_f / shipcount.amount_after.to_f)-1)*100).abs.to_s + "%)" %></td>
+                </tr>
+                <% end %>
+            </tbody>
+          </table>
+                </div>
+              </div>
+            </div>
     <% end %>
   </div>
-  <div style="float: right; min-width: 350px;">
-    <h5>Angreifer:</h5>
-    <% @report.reportable.shipcounts.where(shipowner_time_type: 1).order(:user_id).each do |shipcount| %>
-      <p>
-        <%= shipcount.ship.name + ': ' + shipcount.amount.to_s + ' zu ' + shipcount.amount_after.to_s + ' von ' + shipcount.user.username %>
-      </p>
+
+  <h5>Angreifer:</h5>
+    <div class="accordion" id="defender">
+    <%= "Zum Kampfzeitpunkt waren keine Flotten auf dem Planeten stationiert." if @atk_ships.empty? %>
+    <% @atk_ships.each do |ship| %>
+      <% next if ship.nil? %>
+      <div class="accordion-group">
+        <div class="accordion-heading">
+          <a class="accordion-toggle" data-toggle="collapse" data-parent="#defender" href="#<%= ship[0].id %>">
+            <%= ship[0].user.username %>
+          </a>
+        </div>
+        <div id="<%= ship[0].id %>" class="accordion-body collapse">
+          <div class="accordion-inner">
+            <table class="table table-bordered table-condensed">
+              <thead>
+                <tr class="center">
+                  <th>Schiffstyp</th>
+                  <th>Anzahl vorher</th>
+                  <th>Anzahl nachher</th>
+                  <th>Verlust</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% ship.each do |shipcount| %>
+                <tr class="center">
+                  <td><%= shipcount.ship.name %></td>
+                  <td><%= shipcount.amount.to_s %></td>
+                  <td><%= shipcount.amount_after.to_s %></td>
+                  <% verlust = shipcount.amount - shipcount.amount_after %>
+                  <td><%= "" + (shipcount.amount - shipcount.amount_after).to_s + "(" + ((verlust.to_f/shipcount.amount )*100).abs.to_s + "%)" %></td>
+                </tr>
+                <% end %>
+            </tbody>
+          </table>
+                </div>
+              </div>
+            </div>
     <% end %>
   </div>
-</div>
-<hr>
-<div style="clear: both; padding-top: 10px;">
-  <h4>Schiffe nach dem Kampf:</h4>
-  <div style="float: left; min-width: 350px; padding-bottom: 15px;">
-    <h5>Verteidiger:</h5>
-    <% @report.reportable.shipcounts.where(shipowner_time_type: 0).order(:user_id).each do |shipcount| %>
-      <p>
-        <%= shipcount.ship.name + ': ' + shipcount.amount.to_s + ' zu ' + shipcount.amount_after.to_s + ' von ' + shipcount.user.username %>
-      </p>
-    <% end %>
-  </div>
-  <div style="float: left; min-width: 350px; padding-bottom: 15px;">
-    <h5>Angreifer:</h5>
-    <% @report.reportable.shipcounts.where(shipowner_time_type: 1).order(:user_id).each do |shipcount| %>
-      <p>
-        <%= shipcount.ship.name + ': ' + shipcount.amount.to_s + ' zu ' + shipcount.amount_after.to_s + ' von ' + shipcount.user.username %>
-      </p>
-    <% end %>
-  </div>
-</div>
 
 <% unless @report.reportable.buildingtypes.empty? %>
-  <div>
-    <h4>zerstörte Gebäude:</h4>
-    <% @report.reportable.buildingtypes.each do |buildingtype| %>
-      <p>
-        <%= buildingtype.name + ': ' + buildingtype.level.to_s %>
-      </p>
-    <% end %>
+    <div class="accordion" id="buildings_dest">
+      <div class="accordion-group">
+        <div class="accordion-heading">
+          <a class="accordion-toggle" data-toggle="collapse" data-parent="#buidlings_dest" href="#<%= 1 %>">
+            zerstörte Gebäude
+          </a>
+        </div>
+        <div id="<%= 1 %>" class="accordion-body collapse">
+          <div class="accordion-inner">
+            <table class="table table-bordered table-condensed">
+              <thead>
+                <tr class="center">
+                  <th>Gebäude</th>
+                  <th>Stufe</th>
+                </tr>
+              </thead>
+              <tbody>
+              <% @report.reportable.buildingtypes.each do |buildingtype| %>
+                <tr class="center">
+                  <td><%= buildingtype.name %></td>
+                  <td><%= buildingtype.level.to_s %></td>
+                </tr>
+                <% end %>
+            </tbody>
+          </table>
+                </div>
+              </div>
+            </div>
+  </div>
+  <% end %>
+
+    <div class="accordion" id="ressource">
+      <div class="accordion-group">
+        <div class="accordion-heading">
+          <a class="accordion-toggle" data-toggle="collapse" data-parent="#ressource" href="#<%= 1.to_s %>">
+            gestohlene Ressourcen
+          </a>
+        </div>
+        <div id="<%= 1.to_s %>" class="accordion-body collapse">
+          <div class="accordion-inner">
+                <%= 'Erz:' + @report.reportable.stolen_ore.to_s + ', Space Cash: ' + @report.reportable.stolen_space_cash.to_s +
+      ', Crystal:' + @report.reportable.stolen_crystal.to_s %>
+                </div>
+              </div>
+            </div>
   </div>
 <% end %>
-
-<div>
-  <h3>gestohlene Ressourcen:</h3>
-  <p>
-  	<%= 'Erz:' + @report.reportable.stolen_ore.to_s + ', Space Cash: ' + @report.reportable.stolen_space_cash.to_s +
-   		', Crystal:' + @report.reportable.stolen_crystal.to_s %>
-  </p>
-</div>
 <%= link_to 'Zurück', :back %>

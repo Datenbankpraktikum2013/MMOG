@@ -187,6 +187,7 @@ class Planet < ActiveRecord::Base
 
 
   def claim(user)
+
     if self.user.nil? then #&& self.user.planets.count == 0
       self.seen_by(user)
       self.user = user;
@@ -199,6 +200,7 @@ class Planet < ActiveRecord::Base
       self.create_building_job(:City)
       self.under_construction = 0
       self.create_production_job;
+      #self.set_home_planet
     else
       self.user = user;
     end
@@ -228,7 +230,9 @@ class Planet < ActiveRecord::Base
     elsif type == :Crystalmine
       c = @spec[4] * prod 
     end
+    c = c*1.10 if id == user.home_planet_id 
     c = c.round
+
     return c
     
   end
@@ -713,8 +717,9 @@ class Planet < ActiveRecord::Base
     return self.user.home_planet == self
   end
 
-  def set_home_planet
-    user.home_planet = self if !self.user.nil?
+  def set_home_planet(user)
+    user.home_planet_id = self.id if !user.nil?
+    user.save if !user.nil?
   end
 
 end
