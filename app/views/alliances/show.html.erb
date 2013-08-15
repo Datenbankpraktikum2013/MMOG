@@ -60,6 +60,7 @@
 				<% usr=0 %>
 			<% end %>
 			<% alli=100-usr %>
+			<% alli=alli+1 if usr.to_i+alli.to_i!=100 %>
 			<span style="font-weight: bold"><%= current_user.score.to_s+" / "+@alliance.score.to_s %></span>
   			<div class="bar bar-success" style="width: <%= usr.to_i %>%;"></div>
   			<div class="bar bar-info" style="width: <%= alli.to_i %>%;left:<%= usr.to_i %>%;"></div>
