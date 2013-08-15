@@ -86,7 +86,7 @@ class Galaxy < ActiveRecord::Base
     transaction do
       plans = user.planets
       plans.each do |p|
-      if @@users_settled_here[p.sunsystem.galaxy.id].nil? then
+      if @@users_settled_here[self.id].nil? then
          @@users_settled_here[self.id] = Array.new
       end
       @@users_settled_here[self.id] << user.id

@@ -18,14 +18,14 @@
     <% end %>
   </select>-->
   <select name="planet_name">
-    <option value="">Planet wählen...</option>
+    <option value="">Besiedelten Planeten wählen...</option>
   <% ps = current_user.planets.uniq
      ps.each do |p| %>
       <option value="<%= p.name %>"><%= p.name %></option>
   <% end %>
   </select>
   <select name="allied_planet_name">
-    <option value="">Planet wählen...</option>
+    <option value="">Bekannten Planeten wählen...</option>
     <% ps = current_user.visible_planets.uniq
        ps.each do |p| %>
         <option value="<%= p.name %>"><%= p.name %></option>
