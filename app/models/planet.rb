@@ -232,6 +232,8 @@ class Planet < ActiveRecord::Base
     end
     c = c*1.10 if id == user.home_planet_id 
     c = c.round
+    c = 1 if c < 1 
+    
 
     return c
     
