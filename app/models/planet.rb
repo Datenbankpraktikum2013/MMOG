@@ -46,7 +46,7 @@ class Planet < ActiveRecord::Base
       self.maxenergy = 200 if self.maxenergy.nil?
       self.crystal = 0 if self.crystal.nil?
       self.energy = 50 if self.energy.nil?
-      self.population = self.size/10 if self.population.nil?
+      self.population = self.size/20 if self.population.nil?
       self.maxpopulation = self.size/2 if self.maxpopulation.nil?
 
       #Creates random Planet name
@@ -103,7 +103,7 @@ class Planet < ActiveRecord::Base
         self.maxenergy = 200
         self.crystal = 0
         self.energy = 50
-        self.population = 1000
+        #self.population = 1000
         self.maxpopulation = 5000
         
       end
@@ -117,7 +117,9 @@ class Planet < ActiveRecord::Base
       @start_maxore = 100
       @start_maxcrystal = 1
       @start_maxenergy = 200
-    if self.special == 1
+    if self.special == 0
+      @spec = [1, 1, 1, 1, 1, 1, 1, 1]
+    elsif self.special == 1
       @spec[0] = 1.3
       #Loveplanet
     elsif self.special == 2
@@ -141,10 +143,10 @@ class Planet < ActiveRecord::Base
       @start_maxenergy = 400
       @spec[5] = 1.3
       #Scienceplanet
-    elsif self.special == 7
-      @spec[7] = 1.3
+    #elsif self.special == 7
+    #  @spec[7] = 1.3
       #Energieplanet
-    else self.special == 8
+    else self.special == 7
       @spec[2] = 1.3
     end
   end
@@ -216,7 +218,7 @@ class Planet < ActiveRecord::Base
       sci_factor = self.user.get_ironproduction
       c = sci_factor * prod * @spec[0]
     elsif type == :City
-      c = @spec[2] * prod
+      c = @spec[2] *( prod + (self.population/500).to_i)
     elsif type == :Headquarter
       sci_factor = self.user.get_income
       c = sci_factor * @spec[3] * (self.population / 100) * prod 
@@ -226,6 +228,7 @@ class Planet < ActiveRecord::Base
     elsif type == :Crystalmine
       c = @spec[4] * prod 
     end
+    c = c.round
     return c
     
   end
@@ -255,8 +258,8 @@ class Planet < ActiveRecord::Base
       #
       city_population = self.get_production(:City).to_i
       if city_population.integer? then
-        if (self.population + self.population/500 + city_population) < self.maxpopulation then
-          self.population += (city_population + self.population/500)
+        if (self.population  + city_population) < self.maxpopulation then
+          self.population += (city_population )
         else
           self.population = self.maxpopulation
         end
@@ -421,6 +424,7 @@ class Planet < ActiveRecord::Base
   end
 
   def depot_size_increase(prod_size)
+     prod_size = prod_size / 100
      self.maxore = @start_maxore * prod_size * @spec[5]
      self.maxcrystal = @start_maxcrystal * prod_size * @spec[5]
      self.maxenergy = @start_maxenergy * prod_size * @spec[5]
