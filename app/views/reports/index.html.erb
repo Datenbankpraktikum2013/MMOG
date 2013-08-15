@@ -6,7 +6,7 @@
 
     <table class="table table-bordered table-condensed">
       <thead>
-        <tr>
+        <tr class="center">
           <th>Typ</th>
           <th>Ziel</th>
           <th>Quelle</th>
@@ -17,10 +17,15 @@
       </thead>
 
       <tbody>
+        <% if @reports.empty? %>
+          <tr class="center">
+            <td colspan="6">Es sind keine Berichte vorhanden.</td>
+          </tr>
+        <% end %>
         <% @reports.each do |report| %>
-          <tr <%= "class=\"unread\"".html_safe if (report.read == 0) || (report.read == "f") %> id="report_<%= report.id %>">
+          <tr class="center<%= " unread" if (report.read == 0) || (report.read == "f") %>" id="report_<%= report.id %>">
             <td>
-              <%= report.reportable_type %> <%= report.read %>
+              <%= report.reportable_type %>
             </td>
             <td>
               <%= report.defender.nil? ?  "-" : report.defender.username %><br />

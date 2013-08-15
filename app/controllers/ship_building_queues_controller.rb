@@ -1,6 +1,6 @@
 class ShipBuildingQueuesController < ApplicationController
   before_filter :authenticate_user!
-  before_action :set_ship_building_queue, only: [:show, :edit, :update, :destroy, :destroy_queue]
+  before_action :set_ship_building_queue, only: [:destroy, :destroy_queue]
   # GET /ship_building_queues
   # GET /ship_building_queues.json
   def index

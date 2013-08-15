@@ -20,7 +20,7 @@ module PlanetsHelper
     p = search_startplanet
     if !p.nil? && p.is_a?(Planet) && p.user.nil?
       p.claim(user)
-      p.set_home_planet
+      p.set_home_planet(user)
       return true
     else
       return false
@@ -37,7 +37,7 @@ module PlanetsHelper
 =begin
 gibt ein Array wie folgt aus: [max_research_level, sum_research_levels, count_research_labs]
 =end
-  def fetch_research_data(user)
+  def self.fetch_research_data(user)
     return [0, 0, 0] if user.nil? || user.planets.nil?
     data = [0, 0, 0]
     user.planets.each do |p|

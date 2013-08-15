@@ -55,7 +55,7 @@
 		  			<% if user_signed_in? %>
 
                         <li><a href="<%= galaxies_path %>">Weltkarte</a></li>
-                        <li><a href="<%= planet_path(current_user.home_planet) %>">Hauptplanet</a></li>
+                        <li><a href="<%= if !current_user.home_planet_id.nil? && current_user.home_planet_id > 0 then planet_path(Planet.find(current_user.home_planet_id)) end %>">Hauptplanet</a></li>
 		  				<li><a href="<%= messages_path %>">Nachrichten <span id="msgupdate" class="badge"><%= current_user.unread_messages %></span> </a></li>
                         <li><a href="<%= reports_path %>">Berichte <span class="badge" id="unreadreports"><%= Report.unread_reports(current_user.id) %></span> </a></li>
                         <li><a href="<%= buildingtypes_path%>">Gebäudeübersicht</a></li>
@@ -119,25 +119,24 @@
 					<% end %>
 				</div>
 				<% if user_signed_in? %>
-				<div class="well">					
-					<table class="table table-condensed">
-							<a href="<%= relationships_path %>">Kontakte</a><br>
-							<% @friends=current_user.friends %>						
-								<% unless @friends==nil %>								
+					<div class="well">					
+						<a href="<%= relationships_path %>">Kontakte</a><br>
+						<% @friends=current_user.friends %>						
+							<% unless @friends==nil %>								
 								<% @friends.each do |friend| %>
-									<tr>
-										<td><%= friend.username %><br></td>
-										<% if friend.online? %>
-											<td class="status_online">online</td>
-										<% else %>
-											<td class="status_offline">offline</td>
-										<% end %>
-										<td><%= link_to 'MSG', new_message_path+'/?recipient='+friend.username , class: 'label label-info', :style=>'color:#FFFFFF;'%></td>
-									</tr>
-								<% end %>								
-							<% end %>
-					</table>
-				</div>
+									<div style="border-width:1px;border-style:solid;border-radius:6px;background-color:rgb(0, 0, 80);">
+									<font class="friendlist_color"><%= friend.username %></font>
+									<% if friend.online? %>
+										<font class="status_online">on</font>
+									<% else %>
+										<font class="status_offline">off</font>
+									<% end %>
+									<br>
+									<%= link_to 'MSG', new_message_path+'/?recipient='+friend.username , class: 'label label-info', :style=>'color:#FFFFFF;'%>
+									</div>
+								<% end %>		
+							<% end %>						
+					</div>
 				<% end %>	
 			</div>		
 		</div>			

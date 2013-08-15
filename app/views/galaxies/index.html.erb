@@ -1,9 +1,9 @@
 
-<p>Schnellreise</p>
-
-
-<form id="galaxy_fix_one" action="" method="get">
-    <!--<select name="galaxy_name">
+<!--<p>Schnellreise</p>
+<form id="galaxy_fix_one" action="/planets/redirect_to_planet" method="post">
+    
+ALT
+    <select name="galaxy_name">
       <option value="">Galaxie wählen...</option>
       <% gs = current_user.visible_galaxies.uniq
          gs.each do |g| %>
@@ -16,22 +16,25 @@
         ss.each do |s| %>
         <option value="<%= s.name %>"><%= s.name %></option>
     <% end %>
-  </select>-->
+  </select>
+
+FASTRICHTIG
   <select name="planet_name">
-    <option value="">Planet wählen...</option>
+    <option value="">Besiedelten Planeten wählen...</option>
   <% ps = current_user.planets.uniq
      ps.each do |p| %>
-      <option value="<%= p.name %>"><%= p.name %></option>
+      <option value="<%= p.id %>"><%= p.name %></option>
   <% end %>
   </select>
   <select name="allied_planet_name">
-    <option value="">Planet wählen...</option>
+    <option value="">Bekannten Planeten wählen...</option>
     <% ps = current_user.visible_planets.uniq
        ps.each do |p| %>
-        <option value="<%= p.name %>"><%= p.name %></option>
+        <option value="<%= p.id %>"><%= p.name %></option>
     <% end %>
   </select>
-</form>
+  <input type="submit" value="Los!"/>
+</form>-->
 
 <form id="galaxy_find_one" action="" method="get">
     <label for="x">X</label><input type="text" name="x" maxlength="2" />

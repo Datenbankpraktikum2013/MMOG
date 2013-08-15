@@ -122,7 +122,7 @@ class ShipBuildingQueue < ActiveRecord::Base
 		
 		Resque.remove_delayed(AddShip, self.ship_id, self.planet_id, self.qid )
 		del_ship_type=Ship.find(self.ship_id)
-		ShipBuildingQueue.update_time(end_time, planet,del_ship_type.construction_time)
+		ShipBuildingQueue.update_time(end_time, planet,(end_time - Time.now.to_i))
 		pl=Planet.find(self.planet_id)
 
 		o1=pl.give(:Ore, del_ship_type.ore_cost)
