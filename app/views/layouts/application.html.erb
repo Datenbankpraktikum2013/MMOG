@@ -124,7 +124,7 @@
 						<% @friends=current_user.friends %>						
 							<% unless @friends==nil %>								
 								<% @friends.each do |friend| %>
-									<div style="border-width:1px;border-style:solid;border-radius:6px;background-color:rgb(0, 0, 80);">
+									<div style="border-width:1px;border-style:solid;border-radius:6px;background-color:rgb(0, 0, 105);">
 									<font class="friendlist_color"><%= friend.username %></font>
 									<% if friend.online? %>
 										<font class="status_online">on</font>
