@@ -441,7 +441,7 @@ class Planet < ActiveRecord::Base
     self.reset_building_cache
     self.under_construction = 0
     self.save
-    
+
     return false if buildingtype_id.nil? || !buildingtype_id.integer?
     build_me = Buildingtype.where(id: buildingtype_id).first
     return false if build_me.nil?
@@ -455,8 +455,15 @@ class Planet < ActiveRecord::Base
           depot_size_increase(btype.production)
         end  
         b.save
+
+
+
         user.add_score(5*build_me.level.to_i)
         self.user.system_notify( 'Gebäude', build_me.name.to_s, ' Gebäude: '+build_me.name.to_s+' Level '+build_me.level.to_s+', auf Planet '+self.name.to_s+' erfolgreich gebaut.')
+        neu = PlanetsHelper.fetch_research_data(User.find(user))[0]
+        u = User.find(user).user_setting
+        u.update_attribute(:researchlvl, neu)
+        u.save()
         return true
       end
     end
@@ -467,6 +474,10 @@ class Planet < ActiveRecord::Base
       end
       user.add_score(5*build_me.level.to_i)
       self.user.system_notify( 'Gebäude', build_me.name.to_s, ' Gebäude: '+build_me.name.to_s+' Level '+build_me.level.to_s+', auf Planet '+self.name.to_s+' erfolgreich gebaut.')
+      neu = PlanetsHelper.fetch_research_data(User.find(user))[0]
+      u = User.find(user).user_setting
+      u.update_attribute(:researchlvl, neu)
+      u.save()
       return true
     end
     return false
