@@ -80,14 +80,14 @@ Mission.create({:id => 5, :info_text => "Spy"})
 Mission.create({:id => 6, :info_text => "Transport"})
 
 #Default-Werte von Schiffe und Missionen
-Ship.create({:id => 1, :construction_time => 240, :offense => 1, :defense => 10, :crystal_cost => 0, :credit_cost => 500, :ore_cost => 120, :name => 'Small cargo ship', :velocity => 3, :crew_capacity => 1, :ressource_capacity => 8000, :fuel_capacity => 1000, :consumption => 2})
+Ship.create({:id => 1, :construction_time => 240, :offense => 1, :defense => 10, :crystal_cost => 0, :credit_cost => 500, :ore_cost => 220, :name => 'Small cargo ship', :velocity => 3, :crew_capacity => 1, :ressource_capacity => 8000, :fuel_capacity => 1000, :consumption => 2})
 Ship.create({:id => 2, :construction_time => 480, :offense => 1, :defense => 30, :crystal_cost => 0, :credit_cost => 2000, :ore_cost => 1200, :name => 'Large cargo ship', :velocity => 3, :crew_capacity => 8, :ressource_capacity => 40000, :fuel_capacity => 6000, :consumption => 3})
 Ship.create({:id => 3, :construction_time => 240, :offense => 30, :defense => 30, :crystal_cost => 0, :credit_cost => 100, :ore_cost => 400, :name => 'Fighter', :velocity => 6, :crew_capacity => 1, :ressource_capacity => 10, :fuel_capacity => 100, :consumption => 1})
 Ship.create({:id => 4, :construction_time => 540, :offense => 70, :defense => 30, :crystal_cost => 0, :credit_cost => 400, :ore_cost => 1400, :name => 'Destroyer', :velocity => 5, :crew_capacity => 15, :ressource_capacity => 50, :fuel_capacity => 4000, :consumption => 4})
 Ship.create({:id => 5, :construction_time => 900, :offense => 150, :defense => 60, :crystal_cost => 1, :credit_cost => 700, :ore_cost => 2000, :name => 'Cruiser', :velocity => 6, :crew_capacity => 20, :ressource_capacity => 150, :fuel_capacity => 6000, :consumption => 4})
 Ship.create({:id => 6, :construction_time => 5000, :offense => 10000, :defense => 7000, :crystal_cost => 6666, :credit_cost => 90000, :ore_cost => 90000, :name => 'Deathstar', :velocity => 3, :crew_capacity => 500, :ressource_capacity => 2500, :fuel_capacity => 10000, :consumption => 10})
-Ship.create({:id => 7, :construction_time => 480, :offense => 0, :defense => 0, :crystal_cost => 0, :credit_cost => 100, :ore_cost => 200, :name => 'Spy drone', :velocity => 15, :crew_capacity => 0, :ressource_capacity => 0, :fuel_capacity => 1000, :consumption => 1})
-Ship.create({:id => 8, :construction_time => 480, :offense => 1, :defense => 100, :crystal_cost => 0, :credit_cost => 0, :ore_cost => 300, :name => 'Small defense platform', :velocity => 0, :crew_capacity => 3, :ressource_capacity => 0, :fuel_capacity => 0, :consumption => 0})
+Ship.create({:id => 7, :construction_time => 480, :offense => 0, :defense => 0, :crystal_cost => 0, :credit_cost => 100, :ore_cost => 150, :name => 'Spy drone', :velocity => 15, :crew_capacity => 0, :ressource_capacity => 0, :fuel_capacity => 1000, :consumption => 1})
+Ship.create({:id => 8, :construction_time => 480, :offense => 1, :defense => 50, :crystal_cost => 0, :credit_cost => 0, :ore_cost => 200, :name => 'Small defense platform', :velocity => 0, :crew_capacity => 3, :ressource_capacity => 0, :fuel_capacity => 0, :consumption => 0})
 Ship.create({:id => 9, :construction_time => 900, :offense => 1, :defense => 400, :crystal_cost => 0, :credit_cost => 0, :ore_cost => 1400, :name => 'Large defense platform', :velocity => 0, :crew_capacity => 6, :ressource_capacity => 0, :fuel_capacity => 0, :consumption => 0})
 Ship.create({:id => 10, :construction_time => 900, :offense => 1, :defense => 10, :crystal_cost => 0, :credit_cost => 2000, :ore_cost => 4000, :name => 'Colony ship', :velocity => 2, :crew_capacity => 5, :ressource_capacity => 1000, :fuel_capacity => 3000, :consumption => 4})
 
@@ -119,83 +119,83 @@ Building.create({:planet_id => 4, :buildingtype_id => 51})
 #Default-Werte von Spieler, Allianzen und Nachrichten
 #Alliance.create({:name => 'test_alliance3', :description => 'testtesttest', :user_id => User.first})
 
-##########DEFAULT USER!! demo:praktikum
-User.create(:email => 'demo@demo.com',:password => 'password',:username => 'demo', :money => 12000,:score => 0)
-User.create(:email => 'demo2@demo.com',:password => 'password',:username=> 'demo2',:money => 12000,:score => 0)
-User.create(:email => 'demo3@demo.com',:password => 'password',:username=> 'demo3',:money => 12000,:score => 0)
-User.create(:email => 'demo4@demo.com',:password => 'password',:username=> 'demo4',:money => 12000,:score => 0)
+# ##########DEFAULT USER!! demo:praktikum
+# User.create(:email => 'demo@demo.com',:password => 'password',:username => 'demo', :money => 12000,:score => 0)
+# User.create(:email => 'demo2@demo.com',:password => 'password',:username=> 'demo2',:money => 12000,:score => 0)
+# User.create(:email => 'demo3@demo.com',:password => 'password',:username=> 'demo3',:money => 12000,:score => 0)
+# User.create(:email => 'demo4@demo.com',:password => 'password',:username=> 'demo4',:money => 12000,:score => 0)
 
-alliance = Alliance.create(:name => "Test", :description => "Auch")
-alliance.add_user(User.first)
-alliance.set_founder(User.first)
-alliance.add_user(User.find(2))
+# alliance = Alliance.create(:name => "Test", :description => "Auch")
+# alliance.add_user(User.first)
+# alliance.set_founder(User.first)
+# alliance.add_user(User.find(2))
 
-# Testing values
+# # Testing values
 
-# own
-p=Planet.find(1)
-p.claim(User.find(1))
-Fleet.new(p)
-p.maxore = 100000
-p.maxenergy = 100000
-p.maxcrystal = 100000
-p.maxpopulation = 100000
-p.save
-Fleet.find(1).add_ships({Ship.find(1)=> 5000, Ship.find(2)=> 5000, Ship.find(3)=> 5000, Ship.find(4)=> 5000, Ship.find(5)=> 5000,Ship.find(6)=> 5000,Ship.find(7)=> 5000,Ship.find(8)=> 5000,Ship.find(9)=> 5000,Ship.find(10)=> 5000})
-Planet.find(1).give(:Ore, 10000)
-Planet.find(1).give(:Crystal, 10000)
-Planet.find(1).give(:Money, 10000)
-Planet.find(1).give(:Population, 10000)
-Planet.find(1).give(:Energy, 10000)
+# # own
+# p=Planet.find(1)
+# p.claim(User.find(1))
+# Fleet.new(p)
+# p.maxore = 100000
+# p.maxenergy = 100000
+# p.maxcrystal = 100000
+# p.maxpopulation = 100000
+# p.save
+# Fleet.find(1).add_ships({Ship.find(1)=> 5000, Ship.find(2)=> 5000, Ship.find(3)=> 5000, Ship.find(4)=> 5000, Ship.find(5)=> 5000,Ship.find(6)=> 5000,Ship.find(7)=> 5000,Ship.find(8)=> 5000,Ship.find(9)=> 5000,Ship.find(10)=> 5000})
+# Planet.find(1).give(:Ore, 10000)
+# Planet.find(1).give(:Crystal, 10000)
+# Planet.find(1).give(:Money, 10000)
+# Planet.find(1).give(:Population, 10000)
+# Planet.find(1).give(:Energy, 10000)
 
-# alliance
-p=Planet.find(2)
-p.claim(User.find(2))
-Fleet.new(p)
-p.maxore = 100000
-p.maxenergy = 100000
-p.maxcrystal = 100000
-p.maxpopulation = 100000
-p.save
-Fleet.find(2).add_ships({Ship.find(1)=> 500, Ship.find(2)=> 500, Ship.find(3)=> 500, Ship.find(4)=> 500, Ship.find(5)=> 500,Ship.find(6)=> 500,Ship.find(7)=> 500,Ship.find(8)=> 500,Ship.find(9)=> 500,Ship.find(10)=> 500})
-Planet.find(1).give(:Ore, 10000)
-Planet.find(1).give(:Crystal, 10000)
-Planet.find(1).give(:Money, 10000)
-Planet.find(1).give(:Population, 10000)
-Planet.find(1).give(:Energy, 10000)
+# # alliance
+# p=Planet.find(2)
+# p.claim(User.find(2))
+# Fleet.new(p)
+# p.maxore = 100000
+# p.maxenergy = 100000
+# p.maxcrystal = 100000
+# p.maxpopulation = 100000
+# p.save
+# Fleet.find(2).add_ships({Ship.find(1)=> 500, Ship.find(2)=> 500, Ship.find(3)=> 500, Ship.find(4)=> 500, Ship.find(5)=> 500,Ship.find(6)=> 500,Ship.find(7)=> 500,Ship.find(8)=> 500,Ship.find(9)=> 500,Ship.find(10)=> 500})
+# Planet.find(1).give(:Ore, 10000)
+# Planet.find(1).give(:Crystal, 10000)
+# Planet.find(1).give(:Money, 10000)
+# Planet.find(1).give(:Population, 10000)
+# Planet.find(1).give(:Energy, 10000)
 
-# enemy
-p=Planet.find(3)
-p.claim(User.find(3))
-Fleet.new(p)
-p.maxore = 100000
-p.maxenergy = 100000
-p.maxcrystal = 100000
-p.maxpopulation = 100000
-p.save
-Fleet.find(3).add_ships({Ship.find(1)=> 50, Ship.find(2)=> 50, Ship.find(3)=> 50, Ship.find(4)=> 50, Ship.find(5)=> 50,Ship.find(6)=> 50,Ship.find(7)=> 50,Ship.find(8)=> 50,Ship.find(9)=> 50,Ship.find(10)=> 50})
-Planet.find(1).give(:Ore, 10000)
-Planet.find(1).give(:Crystal, 10000)
-Planet.find(1).give(:Money, 10000)
-Planet.find(1).give(:Population, 10000)
-Planet.find(1).give(:Energy, 10000)
+# # enemy
+# p=Planet.find(3)
+# p.claim(User.find(3))
+# Fleet.new(p)
+# p.maxore = 100000
+# p.maxenergy = 100000
+# p.maxcrystal = 100000
+# p.maxpopulation = 100000
+# p.save
+# Fleet.find(3).add_ships({Ship.find(1)=> 50, Ship.find(2)=> 50, Ship.find(3)=> 50, Ship.find(4)=> 50, Ship.find(5)=> 50,Ship.find(6)=> 50,Ship.find(7)=> 50,Ship.find(8)=> 50,Ship.find(9)=> 50,Ship.find(10)=> 50})
+# Planet.find(1).give(:Ore, 10000)
+# Planet.find(1).give(:Crystal, 10000)
+# Planet.find(1).give(:Money, 10000)
+# Planet.find(1).give(:Population, 10000)
+# Planet.find(1).give(:Energy, 10000)
 
-# 2nd own
-p=Planet.find(4)
-p.claim(User.find(1))
-Fleet.new(p)
-p.maxore = 100000
-p.maxenergy = 100000
-p.maxcrystal = 100000
-p.maxpopulation = 100000
-p.save
-Fleet.find(1).add_ships({Ship.find(1)=> 50, Ship.find(2)=> 50, Ship.find(3)=> 50, Ship.find(4)=> 50, Ship.find(5)=> 50,Ship.find(6)=> 50,Ship.find(7)=> 50,Ship.find(8)=> 50,Ship.find(9)=> 50,Ship.find(10)=> 50})
-Planet.find(1).give(:Ore, 10000)
-Planet.find(1).give(:Crystal, 10000)
-Planet.find(1).give(:Money, 10000)
-Planet.find(1).give(:Population, 10000)
-Planet.find(1).give(:Energy, 10000)
+# # 2nd own
+# p=Planet.find(4)
+# p.claim(User.find(1))
+# Fleet.new(p)
+# p.maxore = 100000
+# p.maxenergy = 100000
+# p.maxcrystal = 100000
+# p.maxpopulation = 100000
+# p.save
+# Fleet.find(1).add_ships({Ship.find(1)=> 50, Ship.find(2)=> 50, Ship.find(3)=> 50, Ship.find(4)=> 50, Ship.find(5)=> 50,Ship.find(6)=> 50,Ship.find(7)=> 50,Ship.find(8)=> 50,Ship.find(9)=> 50,Ship.find(10)=> 50})
+# Planet.find(1).give(:Ore, 10000)
+# Planet.find(1).give(:Crystal, 10000)
+# Planet.find(1).give(:Money, 10000)
+# Planet.find(1).give(:Population, 10000)
+# Planet.find(1).give(:Energy, 10000)
 
-   Planet.first.seen_by(User.first)
-   Planet.first.seen_by(User.find(2))
+#    Planet.first.seen_by(User.first)
+#    Planet.first.seen_by(User.find(2))
 end
