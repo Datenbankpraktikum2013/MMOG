@@ -36,11 +36,7 @@ class StarportController < ApplicationController
 
 
 
-    puts "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    puts "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    puts "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    puts "xxxxxxxxxxx#{build_planet.id}xxxxxxxxxxxxxxx"
-    puts "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
 		build_fleet=Fleet.where(mission: 1, origin_planet: build_planet)
     
     ship_array=Hash.new(Ship)
