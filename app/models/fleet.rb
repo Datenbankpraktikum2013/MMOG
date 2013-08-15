@@ -445,9 +445,9 @@ class Fleet < ActiveRecord::Base
 
     elsif fight_factor>0
       
-
-      self.user.add_score((fight_factor/10).round)
-      
+      unless defender_fleets.first.defense == 0
+        self.user.add_score((fight_factor/10).round)
+      end
 
       puts "Defender FAIL. Calculating loss of Ships..."
       attacker_new_offense=fight_factor.abs*rand(0.8 .. 1.2)
