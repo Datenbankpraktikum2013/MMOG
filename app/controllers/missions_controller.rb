@@ -153,7 +153,6 @@ class MissionsController < ApplicationController
         ship_hash[Ship.find(ship.id)] = params["ship-#{ship.id}"].to_i
       end
     end
-    #############
 
     begin
     
@@ -201,20 +200,15 @@ class MissionsController < ApplicationController
     end
 
     begin
-      puts ship_hash
       puts planet1.energy
       new_fleet = fleet.split_fleet(ship_hash)
-      
       velocity = new_fleet.get_velocity
       distance = planet1.getDistance(planet2)
-      time = get_needed_time(velocity, distance)
+      time = new_fleet.get_needed_time(velocity, distance)
       needed_energy = new_fleet.get_needed_fuel_all(time)
-      if mission.id == 2 || mission.id ==3 || mission.id == 5 || mission.id == 6
-        needed_energy *=2
+      if mission.id == 2 || mission.id == 3 || mission.id == 5 || mission.id == 6
+        needed_energy *= 2
       end
-      puts needed_energy
-      puts planet1.energy
-
     rescue
       puts "FEHLER in TMP BAu der fleet"
     end
