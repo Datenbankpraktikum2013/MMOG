@@ -39,8 +39,8 @@ class Spyreport < ActiveRecord::Base
 				self.ore = planet.ore
 				self.maxore = planet.maxore
 				self.crystal = planet.crystal
-				self.maxcrystal = planet.maxcrystal
-				self.space_cash = planet.user.money
+				self.maxcrystal = planet.maxcrystal 
+				self.space_cash = planet.user.money unless planet.user.nil?
 			end
 
 			if mode < 1
