@@ -132,6 +132,16 @@ class Technology < ActiveRecord::Base
     #@@cached_research_duration[key]
   end
 
+  def get_research_duration_formatted(user)
+    time = get_research_duration(user)
+
+    stunden = (time / 3600).to_i
+    minuten = ((time - 3600*stunden) / 60).to_i
+    sekunden= (time - 3600*stunden - 60*minuten).to_i
+
+    return stunden.to_s + " Stunden, " + minuten.to_s + " Minuten und " + sekunden.to_s
+  end
+
   def building_rank_require?(user)
 
     req_research_lvl = technology_requires.first.building_rank
