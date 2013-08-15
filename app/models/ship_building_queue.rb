@@ -93,7 +93,7 @@ class ShipBuildingQueue < ActiveRecord::Base
 			# puts "QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ"
 			p.give(:Ore,o)
 			p.give(:Crystal,c)
-			p.give(:Money,m)
+			p.give(:Money, m)
 			p.give(:Population,crew)
 			return false
 		end

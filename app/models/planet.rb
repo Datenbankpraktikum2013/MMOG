@@ -451,8 +451,8 @@ class Planet < ActiveRecord::Base
       if btype.name == build_me.name && btype.level + 1 == build_me.level
         b.buildingtype = build_me
 
-        if btype.name== "Depot"
-          depot_size_increase(btype.production)
+        if btype.name == "Depot"
+          self.depot_size_increase(build_me.production)
         end  
         b.save
 
@@ -470,7 +470,7 @@ class Planet < ActiveRecord::Base
     if build_me.level == 1 then
       Building.create(buildingtype_id: buildingtype_id, planet: self)
       if build_me.name == "Depot"
-        depot_size_increase(build_me.production)
+        self.depot_size_increase(build_me.production)
       end
       user.add_score(5*build_me.level.to_i)
       self.user.system_notify( 'Gebäude', build_me.name.to_s, ' Gebäude: '+build_me.name.to_s+' Level '+build_me.level.to_s+', auf Planet '+self.name.to_s+' erfolgreich gebaut.')
