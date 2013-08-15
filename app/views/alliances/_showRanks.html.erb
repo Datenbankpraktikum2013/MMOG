@@ -3,34 +3,33 @@
 		<strong>Ränge verwalten</strong>
 	</div>
    	<table class="table table-striped table-bordered table-condensed">
-	  <tbody>
-	  	<th>Rang</th>
-        <th>Kicken</th>
-        <th>Rundmail</th>
-        <th>Einladen</th>
-        <th>Beschreibung editieren</th>
-        <th>Ränge editieren</th>
-        <th>Bearbeiten</th>
-        <th>Löschen</th>
+   		<thead>
+		  	<th>Rang</th>
+	        <th>Kicken</th>
+	        <th>Rundmail</th>
+	        <th>Einladen</th>
+	        <th>Beschreibung editieren</th>
+	        <th>Ränge editieren</th>
+	        <th>Bearbeiten</th>
+	        <th>Löschen</th>
+	    </thead>
+        <tbody>
 	  	<% @alliance.ranks.each do |rank| %>
-	 	    <tr style=<%= (rank.standard) ? "font-weight:bold" : "" %>>
+	 	    <tr class="<%= "info" if rank.standard %>">
 		  	      <td><%= rank.name %></td>
 		  	      <td><%= rank.can_kick ? "Ja" : "Nein" %></td>
 	        	  <td><%= rank.can_massmail ? "Ja" : "Nein" %></td>
 	        	  <td><%= rank.can_invite ? "Ja" : "Nein" %></td>
 	        	  <td><%= rank.can_change_description ? "Ja" : "Nein" %></td> 	  
 	        	  <td><%= rank.can_edit_ranks ? "Ja" : "Nein" %></td>
-	        	  <td>
-			          	<%= link_to 'Editieren', edit_rank_path(rank), class: "label label-info",:style => 'color:#FFFFFF;'%>
-		          </td>
-		          <td>
-		          	<% unless rank.is_founder or rank.standard %>  
+	        	  <td><%= link_to 'Editieren', edit_rank_path(rank), class: "label label-info",:style => 'color:#FFFFFF;'%></td>
+		          <td><% unless rank.is_founder or rank.standard %>  
 		          		<%= link_to 'Löschen', rank, method: :delete, data: { confirm: 'Möchtest du diesen Rang wirklich löschen?' }, class: "label label-important", :style => 'color:#FFFFFF' %>
 		          	<% end %>
 		          </td>
 	  	    </tr>
 	  	<%end%>
-	  </tbody>
+	  	</tbody>
   	</table>
 	<p>	<%=label_tag ('Standardrank: ') %>
 	    <div class="btn-group">
