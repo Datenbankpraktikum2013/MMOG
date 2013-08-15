@@ -24,7 +24,7 @@
 	    <td id="credit-cost"><%= s.credit_cost %></td>
 	    <td><a id="s<%= s.id %>" href="#"  class="btn btn-mini" data-html="true" ><i class="icon-question-sign" ></i></a>
 	    </td>
-	    <td><%= number_field(:ship, s.id ,:class=> "span1 ship-amount",  :id=> "nr-field") %></td>
+	    <td><%= number_field(:ship, s.id ,:class=> "span1 ship-amount",  :id=> "nr-field", :min=>"0") %></td>
     </tr>
     <% end %>
 
@@ -74,11 +74,14 @@ $(function ()
 
 });  
 
+
+
+
 $(".ship-amount").keyup(function() {
 	$("#ore-t").text("0");
 	$("#crystal-t").text("0");
 	$("#credit-t").text("0");
-	console.log(($(this).parent().parent().find("td[id=ore-cost]").first().text())*$(this).val());
+	//console.log(($(this).parent().parent().find("td[id=ore-cost]").first().text())*$(this).val());
 	$(".ship-amount").each(function(){
 		new_ore=($(this).parent().parent().find("td[id=ore-cost]").first().text())*$(this).val();
 		new_credit=($(this).parent().parent().find("td[id=credit-cost]").first().text())*$(this).val();
@@ -129,7 +132,7 @@ $(".ship-amount").change(function() {
 	$("#ore-t").text("0");
 	$("#crystal-t").text("0");
 	$("#credit-t").text("0");
-	console.log(($(this).parent().parent().find("td[id=ore-cost]").first().text())*$(this).val());
+	//console.log(($(this).parent().parent().find("td[id=ore-cost]").first().text())*$(this).val());
 	$(".ship-amount").each(function(){
 		new_ore=($(this).parent().parent().find("td[id=ore-cost]").first().text())*$(this).val();
 		new_credit=($(this).parent().parent().find("td[id=credit-cost]").first().text())*$(this).val();
@@ -141,8 +144,34 @@ $(".ship-amount").change(function() {
 
 	});
 
-	//new_ore=($(this).parent().parent().find("td[id=ore-cost]").first().text())*
-	//console.log(($(this).parent().parent().find("td[id=ore-cost]").first().text()));
+	if(parseInt($("#ore-t").text()) > parseInt($("#got-ore").data("ore"))){
+		$("#ore-t").css( "color", "red" );
+		$("#build-button").hide();
+	}
+	else{
+		$("#ore-t").css( "color", "black" );
+	}
+	if(parseInt($("#credit-t").text()) > parseInt($("#got-credit").data("credit"))){
+		$("#credit-t").css( "color", "red" );
+		$("#build-button").hide();
+	}
+	else{
+		$("#credit-t").css( "color", "black" );
+	}
+	if(parseInt($("#crystal-t").text()) > parseInt($("#got-crystal").data("crystal"))){
+		$("#crystal-t").css( "color", "red" );
+		$("#build-button").hide();
+	}
+	else{
+		$("#crystal-t").css( "color", "black" );
+	}
+
+	if((parseInt($("#crystal-t").text()) < parseInt($("#got-crystal").data("crystal")))  && (parseInt($("#credit-t").text()) < parseInt($("#got-credit").data("credit")))  &&  (parseInt($("#ore-t").text()) < parseInt($("#got-ore").data("ore")))){
+		$("#crystal-t").css( "color", "black" );
+		$("#ore-t").css( "color", "black" );
+		$("#credit-t").css( "color", "black" );
+		$("#build-button").show();
+	}
 
 });
 
