@@ -68,8 +68,9 @@ class MissionsController < ApplicationController
 
     @fleets = Fleet.where("start_planet=target_planet AND user_id = ?", current_user.id)
     @ships = Ship.get_property_hash
-
-    # @explore_planets = GalaxyHelper.discover_new_planet_at(10)
+    x = rand 1..12
+    y = rand 1..12
+    @explore_planets = GalaxiesHelper.discover_new_planet_at(x,y,10)
   end
 
   def get_info
@@ -80,7 +81,7 @@ class MissionsController < ApplicationController
     hash[:susy_names_hash] = @susy_names_hash
     hash[:planets_names_hash] = @planets_names_hash
     hash[:ships] = @ships
-    hash[:explore_hash] = @explore_hash
+    hash[:explore_planets] = @explore_planets
     render :json => hash.to_json
   end
 

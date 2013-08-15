@@ -119,25 +119,24 @@
 					<% end %>
 				</div>
 				<% if user_signed_in? %>
-				<div class="well">					
-					<table class="table table-condensed">
-							<a href="<%= relationships_path %>">Kontakte</a><br>
-							<% @friends=current_user.friends %>						
-								<% unless @friends==nil %>								
+					<div class="well">					
+						<a href="<%= relationships_path %>">Kontakte</a><br>
+						<% @friends=current_user.friends %>						
+							<% unless @friends==nil %>								
 								<% @friends.each do |friend| %>
-									<tr>
-										<td><%= friend.username %><br></td>
-										<% if friend.online? %>
-											<td class="status_online">online</td>
-										<% else %>
-											<td class="status_offline">offline</td>
-										<% end %>
-										<td><%= link_to 'MSG', new_message_path+'/?recipient='+friend.username , class: 'label label-info', :style=>'color:#FFFFFF;'%></td>
-									</tr>
-								<% end %>								
-							<% end %>
-					</table>
-				</div>
+									<div style="border-width:1px;border-style:solid;border-radius:6px;background-color:rgb(0, 0, 80);">
+									<font class="friendlist_color"><%= friend.username %></font>
+									<% if friend.online? %>
+										<font class="status_online">on</font>
+									<% else %>
+										<font class="status_offline">off</font>
+									<% end %>
+									<br>
+									<%= link_to 'MSG', new_message_path+'/?recipient='+friend.username , class: 'label label-info', :style=>'color:#FFFFFF;'%>
+									</div>
+								<% end %>		
+							<% end %>						
+					</div>
 				<% end %>	
 			</div>		
 		</div>			

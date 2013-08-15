@@ -45,9 +45,9 @@
                                 <% a = p.special.to_s%>
                                 <%= image_tag('/images/planets/Planet'+a+'.png') %></div></a>
                           <%else%>
-                              <a class="darker planetspos planetspos<%= p.z.to_s %>" title=<%=p.user.username %>>><div>
+                              <a class="darker planetspos planetspos<%= p.z.to_s %>" title="<%=p.user.username %>"><div>
                                 <% a = p.special.to_s%>
-                                <%= image_tag('/images/planets/Planet'+a+'.png') %> </div></a>
+                                <%= image_tag('/images/planets/Planet'+a+'.png') %></div></a>
                           <%end%>
                       <%end%>
                   <%end%>

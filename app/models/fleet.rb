@@ -391,6 +391,7 @@ class Fleet < ActiveRecord::Base
       new_offense=0
       shipamount=Hash.new(Fleet)
       defender_fleets.each do |f|
+        f.user.add_score((fight_factor.abs/10).round)
         shipamount[f]=f.get_ships
         
       end
@@ -445,7 +446,7 @@ class Fleet < ActiveRecord::Base
     elsif fight_factor>0
       
 
-      #self.user.add_score(20)
+      self.user.add_score((fight_factor/10).round)
       
 
       puts "Defender FAIL. Calculating loss of Ships..."
