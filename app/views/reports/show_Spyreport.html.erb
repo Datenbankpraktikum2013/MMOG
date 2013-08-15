@@ -1,9 +1,17 @@
 <p>
   <h1>Spionagebericht</h1> 
 vom <strong><%= @report.fightdate.strftime('%d.%m.%y') %> um <%= @report.fightdate.strftime('%H:%M') %> Uhr</strong></br>
-Spylevel: <%= @report.reportable.spylevel.to_s %>
+Spylevel: <%= @report.reportable.spylevel.to_s %></br>
+<% if @report.reportable.mode == 2 %>
+Du kannst Allianzmitglieder nicht ausspionieren.
+<% elsif @report.reportable.mode == 3 %>
+Du kannst deinen eigenen Planeten nicht ausspionieren.
+<% elsif @report.reportable.mode == 4 %>
+Deine Sonde wurde beim spionieren zerstört
+<% else %>
+
 </p>
-</br>
+
 
 <% if @report.reportable.mode < 2 %>
   <h4>Planet <%= @report.defender_planet.name %> von <%= @report.defender.username %>:</h4>
@@ -40,4 +48,6 @@ Spylevel: <%= @report.reportable.spylevel.to_s %>
     <% end %>
   <% end %>
 <% end %>
+<% end %>
+</br>
 <%= link_to 'Zurück', :back, remote: true %>

@@ -3,11 +3,11 @@
 </br>
 </br>
 <% if @report.reportable.mode == 3 %>
-Der Planet war nicht bewohnt.
+<p>Der Planet war nicht bewohnt.</p>
 <% elsif @report.reportable.mode == 4 %>
-Der Planet gehört einem allianzmitglied und konnte deshalb nicht angegriffen werden.
+<p>Der Planet gehört einem allianzmitglied und konnte deshalb nicht angegriffen werden.</p>
 <% elsif@report.reportable.mode == 5 %>
-Der Planet gehört dir und konnte deshalb nicht angegriffen werden.
+<p>Der Planet gehört dir und konnte deshalb nicht angegriffen werden.</p>
 <% else %>
   <h5>Verteidiger:</h5>
   <div class="accordion" id="defender">
