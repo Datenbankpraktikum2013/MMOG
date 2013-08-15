@@ -115,7 +115,14 @@ class PlanetsController < ApplicationController
     
       respond_to do |format|
         format.html { redirect_to @planet, notice: 'Bau abgebrochen.'}
-        format.json {head :no_content}
+        format.json { render action: 'show' }
+      end
+    else
+      @planet.under_construction = 0
+      @planet.save
+      respond_to do |format|
+        format.html { redirect_to @planet, notice: 'Bau konnte nicht abgebrochen werden, hardreset?!.'}
+        format.json { render action: 'show' }
       end
     end
   end
