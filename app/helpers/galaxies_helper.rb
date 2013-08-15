@@ -82,17 +82,18 @@ module GalaxiesHelper
 
   end
 
-  def self.discover_new_planet_at(x,y)
-    return false unless x.is_a?(Integer) && y.is_a?(Integer)
+  def self.discover_new_planet_at(x,y,count)
+    return Array.new unless x.is_a?(Integer) && y.is_a?(Integer) && count.is_a?(Integer)
+    GalaxiesHelper.generateAt(x,y)
     xxx = Galaxy.calcX(x,y)
-    g = Galaxy.find(xxx)
+    g = Galaxy.where(x: xxx).first
     return false if g.nil?
     plts = []
     suns = g.sunsystems
     suns.each do |sun|
       plts.concat sun.planets
     end
-    return plts.shuffle![0]
+    return plts.shuffle![0..(count-1)]
   end
 
 end
