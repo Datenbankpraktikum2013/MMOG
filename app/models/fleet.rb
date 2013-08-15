@@ -613,13 +613,13 @@ class Fleet < ActiveRecord::Base
       type = 2
       self.return_to_origin(planet)
     else  # enemy
-      self.user.add_score(5)
       factor = planet.user.user_setting.increased_spypower
       # the higher the spy factor, the more probable it is, that the drone survives
       r = rand 0.0..0.8
       if own_spy_factor - r < 0.8
         type = 4
       else
+        self.user.add_score(5)
         type = 0
         self.return_to_origin(planet)
       end
@@ -680,7 +680,7 @@ class Fleet < ActiveRecord::Base
         self.credit = (self.get_capacity / 3).to_i
         puts "due to heavy load, a few ressources got lost in the void..."
       end
-      self.user.add_score(50)
+      self.user.add_score(150)
       self.update_values
       type = 1
     elsif other_user == self.user # own planet
@@ -731,12 +731,14 @@ class Fleet < ActiveRecord::Base
       travel_report.finish_travelreport(planet, self, 3)
       home_fleet = Fleet.get_home_fleet(planet)
       home_fleet.merge_fleet(self)
+      self.user.add_score(1)
     elsif other_user.alliance == self.user.alliance # alliance planet
       travel_report.finish_travelreport(planet, self, 2)
       self.start_planet = self.target_planet
       self.arrival_time = Time.now.to_i
       self.departure_time = self.arrival_time
       self.save
+      self.user.add_score(2)
     else # enemy
       travel_report.finish_travelreport(planet, self, 0)
       self.return_to_origin(planet)
@@ -773,10 +775,12 @@ class Fleet < ActiveRecord::Base
       self.unload_ressources(planet)
       trade_report.finish_tradereport(self, planet, 3)
       self.return_to_origin(planet)
+      self.user.add_score(5)
     elsif other_user.alliance == self.user.alliance # alliance planet
       self.unload_ressources(planet)
       trade_report.finish_tradereport(self, planet, 2)
       self.return_to_origin(planet)
+      self.user.add_score(5)
     else # enemy
       trade_report.finish_tradereport(self, planet, 0)
       self.return_to_origin(planet)
@@ -836,6 +840,7 @@ class Fleet < ActiveRecord::Base
     self.target_planet = self.origin_planet
     Resque.enqueue_at(self.arrival_time, ReturnToOrigin, self.id)
     self.save
+    self.user.add_score(-5)
   end
 
 

@@ -80,7 +80,7 @@
                     </thead>
                     <tbody>
                   <% fleet.get_ships.each do |ship, amount| %>
-                    <tr class="image-popover" ship="<%= ship.id %>" data-trigger="hover" data-html="true" data-placement="left">
+                    <tr class="image-popover" data-placement="left" ship="<%= ship.id %>" data-trigger="hover" data-html="true">
                       <td><%= ship.name %></td>
                       <td><%= ship.offense %></td>
                       <td><%= ship.defense %></td>
@@ -499,7 +499,7 @@
         
         //bauen der URL
         url = "/json/check?";
-        $("#send").children().each(function(){
+        $("#send").children("input").each(function(){
           url += $(this).attr("name") + "=" + $(this).attr("value") + "&";
         });
 
