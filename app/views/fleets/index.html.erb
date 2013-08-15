@@ -83,7 +83,7 @@
     <thead>
       <tr>
         <th>ID</th>
-        <th>Heimat</th>
+        <th>Startplanet</th>
         <th>Mission</th>
         <th>Ziel</th>
         <th>Ankunftszeit</th>
@@ -97,19 +97,21 @@
       <% @flying_fleets.each do |fleet| %>
         <tr>
           <td><%= fleet.id %></td>
-          <td><%= fleet.origin_planet.name %></td>
+          <td><%= fleet.start_planet.name %></td>
+          <% tmp = "" %>
           <% if fleet.target_planet == fleet.origin_planet %>
-            <td>Rückkehr</td>
-          <% elsif fleet.mission.id == 2 %>
-            <td>Kolonialisieren</td>
+            <% tmp = "Rückkehr von " %>
+          <% end %>
+          <% if fleet.mission.id == 2 %></td>
+            <td><%= tmp += "Kolonialisierung" %>
           <% elsif fleet.mission.id == 3 %>
-            <td>Angriff</td>
+            <td><%= tmp += "Angriff" %></td>
           <% elsif fleet.mission.id == 4 %>
-            <td>Reise</td>
+            <td><%= tmp += "Reise" %></td>
           <% elsif fleet.mission.id == 5 %>
-            <td>Spionage</td>
+            <td><%= tmp += "Spionage" %></td>
           <% else %>
-            <td>Transport</td>
+            <td><%= tmp += "Transport" %></td>
           <% end %>
           <td><%= fleet.target_planet.name %></td>
           <td>

@@ -192,24 +192,63 @@
     <% b = @planet.buildings_to_hash%>
     <%  b.each do |h| %>
     <% bt = Buildingtype.where(name: h[0].to_s, level: h[1] +1).first %>
+
     <% if bt.nil? then "Maximale Stufe bereits erreicht!" else %>
     <div class= "upgrade_building_btn building_info" id= "building_info_<%=h[0]%>" >
        
       <p class="building_info_field">Gebäude: <%= h[0].to_s %> Level: <%= h[1] %><br />
-       Kosten: <%= bt.build_cost_ore %> Eisen,
+        <% btt = Buildingtype.where(name: h[0].to_s, level: h[1]).first %>
+        <%unless btt.nil? %>
+            Produktion von Resourcen: <%=btt.production%>
+        <%end%>
+        <hr/>
+      Nächstes Level:<br/>
+      Kosten: <%= bt.build_cost_ore %> Eisen,
                <%= bt.build_cost_money %> Spacecash,
                <%= bt.build_cost_population %> Einwohner,
-               <%= bt.build_cost_crystal %> Kristall<br/>
+               <%= bt.build_cost_crystal %> Kristall,
+               <%= bt.energyusage %> Energieverbrauch <br/>
        Bauzeit:<%= bt.build_time/60 %>:<%=bt.build_time%60 %> Minuten<br/>
        Produktion: <%= bt.production%>
       </p>
 
-    <% if @planet.under_construction == 0 && @planet.user.id == current_user.id then%>
+      <% o = 0 %>
+      <% if @planet.under_construction == 0 && @planet.user.id == current_user.id then%>
+          <% if @planet.user.id == current_user.id %>
+              <% a = @planet.upgradable_buildings_to_hash%>
+              <% a.each do |i|%>
+                  <% if i.to_s == bt.name%>
+                      <% o = 1%>
+                  <%else%>
+                  <%end%>
+              <%end%>
+              <%if o == 1%>
+                  <%= button_to 'Upgrade', {:controller => "planets", :action => "upgrade_building", :btype => h[0].to_s, :id => @planet.id } , :method => :post, data: { confirm: 'Möchtest du dein ' + h[0].to_s + ' aufwerten?' }, class: "btn btn-success" %>
+              <%else%>
+                  <%= "Gebäude:" %>
+                  <% bt.requirements.each do|t|%>
+                      <%= t.name%><%=t.level%><%=", "%>
+                  <%end%>
+                  <%="werden benötigt."%>
+              <%end%>
+
+
+
+          <%end%>
+
+      <%else%>
+      <%end%>
+
+
+
+
+
+     <!-- <% if @planet.under_construction == 0 && @planet.user.id == current_user.id then%>
       <%= button_to 'Upgrade', {:controller => "planets", :action => "upgrade_building", :btype => h[0].to_s, :id => @planet.id } , :method => :post, data: { confirm: 'Möchtest du dein ' + h[0].to_s + ' aufwerten?' }, class: "btn btn-success" %>
     <% else %>
       
 
-    <% end %>
+    <% end %>  -->
   </div>
 
   <%end%>

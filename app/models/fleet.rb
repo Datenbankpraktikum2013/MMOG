@@ -8,7 +8,6 @@ class Fleet < ActiveRecord::Base
 	belongs_to :mission
 
 ############################
-#!!!!!!!!!!!!!!!!!!!!MENTION???????????????????????????
 #HYPERSPACE TECHNOLOGY???????????????
 ############################
 
@@ -241,10 +240,6 @@ class Fleet < ActiveRecord::Base
   # ID=4 : Travel
   # ID=5 : Spy
   # ID=6 : Transport
-
-
-# FALLS FEHLER MÜSSEN DINGE RUECKGAENGIG GEMACHT WERDEN!! begin/rescue/else/ensure
-# planet.seen_by(self.user)
   def move(mission, destination, ship_hash, ore, crystal, credit)
     unless destination.is_a?(Planet)
       raise RuntimeError, "Cannot Move fleet, because Input is no Planet"
@@ -448,6 +443,11 @@ class Fleet < ActiveRecord::Base
       self.destroy
 
     elsif fight_factor>0
+      
+
+      #self.user.add_score(20)
+      
+
       puts "Defender FAIL. Calculating loss of Ships..."
       attacker_new_offense=fight_factor.abs*rand(0.8 .. 1.2)
       new_offense=0
@@ -603,6 +603,7 @@ class Fleet < ActiveRecord::Base
     factor = 0.0
     other_user = planet.user
     if other_user.nil? # unknown
+      self.user.add_score(5)
       type = 1
       self.return_to_origin(planet)
     elsif other_user == self.user # own planet
@@ -612,6 +613,7 @@ class Fleet < ActiveRecord::Base
       type = 2
       self.return_to_origin(planet)
     else  # enemy
+      self.user.add_score(5)
       factor = planet.user.user_setting.increased_spypower
       # the higher the spy factor, the more probable it is, that the drone survives
       r = rand 0.0..0.8
@@ -670,7 +672,7 @@ class Fleet < ActiveRecord::Base
       self.departure_time = self.arrival_time
       self.mission_id = 1
       self.unload_ressources(planet)
-      # delete the Colony Ship
+      # delete the Colony Ship, it will be recycled
       self.destroy_ship(Ship.find(10))
       if self.get_capacity < self.get_amount_of_ressources
         self.ore = (self.get_capacity / 3).to_i
@@ -678,6 +680,7 @@ class Fleet < ActiveRecord::Base
         self.credit = (self.get_capacity / 3).to_i
         puts "due to heavy load, a few ressources got lost in the void..."
       end
+      self.user.add_score(50)
       self.update_values
       type = 1
     elsif other_user == self.user # own planet
@@ -690,7 +693,6 @@ class Fleet < ActiveRecord::Base
       type = 0
       self.return_to_origin(planet)
     end
-    # SEEMS NOT TO WROK PROPERLY===============????????????
     colo_report = Colonisationreport.new
     colo_report.finish_colonisationreport(planet, self, type)
 

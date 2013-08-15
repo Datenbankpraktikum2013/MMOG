@@ -29,7 +29,7 @@
             <td align="middle"  valign="middle"><strong><%= 'Name: ' %></strong><%= technology.title %><br>
               <strong><%= 'Benötigte Technologien: ' %></strong><%=technology.get_requirements %><br>
               <strong><%= 'Kosten: ' %></strong><%= technology.get_technology_cost(current_user)%><br>
-              <strong><%= 'Dauer: ' %></strong><%= technology.get_research_duration(current_user).to_s + ' Sekunden'%> <br>
+              <strong><%= 'Dauer: ' %></strong><%= technology.get_research_duration_formatted(current_user).to_s + ' Sekunden'%> <br>
               <strong><%= 'Beschreibung:' %></strong><%= technology.description%>
             </td>
             <td align="middle"  valign="middle" width="50"><%= technology.get_technology_rank(current_user)%></td>

@@ -23,7 +23,7 @@
   </div>
 
   <div class="part">
-    <h3>Missionstyp</h3>
+    <h3>Wähle den Missionstyp</h3>
     <button id="travel" type="button" class="btn btn-default">Travel</button>
     <button id="colonization" type="button" class="btn btn-primary">Colonization</button>
     <button id="transport" type="button" class="btn btn-success">Transport</button>
@@ -105,24 +105,31 @@
     <h3>Wähle das Ziel</h3>
     
     <div class="row-fluid">
-      <div id="galaxy" class="span4">
-        <select id="g-select" name="galaxy-select" class="span8">
+      <div id="galaxy" class="span3">
+        <label for="g-select">Galaxie</label> 
+        <select id="g-select" name="galaxy-select" class="span10">
           <option selected="selected" value="">---</option>
           <% @galaxies.each do |galaxy| %>
             <option value="<%= galaxy.id %>"><%= galaxy.x %> &sdot; <%= galaxy.name %></option>
           <% end %>
         </select>
       </div>
-      <div id="sunsystem" class="span4">
-        <select id="s-select" name="sunsystem-select" class="span8">
+      <div id="sunsystem" class="span3">
+        <label for="s-select">Sonnensystem</label> 
+        <select id="s-select" name="sunsystem-select" class="span10">
           <option selected="selected" value="">---</option>
         </select>
       </div>
       
       <div id="planet" class="span4">
-        <select id="p-select" name="planet-select" class="span8">
+        <label for="p-select">Planet</label> 
+        <select id="p-select" name="planet-select" class="span10">
           <option selected="selected" value="">---</option>
         </select>
+      </div>
+      <div id="explore" class="span2">
+        <label for="explore-button">Erkundung</label> 
+        <a type="button" id="explore-button" class="btn btn-info" ><i class="icon-random"></i></a>
       </div>
     </div>
   </div>
@@ -214,6 +221,7 @@
         susy_names = data.susy_names_hash;
         planets_names = data.planets_names_hash;
         ships = data.ships;
+        explore_planets = data.explore_planets
       });
 
       $(".ress2-popover").popover({title:"Ressourcen"});
@@ -222,6 +230,23 @@
           return '<img src="images/ships/'+$(this).attr("ship")+'.png"/>';
         }
       });
+
+      // $("#explore-button").on("click", function(){
+      //   $("#s-select > option, #p-select > option, #g-select > option").first().remove();
+      //   $("#g-select").append('<option value="">---</option>');
+      //   $("#s-select").append('<option value="">---</option>');
+      //   $("#p-select").append('<option value="">---</option>');
+      //   index = 1
+      //   rand = Math.floor((Math.random()*10)+1); 
+      //   for (i in explore_planets){
+      //     if (rand == index){
+      //       planet = explore_planets[i]
+      //       $("#p-select").prepend('<option value="">'+planet.z+" &sdot; "+planet.name+'</option>');
+      //     }
+          
+      //   }
+        
+      // });
 
       // delegated event
       $(document).on("focusout", ".ship-amount", function(){
