@@ -1,6 +1,6 @@
 Mmog::Application.routes.draw do
 
-  resources :ship_building_queues
+  resources :ship_building_queues , :except => [:edit, :update, :create, :new, :show]
 
   resources :receiving_reports #kommt spaeter noch raus
 
@@ -20,7 +20,7 @@ Mmog::Application.routes.draw do
 
   resources :missions
 
-  resources :ships
+  resources :ships , :except => [:edit, :update, :create, :new, :destroy, :show]
 
   resources :buildingtypes
 
