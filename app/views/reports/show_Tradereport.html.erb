@@ -1,4 +1,5 @@
 <h1>Handelsbericht</h1>
+vom <strong><%= @report.fightdate.strftime('%d.%m.%y') %> um <%= @report.fightdate.strftime('%H:%M') %> Uhr</strong>
 <p>
   Du hast am <strong><%= @report.fightdate.strftime('%d.%m.%y') %> um 
   <%= @report.fightdate.strftime('%H:%M') %> Uhr</strong> Ressourcen zum Planeten

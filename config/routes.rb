@@ -88,6 +88,8 @@ Mmog::Application.routes.draw do
   post 'planets/upgrade_building' => 'planets#upgrade_building'
   post 'planets/abort_upgrade' => 'planets#abort_upgrade'
   post 'planets/rename_planet' => 'planets#rename_planet'
+  post 'planets/set_home_planet' => 'planets#set_home_planet'
+  #post 'planets/redirect_to_planet' => 'planets#redirect_to_planet'
 
 
   post '/alliances/:id/leave' => 'alliances#leave'

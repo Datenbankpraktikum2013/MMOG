@@ -8,6 +8,8 @@ class ReportsController < ApplicationController
   def index
     #@reports = Report.all.joins("INNER JOIN receiving_reports ON receiving_reports.report_id = reports.id").select("reports.*, receiving_reports.read AS read").where("receiving_reports.user_id = #{current_user.id}").order("receiving_reports.read", "reports.fightdate DESC")
     @reports = Report.all.includes([:defender, :attacker], [:defender_planet, :attacker_planet]).joins(:receiving_reports).select("`reports`.*, `receiving_reports`.`read`").where(receiving_reports: {user_id: current_user.id}).order("`receiving_reports`.`read`", fightdate: :desc)
+      
+
       respond_to do |format|
         format.html
         format.js
@@ -49,6 +51,18 @@ class ReportsController < ApplicationController
       case type.reportable_type
       when "Battlereport"
         @report = Report.includes(reportable: [:buildingtypes, shipcounts: [:ship, :user]]).where(id: params[:id]).first
+        @def_ships = []
+        @atk_ships = []
+        @report.reportable.shipcounts.each do |shipcount|
+          if shipcount.shipowner_time_type == 0 
+            @def_ships[shipcount.user_id] = [] if @def_ships[shipcount.user_id].nil?
+            @def_ships[shipcount.user_id] << shipcount
+          else
+            @atk_ships[shipcount.user_id] = [] if @atk_ships[shipcount.user_id].nil?
+            @atk_ships[shipcount.user_id] << shipcount
+          end
+        end
+        puts @ships
       when "Colonisationreport"
         @report = Report.includes(:reportable).where(id: params[:id]).first
       when "Spyreport"

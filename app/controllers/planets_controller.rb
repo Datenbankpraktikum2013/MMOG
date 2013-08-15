@@ -126,6 +126,37 @@ class PlanetsController < ApplicationController
       end
     end
   end
+  def set_home_planet
+    @planet = Planet.find(params["id"])
+    u=@planet.user
+    if(!u.nil? && current_user.id == @planet.user.id)
+    @planet.set_home_planet(current_user)
+
+          respond_to do |format|
+        format.html { redirect_to @planet, notice: 'Homeplanet set.'}
+        format.json { render action: 'show' }
+      end
+    else
+                respond_to do |format|
+        format.html { redirect_to @planet, notice: 'Not yours to own!'}
+        format.json { render action: 'show' }
+      end
+  end
+  end 
+
+  def redirect_to_planet
+    if !params["planet_name"].nil?
+      @planet = Planet.find(params["planet_name"])
+    end
+    if !params["allied_planet_name"].nil?
+      @planet = Planet.find(params["allied_planet_name"])
+    end
+      respond_to do |format|
+        format.html { redirect_to @planet, notice: 'Schnellreise erfolgreich.'}
+        format.json { render action: 'show' }
+      end
+
+  end
 
   def page_refresh()
 
@@ -144,7 +175,6 @@ class PlanetsController < ApplicationController
       format.json { head :no_content }
     end
   end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_planet
