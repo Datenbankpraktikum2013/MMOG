@@ -81,7 +81,7 @@ class MessagesController < ApplicationController
   # DELETE /messages/1
   # DELETE /messages/1.json
   def destroy
-    if @message.recipients.exists?(current_user) > 0
+    if @message.recipients.exists?(current_user)!=nil
       @entry=MessagesUser.all.where(:user_id=>current_user,:message_id=>@message).first
       @entry.update_attributes(:recipient_deleted => true);
       @message.tag_msg_as_seen!(current_user)
