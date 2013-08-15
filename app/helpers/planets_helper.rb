@@ -43,11 +43,12 @@ gibt ein Array wie folgt aus: [max_research_level, sum_research_levels, count_re
     user.planets.each do |p|
       a = p.research_level
       data[0] = a if data[0] < a
+      #data[0] = user.user_setting.researchlvl if data[0] < user.user_setting.researchlvl
       data[1] += a
       data[2] += 1
     end
 
-    user.user_setting.update_attribute :researchlvl, data[0]
+    #user.user_setting.update_attribute :researchlvl, data[0]
     data
   end
 

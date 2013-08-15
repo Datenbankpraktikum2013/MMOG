@@ -16,7 +16,7 @@
     <% @usermessages.each do |message| %>
       <% unless message.deleted?  %>
         <% @read=message.read %>
-        <tr class="<%= "info" unless @read>0 %>">
+        <tr class="<%= "info" unless @read %>">
           <td>
             <%= message.subject %>
           </td>

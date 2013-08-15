@@ -2,19 +2,21 @@
   <h1><%= @alliance.name %></h1>
 </p>
 <p>
-	<strong>Gründer:</strong>
+	<div class="well"><strong>Gründer:</strong>
 	<%= @founder.username %>
+	</div>
 </p>
-
-<p>	<strong>Beschreibung:</strong><br>
+<div class="well">
+<strong>Beschreibung:</strong><br>
 	<%= @alliance.description %>
-</p>
-
-<p>	<strong>Score:</strong> <%= @alliance.score %>
-</p>
-
+</div>
+<div class="well">
+	<strong>Score:</strong> <%= @alliance.score %>
+</div>
 <p>
+<div class="well">
 	<strong>Mitglieder:</strong><br />
+</div>
 	<table class="table table-striped table-bordered table-condensed sort">
 		<thead>	
 			<tr>
@@ -48,7 +50,9 @@
 	</table>
 </p>
 <% if current_user.alliance==@alliance %>
-	<p><strong>Deine Score-Anteile:</strong>
+	<div class="well">
+		<strong>Deine Score-Anteile:</strong>
+	</div>
 		<div class="progress progress-striped">
 			<% if @alliance.score!=0 %>
 				<% usr=(current_user.score.to_f/@alliance.score.to_f)*100 %>
@@ -60,7 +64,6 @@
   			<div class="bar bar-success" style="width: <%= usr.to_i %>%;"></div>
   			<div class="bar bar-info" style="width: <%= alli.to_i %>%;left:<%= usr.to_i %>%;"></div>
   		</div>
-	</p>
 <%end %>
 <% if current_user.alliance==@alliance %>
 	<%= button_to 'Austreten', alliance_path(@alliance)+"/leave", class: 'btn btn-danger', :method => :post unless @alliance.permission?(current_user,"destroy")%>
