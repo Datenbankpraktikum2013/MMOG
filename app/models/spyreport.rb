@@ -52,7 +52,7 @@ class Spyreport < ActiveRecord::Base
 					self.add_ships
 				end	
 
-				unless self.spylevel < 3
+				unless self.spylevel < 3 || @r.defender.nil?
 					self.add_tech
 				end
 			end
@@ -93,7 +93,7 @@ class Spyreport < ActiveRecord::Base
 
 	def self.test
 		s = Spyreport.new
-		p = Planet.find(1)
+		p = Planet.find(55)
 		f = Fleet.find(1)
 		f.arrival_time = Time.now.to_i
 		s.finish_spyreport(p, f, 2, 1, 0)
