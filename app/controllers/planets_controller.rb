@@ -126,7 +126,23 @@ class PlanetsController < ApplicationController
       end
     end
   end
+  def set_home_planet
+    @planet = Planet.find(params["id"])
+    u=@planet.user
+    if(!u.nil? && current_user.id == @planet.user.id)
+    @planet.set_home_planet(current_user)
 
+          respond_to do |format|
+        format.html { redirect_to @planet, notice: 'Homeplanet set.'}
+        format.json { render action: 'show' }
+      end
+    else
+                respond_to do |format|
+        format.html { redirect_to @planet, notice: 'Not yours to own!'}
+        format.json { render action: 'show' }
+      end
+  end
+  end
   def page_refresh()
 
     object = {:buildingtype_id => Planet.find(params["id"]).under_construction}
@@ -144,7 +160,6 @@ class PlanetsController < ApplicationController
       format.json { head :no_content }
     end
   end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_planet

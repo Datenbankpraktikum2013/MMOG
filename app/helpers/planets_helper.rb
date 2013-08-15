@@ -20,7 +20,7 @@ module PlanetsHelper
     p = search_startplanet
     if !p.nil? && p.is_a?(Planet) && p.user.nil?
       p.claim(user)
-      p.set_home_planet
+      p.set_home_planet(user)
       return true
     else
       return false
