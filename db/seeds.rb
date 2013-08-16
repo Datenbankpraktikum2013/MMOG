@@ -105,16 +105,16 @@ Ship.find(9).buildingtypes << Buildingtype.where(name: "Starport", level: 2).fir
 Ship.find(10).buildingtypes << Buildingtype.where(name: "Starport", level: 3).first
 
 #Building 
-Building.create({:planet_id => 1, :buildingtype_id => 1})
-Building.create({:planet_id => 1, :buildingtype_id => 2})
-Building.create({:planet_id => 1, :buildingtype_id => 54})
-Building.create({:planet_id => 1, :buildingtype_id => 30})
-Building.create({:planet_id => 2, :buildingtype_id => 1})
-Building.create({:planet_id => 2, :buildingtype_id => 2})
-Building.create({:planet_id => 2, :buildingtype_id => 51})
-Building.create({:planet_id => 4, :buildingtype_id => 1})
-Building.create({:planet_id => 4, :buildingtype_id => 2})
-Building.create({:planet_id => 4, :buildingtype_id => 51})
+#Building.create({:planet_id => 1, :buildingtype_id => 1})
+#Building.create({:planet_id => 1, :buildingtype_id => 2})
+#Building.create({:planet_id => 1, :buildingtype_id => 54})
+#Building.create({:planet_id => 1, :buildingtype_id => 30})
+#Building.create({:planet_id => 2, :buildingtype_id => 1})
+#Building.create({:planet_id => 2, :buildingtype_id => 2})
+#Building.create({:planet_id => 2, :buildingtype_id => 51})
+#Building.create({:planet_id => 4, :buildingtype_id => 1})
+#Building.create({:planet_id => 4, :buildingtype_id => 2})
+#Building.create({:planet_id => 4, :buildingtype_id => 51})
 
 #Default-Werte von Spieler, Allianzen und Nachrichten
 #Alliance.create({:name => 'test_alliance3', :description => 'testtesttest', :user_id => User.first})
