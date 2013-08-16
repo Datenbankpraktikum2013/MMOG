@@ -12,10 +12,10 @@ class Buildingtype < ActiveRecord::Base
   def self.init()
 
     Buildingtype.create({:name =>'Headquarter', :level=> 1, :production=> 1, :energyusage=> 20, :build_time=>0, :build_cost_ore =>0, :build_cost_crystal =>0, :build_cost_money =>0, :build_cost_population =>0})
-    Buildingtype.create({:name =>'Headquarter', :level=> 2, :production=> 1, :energyusage=> 50, :build_time=>300, :build_cost_ore =>200, :build_cost_crystal =>0, :build_cost_money =>1024, :build_cost_population =>50})
-    Buildingtype.create({:name =>'Headquarter', :level=> 3, :production=> 1, :energyusage=> 100, :build_time=>2500, :build_cost_ore =>500, :build_cost_crystal =>0, :build_cost_money =>7000, :build_cost_population =>100})
-    Buildingtype.create({:name =>'Headquarter', :level=> 4, :production=> 1, :energyusage=> 250, :build_time=>10000, :build_cost_ore =>2500, :build_cost_crystal =>0, :build_cost_money =>25000, :build_cost_population =>200})
-    Buildingtype.create({:name =>'Headquarter', :level=> 5, :production=> 1, :energyusage=> 500, :build_time=>50000, :build_cost_ore =>10000, :build_cost_crystal =>2, :build_cost_money =>78000, :build_cost_population =>500})
+    Buildingtype.create({:name =>'Headquarter', :level=> 2, :production=> 2, :energyusage=> 50, :build_time=>300, :build_cost_ore =>200, :build_cost_crystal =>0, :build_cost_money =>1024, :build_cost_population =>50})
+    Buildingtype.create({:name =>'Headquarter', :level=> 3, :production=> 3, :energyusage=> 100, :build_time=>2500, :build_cost_ore =>500, :build_cost_crystal =>0, :build_cost_money =>7000, :build_cost_population =>100})
+    Buildingtype.create({:name =>'Headquarter', :level=> 4, :production=> 4, :energyusage=> 250, :build_time=>10000, :build_cost_ore =>2500, :build_cost_crystal =>0, :build_cost_money =>25000, :build_cost_population =>200})
+    Buildingtype.create({:name =>'Headquarter', :level=> 5, :production=> 5, :energyusage=> 500, :build_time=>50000, :build_cost_ore =>10000, :build_cost_crystal =>2, :build_cost_money =>78000, :build_cost_population =>500})
 
     Buildingtype.create({:name =>'Oremine', :level=> 1, :production=> 1, :energyusage=>0, :build_time=>0, :build_cost_ore =>0, :build_cost_crystal =>0, :build_cost_money =>0, :build_cost_population =>0})
     Buildingtype.create({:name =>'Oremine', :level=> 2, :production=> 3, :energyusage=>5, :build_time=>60, :build_cost_ore =>5, :build_cost_crystal =>0, :build_cost_money =>100, :build_cost_population =>40})
