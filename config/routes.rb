@@ -16,7 +16,7 @@ Mmog::Application.routes.draw do
 
   resources :shipfleets #kommt spaeter noch raus
 
-  resources :fleets #EXCEPT muss hier noch rein!
+  resources :fleets , :except => [:edit, :update, :create, :new, :destroy, :show]
 
   resources :missions
 
