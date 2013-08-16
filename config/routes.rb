@@ -40,9 +40,9 @@ Mmog::Application.routes.draw do
 
   resources :sunsystems
 
-  resources :planets
+  resources :planets, :except => [:edit, :update, :create, :new, :destroy, :index]
 
-  resources :impressum
+
 
   post "requests" => "requests#create"
   post "requests/reaction"=>"requests#reaction"
