@@ -68,7 +68,7 @@ Buildingtype.init()
 
 TechnologiesHelper.init_Technology
 TechnologiesHelper.init_Technology_Require
-TechnologiesHelper.test_user_technology
+#TechnologiesHelper.test_user_technology
 
 
 #Default-Missionstypen
