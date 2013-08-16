@@ -14,7 +14,7 @@ Deine Sonde wurde beim spionieren zerstört
 
 
 <% if @report.reportable.mode < 2 %>
-  <h4>Planet <%= @report.defender_planet.name %> von <%= @report.defender.username %>:</h4>
+  <h4>Planet <%= @report.defender_planet.name %> von <%= if @report.defender.username.nil? ? "Unbesetzt" : @report.defender.username %>:</h4>
   <p>
     Bevölkerung: <%= @report.reportable.population %>/<%= @report.reportable.maxpopulation %> Energie: <%= @report.reportable.energy %>/<%= @report.reportable.maxenergy %>
     Erz: <%= @report.reportable.ore %>/<%= @report.reportable.maxore %> Space Cash: <%= @report.reportable.space_cash %>

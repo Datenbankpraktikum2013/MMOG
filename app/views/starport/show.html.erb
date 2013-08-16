@@ -113,9 +113,10 @@ $(".ship-amount").keyup(function() {
 	}
 	else{
 		$("#crystal-t").css( "color", "black" );
+		
 	}
 
-	if((parseInt($("#crystal-t").text()) < parseInt($("#got-crystal").data("crystal")))  && (parseInt($("#credit-t").text()) < parseInt($("#got-credit").data("credit")))  &&  (parseInt($("#ore-t").text()) < parseInt($("#got-ore").data("ore")))){
+	if((parseInt($("#crystal-t").text()) <= parseInt($("#got-crystal").data("crystal")))  && (parseInt($("#credit-t").text()) <= parseInt($("#got-credit").data("credit")))  &&  (parseInt($("#ore-t").text()) <= parseInt($("#got-ore").data("ore")))){
 		$("#crystal-t").css( "color", "black" );
 		$("#ore-t").css( "color", "black" );
 		$("#credit-t").css( "color", "black" );
