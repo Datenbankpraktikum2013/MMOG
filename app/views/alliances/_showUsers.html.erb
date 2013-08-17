@@ -59,7 +59,7 @@
 	</table>
 	<% if @alliance.permission?(current_user,"invite") %>
 		<%= form_tag(requests_path)%>
-		<p><strong><%= label_tag ('Mitglied hinzufügen') %></strong>
+		<p><strong class="tip" title="Wenn du Nutzer einlädst, werden diese über eine einzigartige Nachricht unseres Systemes informiert. Sie können dann entscheiden, ob sie wirklich mit dir spielen wollen."><%= label_tag ('Mitglied hinzufügen') %></strong>
 			<%= text_field_tag('recipient') %>
 			<%= hidden_field_tag('useraction','alliance_invite') %>
 		</p>
@@ -89,5 +89,9 @@
     $.extend( $.fn.dataTableExt.oStdClasses, {
         "sWrapper": "dataTables_wrapper form-inline"
     });
+  });
+
+  $(function(){
+    $('.tip').tooltip();
   });
 </script>

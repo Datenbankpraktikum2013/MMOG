@@ -1,7 +1,7 @@
 <p>
-	<div class="btn-group">
+	<div class="btn-group tip" title="Hast du keine Lust mehr, die Rolle des Gründers zu spielen? Gebe die schwere Bürde an einen anderen Nutzer ab. Danach kannst du auch die Allianz verlassen. Natürlich nur, wenn du willst.">
 	    <a class="btn btn-large btn-warning dropdown-toggle" data-toggle="dropdown" href="#" %>
-	    	Zurücktreten
+	    	<font color=white>Zurücktreten</font>
 	    	<span class="caret"></span>
 	    </a>
 	    <ul class="dropdown-menu">
@@ -15,3 +15,8 @@
 	</div>
 </p>
 <%= button_to 'Allianz auflösen', {:controller => "alliances", :action => "destroy"} , :method=>:delete, data: { confirm: 'Bist du dir sicher, dass du die Allianz auflösen willst?' }, class: 'btn btn-large btn-danger' %>
+<script>
+  $(function(){
+    $('.tip').tooltip();
+  });
+</script>

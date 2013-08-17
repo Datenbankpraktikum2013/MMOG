@@ -1,3 +1,8 @@
+<script>
+  $(function(){
+    $('.tip').tooltip();
+  });
+</script>
 <%= form_for(@rank) do |f| %>
   <% if @rank.errors.any? %>
     <div id="error_explanation">
@@ -13,14 +18,14 @@
 
   <div class="field">
     <%= f.label :name %><br>
-    <%= f.text_field :name, :maxlength => 20 %>
+    <%= f.text_field :name, :maxlength => 20,:title => "Gib hier den Namen deines Ranges an",class: "tip","data-toggle"=>'tooltip',"data-placement"=>'right' %>
   </div>
 
   <table class="table table-striped table-bordered table-condensed">
     <th>Attribut</th>
     <th>Erlaubnis</th>
     <tbody>
-      <tr>
+      <tr title="Erteile die Erlaubnis, dass Nutzer dieses Ranges andere Nutzer entfernen dürfen." class="tip" data-toggle="tooltip" data-placement="right" >
           <td>
             <%= f.label "Kicken" %>
           </td>
@@ -29,7 +34,7 @@
           </td>
 
       </tr>
-      <tr>
+      <tr title="Erteile die Erlaubnis, dass Nutzer dieses Ranges Rundmails an alle Allianzmitglieder schicken dürfen." class="tip" data-toggle="tooltip" data-placement="right" >
           <td>
             <%= f.label "Rundmail" %>
           </td>
@@ -37,7 +42,7 @@
             <%= f.check_box :can_massmail %>
           </td>
       </tr>
-      <tr>
+      <tr title="Erteile die Erlaubnis, dass Nutzer dieses Ranges die Allianzbeschreibung ändern dürfen." class="tip" data-toggle="tooltip" data-placement="right" >
           <td>
             <%= f.label "Beschreibung ändern" %>
           </td>
@@ -45,7 +50,7 @@
             <%= f.check_box :can_change_description %>
           </td>
       </tr>
-      <tr>
+      <tr title="Erteile die Erlaubnis, dass Nutzer dieses Ranges andere Ränge editieren dürfen. ACHTUNG: Sei vorsichtig, wem du dieses Privileg anvertraust!" class="tip" data-toggle="tooltip" data-placement="right" >
           <td>
             <%= f.label "Ränge editieren" %>
           </td>
@@ -53,12 +58,12 @@
             <%= f.check_box :can_edit_ranks %>
           </td>
       </tr>
-      <tr>
+      <tr title="Erteile die Erlaubnis, dass Nutzer dieses Ranges andere Nutzer in die Allianz einladen dürfen." class="tip" data-toggle="tooltip" data-placement="right" >
           <td>
-            <%= f.label "Einladen" %>
+            <%= f.label "Einladen"%>
           </td>
           <td>
-            <%= f.check_box :can_invite %>
+            <%= f.check_box :can_invite,:text => "test",class: "tip","data-toggle"=>"tooltip","data-placement"=>"right" %>
           </td>
       </td>
     </tbody>
@@ -67,3 +72,4 @@
     <%= f.submit 'Akzeptieren', :class => 'btn' %>
   </div>
 <% end %>
+
