@@ -10,11 +10,11 @@
 <strong>Beschreibung:</strong><br>
 	<%= @alliance.description %>
 </div>
-<div class="well">
+<div class="well tip" title="ProTip: Der Highscore von Allianzen errechnet sich aus der Summe aller Mitgliederwertungen." data-toggle="tooltip" data-placement="right" >
 	<strong>Score:</strong> <%= @alliance.score %>
 </div>
 <p>
-<div class="well">
+<div class="well tip" title="Hier siehst du alle Mitglieder dieser Allianz im Überblick. Der perfekte Ort um Informationen über diese zu bekommen. Wenn du einen bestimmtes Mitglied suchst, kannst du gerne das Suchfeld benutzen. Dieses filtert deine Suchergebnisse in Echtzeit!" data-toggle="tooltip" data-placement="right" >
 	<strong>Mitglieder:</strong><br />
 </div>
 	<table class="table table-striped table-bordered table-condensed sort">
@@ -50,7 +50,7 @@
 	</table>
 </p>
 <% if current_user.alliance==@alliance %>
-	<div class="well">
+	<div class="well tip" title="Diese Grafik gibt dir Informationen über die Anteile, die du selbst zu der Highscore deiner Allianz beigetragen hast. Blau bist du, grün die anderen." data-toggle="tooltip" data-placement="right" >
 		<strong>Deine Score-Anteile:</strong>
 	</div>
 		<div class="progress progress-striped">
@@ -90,5 +90,9 @@
     $.extend( $.fn.dataTableExt.oStdClasses, {
         "sWrapper": "dataTables_wrapper form-inline"
     });
+  });
+
+  $(function(){
+    $('.tip').tooltip();
   });
 </script>

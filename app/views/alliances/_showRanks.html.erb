@@ -1,5 +1,5 @@
 <p>
-	<div class="well">
+	<div class="well tip" title="Unser Rängesystem ist etwas ganz besonderes. Du sollst die Freiheit haben, die Hierarchie deiner Allianz selbst zu verwalten. Der Standardrang sowie der Rang des Gründers können nicht gelöscht werden. Pass aber auf, wem du welche Rechte anvertraust!">
 		<strong>Ränge verwalten</strong>
 	</div>
    	<table class="table table-striped table-bordered table-condensed">
@@ -48,3 +48,8 @@
 	    <%= link_to 'Neuen Rang erstellen', new_rank_path, class: 'btn'%>
 	</p>
 </p>
+<script>
+  $(function(){
+    $('.tip').tooltip();
+  });
+</script>
