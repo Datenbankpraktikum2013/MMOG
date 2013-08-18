@@ -1,6 +1,7 @@
 class MissionsController < ApplicationController
   # before_action :set_mission, only: [:show, :edit, :update, :destroy]
   before_filter :authenticate_user!
+  
   # GET /missions
   # GET /missions.json
   def index
@@ -92,7 +93,6 @@ class MissionsController < ApplicationController
   end
 
   # GET /json/distance
-  # FEHLERBEHANDLUNG
   def get_distance()
     planet1 = Planet.find(params[:planet1])
     planet2 = Planet.find(params[:planet2])
@@ -101,7 +101,6 @@ class MissionsController < ApplicationController
   end
 
   # GET /json/fleetships
-  # FEHLERBEHANDLUNG
   def get_ships()
     fleet = Fleet.find(params[:fleet_id])
     render :json => fleet.get_ships_ids.to_json

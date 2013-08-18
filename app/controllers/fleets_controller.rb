@@ -12,7 +12,6 @@ class FleetsController < ApplicationController
     planets = current_user.planets
     planets.each do |planet|
       Fleet.where("target_planet = ? AND start_planet != target_planet", planet).each do |fleet|
-      #Fleet.where(target_planet: planet).each do |fleet|  
         @approaching_fleets.push(fleet)
       end
     end
@@ -60,14 +59,12 @@ class FleetsController < ApplicationController
     end
   end
 
-  # Fehlerbehandlung
   def breakup
     fleet = Fleet.find(params["fleet"])
     fleet.breakup_mission
     render :json => {"ok" => 1}.to_json
   end
 
-  # Fehlerbehandlung
   def unload
     fleet = Fleet.find(params["fleet"])
     planet = Planet.find(params["planet"])
@@ -103,12 +100,6 @@ class FleetsController < ApplicationController
       format.html { redirect_to fleets_url }
       format.json { head :no_content }
     end
-  end
-
-  # GET /fleets/mission
-  # GET /fleets/mission.json ????????????? 
-  def show_mission
-
   end
 
 

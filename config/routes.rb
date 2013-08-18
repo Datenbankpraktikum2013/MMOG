@@ -18,7 +18,7 @@ Mmog::Application.routes.draw do
 
   resources :fleets , :except => [:edit, :update, :create, :new, :destroy, :show]
 
-  resources :missions
+  resources :missions, :except => [:edit, :update, :create, :new, :destroy, :show]
 
   resources :ships , :except => [:edit, :update, :create, :new, :destroy, :show]
 
